@@ -133,6 +133,8 @@ Route::prefix('exam-paper-section-questions/{sectionQuestion}')->name('exam-pape
     Route::put('/', [ExamClassPaperController::class, 'updateSectionQuestion'])->name('update');
     Route::delete('/', [ExamClassPaperController::class, 'destroySectionQuestion'])->name('destroy');
 });
+Route::get('/exam-class-papers/{exam_class_paper}/preview', [ExamClassPaperController::class, 'preview'])
+        ->name('exam-class-papers.preview');
 
 // --- Exam Sessions & Schedules Routes ---
 Route::resource('sessions', ExamSessionController::class)->except(['create', 'edit', 'show']);

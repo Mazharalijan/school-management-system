@@ -5,6 +5,7 @@ import FilterSelect from '@/components/FilterSelect';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import RichTextEditor from '@/components/RichTextEditor';
 import {FilePen, PlusIcon, X} from "lucide-react";
 
 export default function QuestionFormModal({ isOpen, onClose, question = null, classes = [] }) {
@@ -97,7 +98,12 @@ export default function QuestionFormModal({ isOpen, onClose, question = null, cl
                     </span>
                     <div className="mt-2">
                         <Label htmlFor="question_content">Question Content *</Label>
-                        <textarea
+                        <RichTextEditor
+                            value = {data.question}
+                            // onChange={(e) => setData('question', e.target.value)}
+                            onChange={(content) => setData('question_text', content)}
+                         />
+                        {/* <textarea
                             id="question_content"
                             value={data.question}
                             onChange={(e) => setData('question', e.target.value)}
@@ -105,7 +111,7 @@ export default function QuestionFormModal({ isOpen, onClose, question = null, cl
                             rows={4}
                             placeholder="Enter the question text here..."
                             required
-                        />
+                        /> */}
                         {errors.question && (
                             <p className="text-xs text-red-500 mt-1">{errors.question}</p>
                         )}

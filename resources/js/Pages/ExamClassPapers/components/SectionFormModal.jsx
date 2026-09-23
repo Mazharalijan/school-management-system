@@ -6,13 +6,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import FilterSelect from '@/components/FilterSelect';
 
-export default function SectionFormModal({ 
-    isOpen, 
-    onClose, 
-    section = null, 
-    papers = [], 
-    questionBank = [] 
+export default function SectionFormModal({
+    isOpen,
+    onClose,
+    section = null,
+    papers = [],
+    questionBank = []
 }) {
+    console.log('SectionFormModal props:', { section, papers, questionBank }); // Debugging line
     const isEdit = Boolean(section);
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -28,12 +29,15 @@ export default function SectionFormModal({
     });
 
     // Populate data when editing or opening
+    // Populate data when editing or opening
     useEffect(() => {
         if (section && isOpen) {
-            // Extract existing question IDs if editing
-            const existingQuestionIds = section.section_questions 
-                ? section.section_questions.map(q => q.question_bank_id) 
-                : (section.question_ids || []);
+            // Look for 'questions' array inside section object
+            const existingQuestionIds = Array.isArray(section.questions)
+                ? section.questions.map((q) => q.question_bank_id)
+                : Array.isArray(section.section_questions)
+                    ? section.section_questions.map((q) => q.question_bank_id)
+                    : section.question_ids || [];
 
             setData({
                 exam_class_paper_id: section.exam_class_paper_id || '',
@@ -63,7 +67,7 @@ export default function SectionFormModal({
         return questionBank.filter((q) => {
             const matchesSubject = String(q.subject_id) === String(selectedPaper.subject_id);
             const matchesType = q.question_type === data.question_type;
-            const matchesSearch = searchTerm 
+            const matchesSearch = searchTerm
                 ? (q.question_text || q.question || '').toLowerCase().includes(searchTerm.toLowerCase())
                 : true;
 
@@ -113,7 +117,7 @@ export default function SectionFormModal({
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         const routeName = isEdit ? 'exam-paper-sections.update' : 'paper.sections.store';
         const submitMethod = isEdit ? put : post;
         const targetUrl = isEdit ? route(routeName, section.id) : route(routeName);
@@ -303,11 +307,10 @@ export default function SectionFormModal({
                                 return (
                                     <label
                                         key={q.id}
-                                        className={`flex items-start gap-3 p-2.5 rounded border text-xs cursor-pointer transition-colors ${
-                                            isChecked
+                                        className={`flex items-start gap-3 p-2.5 rounded border text-xs cursor-pointer transition-colors ${isChecked
                                                 ? 'bg-emerald-50/60 border-emerald-300'
                                                 : 'bg-white border-slate-200 hover:border-slate-300'
-                                        }`}
+                                            }`}
                                     >
                                         <input
                                             type="checkbox"

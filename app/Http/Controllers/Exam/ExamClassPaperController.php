@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Exam;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Exam\StoreExamClassPaperRequest;
-use App\Http\Requests\StoreExamPaperSectionRequest;
-use App\Http\Requests\Exam\UpdateExamClassPaperRequest;
-use App\Http\Requests\UpdateExamPaperSectionRequest;
 use App\Http\Requests\Exam\BulkPrintPapersRequest;
+use App\Http\Requests\Exam\StoreExamClassPaperRequest;
+use App\Http\Requests\Exam\UpdateExamClassPaperRequest;
+use App\Http\Requests\StoreExamPaperSectionRequest;
+use App\Http\Requests\UpdateExamPaperSectionRequest;
 use App\Models\ExamClassPaper;
 use App\Models\ExamPaperSection;
 use App\Models\QuestionBank;
@@ -56,13 +56,13 @@ class ExamClassPaperController extends Controller
         $questionBanks = QuestionBank::with(['chapter', 'topic'])->get();
 
         return Inertia::render('ExamClassPapers/Index', [
-            'papers'        => $papers,
-            'sections'      => $sections,
-            'classes'       => SchoolClass::all(),
-            'subjects'      => Subject::all(),
+            'papers' => $papers,
+            'sections' => $sections,
+            'classes' => SchoolClass::all(),
+            'subjects' => Subject::all(),
             'questionBanks' => $questionBanks,
-            'filters'       => $request->only(['search', 'school_class_id', 'subject_id']),
-            'activeTab'     => $activeTab,
+            'filters' => $request->only(['search', 'school_class_id', 'subject_id']),
+            'activeTab' => $activeTab,
         ]);
     }
 
@@ -150,5 +150,39 @@ class ExamClassPaperController extends Controller
 
         return redirect()->route('exam-class-papers.index', ['tab' => 'print'])
             ->with('success', 'Selected paper print statuses updated.');
+    }
+
+    public function show(ExamClassPaper $examClassPaper)
+    {
+        // 1. Eager load paper relations (sections and their attached question bank items)
+        $examClassPaper->load([
+            'schoolClass',
+            'subject',
+            'sections.questions.questionBank',
+        ]);
+
+        // 2. Fetch question bank items matching this paper's subject (for section question picker)
+        $questionBank = QuestionBank::where('subject_id', $examClassPaper->subject_id)->get();
+
+        // 3. Render your Paper Detail / Section Management view
+        return Inertia::render('ExamClassPapers/Show', [
+            'paper' => $examClassPaper,
+            'sections' => $examClassPaper->sections,
+            'questionBank' => $questionBank,
+        ]);
+    }
+
+    public function preview(ExamClassPaper $examClassPaper)
+    {
+        $examClassPaper->load([
+            'schoolClass',
+            'subject',
+            'sections.questions.questionBank',
+        ]);
+
+        return Inertia::render('ExamClassPapers/components/PaperPreview', [
+            'paper' => $examClassPaper,
+            'sections' => $examClassPaper->sections,
+        ]);
     }
 }

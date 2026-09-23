@@ -18,6 +18,7 @@ class ExamPaperSection extends Model
         'total_marks',
         'total_questions',
         'order',
+        'question_type'
     ];
 
     protected $casts = [

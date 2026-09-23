@@ -102,6 +102,7 @@ return new class extends Migration
             $table->string('title');
             $table->decimal('total_marks', 6, 2);
             $table->unsignedInteger('total_questions');
+            $table->enum('question_type', ['mcq', 'short', 'long', 'letter', 'essay'])->default('mcq');
             $table->unsignedInteger('order')->default(1);
             $table->timestamps();
         });

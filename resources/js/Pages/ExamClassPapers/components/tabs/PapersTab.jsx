@@ -5,7 +5,7 @@ import SearchInput from '@/components/SearchInput';
 import FilterSelect from '@/components/FilterSelect';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { FileText, FilePen, Trash2, Layers, Eye } from 'lucide-react';
+import { FileText, FilePen, Trash2, Layers, Eye, Printer } from 'lucide-react';
 
 export default function PapersTab({ papers = {}, classes = [], subjects = [], filters = {}, onEdit, onViewDetail }) {
     console.log('PapersTab props:', { papers, classes, subjects });
@@ -53,11 +53,46 @@ export default function PapersTab({ papers = {}, classes = [], subjects = [], fi
                                 <td className="px-6 py-4">{paper.duration_minutes} mins</td>
                                 <td className="px-6 py-4 text-right">
                                     <div className="flex items-center justify-end gap-2">
-                                        <Button variant="ghost" size="sm" onClick={() => onViewDetail(paper)} className="h-8 w-8 p-0 text-slate-600"><Eye className="w-4 h-4" /></Button>
-                                        <Link href={`${route('exam-class-papers.show', paper.id)}?tab=sections`} className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700">
+                                        {/* Print Preview Button */}
+                                        <Link
+                                            href={route('exam-class-papers.preview', paper.id)}
+                                            className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 shadow-sm transition-colors"
+                                            title="Print Preview"
+                                        >
+                                            <Printer className="w-3.5 h-3.5 text-slate-500" />
+                                            <span>Preview</span>
+                                        </Link>
+
+                                        {/* View Modal Detail */}
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={() => onViewDetail(paper)}
+                                            className="h-8 w-8 p-0 text-slate-600 hover:text-slate-900"
+                                            title="View Details"
+                                        >
+                                            <Eye className="w-4 h-4" />
+                                        </Button>
+
+                                        {/* Manage Sections Link */}
+                                        <Link
+                                            href={`${route('exam-class-papers.show', paper.id)}?tab=sections`}
+                                            className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                                            title="Manage Sections"
+                                        >
                                             <Layers className="w-3 h-3" /> Sections
                                         </Link>
-                                        <Button variant="ghost" size="sm" onClick={() => onEdit(paper)} className="h-8 w-8 p-0 text-blue-600"><FilePen className="w-4 h-4" /></Button>
+
+                                        {/* Edit Button */}
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={() => onEdit(paper)}
+                                            className="h-8 w-8 p-0 text-blue-600 hover:bg-blue-50"
+                                            title="Edit Paper"
+                                        >
+                                            <FilePen className="w-4 h-4" />
+                                        </Button>
                                     </div>
                                 </td>
                             </tr>

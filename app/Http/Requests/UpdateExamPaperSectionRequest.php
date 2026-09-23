@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateExamPaperSectionRequest extends FormRequest
 {
@@ -19,6 +20,7 @@ class UpdateExamPaperSectionRequest extends FormRequest
             'title'                => ['sometimes', 'required', 'string', 'max:255'],
             'total_marks'          => ['sometimes', 'required', 'numeric', 'min:0', 'max:9999.99'],
             'total_questions'      => ['nullable', 'integer', 'min:0'],
+            'question_type'   => ['required', Rule::in(['mcq', 'short', 'long', 'letter', 'essay'])],
             'order'                => ['nullable', 'integer', 'min:1'],
             
             // Checked Questions Array validation

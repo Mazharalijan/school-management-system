@@ -118,6 +118,7 @@ class ExamClassPaperService
                 'section_name' => $data['section_name'] ?? $section->section_name,
                 'title' => $data['title'] ?? $section->title,
                 'total_marks' => $data['total_marks'] ?? $section->total_marks,
+                'question_type' => $data['question_type'] ?? $section->question_type,
                 'total_questions' => $totalQuestions,
                 'order' => $data['order'] ?? $section->order,
             ]);
@@ -227,6 +228,7 @@ class ExamClassPaperService
             'section_name' => $sectionData['section_name'],
             'title' => $sectionData['title'],
             'total_marks' => $sectionData['total_marks'],
+            'question_type' => $sectionData['question_type'],
             'total_questions' => $totalQuestions,
             'order' => $sectionData['order'] ?? 1,
         ]);
