@@ -27,7 +27,7 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
 
     const handleFilterChange = (classId, subjectId) => {
         router.get(
-            route('exam-papers.create'),
+            route('papers.create'),
             { school_class_id: classId, subject_id: subjectId },
             { preserveState: true, replace: true }
         );
@@ -84,7 +84,7 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        form.post(route('exam-papers.store'));
+        form.post(route('papers.store'));
     };
 
     const calculatedTotalMarks = useMemo(() => {

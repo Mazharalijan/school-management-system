@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\InventoryItem;
 use App\Models\AssetAllocation;
+use App\Models\InventoryItem;
+use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
-use Exception;
 
 class InventoryService
 {
@@ -14,19 +14,19 @@ class InventoryService
     {
         $query = InventoryItem::with(['category', 'allocations.staff']);
 
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             $search = $filters['search'];
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('asset_code', 'like', "%{$search}%");
+                    ->orWhere('asset_code', 'like', "%{$search}%");
             });
         }
 
-        if (!empty($filters['category_id'])) {
+        if (! empty($filters['category_id'])) {
             $query->where('category_id', $filters['category_id']);
         }
 
-        if (!empty($filters['type'])) {
+        if (! empty($filters['type'])) {
             $query->where('type', $filters['type']);
         }
 
@@ -36,6 +36,7 @@ class InventoryService
     public function createItem(array $data): InventoryItem
     {
         $data['available_quantity'] = $data['quantity'];
+
         return InventoryItem::create($data);
     }
 
@@ -94,7 +95,7 @@ class InventoryService
         });
     }
 
-    public function reportDamagedOrLost( array $data): void
+    public function reportDamagedOrLost(array $data): void
     {
         DB::transaction(function () use ($data) {
             $item = InventoryItem::findOrFail($data['inventory_item_id']);
@@ -116,7 +117,7 @@ class InventoryService
                 'status' => 'damaged_loss',
                 'allocation_notes' => "Stock written off: {$data['reason']}",
                 'staff_id' => $data['staff_id'] ?? null,
-                'allocated_by' => auth()->id()??1,
+                'allocated_by' => auth()->id() ?? 1,
             ]);
         });
     }

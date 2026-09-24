@@ -14,7 +14,8 @@ class UpdateChapterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'subject_id'   => ['sometimes', 'required', 'exists:subjects,id'],
+            'school_class_id' => ['sometimes', 'required', 'exists:school_classes,id'],
+            'subject_id' => ['sometimes', 'required', 'exists:subjects,id'],
             'chapter_name' => ['sometimes', 'required', 'string', 'max:255'],
         ];
     }

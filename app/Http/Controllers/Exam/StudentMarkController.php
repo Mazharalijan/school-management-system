@@ -39,12 +39,12 @@ class StudentMarkController extends Controller
         }
 
         return Inertia::render('Exam/Marks/Entry', [
-            'sessions'      => ExamSession::all(),
-            'classes'       => SchoolClass::all(),
-            'subjects'      => Subject::all(),
-            'students'      => $students,
+            'sessions' => ExamSession::all(),
+            'classes' => SchoolClass::all(),
+            'subjects' => Subject::all(),
+            'students' => $students,
             'existingMarks' => $existingMarks,
-            'filters'       => $request->only(['exam_session_id', 'school_class_id', 'subject_id']),
+            'filters' => $request->only(['exam_session_id', 'school_class_id', 'subject_id']),
         ]);
     }
 
@@ -80,7 +80,7 @@ class StudentMarkController extends Controller
             ->get();
 
         return Inertia::render('Exam/Marks/Dmc', [
-            'result'       => $examResult,
+            'result' => $examResult,
             'subjectMarks' => $subjectMarks,
         ]);
     }

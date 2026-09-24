@@ -15,7 +15,7 @@ export default function Index({ sessions, filters }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('exams.sessions.store'), {
+        post(route('sessions.store'), {
             onSuccess: () => {
                 reset();
                 setIsCreating(false);
@@ -149,7 +149,7 @@ export default function Index({ sessions, filters }) {
                                         </td>
                                         <td className="px-6 py-4 text-right space-x-2">
                                             <button
-                                                onClick={() => router.delete(route('exams.sessions.destroy', session.id))}
+                                                onClick={() => router.delete(route('sessions.destroy', session.id))}
                                                 className="text-red-600 hover:text-red-800 font-medium"
                                             >
                                                 Delete

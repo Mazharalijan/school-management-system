@@ -54,6 +54,7 @@ class QuestionBankService
     {
         return DB::transaction(function () use ($data) {
             return Chapter::create([
+                'school_class_id' => $data['school_class_id'],
                 'subject_id' => $data['subject_id'],
                 'chapter_name' => $data['chapter_name'],
             ]);
@@ -67,11 +68,12 @@ class QuestionBankService
     {
         return DB::transaction(function () use ($chapter, $data) {
             $chapter->update([
+                'school_class_id' => $data['school_class_id'] ?? $chapter->school_class_id,
                 'subject_id' => $data['subject_id'] ?? $chapter->subject_id,
                 'chapter_name' => $data['chapter_name'] ?? $chapter->chapter_name,
             ]);
 
-            return $chapter->fresh(['subject']);
+            return $chapter->fresh(['schoolClass', 'subject']);
         });
     }
 

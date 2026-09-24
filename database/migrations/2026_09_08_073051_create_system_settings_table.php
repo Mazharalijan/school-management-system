@@ -10,13 +10,13 @@ return new class extends Migration
     {
         Schema::create('system_settings', function (Blueprint $table) {
             $table->id();
-            
+
             // General Details
             $table->string('school_name');
             $table->string('school_tagline')->nullable();
             $table->string('logo_path')->nullable();
             $table->string('registration_number')->nullable();
-            
+
             // Academic & Operations
             $table->string('current_session_year'); // e.g. "2026-2027"
             $table->string('currency_symbol')->default('Rs.');

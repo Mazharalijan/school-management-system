@@ -10,6 +10,7 @@ use App\Http\Requests\StoreExamPaperSectionRequest;
 use App\Http\Requests\UpdateExamPaperSectionRequest;
 use App\Models\ExamClassPaper;
 use App\Models\ExamPaperSection;
+use App\Models\ExamPaperSectionQuestion;
 use App\Models\QuestionBank;
 use App\Models\SchoolClass;
 use App\Models\Subject;
@@ -68,6 +69,14 @@ class ExamClassPaperController extends Controller
 
     // --- Paper CRUD ---
 
+    public function create(): Response
+    {
+        return Inertia::render('ExamClassPapers/Create', [
+            'classes' => SchoolClass::all(),
+            'subjects' => Subject::all(),
+        ]);
+    }
+
     public function store(StoreExamClassPaperRequest $request): RedirectResponse
     {
         $this->paperService->createPaper($request->validated());
@@ -116,6 +125,39 @@ class ExamClassPaperController extends Controller
 
         return redirect()->route('exam-class-papers.index', ['tab' => 'sections'])
             ->with('success', 'Section deleted successfully.');
+    }
+
+    public function storeSectionQuestion(Request $request, ExamPaperSection $section): RedirectResponse
+    {
+        $validated = $request->validate([
+            'question_bank_id' => 'required|exists:question_banks,id',
+            'marks' => 'nullable|numeric|min:0.01',
+            'order' => 'nullable|integer|min:1',
+        ]);
+
+        $this->paperService->addQuestionToSection($section, $validated);
+
+        return back()->with('success', 'Question attached to section successfully.');
+    }
+
+    public function updateSectionQuestion(Request $request, ExamPaperSectionQuestion $sectionQuestion): RedirectResponse
+    {
+        $validated = $request->validate([
+            'question_bank_id' => 'nullable|exists:question_banks,id',
+            'marks' => 'nullable|numeric|min:0.01',
+            'order' => 'nullable|integer|min:1',
+        ]);
+
+        $this->paperService->updateSectionQuestion($sectionQuestion, $validated);
+
+        return back()->with('success', 'Section question updated successfully.');
+    }
+
+    public function destroySectionQuestion(ExamPaperSectionQuestion $sectionQuestion): RedirectResponse
+    {
+        $this->paperService->removeQuestionFromSection($sectionQuestion);
+
+        return back()->with('success', 'Question removed from section successfully.');
     }
 
     // --- Printing & Bulk Actions ---

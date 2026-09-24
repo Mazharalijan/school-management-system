@@ -18,18 +18,18 @@ class ExamScheduleController extends Controller
     public function index(Request $request): Response
     {
         $schedules = ExamSchedule::with(['examSession', 'schoolClass', 'subject'])
-            ->when($request->exam_session_id, fn($q) => $q->where('exam_session_id', $request->exam_session_id))
-            ->when($request->school_class_id, fn($q) => $q->where('school_class_id', $request->school_class_id))
+            ->when($request->exam_session_id, fn ($q) => $q->where('exam_session_id', $request->exam_session_id))
+            ->when($request->school_class_id, fn ($q) => $q->where('school_class_id', $request->school_class_id))
             ->orderBy('exam_date')
             ->paginate(15)
             ->withQueryString();
 
         return Inertia::render('Exam/Schedules/Index', [
-            'schedules'    => $schedules,
+            'schedules' => $schedules,
             'examSessions' => ExamSession::latest()->get(),
-            'classes'      => SchoolClass::all(),
-            'subjects'     => Subject::all(),
-            'filters'      => $request->only(['exam_session_id', 'school_class_id']),
+            'classes' => SchoolClass::all(),
+            'subjects' => Subject::all(),
+            'filters' => $request->only(['exam_session_id', 'school_class_id']),
         ]);
     }
 

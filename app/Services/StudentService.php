@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Models\Student;
 use App\Models\StudentEnrollment;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class StudentService
 {
@@ -23,32 +23,32 @@ class StudentService
                     $query->whereIn('status', ['unpaid', 'partially_paid', 'overdue'])
                         ->orderBy('session_year', 'asc')
                         ->orderBy('month_order', 'asc');
-                }
+                },
             ]);
 
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             $search = $filters['search'];
             $query->where(function ($q) use ($search) {
                 $q->where('first_name', 'like', "%{$search}%")
-                ->orWhere('last_name', 'like', "%{$search}%")
-                ->orWhere('admission_number', 'like', "%{$search}%")
-                ->orWhere('guardian_phone', 'like', "%{$search}%");
+                    ->orWhere('last_name', 'like', "%{$search}%")
+                    ->orWhere('admission_number', 'like', "%{$search}%")
+                    ->orWhere('guardian_phone', 'like', "%{$search}%");
             });
         }
 
-        if (!empty($filters['class_id'])) {
+        if (! empty($filters['class_id'])) {
             $query->whereHas('current_enrollment', function ($q) use ($filters) {
                 $q->where('school_class_id', $filters['class_id']);
             });
         }
 
-        if (!empty($filters['section_id'])) {
+        if (! empty($filters['section_id'])) {
             $query->whereHas('current_enrollment', function ($q) use ($filters) {
                 $q->where('section_id', $filters['section_id']);
             });
         }
 
-        if (!empty($filters['status'])) {
+        if (! empty($filters['status'])) {
             $query->where('status', $filters['status']);
         }
 
@@ -73,7 +73,7 @@ class StudentService
                 'student_id' => $student->id,
                 'school_class_id' => $data['school_class_id'],
                 'section_id' => $data['section_id'],
-                'session_year' => $data['session_year'] ?? date('Y') . '-' . (date('Y') + 1),
+                'session_year' => $data['session_year'] ?? date('Y').'-'.(date('Y') + 1),
                 'is_current' => true,
             ]);
 
@@ -97,8 +97,8 @@ class StudentService
                     ],
                     [
                         'school_class_id' => $data['school_class_id'],
-                        'section_id'      => $data['section_id'],
-                        'session_year'    => $data['session_year'] ?? date('Y'),
+                        'section_id' => $data['section_id'],
+                        'session_year' => $data['session_year'] ?? date('Y'),
                     ]
                 );
             }
@@ -120,6 +120,6 @@ class StudentService
 
         $sequence = $lastStudent ? ((int) substr($lastStudent->admission_number, -4)) + 1 : 1;
 
-        return sprintf("ADM-%s-%04d", $year, $sequence);
+        return sprintf('ADM-%s-%04d', $year, $sequence);
     }
 }

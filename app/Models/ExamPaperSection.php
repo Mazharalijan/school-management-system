@@ -18,13 +18,13 @@ class ExamPaperSection extends Model
         'total_marks',
         'total_questions',
         'order',
-        'question_type'
+        'question_type',
     ];
 
     protected $casts = [
-        'total_marks'     => 'decimal:2',
+        'total_marks' => 'decimal:2',
         'total_questions' => 'integer',
-        'order'           => 'integer',
+        'order' => 'integer',
     ];
 
     public function examClassPaper(): BelongsTo

@@ -3,9 +3,9 @@
 namespace App\Services;
 
 use App\Models\Staff;
+use App\Models\StaffLedger;
 use App\Models\StaffSalaryAdvance;
 use App\Models\StaffSalarySettlement;
-use App\Models\StaffLedger;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -24,7 +24,7 @@ class StaffSalaryService
             ]);
 
             $lastBalance = StaffLedger::where('staff_id', $data['staff_id'])->latest('id')->value('balance') ?? 0;
-            
+
             StaffLedger::create([
                 'staff_id' => $data['staff_id'],
                 'transaction_date' => $data['issued_date'],
@@ -48,15 +48,15 @@ class StaffSalaryService
 
             $date = Carbon::parse($data['payment_date']);
             $daysInMonth = $date->daysInMonth;
-            
+
             $workedDays = ($data['settlement_type'] === 'resignation_prorated') ? $date->day : $daysInMonth;
 
             $dailyRate = $daysInMonth > 0 ? ($baseSalary / $daysInMonth) : 0;
             $grossPayable = $dailyRate * $workedDays;
 
             $leaveCutoffAmount = 0;
-            if ($data['apply_leave_cutoff'] && !empty($data['unpaid_leaves'])) {
-                $leaveCutoffAmount = $dailyRate * (int)$data['unpaid_leaves'];
+            if ($data['apply_leave_cutoff'] && ! empty($data['unpaid_leaves'])) {
+                $leaveCutoffAmount = $dailyRate * (int) $data['unpaid_leaves'];
                 $grossPayable -= $leaveCutoffAmount;
             }
 
@@ -68,7 +68,7 @@ class StaffSalaryService
 
             $settlement = StaffSalarySettlement::create([
                 'staff_id' => $staff->id,
-                'voucher_no' => 'SAL-' . date('Ym') . '-' . rand(100, 999),
+                'voucher_no' => 'SAL-'.date('Ym').'-'.rand(100, 999),
                 'settlement_type' => $data['settlement_type'],
                 'month_year' => $data['month_year'],
                 'base_salary' => $baseSalary,
@@ -92,12 +92,12 @@ class StaffSalaryService
                 ->update(['status' => 'adjusted']);
 
             $lastBalance = StaffLedger::where('staff_id', $staff->id)->latest('id')->value('balance') ?? 0;
-            
+
             StaffLedger::create([
                 'staff_id' => $staff->id,
                 'transaction_date' => $data['payment_date'],
-                'description' => $data['settlement_type'] === 'resignation_prorated' 
-                    ? "Resignation Prorated Settlement ({$workedDays}/{$daysInMonth} Days)" 
+                'description' => $data['settlement_type'] === 'resignation_prorated'
+                    ? "Resignation Prorated Settlement ({$workedDays}/{$daysInMonth} Days)"
                     : "Monthly Salary Settlement ({$data['month_year']})",
                 'type' => 'credit',
                 'amount' => $netPaid,

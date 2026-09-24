@@ -23,8 +23,8 @@ class FeeService
                 FeeStructure::updateOrCreate(
                     [
                         'school_class_id' => $classId,
-                        'fee_head_id'     => $fee['fee_head_id'],
-                        'session_year'   => $sessionYear,
+                        'fee_head_id' => $fee['fee_head_id'],
+                        'session_year' => $sessionYear,
                     ],
                     ['amount' => $fee['amount']]
                 );
@@ -63,24 +63,24 @@ class FeeService
                 ->exists();
 
             if ($hasPaidInvoice) {
-                throw new Exception("Discount cannot be modified after payments have been processed for this session.");
+                throw new Exception('Discount cannot be modified after payments have been processed for this session.');
             }
 
             $netMonthlyFee = max(0, $baseMonthlyFee - $monthlyDiscount);
 
             return StudentFeeProfile::updateOrCreate(
                 [
-                    'student_id'   => $studentId,
+                    'student_id' => $studentId,
                     'session_year' => $sessionYear,
                 ],
                 [
-                    'school_class_id'     => $classId,
-                    'base_monthly_fee'    => $baseMonthlyFee,
-                    'monthly_discount'    => $monthlyDiscount,
-                    'net_monthly_fee'      => $netMonthlyFee,
-                    'waive_admission_fee'  => $waiveAdmissionFee,
-                    'discount_reason'      => $reason,
-                    'approved_by'          => $approvedById,
+                    'school_class_id' => $classId,
+                    'base_monthly_fee' => $baseMonthlyFee,
+                    'monthly_discount' => $monthlyDiscount,
+                    'net_monthly_fee' => $netMonthlyFee,
+                    'waive_admission_fee' => $waiveAdmissionFee,
+                    'discount_reason' => $reason,
+                    'approved_by' => $approvedById,
                 ]
             );
         });
@@ -155,7 +155,7 @@ class FeeService
 
                 // Add One-Time / Admission Fees if requested and not waived
                 $admissionFeeAmount = 0;
-                if ($includeOneTime && (!$customProfile || !$customProfile->waive_admission_fee)) {
+                if ($includeOneTime && (! $customProfile || ! $customProfile->waive_admission_fee)) {
                     $admissionHead = FeeHead::where('type', 'one_time')
                         ->where('name', 'like', '%admission%')
                         ->first();
@@ -180,23 +180,23 @@ class FeeService
                 $totalAmount = $netMonthly + $previousArrears;
 
                 $invoice = FeeInvoice::create([
-                    'invoice_number'   => 'INV-' . date('Ym') . '-' . str_pad($student->id, 4, '0', STR_PAD_LEFT) . '-' . rand(10, 99),
-                    'student_id'       => $student->id,
-                    'school_class_id'  => $studentClassId,
-                    'section_id'       => $enrollment?->section_id,
-                    'month'            => $month,
-                    'month_order'      => $monthOrder,
-                    'session_year'     => $sessionYear,
-                    'issue_date'       => $issueDate,
-                    'due_date'         => $dueDate,
-                    'subtotal'         => $subtotal + $admissionFeeAmount,
-                    'discount'         => $discount,
+                    'invoice_number' => 'INV-'.date('Ym').'-'.str_pad($student->id, 4, '0', STR_PAD_LEFT).'-'.rand(10, 99),
+                    'student_id' => $student->id,
+                    'school_class_id' => $studentClassId,
+                    'section_id' => $enrollment?->section_id,
+                    'month' => $month,
+                    'month_order' => $monthOrder,
+                    'session_year' => $sessionYear,
+                    'issue_date' => $issueDate,
+                    'due_date' => $dueDate,
+                    'subtotal' => $subtotal + $admissionFeeAmount,
+                    'discount' => $discount,
                     'previous_arrears' => $previousArrears,
-                    'fine'             => 0.00,
-                    'total_amount'     => $totalAmount,
-                    'paid_amount'      => 0.00,
-                    'due_amount'       => $totalAmount,
-                    'status'           => 'unpaid',
+                    'fine' => 0.00,
+                    'total_amount' => $totalAmount,
+                    'paid_amount' => 0.00,
+                    'due_amount' => $totalAmount,
+                    'status' => 'unpaid',
                 ]);
 
                 $generatedCount++;
@@ -213,14 +213,14 @@ class FeeService
     {
         return DB::transaction(function () use ($data, $collectorId) {
             $payment = FeePayment::create([
-                'receipt_no'            => 'REC-' . date('Ym') . '-' . rand(1000, 9999),
-                'student_id'            => $data['student_id'],
-                'received_by'           => $collectorId,
-                'amount_paid'           => $data['amount_paid'],
-                'payment_date'          => $data['payment_date'],
-                'payment_method'        => $data['payment_method'],
+                'receipt_no' => 'REC-'.date('Ym').'-'.rand(1000, 9999),
+                'student_id' => $data['student_id'],
+                'received_by' => $collectorId,
+                'amount_paid' => $data['amount_paid'],
+                'payment_date' => $data['payment_date'],
+                'payment_method' => $data['payment_method'],
                 'transaction_reference' => $data['transaction_reference'] ?? null,
-                'note'                  => $data['note'] ?? null,
+                'note' => $data['note'] ?? null,
             ]);
 
             $remainingCash = (float) $data['amount_paid'];
@@ -244,8 +244,8 @@ class FeeService
 
                 $invoice->update([
                     'paid_amount' => $newPaidAmount,
-                    'due_amount'  => $newDueAmount,
-                    'status'      => $status,
+                    'due_amount' => $newDueAmount,
+                    'status' => $status,
                 ]);
 
                 // Lock student fee profile for this session once a payment is recorded

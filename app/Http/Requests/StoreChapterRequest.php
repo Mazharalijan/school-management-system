@@ -14,7 +14,8 @@ class StoreChapterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'subject_id'   => ['required', 'exists:subjects,id'],
+            'school_class_id' => ['required', 'exists:school_classes,id'],
+            'subject_id' => ['required', 'exists:subjects,id'],
             'chapter_name' => ['required', 'string', 'max:255'],
         ];
     }

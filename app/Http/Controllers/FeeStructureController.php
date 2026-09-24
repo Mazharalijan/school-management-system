@@ -6,10 +6,10 @@ use App\Models\FeeHead;
 use App\Models\FeeStructure;
 use App\Models\SchoolClass;
 use App\Models\SystemSetting;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\RedirectResponse;
 
 class FeeStructureController extends Controller
 {

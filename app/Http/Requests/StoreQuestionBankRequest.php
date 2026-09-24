@@ -16,12 +16,12 @@ class StoreQuestionBankRequest extends FormRequest
     {
         return [
             'school_class_id' => ['required', 'exists:school_classes,id'],
-            'subject_id'      => ['required', 'exists:subjects,id'],
-            'chapter_id'      => ['nullable', 'exists:chapters,id'],
-            'topic_id'        => ['nullable', 'exists:topics,id'],
-            'question_type'   => ['required', Rule::in(['mcq', 'short', 'long', 'letter', 'essay'])],
-            'question'        => ['required', 'string'],
-            'default_marks'   => ['required', 'numeric', 'min:0.01', 'max:999.99'],
+            'subject_id' => ['required', 'exists:subjects,id'],
+            'chapter_id' => ['nullable', 'exists:chapters,id'],
+            'topic_id' => ['nullable', 'exists:topics,id'],
+            'question_type' => ['required', Rule::in(['mcq', 'short', 'long', 'letter', 'essay'])],
+            'question' => ['required', 'string'],
+            'default_marks' => ['required', 'numeric', 'min:0.01', 'max:999.99'],
         ];
     }
 }

@@ -26,28 +26,28 @@ class StaffService
             }], 'amount');
 
         // Search across Name, Father Name, CNIC, Employee ID, Phone, and Email
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             $search = $filters['search'];
 
             $query->where(function ($q) use ($search) {
                 $q->where('first_name', 'like', "%{$search}%")
-                ->orWhere('last_name', 'like', "%{$search}%")
-                ->orWhere('father_name', 'like', "%{$search}%")
-                ->orWhere('cnic', 'like', "%{$search}%")
-                ->orWhere('employee_id', 'like', "%{$search}%")
-                ->orWhere('phone', 'like', "%{$search}%")
-                ->orWhere('email', 'like', "%{$search}%")
-                ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%{$search}%"]);
+                    ->orWhere('last_name', 'like', "%{$search}%")
+                    ->orWhere('father_name', 'like', "%{$search}%")
+                    ->orWhere('cnic', 'like', "%{$search}%")
+                    ->orWhere('employee_id', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%{$search}%"]);
             });
         }
 
         // Filter by Designation
-        if (!empty($filters['designation'])) {
+        if (! empty($filters['designation'])) {
             $query->where('designation', $filters['designation']);
         }
 
         // Filter by Status
-        if (!empty($filters['status'])) {
+        if (! empty($filters['status'])) {
             $query->where('status', $filters['status']);
         }
 
@@ -63,7 +63,7 @@ class StaffService
             $userId = null;
 
             // Provision login account if email is provided
-            if (!empty($data['email'])) {
+            if (! empty($data['email'])) {
                 $user = User::create([
                     'name' => "{$data['first_name']} {$data['last_name']}",
                     'email' => $data['email'],
@@ -113,7 +113,7 @@ class StaffService
             ->orderBy('id', 'desc')
             ->first();
 
-        if (!$lastStaff) {
+        if (! $lastStaff) {
             return "EMP-{$year}-0001";
         }
 

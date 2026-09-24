@@ -25,9 +25,9 @@ class ExamResult extends Model
 
     protected $casts = [
         'total_obtained_marks' => 'decimal:2',
-        'total_max_marks'      => 'decimal:2',
-        'percentage'           => 'decimal:2',
-        'position_in_class'    => 'integer',
+        'total_max_marks' => 'decimal:2',
+        'percentage' => 'decimal:2',
+        'position_in_class' => 'integer',
     ];
 
     public function examSession(): BelongsTo

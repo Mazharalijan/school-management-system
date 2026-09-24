@@ -7,9 +7,9 @@ use App\Http\Requests\StoreSectionRequest;
 use App\Models\SchoolClass;
 use App\Models\Section;
 use App\Services\ClassMatrixService;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\RedirectResponse;
 
 class ClassMatrixController extends Controller
 {
@@ -56,11 +56,13 @@ class ClassMatrixController extends Controller
     {
         try {
             $this->matrixService->deleteSection($section);
+
             return redirect()->back()->with('success', 'Section removed.');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
+
     public function destroyClass(SchoolClass $class): RedirectResponse
     {
         try {
@@ -68,14 +70,13 @@ class ClassMatrixController extends Controller
             if ($class->sections()->has('students')->exists()) {
                 return redirect()->back()->withErrors(['error' => 'Cannot delete class with assigned students.']);
             }
-            
+
             $class->sections()->delete();
             $class->delete();
-            
+
             return redirect()->back()->with('success', 'Class removed successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
-
 }

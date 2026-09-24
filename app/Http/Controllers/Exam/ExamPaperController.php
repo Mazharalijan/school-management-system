@@ -22,14 +22,14 @@ class ExamPaperController extends Controller
     public function index(Request $request): Response
     {
         $papers = ExamClassPaper::with(['schoolClass', 'subject', 'examSchedule.examSession'])
-            ->when($request->school_class_id, fn($q) => $q->where('school_class_id', $request->school_class_id))
-            ->when($request->print_status, fn($q) => $q->where('print_status', $request->print_status))
+            ->when($request->school_class_id, fn ($q) => $q->where('school_class_id', $request->school_class_id))
+            ->when($request->print_status, fn ($q) => $q->where('print_status', $request->print_status))
             ->latest()
             ->paginate(10)
             ->withQueryString();
 
         return Inertia::render('Exam/Papers/Index', [
-            'papers'  => $papers,
+            'papers' => $papers,
             'classes' => SchoolClass::all(),
             'filters' => $request->only(['school_class_id', 'print_status']),
         ]);
@@ -38,8 +38,8 @@ class ExamPaperController extends Controller
     public function create(): Response
     {
         return Inertia::render('Exam/Papers/Create', [
-            'classes'   => SchoolClass::all(),
-            'subjects'  => Subject::all(),
+            'classes' => SchoolClass::all(),
+            'subjects' => Subject::all(),
             'questions' => QuestionBank::with(['chapter', 'topic'])->get(),
         ]);
     }

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\FeeHead;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\RedirectResponse;
 
 class FeeHeadController extends Controller
 {
@@ -36,7 +36,7 @@ class FeeHeadController extends Controller
     public function update(Request $request, FeeHead $head): RedirectResponse
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255|unique:fee_heads,title,' . $head->id,
+            'title' => 'required|string|max:255|unique:fee_heads,title,'.$head->id,
             'type' => 'required|in:recurring,one_time,optional',
             'description' => 'nullable|string|max:500',
             'is_active' => 'boolean',

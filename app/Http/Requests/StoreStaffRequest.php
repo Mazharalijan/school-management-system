@@ -14,7 +14,7 @@ class StoreStaffRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        // Strip non-digit characters if present for CNIC validation checking if needed, 
+        // Strip non-digit characters if present for CNIC validation checking if needed,
         // or standardize CNIC format before validation.
         if ($this->has('cnic')) {
             $this->merge([

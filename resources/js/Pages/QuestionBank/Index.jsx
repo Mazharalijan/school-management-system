@@ -24,6 +24,7 @@ export default function Index({
     chapters = {},
     topics = {},
     classes = [],
+    allSubjects = [],
     filters = {},
     activeTab = 'questions',
 }) {
@@ -143,6 +144,7 @@ export default function Index({
                 onClose={closeModal}
                 question={modalState.data}
                 classes={classes}
+                allSubjects={allSubjects}
             />
             <SubjectFormModal
                 isOpen={modalState.isOpen && modalState.type === 'subject'}
@@ -155,6 +157,7 @@ export default function Index({
                 onClose={closeModal}
                 chapter={modalState.data}
                 classes={classes}
+                allSubjects={allSubjects}
             />
             <TopicFormModal
                 isOpen={modalState.isOpen && modalState.type === 'topic'}

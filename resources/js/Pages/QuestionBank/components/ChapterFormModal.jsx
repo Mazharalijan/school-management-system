@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { FilePen, PlusIcon, X } from 'lucide-react';
 
-export default function ChapterFormModal({ isOpen, onClose, chapter = null, classes = [] }) {
+export default function ChapterFormModal({ isOpen, onClose, chapter = null, classes = [], allSubjects = [] }) {
     const isEdit = Boolean(chapter?.id);
 
     const { data, setData, post, put, processing, errors, reset } = useForm({
@@ -53,9 +53,11 @@ export default function ChapterFormModal({ isOpen, onClose, chapter = null, clas
         .map((ch) => ch.subject)
         .filter(Boolean);
 
-    const availableSubjects = Array.from(
+    const classSubjects = Array.from(
         new Map(rawSubjects.map((subj) => [subj.id, subj])).values()
     );
+
+    const availableSubjects = classSubjects.length > 0 ? classSubjects : allSubjects;
 
     const modalFooter = (
         <div className="flex justify-end gap-2 w-full">

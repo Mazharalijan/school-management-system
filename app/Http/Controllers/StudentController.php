@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
-use App\Models\SchoolClass;
-use App\Services\StudentService;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Models\SchoolClass;
+use App\Models\Student;
+use App\Services\StudentService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\RedirectResponse;
 
 class StudentController extends Controller
 {

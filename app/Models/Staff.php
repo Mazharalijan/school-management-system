@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Staff extends Model
 {
@@ -62,8 +63,8 @@ class Staff extends Model
     public function assigned_sections(): BelongsToMany
     {
         return $this->belongsToMany(Section::class, 'class_subject_teacher')
-                    ->withPivot('school_class_id', 'subject_id')
-                    ->withTimestamps();
+            ->withPivot('school_class_id', 'subject_id')
+            ->withTimestamps();
     }
 
     public function salaryAdvances()
@@ -84,5 +85,10 @@ class Staff extends Model
     public function getPendingAdvancesSumAttribute()
     {
         return $this->salaryAdvances()->where('status', 'pending_adjustment')->sum('amount');
+    }
+
+    public function timetables(): HasMany
+    {
+        return $this->hasMany(Timetable::class);
     }
 }

@@ -30,8 +30,8 @@ class InventorySeeder extends Seeder
         for ($i = 1; $i <= 10; $i++) {
             $itemId = DB::table('inventory_items')->insertGetId([
                 'category_id' => $i,
-                'name' => "Inventory Equipment/Asset " . $i,
-                'asset_code' => "AST-ITEM-00" . $i,
+                'name' => 'Inventory Equipment/Asset '.$i,
+                'asset_code' => 'AST-ITEM-00'.$i,
                 'type' => $i % 2 == 0 ? 'consumable' : 'fixed_asset',
                 'quantity' => 20,
                 'available_quantity' => 15,
@@ -48,7 +48,7 @@ class InventorySeeder extends Seeder
             DB::table('asset_allocations')->insert([
                 'inventory_item_id' => $itemId,
                 'staff_id' => $i,
-                'assigned_location' => "Computer Lab " . ($i % 3 + 1),
+                'assigned_location' => 'Computer Lab '.($i % 3 + 1),
                 'quantity_allocated' => 5,
                 'allocated_date' => '2025-02-01',
                 'return_date' => null,

@@ -17,11 +17,11 @@ class StaffAndPayrollSeeder extends Seeder
             DB::table('staff')->insert([
                 'id' => $i,
                 'user_id' => $i,
-                'employee_id' => 'EMP-2026-00' . $i,
-                'first_name' => 'TeacherFirst' . $i,
-                'last_name' => 'TeacherLast' . $i,
-                'father_name' => 'FatherName' . $i,
-                'cnic' => "17301-765432{$i}-" . ($i % 9),
+                'employee_id' => 'EMP-2026-00'.$i,
+                'first_name' => 'TeacherFirst'.$i,
+                'last_name' => 'TeacherLast'.$i,
+                'father_name' => 'FatherName'.$i,
+                'cnic' => "17301-765432{$i}-".($i % 9),
                 'designation' => $designations[$i % 5],
                 'gender' => $i % 2 == 0 ? 'female' : 'male',
                 'date_of_birth' => '1988-04-12',
@@ -55,25 +55,25 @@ class StaffAndPayrollSeeder extends Seeder
         // 3. 10 Months Salary Settlements for ALL Teachers (All cases)
         $months = [
             '2025-11', '2025-12', '2026-01', '2026-02', '2026-03',
-            '2026-04', '2026-05', '2026-06', '2026-07', '2026-08'
+            '2026-04', '2026-05', '2026-06', '2026-07', '2026-08',
         ];
 
         foreach ($months as $mIndex => $mYear) {
             foreach (range(1, 10) as $staffId) {
                 $baseSalary = 60000.00 + ($staffId * 5000);
-                
+
                 // Varied business logic scenarios across months
                 $unpaidLeaves = ($mIndex == 2 && $staffId % 3 == 0) ? 2 : 0; // Month 3 leave cutoff case
                 $leaveDeduction = $unpaidLeaves * ($baseSalary / 30);
                 $advanceAdjusted = ($mIndex == 0) ? 5000.00 : 0.00; // Month 1 advance recovery
                 $settlementType = ($mIndex == 9 && $staffId == 10) ? 'resignation_prorated' : 'monthly';
-                
+
                 $grossPayable = $baseSalary - $leaveDeduction;
                 $netPaid = $grossPayable - $advanceAdjusted;
 
                 $settlementId = DB::table('staff_salary_settlements')->insertGetId([
                     'staff_id' => $staffId,
-                    'voucher_no' => "SAL-{$mYear}-00" . $staffId,
+                    'voucher_no' => "SAL-{$mYear}-00".$staffId,
                     'settlement_type' => $settlementType,
                     'month_year' => $mYear,
                     'base_salary' => $baseSalary,
@@ -86,7 +86,7 @@ class StaffAndPayrollSeeder extends Seeder
                     'gross_payable' => $grossPayable,
                     'net_paid' => $netPaid,
                     'payment_method' => $staffId % 2 == 0 ? 'bank_transfer' : 'cash',
-                    'reference_no' => 'TRX-' . rand(100000, 999999),
+                    'reference_no' => 'TRX-'.rand(100000, 999999),
                     'payment_date' => "{$mYear}-28",
                     'processed_by' => 1,
                     'notes' => 'Regular monthly payroll processing',

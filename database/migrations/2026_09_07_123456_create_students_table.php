@@ -17,18 +17,18 @@ return new class extends Migration
             $table->enum('gender', ['male', 'female', 'other']);
             $table->date('date_of_birth');
             $table->enum('blood_group', ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'])->nullable();
-            
+
             // Guardian Details
             $table->string('guardian_name');
             $table->string('guardian_relation'); // Father, Mother, Guardian
             $table->string('guardian_phone')->index();
             $table->string('guardian_email')->nullable();
-            
+
             // Address & Info
             $table->text('address')->nullable();
             $table->date('admission_date');
             $table->enum('status', ['active', 'inactive', 'graduated', 'suspended'])->default('active');
-            
+
             $table->timestamps();
             $table->softDeletes();
         });

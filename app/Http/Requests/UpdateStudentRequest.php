@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -18,7 +19,7 @@ class UpdateStudentRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -58,8 +59,8 @@ class UpdateStudentRequest extends FormRequest
                 Rule::unique('student_enrollments', 'roll_number')
                     ->where(function ($query) {
                         return $query->where('school_class_id', $this->school_class_id)
-                                     ->where('section_id', $this->section_id)
-                                     ->where('status', 'active');
+                            ->where('section_id', $this->section_id)
+                            ->where('status', 'active');
                     })
                     ->ignore($studentId, 'student_id'),
             ],
@@ -84,7 +85,7 @@ class UpdateStudentRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
-        if (!$this->has('session_year') || empty($this->session_year)) {
+        if (! $this->has('session_year') || empty($this->session_year)) {
             $this->merge([
                 'session_year' => date('Y'),
             ]);

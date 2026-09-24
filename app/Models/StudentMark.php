@@ -23,8 +23,8 @@ class StudentMark extends Model
 
     protected $casts = [
         'obtained_marks' => 'decimal:2',
-        'total_marks'    => 'decimal:2',
-        'is_absent'      => 'boolean',
+        'total_marks' => 'decimal:2',
+        'is_absent' => 'boolean',
     ];
 
     public function examSession(): BelongsTo

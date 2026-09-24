@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 
 class SystemAndAcademicSeeder extends Seeder
 {
@@ -36,8 +35,8 @@ class SystemAndAcademicSeeder extends Seeder
         // 2. Users (Admin + Staff users)
         for ($i = 1; $i <= 12; $i++) {
             DB::table('users')->insert([
-                //'id' => $i,
-                'name' => 'User ' . $i,
+                // 'id' => $i,
+                'name' => 'User '.$i,
                 'email' => "user{$i}@school.edu.pk",
                 'password' => Hash::make('password'),
                 'created_at' => now(),
@@ -60,7 +59,7 @@ class SystemAndAcademicSeeder extends Seeder
         ];
         foreach ($classes as $cls) {
             DB::table('school_classes')->insert(array_merge($cls, [
-                'description' => 'Standard academic curriculum for ' . $cls['name'],
+                'description' => 'Standard academic curriculum for '.$cls['name'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]));
@@ -74,7 +73,7 @@ class SystemAndAcademicSeeder extends Seeder
                     'school_class_id' => $classId,
                     'name' => $sName,
                     'capacity' => 40,
-                    'room_number' => 'Room ' . ($classId * 10 + ($sName == 'A' ? 1 : 2)),
+                    'room_number' => 'Room '.($classId * 10 + ($sName == 'A' ? 1 : 2)),
                     'is_active' => true,
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -84,9 +83,9 @@ class SystemAndAcademicSeeder extends Seeder
 
         // 5. Subjects (10 Subjects)
         $subjectList = [
-            'Mathematics', 'English Literature', 'Physics', 'Chemistry', 
-            'Biology', 'Computer Science', 'Urdu', 'Islamiyat', 
-            'Pakistan Studies', 'General Science'
+            'Mathematics', 'English Literature', 'Physics', 'Chemistry',
+            'Biology', 'Computer Science', 'Urdu', 'Islamiyat',
+            'Pakistan Studies', 'General Science',
         ];
         foreach ($subjectList as $subName) {
             DB::table('subjects')->insert([
@@ -103,7 +102,7 @@ class SystemAndAcademicSeeder extends Seeder
                 DB::table('chapters')->insert([
                     'school_class_id' => $classId,
                     'subject_id' => $subId,
-                    'chapter_name' => "Chapter {$chapNo}: Fundamental Principles of " . $subjectList[$subId - 1],
+                    'chapter_name' => "Chapter {$chapNo}: Fundamental Principles of ".$subjectList[$subId - 1],
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);

@@ -15,14 +15,14 @@ class ExamSessionController extends Controller
     public function index(Request $request): Response
     {
         $sessions = ExamSession::withCount('schedules')
-            ->when($request->search, fn($q) => $q->where('title', 'like', "%{$request->search}%"))
+            ->when($request->search, fn ($q) => $q->where('title', 'like', "%{$request->search}%"))
             ->latest()
             ->paginate(10)
             ->withQueryString();
 
         return Inertia::render('Exam/Sessions/Index', [
             'sessions' => $sessions,
-            'filters'  => $request->only(['search']),
+            'filters' => $request->only(['search']),
         ]);
     }
 

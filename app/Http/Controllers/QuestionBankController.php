@@ -53,16 +53,15 @@ class QuestionBankController extends Controller
         // 2. Paginated & Filtered Subjects
         // Subjects link to classes via chapters (using whereHas)
         $subjectsList = Subject::with(['chapters' => function ($q) use ($request) {
-        $q->when($request->school_class_id, fn ($cq, $id) => $cq->where('school_class_id', $id))
-          ->with(['topics', 'schoolClass']); // Added schoolClass here
-                }])
-                ->when($request->search, fn ($q, $s) => $q->where('subject_name', 'like', "%{$s}%"))
-                ->when($request->school_class_id, fn ($q, $id) => 
-                    $q->whereHas('chapters', fn ($cq) => $cq->where('school_class_id', $id))
-                )
-                ->latest()
-                ->paginate(15, ['*'], 'subjects_page')
-                ->withQueryString();
+            $q->when($request->school_class_id, fn ($cq, $id) => $cq->where('school_class_id', $id))
+                ->with(['topics', 'schoolClass']); // Added schoolClass here
+        }])
+            ->when($request->search, fn ($q, $s) => $q->where('subject_name', 'like', "%{$s}%"))
+            ->when($request->school_class_id, fn ($q, $id) => $q->whereHas('chapters', fn ($cq) => $cq->where('school_class_id', $id))
+            )
+            ->latest()
+            ->paginate(15, ['*'], 'subjects_page')
+            ->withQueryString();
 
         // 3. Paginated & Filtered Chapters
         // Chapters have school_class_id directly
@@ -79,11 +78,9 @@ class QuestionBankController extends Controller
         $topicsList = Topic::with(['chapter.schoolClass', 'chapter.subject'])
             ->when($request->search, fn ($q, $s) => $q->where('topic_name', 'like', "%{$s}%"))
             ->when($request->chapter_id, fn ($q, $id) => $q->where('chapter_id', $id))
-            ->when($request->subject_id, fn ($q, $id) => 
-                $q->whereHas('chapter', fn ($cq) => $cq->where('subject_id', $id))
+            ->when($request->subject_id, fn ($q, $id) => $q->whereHas('chapter', fn ($cq) => $cq->where('subject_id', $id))
             )
-            ->when($request->school_class_id, fn ($q, $id) => 
-                $q->whereHas('chapter', fn ($cq) => $cq->where('school_class_id', $id))
+            ->when($request->school_class_id, fn ($q, $id) => $q->whereHas('chapter', fn ($cq) => $cq->where('school_class_id', $id))
             )
             ->latest()
             ->paginate(15, ['*'], 'topics_page')
@@ -92,21 +89,22 @@ class QuestionBankController extends Controller
         $classes = SchoolClass::with(['chapters.subject', 'chapters.topics'])->get();
 
         return Inertia::render('QuestionBank/Index', [
-            'questions'   => $questions,
-            'subjects'    => $subjectsList,
-            'chapters'    => $chaptersList,
-            'topics'      => $topicsList,
-            'classes'     => $classes,
+            'questions' => $questions,
+            'subjects' => $subjectsList,
+            'chapters' => $chaptersList,
+            'topics' => $topicsList,
+            'classes' => $classes,
             'allSubjects' => Subject::all(),
-            'activeTab'   => $activeTab,
-            'filters'     => (object) $request->only(['search', 'school_class_id', 'subject_id', 'chapter_id', 'topic_id', 'tab']),
+            'activeTab' => $activeTab,
+            'filters' => (object) $request->only(['search', 'school_class_id', 'subject_id', 'chapter_id', 'topic_id', 'tab']),
         ]);
     }
 
     public function create(): Response
     {
         return Inertia::render('QuestionBank/Create', [
-            'classes' => SchoolClass::with(['subjects.chapters.topics'])->get(),
+            'classes' => SchoolClass::with(['chapters.subject', 'chapters.topics'])->get(),
+            'allSubjects' => Subject::all(),
         ]);
     }
 
@@ -126,23 +124,14 @@ class QuestionBankController extends Controller
             ->with('success', "Successfully created {$count} questions across topics.");
     }
 
-    public function show(QuestionBank $questionBank): Response
+    public function show(QuestionBank $questionBank): RedirectResponse
     {
-        $questionBank->load(['schoolClass', 'subject', 'chapter', 'topic']);
-
-        return Inertia::render('QuestionBank/Show', [
-            'question' => $questionBank,
-        ]);
+        return redirect()->route('question-bank.index', ['tab' => 'questions', 'search' => $questionBank->question]);
     }
 
-    public function edit(QuestionBank $questionBank): Response
+    public function edit(QuestionBank $questionBank): RedirectResponse
     {
-        $questionBank->load(['schoolClass', 'subject', 'chapter', 'topic']);
-
-        return Inertia::render('QuestionBank/Edit', [
-            'question' => $questionBank,
-            'classes' => SchoolClass::with(['subjects.chapters.topics'])->get(),
-        ]);
+        return redirect()->route('question-bank.index', ['tab' => 'questions', 'search' => $questionBank->question]);
     }
 
     public function update(UpdateQuestionBankRequest $request, QuestionBank $questionBank): RedirectResponse

@@ -23,8 +23,8 @@ class ExamSchedule extends Model
     ];
 
     protected $casts = [
-        'exam_date'     => 'date',
-        'total_marks'   => 'decimal:2',
+        'exam_date' => 'date',
+        'total_marks' => 'decimal:2',
         'passing_marks' => 'decimal:2',
     ];
 

@@ -18,7 +18,7 @@ class StaffSalaryController extends Controller
 
     public function issueAdvance(IssueSalaryAdvanceRequest $request): RedirectResponse
     {
-        $this->salaryService->issueAdvance($request->validated(), auth()->id()?? 1);
+        $this->salaryService->issueAdvance($request->validated(), auth()->id() ?? 1);
 
         return redirect()->back()->with('success', 'Advance salary payment issued successfully.');
     }

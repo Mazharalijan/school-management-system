@@ -10,7 +10,7 @@ class FeePayment extends Model
 {
     protected $fillable = [
         'receipt_no', 'student_id', 'received_by', 'amount_paid',
-        'payment_date', 'payment_method', 'transaction_reference', 'note'
+        'payment_date', 'payment_method', 'transaction_reference', 'note',
     ];
 
     public function student(): BelongsTo
@@ -26,7 +26,7 @@ class FeePayment extends Model
     public function invoices(): BelongsToMany
     {
         return $this->belongsToMany(FeeInvoice::class, 'fee_invoice_payment')
-                    ->withPivot('amount_allocated')
-                    ->withTimestamps();
+            ->withPivot('amount_allocated')
+            ->withTimestamps();
     }
 }

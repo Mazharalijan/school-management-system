@@ -26,11 +26,11 @@ class ExamClassPaper extends Model
     ];
 
     protected $casts = [
-        'total_marks'          => 'decimal:2',
-        'duration_minutes'     => 'integer',
-        'total_copies_needed'  => 'integer',
+        'total_marks' => 'decimal:2',
+        'duration_minutes' => 'integer',
+        'total_copies_needed' => 'integer',
         'total_copies_printed' => 'integer',
-        'printed_at'           => 'datetime',
+        'printed_at' => 'datetime',
     ];
 
     public function examSchedule(): BelongsTo

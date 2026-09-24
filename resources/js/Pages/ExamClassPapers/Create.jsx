@@ -2,12 +2,13 @@ import React from 'react';
 import { useForm, Link, Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
-export default function Create({ classes }) {
+export default function Create({ classes = [], subjects = [] }) {
     const { data, setData, post, processing, errors } = useForm({
-        title: '',
+        paper_title: '',
         school_class_id: '',
-        total_marks: '',
-        duration_minutes: '',
+        subject_id: '',
+        total_marks: 100,
+        duration_minutes: 120,
         instructions: '',
     });
 
@@ -26,51 +27,71 @@ export default function Create({ classes }) {
                         <form onSubmit={submit}>
                             <div className="grid grid-cols-1 gap-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Exam Title</label>
+                                    <label className="block text-sm font-medium text-gray-700">Exam Paper Title *</label>
                                     <input 
                                         type="text" 
-                                        value={data.title} 
-                                        onChange={e => setData('title', e.target.value)} 
+                                        value={data.paper_title} 
+                                        onChange={e => setData('paper_title', e.target.value)} 
                                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm" 
                                         required 
                                     />
-                                    {errors.title && <div className="text-red-600 text-xs mt-1">{errors.title}</div>}
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700">Class</label>
-                                    <select 
-                                        value={data.school_class_id} 
-                                        onChange={e => setData('school_class_id', e.target.value)} 
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm"
-                                        required
-                                    >
-                                        <option value="">Select Class</option>
-                                        {classes.map(cls => (
-                                            <option key={cls.id} value={cls.id}>{cls.name}</option>
-                                        ))}
-                                    </select>
-                                    {errors.school_class_id && <div className="text-red-600 text-xs mt-1">{errors.school_class_id}</div>}
+                                    {errors.paper_title && <div className="text-red-600 text-xs mt-1">{errors.paper_title}</div>}
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">Total Marks</label>
+                                        <label className="block text-sm font-medium text-gray-700">Class *</label>
+                                        <select 
+                                            value={data.school_class_id} 
+                                            onChange={e => setData('school_class_id', e.target.value)} 
+                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm"
+                                            required
+                                        >
+                                            <option value="">Select Class</option>
+                                            {classes.map(cls => (
+                                                <option key={cls.id} value={cls.id}>{cls.name}</option>
+                                            ))}
+                                        </select>
+                                        {errors.school_class_id && <div className="text-red-600 text-xs mt-1">{errors.school_class_id}</div>}
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700">Subject *</label>
+                                        <select 
+                                            value={data.subject_id} 
+                                            onChange={e => setData('subject_id', e.target.value)} 
+                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm"
+                                            required
+                                        >
+                                            <option value="">Select Subject</option>
+                                            {subjects.map(sub => (
+                                                <option key={sub.id} value={sub.id}>{sub.subject_name}</option>
+                                            ))}
+                                        </select>
+                                        {errors.subject_id && <div className="text-red-600 text-xs mt-1">{errors.subject_id}</div>}
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700">Total Marks *</label>
                                         <input 
                                             type="number" 
                                             value={data.total_marks} 
                                             onChange={e => setData('total_marks', e.target.value)} 
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm" 
+                                            required
                                         />
                                         {errors.total_marks && <div className="text-red-600 text-xs mt-1">{errors.total_marks}</div>}
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">Duration (Minutes)</label>
+                                        <label className="block text-sm font-medium text-gray-700">Duration (Minutes) *</label>
                                         <input 
                                             type="number" 
                                             value={data.duration_minutes} 
                                             onChange={e => setData('duration_minutes', e.target.value)} 
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm" 
+                                            required
                                         />
                                         {errors.duration_minutes && <div className="text-red-600 text-xs mt-1">{errors.duration_minutes}</div>}
                                     </div>

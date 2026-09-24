@@ -14,8 +14,8 @@ class ClassMatrixService
         return SchoolClass::with(['sections' => function ($query) {
             $query->orderBy('name');
         }])
-        ->orderBy('numeric_value')
-        ->get();
+            ->orderBy('numeric_value')
+            ->get();
     }
 
     public function createClassWithDefaultSection(array $data): SchoolClass
@@ -79,10 +79,10 @@ class ClassMatrixService
     {
         DB::transaction(function () use ($section) {
             $class = $section->schoolClass;
-            
+
             // Prevent removing the last remaining section from a Class
             if ($class->sections()->count() <= 1) {
-                throw new \Exception("Cannot delete the last remaining section of a class.");
+                throw new \Exception('Cannot delete the last remaining section of a class.');
             }
 
             $section->delete();

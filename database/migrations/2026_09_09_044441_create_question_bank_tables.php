@@ -39,7 +39,7 @@ return new class extends Migration
             $table->foreignId('subject_id')->constrained('subjects')->cascadeOnDelete();
             $table->foreignId('chapter_id')->nullable()->constrained('chapters')->nullOnDelete();
             $table->foreignId('topic_id')->nullable()->constrained('topics')->nullOnDelete();
-            
+
             $table->enum('question_type', ['mcq', 'short', 'long', 'letter', 'essay'])->default('mcq');
             $table->text('question');
             $table->decimal('default_marks', 5, 2)->default(1.00);
@@ -85,7 +85,7 @@ return new class extends Migration
             $table->decimal('total_marks', 6, 2);
             $table->unsignedInteger('duration_minutes');
             $table->text('instructions')->nullable();
-            
+
             // Print & Distribution Management
             $table->enum('print_status', ['pending', 'queued', 'printed'])->default('pending');
             $table->unsignedInteger('total_copies_needed')->default(0);
@@ -128,12 +128,12 @@ return new class extends Migration
             $table->foreignId('school_class_id')->constrained('school_classes')->cascadeOnDelete();
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignId('subject_id')->constrained('subjects')->cascadeOnDelete();
-            
+
             $table->decimal('obtained_marks', 6, 2)->default(0.00);
             $table->decimal('total_marks', 6, 2)->default(100.00);
             $table->boolean('is_absent')->default(false);
             $table->string('remarks')->nullable();
-            
+
             $table->unique(['exam_session_id', 'student_id', 'subject_id'], 'unique_student_subject_mark');
             $table->timestamps();
         });
@@ -144,7 +144,7 @@ return new class extends Migration
             $table->foreignId('exam_session_id')->constrained('exam_sessions')->cascadeOnDelete();
             $table->foreignId('school_class_id')->constrained('school_classes')->cascadeOnDelete();
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
-            
+
             $table->decimal('total_obtained_marks', 7, 2);
             $table->decimal('total_max_marks', 7, 2);
             $table->decimal('percentage', 5, 2);
@@ -152,7 +152,7 @@ return new class extends Migration
             $table->enum('status', ['pass', 'fail', 'promoted', 'withheld'])->default('pass');
             $table->unsignedInteger('position_in_class')->nullable();
             $table->text('teacher_remarks')->nullable();
-            
+
             $table->unique(['exam_session_id', 'student_id'], 'unique_student_exam_result');
             $table->timestamps();
         });

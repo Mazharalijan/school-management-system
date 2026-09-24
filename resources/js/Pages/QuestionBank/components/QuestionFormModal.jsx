@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import RichTextEditor from '@/components/RichTextEditor';
 import {FilePen, PlusIcon, X} from "lucide-react";
 
-export default function QuestionFormModal({ isOpen, onClose, question = null, classes = [] }) {
+export default function QuestionFormModal({ isOpen, onClose, question = null, classes = [], allSubjects = [] }) {
     const isEdit = Boolean(question?.id);
 
     const { data, setData, post, put, processing, errors, reset } = useForm({
@@ -18,7 +18,7 @@ export default function QuestionFormModal({ isOpen, onClose, question = null, cl
         subject_id: '',
         chapter_id: '',
         topic_id: '',
-        marks: 1,
+        default_marks: 1.00,
     });
 
     useEffect(() => {
@@ -30,7 +30,7 @@ export default function QuestionFormModal({ isOpen, onClose, question = null, cl
                 subject_id: question.subject_id || '',
                 chapter_id: question.chapter_id || '',
                 topic_id: question.topic_id || '',
-                marks: question.marks || 1,
+                default_marks: question.default_marks || 1.00,
             });
         } else {
             reset();
@@ -50,11 +50,16 @@ export default function QuestionFormModal({ isOpen, onClose, question = null, cl
         }
     };
 
-    const selectedClass = classes.find((c) => c.id == data.school_class_id);
-    const availableSubjects = selectedClass?.subjects || [];
-    const selectedSubject = availableSubjects.find((s) => s.id == data.subject_id);
-    const availableChapters = selectedSubject?.chapters || [];
-    const availableTopics = selectedSubject?.topics || [];
+    const selectedClass = classes.find((c) => String(c.id) === String(data.school_class_id));
+    const classSubjects = (selectedClass?.chapters || []).map((ch) => ch.subject).filter(Boolean);
+    const availableSubjects = classSubjects.length > 0
+        ? Array.from(new Map(classSubjects.map((s) => [s.id, s])).values())
+        : allSubjects;
+    const availableChapters = (selectedClass?.chapters || []).filter(
+        (ch) => String(ch.subject_id) === String(data.subject_id)
+    );
+    const selectedChapter = availableChapters.find((ch) => String(ch.id) === String(data.chapter_id));
+    const availableTopics = selectedChapter?.topics || [];
 
     const questionTypes = [
         { id: 'mcq', name: 'MCQ' },
@@ -99,19 +104,9 @@ export default function QuestionFormModal({ isOpen, onClose, question = null, cl
                     <div className="mt-2">
                         <Label htmlFor="question_content">Question Content *</Label>
                         <RichTextEditor
-                            value = {data.question}
-                            // onChange={(e) => setData('question', e.target.value)}
-                            onChange={(content) => setData('question_text', content)}
-                         />
-                        {/* <textarea
-                            id="question_content"
                             value={data.question}
-                            onChange={(e) => setData('question', e.target.value)}
-                            className="w-full px-3 py-2 text-sm rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-slate-400 mt-1"
-                            rows={4}
-                            placeholder="Enter the question text here..."
-                            required
-                        /> */}
+                            onChange={(content) => setData('question', content)}
+                         />
                         {errors.question && (
                             <p className="text-xs text-red-500 mt-1">{errors.question}</p>
                         )}
@@ -211,17 +206,19 @@ export default function QuestionFormModal({ isOpen, onClose, question = null, cl
                         </div>
 
                         <div>
-                            <Label htmlFor="marks">Marks</Label>
+                            <Label htmlFor="default_marks">Marks *</Label>
                             <Input
-                                id="marks"
+                                id="default_marks"
                                 type="number"
-                                value={data.marks}
-                                onChange={(e) => setData('marks', e.target.value)}
+                                step="0.5"
+                                value={data.default_marks}
+                                onChange={(e) => setData('default_marks', e.target.value)}
                                 className="mt-1"
-                                min="1"
+                                min="0.5"
+                                required
                             />
-                            {errors.marks && (
-                                <span className="text-xs text-red-500">{errors.marks}</span>
+                            {errors.default_marks && (
+                                <span className="text-xs text-red-500">{errors.default_marks}</span>
                             )}
                         </div>
                     </div>

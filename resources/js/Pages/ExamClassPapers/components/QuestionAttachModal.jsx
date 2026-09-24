@@ -25,7 +25,8 @@ export default function QuestionAttachModal({ isOpen, onClose, section = null, q
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('exam-paper-section-questions.store'), {
+        if (!section?.id) return;
+        post(route('exam-paper-sections.questions.store', section.id), {
             onSuccess: () => {
                 reset();
                 onClose();
@@ -50,7 +51,7 @@ export default function QuestionAttachModal({ isOpen, onClose, section = null, q
                         options={questionBanks}
                         placeholder="-- Choose Question --"
                         valueKey="id"
-                        labelKey="question_text"
+                        labelKey="question"
                     />
                     {errors.question_bank_id && <p className="text-xs text-rose-500 mt-1">{errors.question_bank_id}</p>}
                 </div>

@@ -47,7 +47,7 @@ class FeeController extends Controller
 
             return response()->json([
                 'message' => 'Student fee profile updated successfully.',
-                'data'    => $profile,
+                'data' => $profile,
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -72,7 +72,7 @@ class FeeController extends Controller
         );
 
         return response()->json([
-            'message'         => "Successfully generated {$count} invoices.",
+            'message' => "Successfully generated {$count} invoices.",
             'generated_count' => $count,
         ]);
     }
@@ -89,5 +89,4 @@ class FeeController extends Controller
 
         return redirect()->back()->with('success', 'Payment processed and ledger updated successfully.');
     }
-
 }

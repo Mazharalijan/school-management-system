@@ -32,15 +32,15 @@ class StudentFeeProfile extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'base_monthly_fee'    => 'decimal:2',
-        'monthly_discount'   => 'decimal:2',
-        'net_monthly_fee'     => 'decimal:2',
+        'base_monthly_fee' => 'decimal:2',
+        'monthly_discount' => 'decimal:2',
+        'net_monthly_fee' => 'decimal:2',
         'waive_admission_fee' => 'boolean',
-        'is_locked'           => 'boolean',
+        'is_locked' => 'boolean',
     ];
 
     /* -------------------------------------------------------------------------- */
-    /*                                RELATIONSHIPS                               */
+    /*                                RELATIONSHIPS */
     /* -------------------------------------------------------------------------- */
 
     public function student(): BelongsTo
@@ -64,7 +64,7 @@ class StudentFeeProfile extends Model
     }
 
     /* -------------------------------------------------------------------------- */
-    /*                                HELPER METHODS                               */
+    /*                                HELPER METHODS */
     /* -------------------------------------------------------------------------- */
 
     /**

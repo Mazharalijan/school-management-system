@@ -51,11 +51,11 @@ export default function Create({ exam, availableQuestions }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('exams.papers.store'));
+        post(route('papers.store'));
     };
 
     const filteredAvailableQuestions = availableQuestions?.filter((q) =>
-        q.question_text.toLowerCase().includes(searchQuery.toLowerCase())
+        (q.question || q.question_text || '').toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (
@@ -67,7 +67,7 @@ export default function Create({ exam, availableQuestions }) {
                     <div>
                         <h1 className="text-2xl font-bold text-slate-800">Exam Paper Builder</h1>
                         <p className="text-sm text-slate-500">
-                            {exam.title} ({exam.school_class?.name} - {exam.subject?.subject_name})
+                            {exam?.title} ({exam?.school_class?.name} - {exam?.subject?.subject_name})
                         </p>
                     </div>
                     <div className="text-right">
@@ -118,9 +118,9 @@ export default function Create({ exam, availableQuestions }) {
                                         <div key={q.id} className="p-4 border rounded-md bg-slate-50 relative flex justify-between gap-4">
                                             <div className="space-y-1 flex-1">
                                                 <span className="text-xs font-bold text-indigo-600">Q{idx + 1}.</span>
-                                                <p className="text-sm text-slate-800 font-medium">{q.question_text}</p>
+                                                <p className="text-sm text-slate-800 font-medium">{q.question || q.question_text}</p>
                                                 <span className="inline-block px-2 py-0.5 text-xs bg-slate-200 text-slate-600 rounded">
-                                                    {q.question_type.replace('_', ' ')}
+                                                    {(q.question_type || '').replace('_', ' ')}
                                                 </span>
                                             </div>
 
@@ -183,10 +183,10 @@ export default function Create({ exam, availableQuestions }) {
                                         }`}
                                     >
                                         <div className="flex justify-between items-start mb-1">
-                                            <span className="text-xs font-semibold text-slate-500 uppercase">{q.difficulty_level}</span>
+                                            <span className="text-xs font-semibold text-slate-500 uppercase">{q.question_type}</span>
                                             <span className="text-xs font-bold text-slate-700">{q.default_marks} Marks</span>
                                         </div>
-                                        <p className="text-xs text-slate-800 line-clamp-2">{q.question_text}</p>
+                                        <p className="text-xs text-slate-800 line-clamp-2">{q.question || q.question_text}</p>
                                     </div>
                                 );
                             })}

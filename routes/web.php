@@ -16,6 +16,7 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StaffSalaryController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SystemSettingController;
+use App\Http\Controllers\TimetableController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -134,7 +135,7 @@ Route::prefix('exam-paper-section-questions/{sectionQuestion}')->name('exam-pape
     Route::delete('/', [ExamClassPaperController::class, 'destroySectionQuestion'])->name('destroy');
 });
 Route::get('/exam-class-papers/{exam_class_paper}/preview', [ExamClassPaperController::class, 'preview'])
-        ->name('exam-class-papers.preview');
+    ->name('exam-class-papers.preview');
 
 // --- Exam Sessions & Schedules Routes ---
 Route::resource('sessions', ExamSessionController::class)->except(['create', 'edit', 'show']);
@@ -151,6 +152,18 @@ Route::post('marks/bulk-store', [StudentMarkController::class, 'storeBulkMarks']
 Route::post('marks/process-results', [StudentMarkController::class, 'processResults'])->name('marks.process-results');
 Route::get('marks/dmc/{examResult}', [StudentMarkController::class, 'dmcView'])->name('marks.dmc');
 
+// --- Timetable Generator & Schedule Routes ---
+
+Route::prefix('timetable')->name('timetable.')->group(function () {
+    Route::get('/', [TimetableController::class, 'index'])->name('index');
+    Route::post('/slot', [TimetableController::class, 'storeSlot'])->name('slot.store');
+    Route::post('/update-school-timings', [TimetableController::class, 'updateSchoolTimings'])->name('update-school-timings');
+    Route::post('/fulltime-teacher-config', [TimetableController::class, 'updateFullTimeTeacherConfig'])->name('fulltime-teacher-config');
+    Route::post('/auto-generate', [TimetableController::class, 'autoGenerate'])
+        ->name('auto-generate');
+    Route::post('/update-break-config', [TimetableController::class, 'updateBreakConfig'])
+        ->name('break-config.update');
+});
 Route::middleware(['auth', 'verified'])->group(function () {
     // Authenticated routes can be grouped here as required
 });

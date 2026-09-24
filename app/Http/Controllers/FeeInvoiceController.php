@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\FeeInvoice;
 use App\Models\SchoolClass;
 use App\Services\FeeService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\RedirectResponse;
 
 class FeeInvoiceController extends Controller
 {
@@ -35,11 +35,11 @@ class FeeInvoiceController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('invoice_no', 'like', "%{$search}%")
-                  ->orWhereHas('student', function ($s) use ($search) {
-                      $s->where('first_name', 'like', "%{$search}%")
-                        ->orWhere('last_name', 'like', "%{$search}%")
-                        ->orWhere('roll_no', 'like', "%{$search}%");
-                  });
+                    ->orWhereHas('student', function ($s) use ($search) {
+                        $s->where('first_name', 'like', "%{$search}%")
+                            ->orWhere('last_name', 'like', "%{$search}%")
+                            ->orWhere('roll_no', 'like', "%{$search}%");
+                    });
             });
         }
 
@@ -65,6 +65,7 @@ class FeeInvoiceController extends Controller
 
         try {
             $count = $this->feeService->generateBulkInvoices($validated);
+
             return back()->with('success', "{$count} fee invoice(s) generated successfully.");
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -89,7 +90,7 @@ class FeeInvoiceController extends Controller
     public function collectPayment(Request $request, FeeInvoice $invoice): RedirectResponse
     {
         $validated = $request->validate([
-            'amount_paid' => 'required|numeric|min:1|max:' . $invoice->due_amount,
+            'amount_paid' => 'required|numeric|min:1|max:'.$invoice->due_amount,
             'payment_date' => 'required|date',
             'payment_method' => 'required|in:cash,bank_transfer,cheque,online',
             'transaction_reference' => 'nullable|string|max:255',
@@ -98,9 +99,10 @@ class FeeInvoiceController extends Controller
 
         try {
             $this->feeService->collectPayment($invoice, $validated, auth()->id());
+
             return back()->with('success', 'Payment recorded successfully.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Failed to process payment: ' . $e->getMessage());
+            return back()->with('error', 'Failed to process payment: '.$e->getMessage());
         }
     }
 }

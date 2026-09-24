@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreInventoryItemRequest;
 use App\Http\Requests\AllocateAssetRequest;
-use App\Services\InventoryService;
+use App\Http\Requests\ReportDamagedAssetRequest;
+use App\Http\Requests\StoreInventoryItemRequest;
 use App\Models\InventoryCategory;
 use App\Models\Staff;
+use App\Services\InventoryService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\RedirectResponse;
-use App\Http\Requests\ReportDamagedAssetRequest;
-use Illuminate\Validation\ValidationException;
 
 class InventoryController extends Controller
 {
@@ -41,6 +41,7 @@ class InventoryController extends Controller
     public function store(StoreInventoryItemRequest $request): RedirectResponse
     {
         $this->inventoryService->createItem($request->validated());
+
         return redirect()->back()->with('success', 'Inventory item created successfully.');
     }
 
@@ -48,7 +49,7 @@ class InventoryController extends Controller
     {
         try {
             $this->inventoryService->allocateAsset($request->validated(), auth()->id() ?? 1);
-            
+
             return redirect()->back()->with('success', 'Asset allocated successfully.');
         } catch (\Exception $e) {
             throw ValidationException::withMessages([
@@ -61,6 +62,7 @@ class InventoryController extends Controller
     {
         try {
             $this->inventoryService->returnAsset($id, $request->input('return_date'));
+
             return redirect()->back()->with('success', 'Asset returned successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
@@ -70,7 +72,8 @@ class InventoryController extends Controller
     public function reportDamaged(ReportDamagedAssetRequest $request): RedirectResponse
     {
         try {
-            $this->inventoryService->reportDamagedOrLost($request->validated(), auth()->id()??1);
+            $this->inventoryService->reportDamagedOrLost($request->validated(), auth()->id() ?? 1);
+
             return redirect()->back()->with('success', 'Damage or stock loss reported successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['quantity' => $e->getMessage()]);

@@ -5,7 +5,7 @@ import AppLayout from '@/Layouts/AppLayout';
 export default function Entry({ sessions, classes, subjects, students, existingMarks, filters }) {
     const handleFilterChange = (key, value) => {
         router.get(
-            route('exams.marks.entry'),
+            route('marks.entry'),
             { ...filters, [key]: value },
             { preserveState: true, replace: true }
         );
@@ -37,11 +37,11 @@ export default function Entry({ sessions, classes, subjects, students, existingM
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('exams.marks.bulk-store'));
+        post(route('marks.bulk-store'));
     };
 
     const handleProcessResults = () => {
-        router.post(route('exams.marks.process-results'), {
+        router.post(route('marks.process-results'), {
             exam_session_id: filters.exam_session_id,
             school_class_id: filters.school_class_id,
         });

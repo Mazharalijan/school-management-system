@@ -36,18 +36,18 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignId('school_class_id')->constrained('school_classes')->cascadeOnDelete();
             $table->string('session_year'); // e.g., "2026-2027"
-            
+
             // Fee calculations
             $table->decimal('base_monthly_fee', 10, 2)->default(0);
             $table->decimal('monthly_discount', 10, 2)->default(0);
             $table->decimal('net_monthly_fee', 10, 2)->default(0);
             $table->boolean('waive_admission_fee')->default(false);
-            
+
             // Approval & locking
             $table->text('discount_reason')->nullable(); // e.g., "Principal Concession / Sibling Discount"
             $table->boolean('is_locked')->default(false);
             $table->foreignId('approved_by')->nullable()->constrained('users')->nullOnDelete();
-            
+
             $table->timestamps();
 
             $table->unique(['student_id', 'session_year'], 'student_session_fee_unique');
@@ -71,13 +71,13 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignId('school_class_id')->constrained('school_classes')->cascadeOnDelete();
             $table->foreignId('section_id')->nullable()->constrained('sections')->nullOnDelete();
-            
+
             $table->string('month'); // e.g., "September"
             $table->integer('month_order'); // 1 to 12 (used to sort multi-month arrears sequentially)
             $table->string('session_year'); // e.g., "2026-2027"
             $table->date('issue_date');
             $table->date('due_date');
-            
+
             $table->decimal('subtotal', 10, 2)->default(0.00); // Current month charges
             $table->decimal('previous_arrears', 10, 2)->default(0.00); // Unpaid balance brought forward
             $table->decimal('discount', 10, 2)->default(0.00);
@@ -85,7 +85,7 @@ return new class extends Migration
             $table->decimal('total_amount', 10, 2)->default(0.00); // (Subtotal + Previous Arrears + Fine) - Discount
             $table->decimal('paid_amount', 10, 2)->default(0.00);
             $table->decimal('due_amount', 10, 2)->default(0.00); // total_amount - paid_amount
-            
+
             $table->enum('status', ['unpaid', 'partially_paid', 'paid', 'overdue'])->default('unpaid');
             $table->text('remarks')->nullable();
             $table->timestamps();
@@ -108,7 +108,7 @@ return new class extends Migration
             $table->string('receipt_no')->unique()->index(); // e.g., "REC-2026-0001"
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignId('received_by')->nullable()->constrained('users')->nullOnDelete();
-            
+
             $table->decimal('amount_paid', 10, 2);
             $table->date('payment_date');
             $table->enum('payment_method', ['cash', 'bank_transfer', 'cheque', 'online'])->default('cash');
