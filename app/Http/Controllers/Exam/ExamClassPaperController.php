@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Exam;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Exam\BulkPrintPapersRequest;
 use App\Http\Requests\Exam\StoreExamClassPaperRequest;
-use App\Http\Requests\Exam\UpdateExamClassPaperRequest;
 use App\Http\Requests\StoreExamPaperSectionRequest;
+use App\Http\Requests\UpdateExamClassPaperRequest;
 use App\Http\Requests\UpdateExamPaperSectionRequest;
 use App\Models\ExamClassPaper;
 use App\Models\ExamPaperSection;
 use App\Models\ExamPaperSectionQuestion;
+use App\Models\ExamSession;
 use App\Models\QuestionBank;
 use App\Models\SchoolClass;
 use App\Models\Subject;
@@ -33,8 +34,8 @@ class ExamClassPaperController extends Controller
     {
         $activeTab = $request->get('tab', 'overview');
 
-        // Main Papers Query with Search & Filters
-        $papers = ExamClassPaper::with(['schoolClass', 'subject', 'sections.questions.questionBank'])
+        // Main Papers Query with Search & Hierarchy Filters (Class, Exam Session / Term, Subject, Print Status)
+        $papers = ExamClassPaper::with(['schoolClass', 'subject', 'examSession', 'examSchedule.examSession', 'sections.questions.questionBank'])
             ->when($request->search, function ($q, $search) {
                 $q->where(function ($sub) use ($search) {
                     $sub->where('paper_title', 'like', "%{$search}%")
@@ -42,9 +43,16 @@ class ExamClassPaperController extends Controller
                 });
             })
             ->when($request->school_class_id, fn ($q, $id) => $q->where('school_class_id', $id))
+            ->when($request->exam_session_id, function ($q, $sessionId) {
+                $q->where(function ($sq) use ($sessionId) {
+                    $sq->where('exam_session_id', $sessionId)
+                        ->orWhereHas('examSchedule', fn ($sched) => $sched->where('exam_session_id', $sessionId));
+                });
+            })
             ->when($request->subject_id, fn ($q, $id) => $q->where('subject_id', $id))
+            ->when($request->print_status, fn ($q, $status) => $q->where('print_status', $status))
             ->latest()
-            ->paginate(10)
+            ->paginate(15)
             ->withQueryString();
 
         // Load Sections with Attached Question Details
@@ -56,13 +64,24 @@ class ExamClassPaperController extends Controller
         // Question Bank pool for Section Builder
         $questionBanks = QuestionBank::with(['chapter', 'topic'])->get();
 
+        // Classes with counts
+        $classes = SchoolClass::withCount(['sections', 'classPapers'])
+            ->orderBy('numeric_value')
+            ->get();
+
+        // Exam Sessions / Terms
+        $examSessions = ExamSession::withCount(['classPapers', 'schedules'])
+            ->orderBy('id')
+            ->get();
+
         return Inertia::render('ExamClassPapers/Index', [
             'papers' => $papers,
             'sections' => $sections,
-            'classes' => SchoolClass::all(),
-            'subjects' => Subject::all(),
+            'classes' => $classes,
+            'examSessions' => $examSessions,
+            'subjects' => Subject::orderBy('subject_name')->get(),
             'questionBanks' => $questionBanks,
-            'filters' => $request->only(['search', 'school_class_id', 'subject_id']),
+            'filters' => $request->only(['search', 'school_class_id', 'exam_session_id', 'subject_id', 'print_status']),
             'activeTab' => $activeTab,
         ]);
     }
@@ -72,8 +91,9 @@ class ExamClassPaperController extends Controller
     public function create(): Response
     {
         return Inertia::render('ExamClassPapers/Create', [
-            'classes' => SchoolClass::all(),
-            'subjects' => Subject::all(),
+            'classes' => SchoolClass::orderBy('numeric_value')->get(),
+            'subjects' => Subject::orderBy('subject_name')->get(),
+            'examSessions' => ExamSession::orderBy('id')->get(),
         ]);
     }
 
@@ -200,6 +220,7 @@ class ExamClassPaperController extends Controller
         $examClassPaper->load([
             'schoolClass',
             'subject',
+            'examSession',
             'sections.questions.questionBank',
         ]);
 
@@ -219,6 +240,7 @@ class ExamClassPaperController extends Controller
         $examClassPaper->load([
             'schoolClass',
             'subject',
+            'examSession',
             'sections.questions.questionBank',
         ]);
 

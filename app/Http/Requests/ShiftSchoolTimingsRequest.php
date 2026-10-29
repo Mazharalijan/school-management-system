@@ -16,9 +16,9 @@ class ShiftSchoolTimingsRequest extends FormRequest
         return [
             'old_start_time' => 'required',
             'new_start_time' => 'required',
-            'old_end_time'   => 'required',
-            'new_end_time'   => 'required',
-            'delta_minutes'  => 'required',
+            'old_end_time' => 'required',
+            'new_end_time' => 'required',
+            'delta_minutes' => 'required',
         ];
     }
 }

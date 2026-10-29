@@ -21,6 +21,7 @@ class StoreExamClassPaperRequest extends FormRequest
             'duration_minutes' => ['required', 'integer', 'min:1'],
             'instructions' => ['nullable', 'string'],
             'exam_schedule_id' => ['nullable', 'exists:exam_schedules,id'],
+            'exam_session_id' => ['nullable', 'exists:exam_sessions,id'],
             'total_copies_needed' => ['nullable', 'integer', 'min:0'],
             'print_status' => ['nullable', 'string', 'in:pending,printed,queued'],
         ];

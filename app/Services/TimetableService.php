@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Timetable;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class TimetableService
 {
@@ -36,7 +35,8 @@ class TimetableService
                 'end_time' => $endTimeExpression,
                 'updated_at' => now(),
             ]);
-            return $query;
+
+        return $query;
     }
 
     /**

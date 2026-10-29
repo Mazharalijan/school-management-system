@@ -164,6 +164,22 @@ Route::prefix('timetable')->name('timetable.')->group(function () {
     Route::post('/update-break-config', [TimetableController::class, 'updateBreakConfig'])
         ->name('break-config.update');
 });
+
+Route::prefix('admin/exam')->name('admin.exam.')->group(function () {
+
+    // Marks Entry Grid Page
+    Route::get('/marks/entry', [StudentMarkController::class, 'entryForm'])->name('marks.entry');
+
+    // Save Bulk Marks Post Route
+    Route::post('/marks/store', [StudentMarkController::class, 'storeBulkMarks'])->name('marks.store');
+
+    // Process Class Rankings
+    Route::post('/marks/process', [StudentMarkController::class, 'processResults'])->name('marks.process');
+
+    // Individual DMC Certificate Route
+    Route::get('/marks/dmc/{examResult}', [StudentMarkController::class, 'dmcView'])->name('marks.dmc');
+
+});
 Route::middleware(['auth', 'verified'])->group(function () {
     // Authenticated routes can be grouped here as required
 });

@@ -13,6 +13,7 @@ class ExamClassPaper extends Model
 
     protected $fillable = [
         'exam_schedule_id',
+        'exam_session_id',
         'school_class_id',
         'subject_id',
         'paper_title',
@@ -32,6 +33,11 @@ class ExamClassPaper extends Model
         'total_copies_printed' => 'integer',
         'printed_at' => 'datetime',
     ];
+
+    public function examSession(): BelongsTo
+    {
+        return $this->belongsTo(ExamSession::class);
+    }
 
     public function examSchedule(): BelongsTo
     {

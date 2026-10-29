@@ -53,6 +53,14 @@ export default function ExamPaperDetailModal({ isOpen, onClose, paper = null }) 
                         </div>
 
                         <div className="flex items-center gap-2 text-slate-600">
+                            <Calendar className="w-4 h-4 text-slate-400" />
+                            <span className="font-medium text-slate-700">Exam Term:</span>
+                            <span className="font-semibold text-indigo-700">
+                                {paper.exam_session?.title || paper.exam_schedule?.exam_session?.title || 'General Session'}
+                            </span>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-slate-600">
                             <BookOpen className="w-4 h-4 text-slate-400" />
                             <span className="font-medium text-slate-700">Subject:</span>
                             <span>{paper.subject?.subject_name || paper.subject?.name || 'N/A'}</span>

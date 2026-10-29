@@ -2,10 +2,11 @@ import React from 'react';
 import { useForm, Link, Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
-export default function Create({ classes = [], subjects = [] }) {
+export default function Create({ classes = [], subjects = [], examSessions = [] }) {
     const { data, setData, post, processing, errors } = useForm({
         paper_title: '',
         school_class_id: '',
+        exam_session_id: '',
         subject_id: '',
         total_marks: 100,
         duration_minutes: 120,
@@ -38,7 +39,7 @@ export default function Create({ classes = [], subjects = [] }) {
                                     {errors.paper_title && <div className="text-red-600 text-xs mt-1">{errors.paper_title}</div>}
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700">Class *</label>
                                         <select 
@@ -53,6 +54,21 @@ export default function Create({ classes = [], subjects = [] }) {
                                             ))}
                                         </select>
                                         {errors.school_class_id && <div className="text-red-600 text-xs mt-1">{errors.school_class_id}</div>}
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700">Exam Term / Session</label>
+                                        <select 
+                                            value={data.exam_session_id} 
+                                            onChange={e => setData('exam_session_id', e.target.value)} 
+                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm"
+                                        >
+                                            <option value="">Select Term (e.g. First Term)</option>
+                                            {examSessions.map(term => (
+                                                <option key={term.id} value={term.id}>{term.title}</option>
+                                            ))}
+                                        </select>
+                                        {errors.exam_session_id && <div className="text-red-600 text-xs mt-1">{errors.exam_session_id}</div>}
                                     </div>
 
                                     <div>

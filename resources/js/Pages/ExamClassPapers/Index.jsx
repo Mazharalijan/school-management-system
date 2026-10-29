@@ -4,7 +4,8 @@ import { Head, router } from '@inertiajs/react';
 import PageHeader from '@/components/PageHeader';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { Plus, FileText, Layers, Printer, LayoutDashboard } from 'lucide-react';
+import { Plus, FileText, Layers, Printer, LayoutDashboard, Award, ScanLine, Save } from 'lucide-react';
+import MarksIndex from './marks/Index';
 
 // Domain Tabs
 import OverviewTab from './components/tabs/OverviewTab';
@@ -20,15 +21,21 @@ export default function Index({
     papers = {},
     sections = {},
     classes = [],
+    examSessions = [],
     subjects = [],
     questionBanks = [],
     filters = {},
     activeTab = 'overview',
+    teacher = { name: 'System Admin', emp_id: 'EMP-001', designation: 'Class Teacher' },
+    examTerm = { id: 1, name: 'Term Examination 2026' },
+    classDetails = { id: 101, name: 'Grade 5', section: 'Section A' },
+    students = []
 }) {
     const [currentTab, setCurrentTab] = useState(activeTab);
 
+    // Track active modals
     const [modalState, setModalState] = useState({
-        type: null, // 'paper' | 'detail'
+        type: null, // 'paper' | 'detail' | 'ocr'
         isOpen: false,
         data: null,
     });
@@ -52,12 +59,37 @@ export default function Index({
             <div className="space-y-6">
                 <PageHeader
                     title="Exam Class Papers"
-                    subtitle="Create papers, assemble sections with attached questions, and trigger bulk printing."
+                    subtitle="Create papers, assemble sections with attached questions, evaluate marks, and trigger printing."
                 >
+                    {/* Unified Top Action Buttons */}
                     {currentTab === 'papers' && (
                         <Button onClick={() => openCreateModal('paper')} className="text-white bg-slate-900 hover:bg-slate-800">
                             <Plus className="h-4 w-4 mr-2" /> Add Paper
                         </Button>
+                    )}
+
+                    {currentTab === 'marks' && (
+                        <div className="flex items-center gap-2">
+                            <Button 
+                                variant="outline" 
+                                onClick={() => openCreateModal('ocr')} 
+                                className="border-indigo-200 text-indigo-700 hover:bg-indigo-50"
+                            >
+                                <ScanLine className="h-4 w-4 mr-2 text-indigo-600" /> Offline OCR Scan
+                            </Button>
+
+                            <Button 
+                                variant="outline" 
+                                onClick={() => window.print()} 
+                                className="border-slate-200 text-slate-700 hover:bg-slate-50"
+                            >
+                                <Printer className="h-4 w-4 mr-2 text-slate-500" /> Print Sheet
+                            </Button>
+
+                            <Button className="text-white bg-indigo-600 hover:bg-indigo-700">
+                                <Save className="h-4 w-4 mr-2" /> Save Marks
+                            </Button>
+                        </div>
                     )}
                 </PageHeader>
 
@@ -72,6 +104,9 @@ export default function Index({
                         <TabsTrigger value="sections" className="flex items-center gap-2 px-4 py-2 text-sm font-medium">
                             <Layers className="h-4 w-4 text-emerald-600" /> Section & Question Builder
                         </TabsTrigger>
+                        <TabsTrigger value="marks" className="flex items-center gap-2 px-4 py-2 text-sm font-medium">
+                            <Award className="h-4 w-4 text-indigo-600" /> Marks & Evaluation
+                        </TabsTrigger>
                         <TabsTrigger value="print" className="flex items-center gap-2 px-4 py-2 text-sm font-medium">
                             <Printer className="h-4 w-4 text-amber-600" /> Print & Bulk Print
                         </TabsTrigger>
@@ -81,9 +116,12 @@ export default function Index({
                         <OverviewTab
                             papers={papers}
                             classes={classes}
+                            examSessions={examSessions}
                             subjects={subjects}
                             filters={filters}
                             onViewDetail={(paper) => openCreateModal('detail', paper)}
+                            onEditPaper={(paper) => openCreateModal('paper', paper)}
+                            onCreatePaper={(defaultData) => openCreateModal('paper', defaultData)}
                         />
                     </TabsContent>
 
@@ -106,6 +144,21 @@ export default function Index({
                         />
                     </TabsContent>
 
+                    <TabsContent value="marks">
+                        <MarksIndex
+                            teacher={teacher}
+                            examTerm={examTerm}
+                            classDetails={classDetails}
+                            papers={papers?.data || (Array.isArray(papers) ? papers : [])}
+                            initialStudents={students}
+                            classes={classes}
+                            subjects={subjects}
+                            filters={filters}
+                            externalOcrOpen={modalState.type === 'ocr' && modalState.isOpen}
+                            onCloseExternalOcr={closeModal}
+                        />
+                    </TabsContent>
+
                     <TabsContent value="print">
                         <PrintTab papers={papers} />
                     </TabsContent>
@@ -124,6 +177,7 @@ export default function Index({
                 paper={modalState.type === 'paper' ? modalState.data : null}
                 classes={classes}
                 subjects={subjects}
+                examSessions={examSessions}
             />
         </AppLayout>
     );

@@ -6,11 +6,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import FilterSelect from '@/components/FilterSelect';
 
-export default function PaperFormModal({ isOpen, onClose, paper = null, classes = [], subjects = [] }) {
-    const isEdit = Boolean(paper);
+export default function PaperFormModal({ isOpen, onClose, paper = null, classes = [], subjects = [], examSessions = [] }) {
+    const isEdit = Boolean(paper && paper.id);
 
     const { data, setData, post, put, processing, errors, reset } = useForm({
         school_class_id: '',
+        exam_session_id: '',
         subject_id: '',
         paper_title: '',
         total_marks: 100,
@@ -22,6 +23,7 @@ export default function PaperFormModal({ isOpen, onClose, paper = null, classes 
         if (paper) {
             setData({
                 school_class_id: paper.school_class_id || '',
+                exam_session_id: paper.exam_session_id || '',
                 subject_id: paper.subject_id || '',
                 paper_title: paper.paper_title || paper.title || '',
                 total_marks: paper.total_marks || 100,
@@ -73,7 +75,7 @@ export default function PaperFormModal({ isOpen, onClose, paper = null, classes 
                     {errors.paper_title && <p className="text-xs text-rose-500 mt-1">{errors.paper_title}</p>}
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <Label>Class *</Label>
                         <FilterSelect
@@ -86,6 +88,20 @@ export default function PaperFormModal({ isOpen, onClose, paper = null, classes 
                             labelKey="name"
                         />
                         {errors.school_class_id && <p className="text-xs text-rose-500 mt-1">{errors.school_class_id}</p>}
+                    </div>
+
+                    <div>
+                        <Label>Exam Term / Session</Label>
+                        <FilterSelect
+                            className="mt-1"
+                            value={data.exam_session_id}
+                            onChange={(val) => setData('exam_session_id', val)}
+                            options={examSessions}
+                            placeholder="Select Term (e.g. First Term)"
+                            valueKey="id"
+                            labelKey="title"
+                        />
+                        {errors.exam_session_id && <p className="text-xs text-rose-500 mt-1">{errors.exam_session_id}</p>}
                     </div>
 
                     <div>
