@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Accounting\ExpenseController;
 use App\Http\Controllers\ClassMatrixController;
 use App\Http\Controllers\Exam\ExamClassPaperController;
 use App\Http\Controllers\Exam\ExamPaperController;
@@ -157,10 +158,13 @@ Route::get('marks/dmc/{examResult}', [StudentMarkController::class, 'dmcView'])-
 Route::prefix('timetable')->name('timetable.')->group(function () {
     Route::get('/', [TimetableController::class, 'index'])->name('index');
     Route::post('/slot', [TimetableController::class, 'storeSlot'])->name('slot.store');
+    Route::post('/slots', [TimetableController::class, 'storeSlot'])->name('slots.store');
     Route::post('/update-school-timings', [TimetableController::class, 'updateSchoolTimings'])->name('update-school-timings');
     Route::post('/fulltime-teacher-config', [TimetableController::class, 'updateFullTimeTeacherConfig'])->name('fulltime-teacher-config');
     Route::post('/auto-generate', [TimetableController::class, 'autoGenerate'])
         ->name('auto-generate');
+    Route::post('/generate', [TimetableController::class, 'generate'])
+        ->name('generate');
     Route::post('/update-break-config', [TimetableController::class, 'updateBreakConfig'])
         ->name('break-config.update');
 });
@@ -180,6 +184,16 @@ Route::prefix('admin/exam')->name('admin.exam.')->group(function () {
     Route::get('/marks/dmc/{examResult}', [StudentMarkController::class, 'dmcView'])->name('marks.dmc');
 
 });
+
+// --- Expenses & Profit and Loss (P&L) Routes ---
+Route::prefix('expenses')->name('expenses.')->group(function () {
+    Route::get('/', [ExpenseController::class, 'index'])->name('index');
+    Route::post('/', [ExpenseController::class, 'store'])->name('store');
+    Route::put('/{expense}', [ExpenseController::class, 'update'])->name('update');
+    Route::delete('/{expense}', [ExpenseController::class, 'destroy'])->name('destroy');
+    Route::post('/categories', [ExpenseController::class, 'storeCategory'])->name('categories.store');
+});
+
 Route::middleware(['auth', 'verified'])->group(function () {
     // Authenticated routes can be grouped here as required
 });

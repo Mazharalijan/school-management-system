@@ -16,6 +16,7 @@ use App\Models\QuestionBank;
 use App\Models\SchoolClass;
 use App\Models\Subject;
 use App\Services\Exam\ExamClassPaperService;
+use App\Services\Exam\MarksAndResultService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -74,6 +75,17 @@ class ExamClassPaperController extends Controller
             ->orderBy('id')
             ->get();
 
+        // Load Marks Entry & Evaluation Data
+        $selectedSessionId = (int) ($request->get('exam_session_id') ?: $examSessions->first()?->id ?: 1);
+        $selectedClassId = (int) ($request->get('school_class_id') ?: $classes->first()?->id ?: 1);
+        $selectedSectionId = $request->get('section_id') ? (int) $request->get('section_id') : null;
+
+        $marksData = app(MarksAndResultService::class)->getMarksEntryData(
+            $selectedSessionId,
+            $selectedClassId,
+            $selectedSectionId
+        );
+
         return Inertia::render('ExamClassPapers/Index', [
             'papers' => $papers,
             'sections' => $sections,
@@ -81,8 +93,32 @@ class ExamClassPaperController extends Controller
             'examSessions' => $examSessions,
             'subjects' => Subject::orderBy('subject_name')->get(),
             'questionBanks' => $questionBanks,
-            'filters' => $request->only(['search', 'school_class_id', 'exam_session_id', 'subject_id', 'print_status']),
+            'filters' => array_merge(
+                $request->only(['search', 'school_class_id', 'exam_session_id', 'subject_id', 'print_status', 'section_id']),
+                [
+                    'school_class_id' => $selectedClassId,
+                    'exam_session_id' => $selectedSessionId,
+                ]
+            ),
             'activeTab' => $activeTab,
+            'markPapers' => $marksData['subjects'],
+            'markStudents' => $marksData['students'],
+            'examTerm' => [
+                'id' => $marksData['session']?->id ?? $selectedSessionId,
+                'name' => $marksData['session']?->title ?? 'Exam Session',
+                'session_year' => $marksData['session']?->session_year ?? '',
+            ],
+            'classDetails' => [
+                'id' => $marksData['class']?->id ?? $selectedClassId,
+                'name' => $marksData['class']?->name ?? 'Class',
+                'sections' => $marksData['class']?->sections ?? [],
+            ],
+            'teacher' => [
+                'id' => auth()->id() ?? 1,
+                'name' => auth()->user()?->name ?? 'Admin / Teacher',
+                'emp_id' => 'EMP-001',
+                'designation' => 'Class Teacher / Exam Controller',
+            ],
         ]);
     }
 
@@ -105,17 +141,17 @@ class ExamClassPaperController extends Controller
             ->with('success', 'Exam paper created successfully.');
     }
 
-    public function update(UpdateExamClassPaperRequest $request, ExamClassPaper $examClassPaper): RedirectResponse
+    public function update(UpdateExamClassPaperRequest $request, ExamClassPaper $exam_class_paper): RedirectResponse
     {
-        $this->paperService->updatePaper($examClassPaper, $request->validated());
+        $this->paperService->updatePaper($exam_class_paper, $request->validated());
 
         return redirect()->route('exam-class-papers.index', ['tab' => 'papers'])
             ->with('success', 'Exam paper updated successfully.');
     }
 
-    public function destroy(ExamClassPaper $examClassPaper): RedirectResponse
+    public function destroy(ExamClassPaper $exam_class_paper): RedirectResponse
     {
-        $this->paperService->deletePaper($examClassPaper);
+        $this->paperService->deletePaper($exam_class_paper);
 
         return redirect()->route('exam-class-papers.index', ['tab' => 'papers'])
             ->with('success', 'Exam paper deleted successfully.');

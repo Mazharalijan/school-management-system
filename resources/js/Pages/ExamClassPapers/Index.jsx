@@ -29,7 +29,9 @@ export default function Index({
     teacher = { name: 'System Admin', emp_id: 'EMP-001', designation: 'Class Teacher' },
     examTerm = { id: 1, name: 'Term Examination 2026' },
     classDetails = { id: 101, name: 'Grade 5', section: 'Section A' },
-    students = []
+    students = [],
+    markPapers = null,
+    markStudents = null,
 }) {
     const [currentTab, setCurrentTab] = useState(activeTab);
 
@@ -149,11 +151,13 @@ export default function Index({
                             teacher={teacher}
                             examTerm={examTerm}
                             classDetails={classDetails}
-                            papers={papers?.data || (Array.isArray(papers) ? papers : [])}
-                            initialStudents={students}
+                            papers={markPapers || papers?.data || (Array.isArray(papers) ? papers : [])}
+                            initialStudents={markStudents || students}
                             classes={classes}
+                            sessions={examSessions}
                             subjects={subjects}
                             filters={filters}
+                            isTab={true}
                             externalOcrOpen={modalState.type === 'ocr' && modalState.isOpen}
                             onCloseExternalOcr={closeModal}
                         />

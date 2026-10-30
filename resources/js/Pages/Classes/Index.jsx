@@ -26,6 +26,8 @@ import {
     CheckCircle2, 
     XCircle 
 } from 'lucide-react';
+import PageHeader from '@/components/PageHeader';
+import TableActionButton from '@/components/TableActionButton';
 
 export default function ClassMatrixIndex({ matrix }) {
     // Modal States
@@ -169,20 +171,17 @@ export default function ClassMatrixIndex({ matrix }) {
 
     return (
         <AppLayout title="Class & Section Matrix">
-            {/* Header */}
-            <div className="flex justify-between items-center mb-6">
-                <div>
-                    <h2 className="text-lg font-semibold text-slate-800">Class & Section Structures</h2>
-                    <p className="text-sm text-slate-500">Manage grade levels and section allocations.</p>
-                </div>
-                <Button onClick={() => setIsClassModalOpen(true)} className="flex items-center space-x-2">
-                    <Plus className="h-4 w-4" />
-                    <span>Add New Class</span>
-                </Button>
-            </div>
+            <div className="space-y-6">
+                <PageHeader
+                    title="Class & Section Structures"
+                    subtitle="Manage grade levels, class codes, and section allocations."
+                    icon={GraduationCap}
+                    buttonText="Add New Class"
+                    onButtonClick={() => setIsClassModalOpen(true)}
+                />
 
-            {/* Matrix Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Matrix Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {matrix.map((item) => (
                     <Card key={item.id} className="border-slate-200 shadow-sm hover:border-slate-300 transition-all flex flex-col justify-between">
                         <div>
@@ -197,33 +196,24 @@ export default function ClassMatrixIndex({ matrix }) {
                                     <span className="text-xs font-mono text-slate-400">Code: {item.code}</span>
                                 </div>
                                 <div className="flex items-center space-x-1">
-                                    <Button 
-                                        variant="ghost" 
-                                        size="icon" 
-                                        className="h-7 w-7 text-slate-500 hover:text-slate-800"
+                                    <TableActionButton 
+                                        variant="default" 
                                         onClick={() => handleOpenClassDetails(item)}
                                         title="View Details"
-                                    >
-                                        <Info className="h-3.5 w-3.5" />
-                                    </Button>
-                                    <Button 
-                                        variant="ghost" 
-                                        size="icon" 
-                                        className="h-7 w-7 text-slate-500 hover:text-blue-600"
+                                        icon={Info}
+                                    />
+                                    <TableActionButton 
+                                        variant="primary" 
                                         onClick={() => handleOpenEditClass(item)}
                                         title="Edit Class"
-                                    >
-                                        <Pencil className="h-3.5 w-3.5" />
-                                    </Button>
-                                    <Button 
-                                        variant="ghost" 
-                                        size="icon" 
-                                        className="h-7 w-7 text-slate-400 hover:text-red-600"
+                                        icon={Pencil}
+                                    />
+                                    <TableActionButton 
+                                        variant="danger" 
                                         onClick={() => handleDeleteClass(item.id)}
                                         title="Delete Class"
-                                    >
-                                        <Trash2 className="h-3.5 w-3.5" />
-                                    </Button>
+                                        icon={Trash2}
+                                    />
                                 </div>
                             </CardHeader>
 
@@ -255,22 +245,18 @@ export default function ClassMatrixIndex({ matrix }) {
                                                 </Badge>
                                                 
                                                 <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center ml-1">
-                                                    <Button 
-                                                        variant="ghost" 
-                                                        size="icon" 
-                                                        className="h-6 w-6 text-slate-400 hover:text-slate-700"
+                                                    <TableActionButton 
+                                                        variant="default" 
                                                         onClick={() => handleOpenSectionDetails(sec, item)}
-                                                    >
-                                                        <Info className="h-3 w-3" />
-                                                    </Button>
-                                                    <Button 
-                                                        variant="ghost" 
-                                                        size="icon" 
-                                                        className="h-6 w-6 text-slate-400 hover:text-blue-600"
+                                                        title="Section Details"
+                                                        icon={Info}
+                                                    />
+                                                    <TableActionButton 
+                                                        variant="primary" 
                                                         onClick={() => handleOpenEditSection(sec)}
-                                                    >
-                                                        <Pencil className="h-3 w-3" />
-                                                    </Button>
+                                                        title="Edit Section"
+                                                        icon={Pencil}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
@@ -291,6 +277,7 @@ export default function ClassMatrixIndex({ matrix }) {
                         </div>
                     </Card>
                 ))}
+            </div>
             </div>
 
             {/* --- MODAL: CREATE CLASS --- */}

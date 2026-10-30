@@ -15,7 +15,7 @@ export default function HeaderMetadata({
           <FileSpreadsheet className="w-4 h-4" /> Academic Marks Management
         </div>
         <h2 className="text-xl font-bold text-slate-900 mt-0.5">
-          {classDetails.name} ({classDetails.section}) — {examTerm.name}
+          {classDetails?.name || 'Class'}{classDetails?.section ? ` (${classDetails.section})` : ''} — {examTerm?.name || 'Examination'}
         </h2>
         
         <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-slate-600 font-medium">

@@ -16,14 +16,17 @@ class StaffService
     public function getPaginatedStaff(array $filters = [], int $perPage = 15): LengthAwarePaginator
     {
         $query = Staff::query()
-            // Eager load ledgers sorted by newest first
-            ->with(['ledgers' => function ($q) {
-                $q->orderBy('id', 'desc');
-            }])
-            // Calculate pending advance total directly in the SQL query
-            ->withSum(['salaryAdvances as pending_advances_sum' => function ($q) {
-                $q->where('status', 'pending_adjustment');
-            }], 'amount');
+            ->with([
+                'ledgers' => function ($q) {
+                    $q->orderBy('id', 'desc');
+                },
+                'salarySettlements' => function ($q) {
+                    $q->with('processor:id,name')->orderBy('payment_date', 'desc')->orderBy('id', 'desc');
+                },
+                'salaryAdvances' => function ($q) {
+                    $q->with('issuer:id,name')->orderBy('issued_date', 'desc')->orderBy('id', 'desc');
+                },
+            ]);
 
         // Search across Name, Father Name, CNIC, Employee ID, Phone, and Email
         if (! empty($filters['search'])) {
@@ -68,7 +71,6 @@ class StaffService
                     'name' => "{$data['first_name']} {$data['last_name']}",
                     'email' => $data['email'],
                     'password' => Hash::make($data['password'] ?? 'Password123!'),
-                    'role' => 'staff',
                 ]);
                 $userId = $user->id;
             }

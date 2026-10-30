@@ -11,37 +11,44 @@ class SystemAndAcademicSeeder extends Seeder
     public function run(): void
     {
         // 1. System Settings
-        DB::table('system_settings')->insert([
-            'school_name' => 'Army Public School & College System',
-            'school_tagline' => 'Excellence in Education',
-            'logo_path' => 'logos/aps_logo.png',
-            'registration_number' => 'REG-2026-99481',
-            'current_session_year' => '2026-2027',
-            'currency_symbol' => 'Rs.',
-            'currency_code' => 'PKR',
-            'timezone' => 'Asia/Karachi',
-            'date_format' => 'Y-m-d',
-            'phone' => '+92-91-5550192',
-            'alt_phone' => '+92-91-5550193',
-            'email' => 'info@aps.edu.pk',
-            'website' => 'https://aps.edu.pk',
-            'address' => 'The Mall Road, Peshawar Cantt, Pakistan',
-            'invoice_prefix' => 'INV-',
-            'receipt_footer_note' => 'Thank you for timely payment. Computer generated receipt.',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        // 2. Users (Admin + Staff users)
-        for ($i = 1; $i <= 12; $i++) {
-            DB::table('users')->insert([
-                // 'id' => $i,
-                'name' => 'User '.$i,
-                'email' => "user{$i}@school.edu.pk",
-                'password' => Hash::make('password'),
+        if (DB::table('system_settings')->count() === 0) {
+            DB::table('system_settings')->insert([
+                'school_name' => 'Army Public School & College System',
+                'school_tagline' => 'Excellence in Education',
+                'logo_path' => 'logos/aps_logo.png',
+                'registration_number' => 'REG-2026-99481',
+                'current_session_year' => '2026-2027',
+                'currency_symbol' => 'Rs.',
+                'currency_code' => 'PKR',
+                'timezone' => 'Asia/Karachi',
+                'date_format' => 'Y-m-d',
+                'phone' => '+92-91-5550192',
+                'alt_phone' => '+92-91-5550193',
+                'email' => 'info@aps.edu.pk',
+                'website' => 'https://aps.edu.pk',
+                'address' => 'The Mall Road, Peshawar Cantt, Pakistan',
+                'invoice_prefix' => 'INV-',
+                'receipt_footer_note' => 'Thank you for timely payment. Computer generated receipt.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+        }
+
+        // 2. Users (Admin + Staff users)
+        for ($i = 1; $i <= 12; $i++) {
+            DB::table('users')->updateOrInsert(
+                ['email' => "user{$i}@school.edu.pk"],
+                [
+                    'name' => 'User '.$i,
+                    'password' => Hash::make('password'),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]
+            );
+        }
+
+        if (DB::table('school_classes')->count() > 0) {
+            return;
         }
 
         // 3. School Classes (10 Grades)

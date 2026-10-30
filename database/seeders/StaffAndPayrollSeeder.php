@@ -9,6 +9,10 @@ class StaffAndPayrollSeeder extends Seeder
 {
     public function run(): void
     {
+        if (DB::table('staff')->count() > 0) {
+            return;
+        }
+
         $designations = ['Senior Teacher', 'Lecturer', 'Assistant Professor', 'Junior Teacher', 'Lab Instructor'];
         $qualifications = ['MS / M.Phil', 'BS (4-Year Program)', 'M.Sc Physics', 'MA English', 'BS Computer Science'];
 
@@ -43,6 +47,7 @@ class StaffAndPayrollSeeder extends Seeder
             DB::table('staff_salary_advances')->insert([
                 'staff_id' => $sId,
                 'amount' => 10000.00,
+                'adjusted_amount' => 10000.00,
                 'issued_date' => '2025-11-10',
                 'status' => 'adjusted',
                 'reason' => 'Emergency Medical Loan',

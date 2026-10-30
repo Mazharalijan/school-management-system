@@ -9,6 +9,10 @@ class StudentAndFeeSeeder extends Seeder
 {
     public function run(): void
     {
+        if (DB::table('students')->count() > 0) {
+            return;
+        }
+
         // 1. Create Fee Heads (10 Types)
         $heads = [
             ['title' => 'Monthly Tuition Fee', 'type' => 'recurring'],

@@ -20,6 +20,7 @@ class ProcessSalarySettlementRequest extends FormRequest
             'payment_date' => ['required', 'date'],
             'unpaid_leaves' => ['nullable', 'integer', 'min:0'],
             'apply_leave_cutoff' => ['required', 'boolean'],
+            'advance_adjusted' => ['nullable', 'numeric', 'min:0'],
             'payment_method' => ['required', 'in:cash,bank_transfer,cheque'],
             'reference_no' => ['nullable', 'string', 'max:100'],
             'notes' => ['nullable', 'string'],

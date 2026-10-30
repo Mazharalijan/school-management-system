@@ -7,7 +7,6 @@ use App\Models\ExamSession;
 use App\Models\SchoolClass;
 use App\Models\Subject;
 use App\Models\User;
-use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
@@ -80,7 +79,6 @@ class ExamClassPaperTest extends TestCase
             'subject_name' => 'English Literature',
         ]);
 
-        $this->withoutMiddleware([ValidateCsrfToken::class]);
         config(['inertia.testing.ensure_pages_exist' => false]);
     }
 

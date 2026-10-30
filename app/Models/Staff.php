@@ -42,7 +42,7 @@ class Staff extends Model
         'skills' => 'array',
     ];
 
-    protected $appends = ['full_name'];
+    protected $appends = ['full_name', 'pending_advances_sum'];
 
     public function getFullNameAttribute(): string
     {
@@ -67,24 +67,33 @@ class Staff extends Model
             ->withTimestamps();
     }
 
-    public function salaryAdvances()
+    public function salaryAdvances(): HasMany
     {
         return $this->hasMany(StaffSalaryAdvance::class);
     }
 
-    public function salarySettlements()
+    public function salarySettlements(): HasMany
     {
         return $this->hasMany(StaffSalarySettlement::class);
     }
 
-    public function ledgers()
+    public function ledgers(): HasMany
     {
         return $this->hasMany(StaffLedger::class)->orderBy('id', 'desc');
     }
 
-    public function getPendingAdvancesSumAttribute()
+    public function getPendingAdvancesSumAttribute(): float
     {
-        return $this->salaryAdvances()->where('status', 'pending_adjustment')->sum('amount');
+        if ($this->relationLoaded('salaryAdvances')) {
+            return (float) $this->salaryAdvances
+                ->whereIn('status', ['pending_adjustment', 'partially_adjusted'])
+                ->sum(fn ($adv) => max(0, (float) $adv->amount - (float) ($adv->adjusted_amount ?? 0)));
+        }
+
+        return (float) ($this->salaryAdvances()
+            ->whereIn('status', ['pending_adjustment', 'partially_adjusted'])
+            ->selectRaw('COALESCE(SUM(amount - adjusted_amount), 0) as balance')
+            ->value('balance') ?? 0);
     }
 
     public function timetables(): HasMany

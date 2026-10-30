@@ -9,6 +9,10 @@ class InventorySeeder extends Seeder
 {
     public function run(): void
     {
+        if (DB::table('inventory_categories')->count() > 0) {
+            return;
+        }
+
         // 1. Categories
         $categories = [
             ['name' => 'Electronics & IT', 'code' => 'CAT-IT'],

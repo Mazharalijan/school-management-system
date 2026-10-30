@@ -7,6 +7,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import PageHeader from '@/components/PageHeader';
+import FilterBar from '@/components/FilterBar';
+import SearchInput from '@/components/SearchInput';
+import FilterSelect from '@/components/FilterSelect';
+import TableActionButton from '@/components/TableActionButton';
+import Pagination from '@/components/Pagination';
 import SalaryManagementModal from '@/Pages/Staff/components/SalaryManagementModal';
 import {
     Dialog,
@@ -31,7 +37,12 @@ import {
     Award,
     MapPin,
     CreditCard,
-    Receipt
+    Receipt,
+    Banknote,
+    CheckCircle2,
+    Clock,
+    History,
+    AlertCircle
 } from 'lucide-react';
 
 export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
@@ -77,6 +88,16 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
     const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
     const [selectedStaff, setSelectedStaff] = useState(null);
     const [isSalaryModalOpen, setIsSalaryModalOpen] = useState(false);
+
+    // Keep selectedStaff synced with updated staff data on reload
+    useEffect(() => {
+        if (selectedStaff) {
+            const updated = staff.data?.find((s) => s.id === selectedStaff.id);
+            if (updated) {
+                setSelectedStaff(updated);
+            }
+        }
+    }, [staff]);
 
     // Search & Filter state initialized from props
     const [searchQuery, setSearchQuery] = useState(filters.search || '');
@@ -243,69 +264,34 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
     return (
         <AppLayout title="Staff Directory">
             {/* Page Header */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-                <div>
-                    <h2 className="text-xl font-semibold text-slate-800">Staff Directory</h2>
-                    <p className="text-sm text-slate-500">Manage teachers, administrators, and school support staff profiles.</p>
-                </div>
-                <Button
-                    onClick={() => setIsAddModalOpen(true)}
-                    className="flex items-center space-x-2 bg-slate-800 hover:bg-slate-900 hover:cursor-pointer text-white shadow-sm"
-                >
-                    <UserPlus className="h-4 w-4" />
-                    <span>Add Staff Member</span>
-                </Button>
-            </div>
+            <PageHeader
+                title="Staff Directory"
+                subtitle="Manage teachers, administrators, and school support staff profiles."
+                buttonText="Add Staff Member"
+                icon={UserPlus}
+                onButtonClick={() => setIsAddModalOpen(true)}
+            />
 
             {/* Single-Row Search & Filter Bar */}
-            <Card className="mb-6 border-slate-200 shadow-sm">
-                <CardContent className="p-4">
-                    <div className="flex flex-row items-center gap-3 w-full">
-                        <div className="relative flex-1">
-                            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400 z-10">
-                                <Search className="h-4 w-4" />
-                            </div>
+            <FilterBar showReset={Boolean(searchQuery || selectedDesignationFilter)} onReset={handleResetFilter}>
+                <SearchInput
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e?.target ? e.target.value : e)}
+                    placeholder="Search by name, CNIC, employee code, email, or phone..."
+                    className="flex-1 min-w-[240px]"
+                />
 
-                            <Input
-                                placeholder="Search by name, CNIC, employee code, email, or phone..."
-                                className="pl-10 w-full bg-white h-10 border-slate-200 focus-visible:ring-blue-500"
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
-                        </div>
-
-                        <div className="w-56 shrink-0">
-                            <select
-                                className="w-full h-10 px-3 py-2 text-sm rounded-md border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                value={selectedDesignationFilter}
-                                onChange={handleDesignationChange}
-                            >
-                                <option value="">All Designations</option>
-                                {DESIGNATIONS.map((desig, idx) => (
-                                    <option key={idx} value={desig}>
-                                        {desig}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        {(searchQuery || selectedDesignationFilter) && (
-                            <Button
-                                type="button"
-                                onClick={handleResetFilter}
-                                variant="outline"
-                                className="h-10 px-3 flex items-center space-x-1 text-slate-600 shrink-0 border-slate-200 hover:bg-slate-50"
-                            >
-                                <RotateCcw className="h-3.5 w-3.5" />
-                                <span>Reset</span>
-                            </Button>
-                        )}
-                    </div>
-                </CardContent>
-            </Card>
+                <FilterSelect
+                    value={selectedDesignationFilter}
+                    onChange={(v) => handleDesignationChange({ target: { value: v } })}
+                    options={DESIGNATIONS.map((d) => ({ id: d, name: d }))}
+                    placeholder="All Designations"
+                    className="w-56 shrink-0"
+                />
+            </FilterBar>
 
             {/* Staff Table */}
-            <Card className="border-slate-200 shadow-sm">
+            <Card className="border-slate-200 shadow-sm overflow-hidden">
                 <CardContent className="p-0">
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm text-left text-slate-600">
@@ -344,6 +330,13 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                                 <span className="text-xs text-slate-400 capitalize">
                                                     {member.gender} | Joined: {member.joining_date}
                                                 </span>
+                                                {parseFloat(member.pending_advances_sum || 0) > 0 && (
+                                                    <div className="mt-1">
+                                                        <Badge className="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] py-0 px-1.5 font-mono">
+                                                            Advance Debt: PKR {parseFloat(member.pending_advances_sum).toLocaleString()}
+                                                        </Badge>
+                                                    </div>
+                                                )}
                                             </td>
                                             <td className="px-4 py-3">
                                                 <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
@@ -376,48 +369,36 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                             </td>
                                             <td className="px-4 py-3 text-right">
                                                 <div className="flex items-center justify-end space-x-1">
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="icon"
+                                                    <TableActionButton
                                                         title="View Details"
-                                                        className="h-8 w-8 text-slate-500 hover:text-slate-800 hover:bg-slate-100"
+                                                        icon={Eye}
+                                                        variant="default"
                                                         onClick={() => {
                                                             setSelectedStaff(member);
                                                             setIsDetailsModalOpen(true);
                                                         }}
-                                                    >
-                                                        <Eye className="h-4 w-4" />
-                                                    </Button>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="icon"
+                                                    />
+                                                    <TableActionButton
                                                         title="Salary Management"
-                                                        className="h-8 w-8 text-slate-500 hover:text-slate-800 hover:bg-slate-100"
+                                                        icon={Receipt}
+                                                        variant="default"
                                                         onClick={() => {
                                                             setSelectedStaff(member);
                                                             setIsSalaryModalOpen(true);
                                                         }}
-                                                    >
-                                                        <Receipt className="h-4 w-4" />
-                                                    </Button>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="icon"
+                                                    />
+                                                    <TableActionButton
                                                         title="Edit Staff"
-                                                        className="h-8 w-8 text-slate-500 hover:text-blue-600 hover:bg-blue-50"
+                                                        icon={Pencil}
+                                                        variant="primary"
                                                         onClick={() => handleOpenEdit(member)}
-                                                    >
-                                                        <Pencil className="h-4 w-4" />
-                                                    </Button>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="icon"
+                                                    />
+                                                    <TableActionButton
                                                         title="Delete Staff"
-                                                        className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-red-50"
+                                                        icon={Trash2}
+                                                        variant="danger"
                                                         onClick={() => handleDeleteStaff(member.id)}
-                                                    >
-                                                        <Trash2 className="h-4 w-4" />
-                                                    </Button>
+                                                    />
                                                 </div>
                                             </td>
                                         </tr>
@@ -426,6 +407,14 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                             </tbody>
                         </table>
                     </div>
+                    {staff?.links && (
+                        <Pagination
+                            links={staff.links}
+                            from={staff.from}
+                            to={staff.to}
+                            total={staff.total}
+                        />
+                    )}
                 </CardContent>
             </Card>
 
@@ -986,42 +975,233 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                         </div>
                                     </TabsContent>
 
-                                    {/* TAB 2: SALARY DETAILS */}
-                                    <TabsContent value="salary-details" className="mt-0">
-                                        <div className="rounded-lg border border-slate-200 overflow-hidden bg-white">
-                                            <table className="w-full text-xs text-left text-slate-600">
-                                                <thead className="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200 uppercase">
-                                                    <tr>
-                                                        <th className="px-3 py-2.5">Month</th>
-                                                        <th className="px-3 py-2.5">Base Salary</th>
-                                                        <th className="px-3 py-2.5">Net Paid</th>
-                                                        <th className="px-3 py-2.5">Status</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="divide-y divide-slate-100">
-                                                    {selectedStaff.salary_history && selectedStaff.salary_history.length > 0 ? (
-                                                        selectedStaff.salary_history.map((sal) => (
-                                                            <tr key={sal.id} className="hover:bg-slate-50">
-                                                                <td className="px-3 py-2 font-medium text-slate-800">{sal.month}</td>
-                                                                <td className="px-3 py-2">{sal.base_salary}</td>
-                                                                <td className="px-3 py-2 font-semibold text-slate-800">{sal.net_salary}</td>
-                                                                <td className="px-3 py-2">
-                                                                    <Badge className={sal.status === 'paid' ? "bg-emerald-100 text-emerald-800 border-0" : "bg-amber-100 text-amber-800 border-0"}>
-                                                                        {sal.status}
-                                                                    </Badge>
-                                                                </td>
-                                                            </tr>
-                                                        ))
-                                                    ) : (
-                                                        <tr>
-                                                            <td colSpan="4" className="text-center py-6 text-slate-400">
-                                                                No salary records found for this staff member.
-                                                            </td>
-                                                        </tr>
-                                                    )}
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                    {/* TAB 2: SALARY & ADVANCES DETAILS */}
+                                    <TabsContent value="salary-details" className="mt-0 space-y-4">
+                                        {(() => {
+                                            const pSettlements = selectedStaff.salary_settlements || selectedStaff.salarySettlements || [];
+                                            const pAdvances = selectedStaff.salary_advances || selectedStaff.salaryAdvances || [];
+                                            const pLedgers = selectedStaff.ledgers || [];
+                                            const pBaseSalary = parseFloat(selectedStaff.salary || 0);
+                                            const pPendingAdvance = parseFloat(selectedStaff.pending_advances_sum || 0);
+                                            const pTotalAdvances = pAdvances.reduce((acc, a) => acc + (parseFloat(a.amount) || 0), 0);
+                                            const pTotalAdjusted = pAdvances.reduce((acc, a) => acc + (parseFloat(a.adjusted_amount) || 0), 0);
+                                            const pTotalPaid = pSettlements.reduce((acc, s) => acc + (parseFloat(s.net_paid) || 0), 0);
+
+                                            return (
+                                                <div className="space-y-4">
+                                                    {/* Header & Quick Action */}
+                                                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                                        <div>
+                                                            <h4 className="font-bold text-slate-800 text-sm">Salary & Advance Ledger</h4>
+                                                            <p className="text-xs text-slate-500">Track monthly salary disbursements, advance loans, and deductions.</p>
+                                                        </div>
+                                                        <Button
+                                                            size="sm"
+                                                            onClick={() => {
+                                                                setIsDetailsModalOpen(false);
+                                                                setIsSalaryModalOpen(true);
+                                                            }}
+                                                            className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold h-8"
+                                                        >
+                                                            <Banknote className="h-3.5 w-3.5 mr-1.5" />
+                                                            Pay Salary / Issue Advance
+                                                        </Button>
+                                                    </div>
+
+                                                    {/* Summary Metrics */}
+                                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
+                                                        <div className="bg-white p-3 rounded-lg border border-slate-200">
+                                                            <span className="text-[11px] text-slate-400 block font-medium">Base Salary</span>
+                                                            <span className="text-sm font-bold font-mono text-slate-800">
+                                                                PKR {pBaseSalary.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                                                            </span>
+                                                        </div>
+                                                        <div className="bg-white p-3 rounded-lg border border-slate-200">
+                                                            <span className="text-[11px] text-slate-400 block font-medium">Pending Advance Debt</span>
+                                                            <span className={`text-sm font-bold font-mono ${pPendingAdvance > 0 ? 'text-amber-600' : 'text-slate-800'}`}>
+                                                                PKR {pPendingAdvance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                                                            </span>
+                                                        </div>
+                                                        <div className="bg-white p-3 rounded-lg border border-slate-200">
+                                                            <span className="text-[11px] text-slate-400 block font-medium">Advances Taken / Repaid</span>
+                                                            <span className="text-xs font-bold font-mono text-slate-700 block">
+                                                                PKR {pTotalAdvances.toLocaleString()} / <span className="text-emerald-600">{pTotalAdjusted.toLocaleString()}</span>
+                                                            </span>
+                                                        </div>
+                                                        <div className="bg-white p-3 rounded-lg border border-slate-200">
+                                                            <span className="text-[11px] text-slate-400 block font-medium">Total Net Salary Paid</span>
+                                                            <span className="text-sm font-bold font-mono text-emerald-700">
+                                                                PKR {pTotalPaid.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Sub Tabs: Settlements / Advances / Ledger */}
+                                                    <Tabs defaultValue="profile-settlements" className="w-full">
+                                                        <TabsList className="bg-slate-100 p-0.5 rounded-md h-8">
+                                                            <TabsTrigger value="profile-settlements" className="text-xs px-2.5 py-1">
+                                                                <Receipt className="h-3 w-3 mr-1" />
+                                                                Salary Payments ({pSettlements.length})
+                                                            </TabsTrigger>
+                                                            <TabsTrigger value="profile-advances" className="text-xs px-2.5 py-1">
+                                                                <Clock className="h-3 w-3 mr-1" />
+                                                                Advances ({pAdvances.length})
+                                                            </TabsTrigger>
+                                                            <TabsTrigger value="profile-ledger" className="text-xs px-2.5 py-1">
+                                                                <History className="h-3 w-3 mr-1" />
+                                                                Ledger ({pLedgers.length})
+                                                            </TabsTrigger>
+                                                        </TabsList>
+
+                                                        {/* Sub-Tab 1: Settlements */}
+                                                        <TabsContent value="profile-settlements" className="mt-2.5">
+                                                            <div className="rounded-lg border border-slate-200 overflow-hidden bg-white">
+                                                                <div className="max-h-60 overflow-y-auto">
+                                                                    <table className="w-full text-xs text-left text-slate-600">
+                                                                        <thead className="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200 uppercase sticky top-0">
+                                                                            <tr>
+                                                                                <th className="px-3 py-2">Voucher #</th>
+                                                                                <th className="px-3 py-2">Period</th>
+                                                                                <th className="px-3 py-2">Paid Date</th>
+                                                                                <th className="px-3 py-2">Gross</th>
+                                                                                <th className="px-3 py-2">Advance Deducted</th>
+                                                                                <th className="px-3 py-2">Net Disbursed</th>
+                                                                                <th className="px-3 py-2">Method</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody className="divide-y divide-slate-100">
+                                                                            {pSettlements.length > 0 ? (
+                                                                                pSettlements.map((sal) => (
+                                                                                    <tr key={sal.id} className="hover:bg-slate-50">
+                                                                                        <td className="px-3 py-2 font-mono font-bold text-slate-800">{sal.voucher_no}</td>
+                                                                                        <td className="px-3 py-2 font-medium text-slate-700">{sal.month_year}</td>
+                                                                                        <td className="px-3 py-2">{sal.payment_date}</td>
+                                                                                        <td className="px-3 py-2 font-mono">PKR {parseFloat(sal.gross_payable || 0).toLocaleString()}</td>
+                                                                                        <td className="px-3 py-2 font-mono text-amber-700 font-semibold">
+                                                                                            {parseFloat(sal.advance_adjusted || 0) > 0 ? `- PKR ${parseFloat(sal.advance_adjusted).toLocaleString()}` : 'PKR 0.00'}
+                                                                                        </td>
+                                                                                        <td className="px-3 py-2 font-mono font-bold text-emerald-700">
+                                                                                            PKR {parseFloat(sal.net_paid || 0).toLocaleString()}
+                                                                                        </td>
+                                                                                        <td className="px-3 py-2 capitalize">{sal.payment_method?.replace('_', ' ') || 'Cash'}</td>
+                                                                                    </tr>
+                                                                                ))
+                                                                            ) : (
+                                                                                <tr>
+                                                                                    <td colSpan="7" className="text-center py-6 text-slate-400">
+                                                                                        No salary payment records found for this staff member.
+                                                                                    </td>
+                                                                                </tr>
+                                                                            )}
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </TabsContent>
+
+                                                        {/* Sub-Tab 2: Advances */}
+                                                        <TabsContent value="profile-advances" className="mt-2.5">
+                                                            <div className="rounded-lg border border-slate-200 overflow-hidden bg-white">
+                                                                <div className="max-h-60 overflow-y-auto">
+                                                                    <table className="w-full text-xs text-left text-slate-600">
+                                                                        <thead className="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200 uppercase sticky top-0">
+                                                                            <tr>
+                                                                                <th className="px-3 py-2">Issued Date</th>
+                                                                                <th className="px-3 py-2">Amount</th>
+                                                                                <th className="px-3 py-2">Adjusted</th>
+                                                                                <th className="px-3 py-2">Remaining Debt</th>
+                                                                                <th className="px-3 py-2">Status</th>
+                                                                                <th className="px-3 py-2">Reason</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody className="divide-y divide-slate-100">
+                                                                            {pAdvances.length > 0 ? (
+                                                                                pAdvances.map((adv) => {
+                                                                                    const amt = parseFloat(adv.amount || 0);
+                                                                                    const adj = parseFloat(adv.adjusted_amount || 0);
+                                                                                    const rem = Math.max(0, amt - adj);
+
+                                                                                    return (
+                                                                                        <tr key={adv.id} className="hover:bg-slate-50">
+                                                                                            <td className="px-3 py-2 font-mono">{adv.issued_date}</td>
+                                                                                            <td className="px-3 py-2 font-mono font-bold text-slate-800">PKR {amt.toLocaleString()}</td>
+                                                                                            <td className="px-3 py-2 font-mono text-emerald-700">PKR {adj.toLocaleString()}</td>
+                                                                                            <td className="px-3 py-2 font-mono font-bold text-amber-700">PKR {rem.toLocaleString()}</td>
+                                                                                            <td className="px-3 py-2">
+                                                                                                {adv.status === 'adjusted' ? (
+                                                                                                    <Badge className="bg-emerald-100 text-emerald-800 border-0 text-[10px]">Fully Adjusted</Badge>
+                                                                                                ) : adv.status === 'partially_adjusted' ? (
+                                                                                                    <Badge className="bg-amber-100 text-amber-800 border-0 text-[10px]">Partially Adjusted</Badge>
+                                                                                                ) : (
+                                                                                                    <Badge className="bg-blue-100 text-blue-800 border-0 text-[10px]">Pending Adjustment</Badge>
+                                                                                                )}
+                                                                                            </td>
+                                                                                            <td className="px-3 py-2 text-slate-600">{adv.reason || 'Salary advance'}</td>
+                                                                                        </tr>
+                                                                                    );
+                                                                                })
+                                                                            ) : (
+                                                                                <tr>
+                                                                                    <td colSpan="6" className="text-center py-6 text-slate-400">
+                                                                                        No advance loan records found for this staff member.
+                                                                                    </td>
+                                                                                </tr>
+                                                                            )}
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </TabsContent>
+
+                                                        {/* Sub-Tab 3: Ledger */}
+                                                        <TabsContent value="profile-ledger" className="mt-2.5">
+                                                            <div className="rounded-lg border border-slate-200 overflow-hidden bg-white">
+                                                                <div className="max-h-60 overflow-y-auto">
+                                                                    <table className="w-full text-xs text-left text-slate-600">
+                                                                        <thead className="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200 uppercase sticky top-0">
+                                                                            <tr>
+                                                                                <th className="px-3 py-2">Date</th>
+                                                                                <th className="px-3 py-2">Description</th>
+                                                                                <th className="px-3 py-2">Type</th>
+                                                                                <th className="px-3 py-2 text-right">Amount</th>
+                                                                                <th className="px-3 py-2 text-right">Balance</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody className="divide-y divide-slate-100">
+                                                                            {pLedgers.length > 0 ? (
+                                                                                pLedgers.map((leg) => (
+                                                                                    <tr key={leg.id} className="hover:bg-slate-50">
+                                                                                        <td className="px-3 py-2 font-mono text-slate-700">{leg.transaction_date}</td>
+                                                                                        <td className="px-3 py-2 font-medium text-slate-800">{leg.description}</td>
+                                                                                        <td className="px-3 py-2">
+                                                                                            <Badge className={leg.type === 'credit' ? 'bg-emerald-100 text-emerald-800 border-0 text-[10px]' : 'bg-amber-100 text-amber-800 border-0 text-[10px]'}>
+                                                                                                {leg.type}
+                                                                                            </Badge>
+                                                                                        </td>
+                                                                                        <td className="px-3 py-2 text-right font-mono font-bold">
+                                                                                            PKR {parseFloat(leg.amount || 0).toLocaleString()}
+                                                                                        </td>
+                                                                                        <td className="px-3 py-2 text-right font-mono font-bold text-slate-900">
+                                                                                            PKR {parseFloat(leg.balance || 0).toLocaleString()}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                ))
+                                                                            ) : (
+                                                                                <tr>
+                                                                                    <td colSpan="5" className="text-center py-6 text-slate-400">
+                                                                                        No ledger entries recorded.
+                                                                                    </td>
+                                                                                </tr>
+                                                                            )}
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </TabsContent>
+                                                    </Tabs>
+                                                </div>
+                                            );
+                                        })()}
                                     </TabsContent>
 
                                 </Tabs>

@@ -1,75 +1,84 @@
 import React, { useState, useEffect } from 'react';
-import { router } from '@inertiajs/react';
+import { router, Head } from '@inertiajs/react';
+import AppLayout from '@/Layouts/AppLayout';
+import PageHeader from '@/components/PageHeader';
 import FilterBar from '@/components/FilterBar';
 import SearchInput from '@/components/SearchInput';
 import FilterSelect from '@/components/FilterSelect';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { 
   Printer, 
-  Plus, 
-  FileSpreadsheet, 
-  UserCheck, 
   GraduationCap, 
-  UserPlus, 
+  Calendar, 
   CheckCircle2, 
-  FileText 
+  FileSpreadsheet, 
+  Award,
+  ScanLine,
+  Save,
+  Send,
+  Loader2,
+  FileCheck
 } from 'lucide-react';
 
-import HeaderMetadata from './components/HeaderMetadata';
 import MarksEntryGrid from './components/MarksEntryGrid';
 import OcrScannerModal from './components/OcrScannerModal';
 import DmcPrintModal from './components/DmcPrintModal';
 import PrintMarksheetModal from './components/PrintMarksheetModal';
 
 export default function Index({
-  teacher = { id: 104, name: 'Prof. Sarah Jenkins', emp_id: 'T-104', designation: 'Class Teacher' },
-  examTerm = { id: 1, name: 'Mid Term Examination 2026' },
-  classDetails = { id: 101, name: 'Grade 5', section: 'Section A' },
-  teachers = [
-    { id: 104, name: 'Prof. Sarah Jenkins', emp_id: 'T-104' },
-    { id: 105, name: 'Dr. Robert Ford', emp_id: 'T-105' },
-    { id: 106, name: 'Ms. Clara Oswald', emp_id: 'T-106' }
-  ],
-  papers = [
-    { id: 1, subject_name: 'Mathematics', total_marks: 100, passing_marks: 33 },
-    { id: 2, subject_name: 'English', total_marks: 100, passing_marks: 33 },
-    { id: 3, subject_name: 'General Science', total_marks: 100, passing_marks: 33 },
-    { id: 4, subject_name: 'Computer Studies', total_marks: 50, passing_marks: 17 }
-  ],
-  initialStudents = [
-    { id: 1001, roll_no: '501', name: 'Ali Ahmed', marks: { 1: 85, 2: 78, 3: 92, 4: 44 }, absent: { 1: false, 2: false, 3: false, 4: false } },
-    { id: 1002, roll_no: '502', name: 'Sara Khan', marks: { 1: 28, 2: 65, 3: 58, 4: 30 }, absent: { 1: false, 2: false, 3: false, 4: false } },
-    { id: 1003, roll_no: '503', name: 'Usman Tariq', marks: { 1: 0, 2: 0, 3: 0, 4: 0 }, absent: { 1: true, 2: true, 3: true, 4: true } },
-    { id: 1004, roll_no: '504', name: 'Zoya Fatima', marks: { 1: 95, 2: 88, 3: 91, 4: 48 }, absent: { 1: false, 2: false, 3: false, 4: false } }
-  ],
-  classes = [
-    { id: 101, name: 'Grade 5 - Sec A' },
-    { id: 102, name: 'Grade 5 - Sec B' },
-    { id: 103, name: 'Grade 6 - Sec A' }
-  ],
-  subjects = [],
+  teacher = { id: 1, name: 'Admin User', emp_id: 'EMP-001', designation: 'Class Teacher' },
+  examTerm = { id: 1, name: 'First Term Examination 2026-2027' },
+  classDetails = { id: 1, name: 'Grade 1', sections: [] },
+  teachers = [],
+  papers = [],
+  initialStudents = [],
+  classes = [],
+  sessions = [],
+  examSessions = [],
   filters = {},
+  isTab = false,
   externalOcrOpen = false,
   onCloseExternalOcr = () => {}
 }) {
+  // Available Sessions (from either sessions or examSessions prop)
+  const availableSessions = sessions.length > 0 ? sessions : examSessions;
+
+  // Active Filter States
+  const [activeSessionId, setActiveSessionId] = useState(
+    Number(filters.exam_session_id) || examTerm?.id || (availableSessions[0]?.id || 1)
+  );
+  const [activeClassId, setActiveClassId] = useState(
+    Number(filters.school_class_id) || classDetails?.id || (classes[0]?.id || 1)
+  );
+  const [activeSectionId, setActiveSectionId] = useState(filters.section_id || '');
+  const [search, setSearch] = useState(filters.search || '');
+
+  // Local student marks state
   const [studentsData, setStudentsData] = useState(initialStudents);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  
-  // Active Class State
-  const [activeClassId, setActiveClassId] = useState(classDetails.id || (classes[0]?.id || ''));
-
-  // Filter States
-  const [search, setSearch] = useState(filters.search || '');
-  const [selectedSubject, setSelectedSubject] = useState(filters.subject_id || '');
+  const [isSaving, setIsSaving] = useState(false);
+  const [notification, setNotification] = useState(null);
 
   // Modals state
   const [isOcrOpen, setIsOcrOpen] = useState(false);
   const [selectedDmcStudent, setSelectedDmcStudent] = useState(null);
   const [isPrintMarksheetOpen, setIsPrintMarksheetOpen] = useState(false);
-  const [selectedPrintTeacher, setSelectedPrintTeacher] = useState(teacher.id);
+  const [selectedPrintTeacher, setSelectedPrintTeacher] = useState(teacher?.id || 1);
 
-  // Sync external header OCR modal trigger from Index.jsx
+  // Sync state when server props update after navigation
+  useEffect(() => {
+    setStudentsData(initialStudents);
+  }, [initialStudents]);
+
+  useEffect(() => {
+    if (filters.exam_session_id) setActiveSessionId(Number(filters.exam_session_id));
+    if (filters.school_class_id) setActiveClassId(Number(filters.school_class_id));
+    if (filters.section_id !== undefined) setActiveSectionId(filters.section_id);
+  }, [filters]);
+
+  // Sync external header OCR modal trigger
   useEffect(() => {
     if (externalOcrOpen) {
       setIsOcrOpen(true);
@@ -81,35 +90,61 @@ export default function Index({
     onCloseExternalOcr();
   };
 
-  const applyFilters = (newFilters = {}) => {
-    router.get(
-      route('exam-class-papers.index'),
-      {
-        tab: 'marks',
-        search,
-        school_class_id: activeClassId,
-        subject_id: selectedSubject,
-        ...newFilters,
-      },
-      { preserveState: true, replace: true }
-    );
+  // Find active class sections
+  const activeClassObj = classes.find(c => c.id === activeClassId);
+  const activeSections = activeClassObj?.sections || classDetails?.sections || [];
+
+  // Trigger Inertia Visit to load session/class data
+  const applyFilters = (newParams = {}) => {
+    const targetRoute = isTab ? route('exam-class-papers.index') : route('marks.entry');
+    const query = {
+      ...(isTab ? { tab: 'marks' } : {}),
+      exam_session_id: newParams.exam_session_id !== undefined ? newParams.exam_session_id : activeSessionId,
+      school_class_id: newParams.school_class_id !== undefined ? newParams.school_class_id : activeClassId,
+      section_id: newParams.section_id !== undefined ? newParams.section_id : activeSectionId,
+      search: newParams.search !== undefined ? newParams.search : search,
+    };
+
+    router.get(targetRoute, query, {
+      preserveState: true,
+      preserveScroll: true,
+      replace: true,
+    });
+  };
+
+  const handleSessionChange = (sessionId) => {
+    const sId = Number(sessionId);
+    setActiveSessionId(sId);
+    applyFilters({ exam_session_id: sId });
   };
 
   const handleClassChange = (classId) => {
-    setActiveClassId(classId);
-    applyFilters({ school_class_id: classId });
+    const cId = Number(classId);
+    setActiveClassId(cId);
+    applyFilters({ school_class_id: cId, section_id: '' });
+  };
+
+  const handleSectionChange = (sectionId) => {
+    setActiveSectionId(sectionId);
+    applyFilters({ section_id: sectionId });
+  };
+
+  const handleResetFilter = () => {
+    setSearch('');
+    setActiveSectionId('');
+    applyFilters({ search: '', section_id: '' });
   };
 
   // Apply OCR scanned data to students
   const handleApplyOcrData = (extractedRows) => {
     setStudentsData(prev => 
       prev.map(student => {
-        const match = extractedRows.find(r => r.roll_no === student.roll_no);
+        const match = extractedRows.find(r => String(r.roll_no) === String(student.roll_no));
         if (match) {
           return {
             ...student,
             marks: match.marks || student.marks,
-            absent: match.is_absent ? { 1: true, 2: true, 3: true, 4: true } : student.absent
+            absent: match.is_absent ? { ...student.absent, 1: true } : student.absent
           };
         }
         return student;
@@ -117,105 +152,242 @@ export default function Index({
     );
   };
 
-  // Filter students by search term
-  const filteredStudents = studentsData.filter(student =>
-    student.name.toLowerCase().includes(search.toLowerCase()) ||
-    student.roll_no.toString().includes(search)
-  );
+  // Save Marks / Prepare Results to Backend
+  const handleSaveMarks = (prepareResults = false) => {
+    setIsSaving(true);
+    setNotification(null);
 
-  return (
-    <div className="space-y-5">
-      {/* 1. Class Selection Strip */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <GraduationCap className="w-5 h-5 text-indigo-600" />
-          <span className="text-sm font-bold text-slate-800">Select Class Directory:</span>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          {classes.map((cls) => {
-            const isActive = cls.id === activeClassId;
-            return (
-              <button
-                key={cls.id}
-                onClick={() => handleClassChange(cls.id)}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all border ${
-                  isActive
-                    ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                    : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
-                }`}
-              >
-                {cls.name}
-              </button>
-            );
-          })}
-        </div>
-      </div>
+    const payload = {
+      exam_session_id: activeSessionId,
+      school_class_id: activeClassId,
+      prepare_results: prepareResults,
+      students: studentsData.map(student => {
+        const studentMarksArray = papers.map(paper => {
+          const key = paper.subject_id || paper.id;
+          const isAbsent = Boolean(student.absent?.[key] ?? student.absent?.[paper.id]);
+          const markVal = student.marks?.[key] ?? student.marks?.[paper.id];
 
-      {/* 2. Header Metadata Summary Banner */}
-      <HeaderMetadata
-        teacher={teacher}
-        examTerm={examTerm}
-        classDetails={classDetails}
-        isSubmitted={isSubmitted}
-      />
+          return {
+            subject_id: paper.subject_id || paper.id,
+            obtained_marks: isAbsent ? 0.00 : (markVal === '' || markVal === null ? 0.00 : Number(markVal)),
+            total_marks: Number(paper.total_marks) || 100.00,
+            is_absent: isAbsent,
+            remarks: student.remarks?.[key] || null,
+          };
+        });
 
-      {/* 3. Filter Bar & Quick Print Action */}
-      <FilterBar 
-        showReset={Boolean(search || selectedSubject)} 
-        onReset={() => {
-          setSearch('');
-          setSelectedSubject('');
-          applyFilters({ search: '', subject_id: '' });
-        }}
-      >
-        <SearchInput 
-          value={search} 
-          onChange={(e) => setSearch(e.target.value)} 
-          placeholder="Search student by name or roll no..." 
+        return {
+          student_id: student.id,
+          teacher_remarks: student.teacher_remarks || null,
+          marks: studentMarksArray,
+        };
+      }),
+    };
+
+    router.post(route('marks.bulk-store'), payload, {
+      preserveScroll: true,
+      onSuccess: () => {
+        setIsSaving(false);
+        setNotification({
+          type: 'success',
+          message: prepareResults 
+            ? 'Marks saved and student results & class positions prepared successfully!'
+            : 'Marks draft saved successfully.'
+        });
+      },
+      onError: (err) => {
+        setIsSaving(false);
+        setNotification({
+          type: 'error',
+          message: 'Error saving marks: ' + (Object.values(err)[0] || 'Please review your input fields.')
+        });
+      }
+    });
+  };
+
+  const mainContent = (
+    <div className="space-y-6">
+      {/* 1. Page Header (Rendered on standalone page) */}
+      {!isTab && (
+        <PageHeader
+          title="Marks & Results Management"
+          subtitle="Record subject marks, calculate student percentages & grades, rank positions, and print official DMCs."
+          icon={Award}
+        >
+          <div className="flex flex-wrap items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsOcrOpen(true)}
+              className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold h-9"
+            >
+              <ScanLine className="w-3.5 h-3.5 mr-1.5 text-indigo-600" />
+              Offline OCR Scan
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsPrintMarksheetOpen(true)}
+              className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold h-9"
+            >
+              <Printer className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
+              Print Marksheet
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={isSaving}
+              onClick={() => handleSaveMarks(false)}
+              className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold h-9"
+            >
+              {isSaving ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin text-slate-500" /> : <Save className="w-3.5 h-3.5 mr-1.5 text-slate-600" />}
+              Save Draft
+            </Button>
+            <Button
+              size="sm"
+              disabled={isSaving}
+              onClick={() => handleSaveMarks(true)}
+              className="bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold h-9 shadow-sm"
+            >
+              {isSaving ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin text-white" /> : <Send className="w-3.5 h-3.5 mr-1.5 text-white" />}
+              Save & Prepare Results
+            </Button>
+          </div>
+        </PageHeader>
+      )}
+
+      {/* 2. Unified FilterBar Matching Students UI */}
+      <FilterBar showReset={Boolean(search || activeSectionId)} onReset={handleResetFilter}>
+        <SearchInput
+          value={search}
+          onChange={(e) => setSearch(e?.target ? e.target.value : e)}
+          placeholder="Filter students in matrix by name or roll no..."
+          className="flex-1 min-w-[220px]"
         />
-        <FilterSelect 
-          value={selectedSubject} 
-          onChange={(val) => { setSelectedSubject(val); applyFilters({ subject_id: val }); }} 
-          options={subjects} 
-          placeholder="Filter Subject" 
-          valueKey="id" 
-          labelKey="name" 
+
+        <FilterSelect
+          value={activeSessionId}
+          onChange={handleSessionChange}
+          options={availableSessions}
+          valueKey="id"
+          labelKey="title"
+          placeholder="Select Exam Session"
+          className="w-56 shrink-0"
         />
 
-        <div className="flex items-center gap-2 ml-auto">
-          <Button 
-            variant="outline" 
-            onClick={() => setIsPrintMarksheetOpen(true)}
-            className="border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold text-xs"
-          >
-            <Printer className="w-3.5 h-3.5 mr-1.5 text-slate-600" />
-            Print Blank Marksheet Sheet
-          </Button>
-        </div>
+        <FilterSelect
+          value={activeClassId}
+          onChange={handleClassChange}
+          options={classes}
+          valueKey="id"
+          labelKey="name"
+          placeholder="Select Class"
+          className="w-48 shrink-0"
+        />
+
+        {activeSections.length > 0 && (
+          <FilterSelect
+            value={activeSectionId}
+            onChange={handleSectionChange}
+            options={activeSections}
+            valueKey="id"
+            labelKey="name"
+            placeholder="All Sections"
+            className="w-36 shrink-0"
+          />
+        )}
       </FilterBar>
 
-      {/* 4. Primary Marks Spreadsheet Grid */}
-      <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
-        <MarksEntryGrid
-          papers={papers}
-          studentsData={filteredStudents}
-          setStudentsData={setStudentsData}
-          isSubmitted={isSubmitted}
-          setIsSubmitted={setIsSubmitted}
-          onOpenDmc={(student) => setSelectedDmcStudent(student)}
-        />
-      </div>
+      {/* 3. Session & Evaluation Context Card */}
+      <Card className="border-slate-200 shadow-sm">
+        <CardContent className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-700 shrink-0">
+              <Award className="w-5 h-5" />
+            </div>
+            <div>
+              <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Examination Term</span>
+              <span className="text-sm font-bold text-slate-800">
+                {examTerm?.name} {examTerm?.session_year ? `(${examTerm.session_year})` : ''}
+              </span>
+            </div>
+          </div>
 
-      {/* 5. OCR Scanner Modal */}
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
+            <div>
+              <span className="text-[11px] text-slate-400 block font-medium">Class & Section</span>
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 font-semibold">
+                  {classDetails?.name || 'Class'}
+                </Badge>
+                {activeSectionId ? (
+                  <Badge variant="outline" className="bg-slate-100 text-slate-700 font-semibold">
+                    Sec {activeSections.find(s => String(s.id) === String(activeSectionId))?.name || activeSectionId}
+                  </Badge>
+                ) : (
+                  <Badge variant="outline" className="bg-slate-100 text-slate-500 font-semibold">
+                    All Sections
+                  </Badge>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <span className="text-[11px] text-slate-400 block font-medium">Students in Matrix</span>
+              <span className="text-sm font-bold text-slate-800 font-mono">{initialStudents.length}</span>
+            </div>
+
+            <div>
+              <span className="text-[11px] text-slate-400 block font-medium">Papers Evaluated</span>
+              <span className="text-sm font-bold text-slate-800 font-mono">{papers.length} Subjects</span>
+            </div>
+
+            <div>
+              <span className="text-[11px] text-slate-400 block font-medium">Class Evaluator</span>
+              <span className="text-xs font-semibold text-slate-700">{teacher?.name || 'Administrator'}</span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Notification Banner */}
+      {notification && (
+        <div className={`p-4 rounded-lg border flex items-center justify-between text-xs font-bold ${
+          notification.type === 'success' 
+            ? 'bg-emerald-50 border-emerald-200 text-emerald-800' 
+            : 'bg-rose-50 border-rose-200 text-rose-800'
+        }`}>
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+            <span>{notification.message}</span>
+          </div>
+          <button onClick={() => setNotification(null)} className="text-slate-400 hover:text-slate-600 font-mono">×</button>
+        </div>
+      )}
+
+      {/* 4. Unified Marks Spreadsheet Grid */}
+      <MarksEntryGrid
+        papers={papers}
+        studentsData={studentsData}
+        setStudentsData={setStudentsData}
+        searchQuery={search}
+        isSubmitted={isSubmitted}
+        setIsSubmitted={setIsSubmitted}
+        onOpenDmc={(student) => setSelectedDmcStudent(student)}
+        onSaveDraft={() => handleSaveMarks(false)}
+        onPrepareResults={() => handleSaveMarks(true)}
+        isSaving={isSaving}
+      />
+
+      {/* Modals */}
       <OcrScannerModal
         isOpen={isOcrOpen}
         onClose={handleCloseOcr}
         onApplyOcrData={handleApplyOcrData}
       />
 
-      {/* 6. Printable DMC Certificate Modal */}
       <DmcPrintModal
-        isOpen={!!selectedDmcStudent}
+        isOpen={Boolean(selectedDmcStudent)}
         onClose={() => setSelectedDmcStudent(null)}
         student={selectedDmcStudent}
         classDetails={classDetails}
@@ -224,18 +396,32 @@ export default function Index({
         teacher={teacher}
       />
 
-      {/* 7. Printable Blank Marksheet Form Modal */}
       <PrintMarksheetModal
         isOpen={isPrintMarksheetOpen}
         onClose={() => setIsPrintMarksheetOpen(false)}
         classDetails={classDetails}
         examTerm={examTerm}
         papers={papers}
-        teachers={teachers}
+        teachers={teachers.length > 0 ? teachers : [teacher]}
         selectedTeacherId={selectedPrintTeacher}
         onTeacherChange={setSelectedPrintTeacher}
-        students={filteredStudents}
+        students={studentsData}
       />
     </div>
   );
+
+  // If rendered as a standalone page via /marks/entry, wrap with AppLayout
+  if (!isTab) {
+    return (
+      <AppLayout title="Student Marks & Results Management">
+        <Head title="Exam Marks & Results Management" />
+        <div className="space-y-6">
+          {mainContent}
+        </div>
+      </AppLayout>
+    );
+  }
+
+  // If rendered inside ExamClassPapers/Index tabs, return directly
+  return mainContent;
 }

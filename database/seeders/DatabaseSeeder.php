@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             StudentAndFeeSeeder::class,
             InventorySeeder::class,
             ExamAndQuestionSeeder::class,
+            ExpenseSeeder::class,
         ]);
     }
 }

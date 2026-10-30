@@ -13,6 +13,7 @@ class StaffSalaryAdvance extends Model
     protected $fillable = [
         'staff_id',
         'amount',
+        'adjusted_amount',
         'issued_date',
         'status',
         'reason',
@@ -21,8 +22,16 @@ class StaffSalaryAdvance extends Model
 
     protected $casts = [
         'amount' => 'decimal:2',
-        'issued_date' => 'date',
+        'adjusted_amount' => 'decimal:2',
+        'issued_date' => 'date:Y-m-d',
     ];
+
+    protected $appends = ['remaining_amount'];
+
+    public function getRemainingAmountAttribute(): float
+    {
+        return max(0, (float) $this->amount - (float) ($this->adjusted_amount ?? 0));
+    }
 
     public function staff(): BelongsTo
     {

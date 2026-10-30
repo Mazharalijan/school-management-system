@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Exam\ProcessExamResultRequest;
 use App\Http\Requests\Exam\StoreBulkStudentMarksRequest;
 use App\Models\ExamResult;
+use App\Models\ExamSession;
+use App\Models\SchoolClass;
+use App\Models\StudentMark;
+use App\Services\Exam\MarksAndResultService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,69 +17,75 @@ use Inertia\Response;
 
 class StudentMarkController extends Controller
 {
+    public function __construct(protected MarksAndResultService $marksService) {}
+
     /**
      * Display the main Marks Entry UI
      */
     public function entryForm(Request $request): Response
     {
+        $sessions = ExamSession::orderByDesc('id')->get();
+        $classes = SchoolClass::with('sections')->orderBy('numeric_value')->get();
+
+        $selectedSessionId = (int) ($request->query('exam_session_id') ?: $sessions->first()?->id ?: 1);
+        $selectedClassId = (int) ($request->query('school_class_id') ?: $classes->first()?->id ?: 1);
+        $selectedSectionId = $request->query('section_id') ? (int) $request->query('section_id') : null;
+
+        $marksData = $this->marksService->getMarksEntryData($selectedSessionId, $selectedClassId, $selectedSectionId);
+
         return Inertia::render('ExamClassPapers/marks/Index', [
-            'teacher' => [
-                'id' => auth()->id() ?? 1,
-                'name' => auth()->user()->name ?? 'Admin User',
-                'emp_id' => 'EMP-001',
-                'designation' => 'Class Teacher',
-            ],
+            'sessions' => $sessions,
+            'classes' => $classes,
             'examTerm' => [
-                'id' => $request->query('exam_session_id', 1),
-                'name' => 'Mid Term Examination 2026',
+                'id' => $marksData['session']?->id ?? $selectedSessionId,
+                'name' => $marksData['session']?->title ?? 'Exam Session',
+                'session_year' => $marksData['session']?->session_year ?? '',
             ],
             'classDetails' => [
-                'id' => $request->query('school_class_id', 101),
-                'name' => 'Grade 5',
-                'section' => 'Section A',
+                'id' => $marksData['class']?->id ?? $selectedClassId,
+                'name' => $marksData['class']?->name ?? 'Class',
+                'sections' => $marksData['class']?->sections ?? [],
             ],
-            'papers' => [
-                ['id' => 1, 'subject_name' => 'Mathematics', 'total_marks' => 100, 'passing_marks' => 33],
-                ['id' => 2, 'subject_name' => 'English', 'total_marks' => 100, 'passing_marks' => 33],
-                ['id' => 3, 'subject_name' => 'General Science', 'total_marks' => 100, 'passing_marks' => 33],
-                ['id' => 4, 'subject_name' => 'Computer Studies', 'total_marks' => 50, 'passing_marks' => 17],
+            'papers' => $marksData['subjects'],
+            'initialStudents' => $marksData['students'],
+            'teacher' => [
+                'id' => auth()->id() ?? 1,
+                'name' => auth()->user()?->name ?? 'Admin / Teacher',
+                'emp_id' => 'EMP-001',
+                'designation' => 'Class Teacher / Exam Controller',
             ],
-            'initialStudents' => [
-                [
-                    'id' => 1001,
-                    'roll_no' => '501',
-                    'name' => 'Ali Ahmed',
-                    'marks' => [1 => 85, 2 => 78, 3 => 92, 4 => 44],
-                    'absent' => [1 => false, 2 => false, 3 => false, 4 => false],
-                ],
-                [
-                    'id' => 1002,
-                    'roll_no' => '502',
-                    'name' => 'Sara Khan',
-                    'marks' => [1 => 28, 2 => 65, 3 => 58, 4 => 30],
-                    'absent' => [1 => false, 2 => false, 3 => false, 4 => false],
-                ],
+            'filters' => [
+                'exam_session_id' => $selectedSessionId,
+                'school_class_id' => $selectedClassId,
+                'section_id' => $selectedSectionId,
+                'search' => $request->query('search', ''),
             ],
-            'filters' => $request->only(['exam_session_id', 'school_class_id', 'subject_id']),
+            'isTab' => false,
         ]);
     }
 
     /**
-     * Store bulk student marks (Stubbed for now)
+     * Store bulk student marks and prepare results.
      */
     public function storeBulkMarks(StoreBulkStudentMarksRequest $request): RedirectResponse
     {
-        // Business logic will be re-implemented later
-        return back()->with('success', 'Marks saved successfully.');
+        $this->marksService->storeBulkMarks($request->validated());
+
+        return back()->with('success', 'Student marks saved and exam results prepared successfully.');
     }
 
     /**
-     * Process exam results & rankings (Stubbed for now)
+     * Process exam results & rankings for a class and session.
      */
     public function processResults(ProcessExamResultRequest $request): RedirectResponse
     {
-        // Business logic will be re-implemented later
-        return back()->with('success', 'Class results processed successfully.');
+        $this->marksService->processClassResults(
+            (int) $request->validated('exam_session_id'),
+            (int) $request->validated('school_class_id'),
+            $request->validated('teacher_remarks', [])
+        );
+
+        return back()->with('success', 'Class results processed and student rankings prepared successfully.');
     }
 
     /**
@@ -83,9 +93,17 @@ class StudentMarkController extends Controller
      */
     public function dmcView(ExamResult $examResult): Response
     {
+        $examResult->load(['student', 'schoolClass', 'examSession']);
+
+        $subjectMarks = StudentMark::with('subject')
+            ->where('exam_session_id', $examResult->exam_session_id)
+            ->where('school_class_id', $examResult->school_class_id)
+            ->where('student_id', $examResult->student_id)
+            ->get();
+
         return Inertia::render('Exam/Marks/Dmc', [
             'result' => $examResult,
-            'subjectMarks' => [],
+            'subjectMarks' => $subjectMarks,
         ]);
     }
 }

@@ -392,4 +392,79 @@ class TimetableController extends Controller
 
         return back()->with('success', 'Break position and class schedule updated successfully.');
     }
+
+    public function generate(Request $request)
+    {
+        $validated = $request->validate([
+            'school_class_id' => 'required|exists:school_classes,id',
+            'section_id' => 'nullable|exists:sections,id',
+            'working_days' => 'required|array',
+            'periods_per_day' => 'required|integer|min:1',
+            'start_time' => 'nullable|string',
+            'period_duration_minutes' => 'nullable|integer',
+            'break_period' => 'nullable|integer',
+            'allocations' => 'nullable|array',
+            'academic_year' => 'nullable|string',
+        ]);
+
+        $classId = $validated['school_class_id'];
+        $sectionId = $validated['section_id'] ?? null;
+        $workingDays = $validated['working_days'];
+        $periodsPerDay = (int) $validated['periods_per_day'];
+        $startTime = $validated['start_time'] ?? '08:00';
+        $duration = (int) ($validated['period_duration_minutes'] ?? 45);
+        $breakPeriod = isset($validated['break_period']) ? (int) $validated['break_period'] : null;
+        $academicYear = $validated['academic_year'] ?? '2025-2026';
+        $allocations = $validated['allocations'] ?? [];
+
+        $allocationPool = [];
+        foreach ($allocations as $alloc) {
+            $periodsPerWeek = $alloc['periods_per_week'] ?? 1;
+            for ($i = 0; $i < $periodsPerWeek; $i++) {
+                $allocationPool[] = $alloc;
+            }
+        }
+
+        $allocIndex = 0;
+
+        DB::transaction(function () use ($classId, $sectionId, $workingDays, $periodsPerDay, $startTime, $duration, $breakPeriod, $academicYear, $allocationPool, &$allocIndex) {
+            foreach ($workingDays as $day) {
+                $currentMins = Carbon::parse($startTime)->hour * 60 + Carbon::parse($startTime)->minute;
+
+                for ($period = 1; $period <= $periodsPerDay; $period++) {
+                    $isBreak = ($breakPeriod !== null && $period === $breakPeriod);
+                    $slotStart = date('H:i:s', $currentMins * 60);
+                    $currentMins += $duration;
+                    $slotEnd = date('H:i:s', $currentMins * 60);
+
+                    $alloc = null;
+                    if (! $isBreak && count($allocationPool) > 0) {
+                        $alloc = $allocationPool[$allocIndex % count($allocationPool)];
+                        $allocIndex++;
+                    }
+
+                    Timetable::updateOrCreate(
+                        [
+                            'school_class_id' => $classId,
+                            'section_id' => $sectionId,
+                            'day_of_week' => strtolower($day),
+                            'period_number' => $period,
+                            'academic_year' => $academicYear,
+                        ],
+                        [
+                            'subject_id' => $isBreak ? null : ($alloc['subject_id'] ?? null),
+                            'staff_id' => $isBreak ? null : ($alloc['staff_id'] ?? null),
+                            'room_number' => $isBreak ? null : ($alloc['room_number'] ?? null),
+                            'start_time' => $slotStart,
+                            'end_time' => $slotEnd,
+                            'is_break' => $isBreak,
+                            'break_title' => $isBreak ? 'Recess / Break' : null,
+                        ]
+                    );
+                }
+            }
+        });
+
+        return back()->with('success', 'Weekly timetable generated successfully.');
+    }
 }

@@ -10,7 +10,8 @@ import {
     CreditCard, 
     Receipt, 
     Package, 
-    Bus 
+    Bus,
+    Award 
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -23,6 +24,7 @@ const navigation = [
     { name: 'Timetable Generator', href: '/timetable', icon: Calendar },
     { name: 'Question Bank', href: '/question-bank', icon: FileSpreadsheet },
     { name: 'Exams', href: '/exam-class-papers', icon: FileSpreadsheet },
+    { name: 'Marks & Results', href: '/marks/entry', icon: Award },
     { name: 'Expenses P&L', href: '/expenses', icon: Receipt },
     { name: 'Assets & Inventory', href: '/inventory', icon: Package },
     { name: 'Transport', href: '/transport', icon: Bus },

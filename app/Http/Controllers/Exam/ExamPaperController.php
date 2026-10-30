@@ -48,13 +48,13 @@ class ExamPaperController extends Controller
     {
         $this->paperService->createPaperWithSections($request->validated());
 
-        return redirect()->route('exam-papers.index')->with('success', 'Question paper composed successfully.');
+        return redirect()->route('papers.index')->with('success', 'Question paper composed successfully.');
     }
 
-    public function show(ExamClassPaper $examPaper): Response
+    public function show(ExamClassPaper $paper): Response
     {
         return Inertia::render('Exam/Papers/Show', [
-            'paper' => $examPaper->load([
+            'paper' => $paper->load([
                 'schoolClass',
                 'subject',
                 'sections.questions.questionBank.chapter',
