@@ -5,11 +5,15 @@ namespace App\Services;
 use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class StaffService
 {
+    public function __construct(protected ImageProcessingService $imageService) {}
+
     /**
      * Fetch paginated staff members with optional search filtering.
      */
@@ -65,6 +69,12 @@ class StaffService
         return DB::transaction(function () use ($data) {
             $userId = null;
 
+            if (isset($data['photo']) && $data['photo'] instanceof UploadedFile) {
+                $bgColor = $data['background_color'] ?? null;
+                $data['photo_path'] = $this->imageService->processProfilePhoto($data['photo'], 'staff', 500, $bgColor);
+                unset($data['photo'], $data['background_color']);
+            }
+
             // Provision login account if email is provided
             if (! empty($data['email'])) {
                 $user = User::create([
@@ -91,6 +101,20 @@ class StaffService
     public function updateStaff(Staff $staff, array $data): Staff
     {
         return DB::transaction(function () use ($staff, $data) {
+            if (isset($data['photo']) && $data['photo'] instanceof UploadedFile) {
+                if ($staff->photo_path && Storage::disk('public')->exists($staff->photo_path)) {
+                    Storage::disk('public')->delete($staff->photo_path);
+                }
+                $bgColor = $data['background_color'] ?? null;
+                $data['photo_path'] = $this->imageService->processProfilePhoto($data['photo'], 'staff', 500, $bgColor);
+                unset($data['photo'], $data['background_color']);
+            } elseif (array_key_exists('photo', $data)) {
+                unset($data['photo']);
+            }
+            if (array_key_exists('background_color', $data)) {
+                unset($data['background_color']);
+            }
+
             $staff->update($data);
 
             if ($staff->user_id && $staff->user) {

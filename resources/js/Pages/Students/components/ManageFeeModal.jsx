@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import ProfileAvatar from '@/components/ProfileAvatar';
 import { Lock, Percent, AlertCircle } from 'lucide-react';
 
 export default function ManageFeeModal({
@@ -133,11 +134,19 @@ export default function ManageFeeModal({
 
                 {/* STUDENT INFORMATION HEADER */}
                 <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 flex justify-between items-center text-xs">
-                    <div>
-                        <span className="text-slate-500 block">Student Name</span>
-                        <span className="font-bold text-slate-800">
-                            {student.first_name} {student.last_name}
-                        </span>
+                    <div className="flex items-center gap-2.5">
+                        <ProfileAvatar
+                            src={student.photo_url}
+                            name={`${student.first_name} ${student.last_name}`}
+                            className="w-9 h-9"
+                            iconClassName="w-4 h-4"
+                        />
+                        <div>
+                            <span className="text-slate-500 block">Student Name</span>
+                            <span className="font-bold text-slate-800">
+                                {student.first_name} {student.last_name}
+                            </span>
+                        </div>
                     </div>
                     <div className="text-right">
                         <span className="text-slate-500 block">Class & Section</span>

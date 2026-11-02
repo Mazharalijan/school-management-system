@@ -3,6 +3,7 @@ import DataTable from '@/components/DataTable';
 import TableActionButton from '@/components/TableActionButton';
 import Pagination from '@/components/Pagination'; // Adjust path if needed
 import { Badge } from '@/components/ui/badge';
+import ProfileAvatar from '@/components/ProfileAvatar';
 import { Eye, Pencil, Receipt, Trash2, Phone } from 'lucide-react';
 
 export default function StudentTable({
@@ -32,13 +33,21 @@ export default function StudentTable({
         {
             header: 'Student Name',
             render: (student) => (
-                <div>
-                    <div className="font-semibold text-slate-800">
-                        {student.first_name} {student.last_name}
+                <div className="flex items-center gap-3">
+                    <ProfileAvatar
+                        src={student.photo_url}
+                        name={`${student.first_name} ${student.last_name}`}
+                        className="w-9 h-9"
+                        iconClassName="w-4 h-4"
+                    />
+                    <div>
+                        <div className="font-semibold text-slate-800">
+                            {student.first_name} {student.last_name}
+                        </div>
+                        <span className="text-xs text-slate-400 capitalize">
+                            {student.gender} | DOB: {student.date_of_birth}
+                        </span>
                     </div>
-                    <span className="text-xs text-slate-400 capitalize">
-                        {student.gender} | DOB: {student.date_of_birth}
-                    </span>
                 </div>
             ),
         },

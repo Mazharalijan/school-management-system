@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Staff extends Model
 {
@@ -20,6 +21,7 @@ class Staff extends Model
         'employee_id',
         'first_name',
         'last_name',
+        'photo_path',
         'father_name',
         'cnic',
         'designation',
@@ -42,11 +44,16 @@ class Staff extends Model
         'skills' => 'array',
     ];
 
-    protected $appends = ['full_name', 'pending_advances_sum'];
+    protected $appends = ['full_name', 'photo_url', 'pending_advances_sum'];
 
     public function getFullNameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function getPhotoUrlAttribute(): ?string
+    {
+        return $this->photo_path ? Storage::url($this->photo_path) : null;
     }
 
     /**

@@ -122,6 +122,7 @@ class MarksAndResultService
                 'id' => $student->id,
                 'roll_no' => $student->roll_number ?: "STU-{$student->id}",
                 'name' => $student->full_name,
+                'photo_url' => $student->photo_url,
                 'gender' => $student->gender,
                 'section_name' => $student->current_enrollment?->section?->name ?? 'A',
                 'marks' => $marksMap,

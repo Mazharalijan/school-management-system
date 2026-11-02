@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import ProfileAvatar from '@/components/ProfileAvatar';
 import { Receipt, Plus, Eye, DollarSign } from 'lucide-react';
 
 export default function Index({ invoices, classes = [], filters = {} }) {
@@ -159,7 +160,17 @@ export default function Index({ invoices, classes = [], filters = {} }) {
                                                     {inv.invoice_no}
                                                 </td>
                                                 <td className="px-6 py-4 font-semibold text-slate-900">
-                                                    {inv.student ? `${inv.student.first_name || ''} ${inv.student.last_name || ''}`.trim() : 'N/A'}
+                                                    <div className="flex items-center gap-2.5">
+                                                        <ProfileAvatar
+                                                            src={inv.student?.photo_url}
+                                                            name={inv.student ? `${inv.student.first_name || ''} ${inv.student.last_name || ''}`.trim() : ''}
+                                                            className="w-7 h-7"
+                                                            iconClassName="w-3.5 h-3.5"
+                                                        />
+                                                        <span>
+                                                            {inv.student ? `${inv.student.first_name || ''} ${inv.student.last_name || ''}`.trim() : 'N/A'}
+                                                        </span>
+                                                    </div>
                                                 </td>
                                                 <td className="px-6 py-4 text-slate-600 text-xs">
                                                     <Badge variant="outline" className="bg-slate-50 text-slate-700 border-slate-200">

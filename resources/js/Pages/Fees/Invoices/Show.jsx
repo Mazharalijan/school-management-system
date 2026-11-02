@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Head, useForm } from '@inertiajs/react';
+import ProfileAvatar from '@/components/ProfileAvatar';
 
 export default function Show({ invoice }) {
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
@@ -56,10 +57,18 @@ export default function Show({ invoice }) {
                 </div>
 
                 {/* Student Info */}
-                <div className="grid grid-cols-2 gap-4 text-sm bg-gray-50 p-4 rounded">
-                    <div>
-                        <p><span className="font-semibold">Student Name:</span> {invoice.student?.first_name} {invoice.student?.last_name}</p>
-                        <p><span className="font-semibold">Roll No:</span> {invoice.student?.roll_no || 'N/A'}</p>
+                <div className="grid grid-cols-2 gap-4 text-sm bg-gray-50 p-4 rounded items-center">
+                    <div className="flex items-center gap-3">
+                        <ProfileAvatar
+                            src={invoice.student?.photo_url}
+                            name={`${invoice.student?.first_name || ''} ${invoice.student?.last_name || ''}`.trim()}
+                            className="w-11 h-11"
+                            iconClassName="w-5 h-5"
+                        />
+                        <div>
+                            <p><span className="font-semibold">Student Name:</span> {invoice.student?.first_name} {invoice.student?.last_name}</p>
+                            <p><span className="font-semibold">Roll No:</span> {invoice.student?.roll_number || invoice.student?.roll_no || 'N/A'}</p>
+                        </div>
                     </div>
                     <div>
                         <p><span className="font-semibold">Class / Section:</span> {invoice.school_class?.name} ({invoice.section?.name})</p>

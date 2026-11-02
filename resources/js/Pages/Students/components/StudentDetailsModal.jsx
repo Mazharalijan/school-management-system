@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { GraduationCap, User, Phone, Mail, MapPin, CreditCard, UserRoundX } from 'lucide-react';
 import ManageFeeModal from './ManageFeeModal';
+import ProfileAvatar from '@/components/ProfileAvatar';
 
 export default function StudentDetailsModal({ isOpen, onClose, student, currentSessionYear = "2026-2027", }) {
 
@@ -62,9 +63,12 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                     {/* LEFT SIDEBAR: BASIC INFO */}
                     <aside className="w-full md:w-72 shrink-0 space-y-4 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
                         <div className="flex flex-col items-center text-center pb-4 border-b border-slate-200">
-                            <div className="h-16 w-16 rounded-full bg-blue-100 text-blue-700 border-2 border-blue-500 flex items-center justify-center font-bold text-xl mb-2">
-                                {student.first_name?.[0]}{student.last_name?.[0]}
-                            </div>
+                            <ProfileAvatar
+                                src={student.photo_url}
+                                name={`${student.first_name} ${student.last_name}`}
+                                className="h-20 w-20 border-2 border-blue-500 mb-2 shadow-sm"
+                                iconClassName="h-10 w-10"
+                            />
                             <h3 className="font-bold text-slate-800 text-base">
                                 {student.first_name} {student.last_name}
                             </h3>

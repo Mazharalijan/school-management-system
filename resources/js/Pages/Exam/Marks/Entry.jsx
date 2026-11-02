@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm, router, Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
+import ProfileAvatar from '@/components/ProfileAvatar';
 
 export default function Entry({ sessions, classes, subjects, students, existingMarks, filters }) {
     const handleFilterChange = (key, value) => {
@@ -129,7 +130,16 @@ export default function Entry({ sessions, classes, subjects, students, existingM
                             <tbody className="divide-y divide-slate-200">
                                 {students.map((student, idx) => (
                                     <tr key={student.id} className="hover:bg-slate-50">
-                                        <td className="px-6 py-3 font-medium text-slate-800">{student.name}</td>
+                                        <td className="px-6 py-3 font-medium text-slate-800">
+                                            <div className="flex items-center gap-2.5">
+                                                <ProfileAvatar
+                                                    src={student.photo_url}
+                                                    name={student.name}
+                                                    size="sm"
+                                                />
+                                                <span>{student.name}</span>
+                                            </div>
+                                        </td>
                                         <td className="px-6 py-3">
                                             <input
                                                 type="checkbox"

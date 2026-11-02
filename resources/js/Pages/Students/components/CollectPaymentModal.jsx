@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import ProfileAvatar from '@/components/ProfileAvatar';
 import { UserCheck, UserRoundX } from 'lucide-react';
 
 export default function CollectPaymentModal({ isOpen, onClose, student, unpaidInvoices: rawUnpaidInvoices }) {
@@ -156,12 +157,20 @@ export default function CollectPaymentModal({ isOpen, onClose, student, unpaidIn
     >
       {/* Student Brief Header */}
       <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 grid grid-cols-2 md:grid-cols-4 gap-4 text-xs mb-4">
-        <div>
-          <p className="text-slate-500 uppercase font-medium">Student Name</p>
-          <p className="font-bold text-slate-900 text-sm mt-0.5">{student.first_name} {student.last_name}</p>
-          <p className="text-[11px] text-slate-500">
-            {classInfo?.name || 'Class N/A'} ({sectionInfo?.name || 'Sec N/A'})
-          </p>
+        <div className="flex items-center gap-3">
+          <ProfileAvatar
+            src={student.photo_url}
+            name={`${student.first_name} ${student.last_name}`}
+            className="w-10 h-10"
+            iconClassName="w-5 h-5"
+          />
+          <div>
+            <p className="text-slate-500 uppercase font-medium">Student Name</p>
+            <p className="font-bold text-slate-900 text-sm mt-0.5">{student.first_name} {student.last_name}</p>
+            <p className="text-[11px] text-slate-500">
+              {classInfo?.name || 'Class N/A'} ({sectionInfo?.name || 'Sec N/A'})
+            </p>
+          </div>
         </div>
 
         <div>

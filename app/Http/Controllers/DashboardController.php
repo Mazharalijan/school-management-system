@@ -113,6 +113,7 @@ class DashboardController extends Controller
                 'id' => $payment->id,
                 'receipt_no' => $payment->receipt_no,
                 'student_name' => $payment->student?->full_name ?? 'Student',
+                'photo_url' => $payment->student?->photo_url,
                 'admission_number' => $payment->student?->admission_number ?? 'N/A',
                 'amount' => (float) $payment->amount_paid,
                 'date' => Carbon::parse($payment->payment_date)->format('M d, Y'),

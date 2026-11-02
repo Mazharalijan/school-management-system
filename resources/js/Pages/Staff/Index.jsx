@@ -21,6 +21,8 @@ import {
     DialogTitle,
     DialogFooter
 } from '@/components/ui/dialog';
+import ProfileAvatar from '@/components/ProfileAvatar';
+import ImageCropModal from '@/components/ImageCropModal';
 import {
     UserPlus,
     Search,
@@ -32,6 +34,8 @@ import {
     Mail,
     Calendar,
     User,
+    Crop,
+    Upload,
     Briefcase,
     ShieldCheck,
     Award,
@@ -88,6 +92,8 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
     const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
     const [selectedStaff, setSelectedStaff] = useState(null);
     const [isSalaryModalOpen, setIsSalaryModalOpen] = useState(false);
+    const [createPhotoPreview, setCreatePhotoPreview] = useState(null);
+    const [editPhotoPreview, setEditPhotoPreview] = useState(null);
 
     // Keep selectedStaff synced with updated staff data on reload
     useEffect(() => {
@@ -122,6 +128,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
         joining_date: new Date().toISOString().split('T')[0],
         salary: '',
         address: '',
+        photo: null,
     });
 
     // Form: Edit Staff
@@ -141,7 +148,57 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
         salary: '',
         address: '',
         status: 'active',
+        photo: null,
+        background_color: 'original',
     });
+
+    const [cropModalData, setCropModalData] = useState({
+        isOpen: false,
+        imageSrc: null,
+        targetForm: null,
+    });
+
+    const handleCreatePhotoChange = (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setCropModalData({
+                isOpen: true,
+                imageSrc: URL.createObjectURL(file),
+                targetForm: 'create',
+            });
+            e.target.value = '';
+        }
+    };
+
+    const handleEditPhotoChange = (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setCropModalData({
+                isOpen: true,
+                imageSrc: URL.createObjectURL(file),
+                targetForm: 'edit',
+            });
+            e.target.value = '';
+        }
+    };
+
+    const handleStaffCropApply = ({ file, previewUrl, backgroundColor }) => {
+        if (cropModalData.targetForm === 'create') {
+            staffForm.setData((prev) => ({
+                ...prev,
+                photo: file,
+                background_color: backgroundColor,
+            }));
+            setCreatePhotoPreview(previewUrl);
+        } else if (cropModalData.targetForm === 'edit') {
+            editForm.setData((prev) => ({
+                ...prev,
+                photo: file,
+                background_color: backgroundColor,
+            }));
+            setEditPhotoPreview(previewUrl);
+        }
+    };
 
     // Toggle skills checkboxes
     const handleSkillToggle = (formInstance, skill) => {
@@ -200,9 +257,12 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
     const handleCreateStaff = (e) => {
         e.preventDefault();
         staffForm.post(route('staff.store'), {
+            forceFormData: true,
+            preserveScroll: true,
             onSuccess: () => {
                 setIsAddModalOpen(false);
                 staffForm.reset();
+                setCreatePhotoPreview(null);
             },
         });
     };
@@ -210,6 +270,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
     // --- CRUD 2: OPEN EDIT MODAL & PRE-FILL ---
     const handleOpenEdit = (member) => {
         setSelectedStaff(member);
+        setEditPhotoPreview(member.photo_url || null);
 
         let existingSkills = member.skills || [];
         if (typeof existingSkills === 'string') {
@@ -236,6 +297,8 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
             salary: member.salary || '',
             address: member.address || '',
             status: member.status || 'active',
+            photo: null,
+            background_color: 'original',
         });
         setIsEditModalOpen(true);
     };
@@ -243,10 +306,17 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
     // --- CRUD 3: UPDATE ---
     const handleUpdateStaff = (e) => {
         e.preventDefault();
-        editForm.put(route('staff.update', selectedStaff.id), {
+        editForm.transform((data) => ({
+            ...data,
+            _method: 'put',
+        }));
+        editForm.post(route('staff.update', selectedStaff.id), {
+            forceFormData: true,
+            preserveScroll: true,
             onSuccess: () => {
                 setIsEditModalOpen(false);
                 setSelectedStaff(null);
+                setEditPhotoPreview(null);
             },
         });
     };
@@ -319,17 +389,27 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                                 {member.employee_code || `EMP-${member.id}`}
                                             </td>
                                             <td className="px-4 py-3">
-                                                <div className="font-semibold text-slate-800">
-                                                    {member.first_name} {member.last_name}
-                                                </div>
-                                                {member.father_name && (
-                                                    <div className="text-xs text-slate-500">
-                                                        S/O, D/O: {member.father_name}
+                                                <div className="flex items-center gap-3">
+                                                    <ProfileAvatar
+                                                        src={member.photo_url}
+                                                        name={`${member.first_name} ${member.last_name}`}
+                                                        className="w-9 h-9"
+                                                        iconClassName="w-4 h-4"
+                                                    />
+                                                    <div>
+                                                        <div className="font-semibold text-slate-800">
+                                                            {member.first_name} {member.last_name}
+                                                        </div>
+                                                        {member.father_name && (
+                                                            <div className="text-xs text-slate-500">
+                                                                S/O, D/O: {member.father_name}
+                                                            </div>
+                                                        )}
+                                                        <span className="text-xs text-slate-400 capitalize">
+                                                            {member.gender} | Joined: {member.joining_date}
+                                                        </span>
                                                     </div>
-                                                )}
-                                                <span className="text-xs text-slate-400 capitalize">
-                                                    {member.gender} | Joined: {member.joining_date}
-                                                </span>
+                                                </div>
                                                 {parseFloat(member.pending_advances_sum || 0) > 0 && (
                                                     <div className="mt-1">
                                                         <Badge className="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] py-0 px-1.5 font-mono">
@@ -471,6 +551,73 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                         {/* Personal Information */}
                         <div className="border-b pb-3">
                             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Personal Information</span>
+
+                            {/* Profile Photo Upload with Crop & Background Adjustments */}
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-2 mb-3 p-3 bg-slate-50 border border-slate-200 rounded-lg">
+                                <ProfileAvatar
+                                    src={createPhotoPreview}
+                                    name={staffForm.data.first_name}
+                                    className="w-16 h-16 border-2 border-slate-300 shadow-sm shrink-0"
+                                    iconClassName="w-8 h-8"
+                                />
+                                <div className="flex-1 min-w-0 space-y-2">
+                                    <div className="flex items-center justify-between">
+                                        <Label className="text-xs font-semibold text-slate-700">
+                                            Staff Profile Photo
+                                        </Label>
+                                        <span className="text-[11px] text-slate-400 font-medium">
+                                            Aspect Ratio: 1:1 Square (Auto-corrected)
+                                        </span>
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-md shadow-sm cursor-pointer transition">
+                                            <Upload className="w-3.5 h-3.5" />
+                                            <span>{createPhotoPreview ? 'Change Photo' : 'Upload Photo'}</span>
+                                            <input
+                                                id="staff-photo-add"
+                                                type="file"
+                                                accept="image/jpeg,image/png,image/webp,image/jpg"
+                                                onChange={handleCreatePhotoChange}
+                                                className="hidden"
+                                            />
+                                        </label>
+                                        {createPhotoPreview && (
+                                            <>
+                                                <Button
+                                                    type="button"
+                                                    variant="outline"
+                                                    size="sm"
+                                                    onClick={() => setCropModalData({ isOpen: true, imageSrc: createPhotoPreview, targetForm: 'create' })}
+                                                    className="text-xs h-8 text-slate-700"
+                                                >
+                                                    <Crop className="w-3.5 h-3.5 mr-1 text-blue-600" />
+                                                    Crop / Background
+                                                </Button>
+                                                <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={() => {
+                                                        staffForm.setData('photo', null);
+                                                        setCreatePhotoPreview(null);
+                                                    }}
+                                                    className="text-xs h-8 text-rose-600 hover:text-rose-700 hover:bg-rose-50"
+                                                >
+                                                    <Trash2 className="w-3.5 h-3.5 mr-1" />
+                                                    Remove
+                                                </Button>
+                                            </>
+                                        )}
+                                    </div>
+                                    <p className="text-[11px] text-slate-500 leading-tight">
+                                        JPEG, PNG, or WEBP up to 5MB. Option to crop, resize, or set green/white background.
+                                    </p>
+                                    {staffForm.errors.photo && (
+                                        <span className="text-xs text-red-500 block mt-1">{staffForm.errors.photo}</span>
+                                    )}
+                                </div>
+                            </div>
+
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
                                 <div>
                                     <Label htmlFor="first_name">First Name *</Label>
@@ -681,6 +828,73 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                         {/* Personal Details */}
                         <div className="border-b pb-3">
                             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Personal Information</span>
+
+                            {/* Profile Photo Upload with Crop & Background Adjustments */}
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-2 mb-3 p-3 bg-slate-50 border border-slate-200 rounded-lg">
+                                <ProfileAvatar
+                                    src={editPhotoPreview}
+                                    name={editForm.data.first_name}
+                                    className="w-16 h-16 border-2 border-slate-300 shadow-sm shrink-0"
+                                    iconClassName="w-8 h-8"
+                                />
+                                <div className="flex-1 min-w-0 space-y-2">
+                                    <div className="flex items-center justify-between">
+                                        <Label className="text-xs font-semibold text-slate-700">
+                                            Staff Profile Photo
+                                        </Label>
+                                        <span className="text-[11px] text-slate-400 font-medium">
+                                            Aspect Ratio: 1:1 Square (Auto-corrected)
+                                        </span>
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-md shadow-sm cursor-pointer transition">
+                                            <Upload className="w-3.5 h-3.5" />
+                                            <span>{editPhotoPreview ? 'Change Photo' : 'Upload Photo'}</span>
+                                            <input
+                                                id="staff-photo-edit"
+                                                type="file"
+                                                accept="image/jpeg,image/png,image/webp,image/jpg"
+                                                onChange={handleEditPhotoChange}
+                                                className="hidden"
+                                            />
+                                        </label>
+                                        {editPhotoPreview && (
+                                            <>
+                                                <Button
+                                                    type="button"
+                                                    variant="outline"
+                                                    size="sm"
+                                                    onClick={() => setCropModalData({ isOpen: true, imageSrc: editPhotoPreview, targetForm: 'edit' })}
+                                                    className="text-xs h-8 text-slate-700"
+                                                >
+                                                    <Crop className="w-3.5 h-3.5 mr-1 text-blue-600" />
+                                                    Crop / Background
+                                                </Button>
+                                                <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={() => {
+                                                        editForm.setData('photo', null);
+                                                        setEditPhotoPreview(null);
+                                                    }}
+                                                    className="text-xs h-8 text-rose-600 hover:text-rose-700 hover:bg-rose-50"
+                                                >
+                                                    <Trash2 className="w-3.5 h-3.5 mr-1" />
+                                                    Remove
+                                                </Button>
+                                            </>
+                                        )}
+                                    </div>
+                                    <p className="text-[11px] text-slate-500 leading-tight">
+                                        JPEG, PNG, or WEBP up to 5MB. Option to crop, resize, or set green/white background.
+                                    </p>
+                                    {editForm.errors.photo && (
+                                        <span className="text-xs text-red-500 block mt-1">{editForm.errors.photo}</span>
+                                    )}
+                                </div>
+                            </div>
+
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
                                 <div>
                                     <Label htmlFor="edit_first_name">First Name *</Label>
@@ -862,9 +1076,12 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                             <aside className="w-full md:w-72 shrink-0 space-y-4 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
                                 {/* Identity Header */}
                                 <div className="flex flex-col items-center text-center pb-4 border-b border-slate-200">
-                                    <div className="h-16 w-16 rounded-full bg-blue-100 text-blue-700 border-2 border-blue-500 flex items-center justify-center font-bold text-xl mb-2">
-                                        {selectedStaff.first_name?.[0]}{selectedStaff.last_name?.[0]}
-                                    </div>
+                                    <ProfileAvatar
+                                        src={selectedStaff.photo_url}
+                                        name={`${selectedStaff.first_name} ${selectedStaff.last_name}`}
+                                        className="h-20 w-20 border-2 border-blue-500 mb-2 shadow-sm"
+                                        iconClassName="w-10 h-10"
+                                    />
                                     <h3 className="font-bold text-slate-800 text-base">
                                         {selectedStaff.first_name} {selectedStaff.last_name}
                                     </h3>
@@ -1226,6 +1443,22 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                         setSelectedStaff(null);
                     }}
                     staff={selectedStaff}
+                />
+            )}
+
+            {/* INTERACTIVE IMAGE CROP & BACKGROUND MODAL */}
+            {cropModalData.isOpen && cropModalData.imageSrc && (
+                <ImageCropModal
+                    isOpen={cropModalData.isOpen}
+                    imageSrc={cropModalData.imageSrc}
+                    onClose={() =>
+                        setCropModalData({
+                            isOpen: false,
+                            imageSrc: null,
+                            targetForm: null,
+                        })
+                    }
+                    onApply={handleStaffCropApply}
                 />
             )}
         </AppLayout>

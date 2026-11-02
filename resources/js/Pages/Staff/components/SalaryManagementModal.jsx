@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import ProfileAvatar from '@/components/ProfileAvatar';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import {
     CreditCard,
@@ -124,18 +125,17 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
 
     const handleSettlementSubmit = (e) => {
         e.preventDefault();
-        settlementForm
-            .transform((data) => ({
-                ...data,
-                advance_adjusted: advanceAdjusted,
-            }))
-            .post(route('staff.salary.settlement'), {
-                preserveScroll: true,
-                onSuccess: () => {
-                    settlementForm.reset();
-                    setActiveTab('settlements-history');
-                }
-            });
+        settlementForm.transform((data) => ({
+            ...data,
+            advance_adjusted: advanceAdjusted,
+        }));
+        settlementForm.post(route('staff.salary.settlement'), {
+            preserveScroll: true,
+            onSuccess: () => {
+                settlementForm.reset();
+                setActiveTab('settlements-history');
+            }
+        });
     };
 
     return (
@@ -155,11 +155,19 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
 
                 {/* Staff Quick Profile Summary */}
                 <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 grid grid-cols-1 md:grid-cols-4 gap-3 text-xs mt-2">
-                    <div>
-                        <span className="font-bold text-slate-800 text-sm block">
-                            {staff.first_name} {staff.last_name}
-                        </span>
-                        <span className="text-slate-500">{staff.designation || 'Staff Member'}</span>
+                    <div className="flex items-center gap-2.5">
+                        <ProfileAvatar
+                            src={staff.photo_url}
+                            name={`${staff.first_name} ${staff.last_name}`}
+                            className="w-9 h-9"
+                            iconClassName="w-4 h-4"
+                        />
+                        <div>
+                            <span className="font-bold text-slate-800 text-sm block">
+                                {staff.first_name} {staff.last_name}
+                            </span>
+                            <span className="text-slate-500">{staff.designation || 'Staff Member'}</span>
+                        </div>
                     </div>
                     <div>
                         <span className="text-slate-400 block font-medium">Base Monthly Salary</span>

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Student extends Model
 {
@@ -17,6 +18,7 @@ class Student extends Model
         'roll_number',
         'first_name',
         'last_name',
+        'photo_path',
         'gender',
         'date_of_birth',
         'blood_group',
@@ -34,11 +36,16 @@ class Student extends Model
         'admission_date' => 'date:Y-m-d',
     ];
 
-    protected $appends = ['full_name'];
+    protected $appends = ['full_name', 'photo_url'];
 
     public function getFullNameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function getPhotoUrlAttribute(): ?string
+    {
+        return $this->photo_path ? Storage::url($this->photo_path) : null;
     }
 
     /**

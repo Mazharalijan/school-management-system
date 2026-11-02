@@ -81,6 +81,8 @@ class UpdateStaffRequest extends FormRequest
             ],
             'password' => ['nullable', 'string', 'min:8'],
             'address' => ['nullable', 'string', 'max:500'],
+            'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
+            'background_color' => ['nullable', 'string', 'max:30'],
         ];
     }
 

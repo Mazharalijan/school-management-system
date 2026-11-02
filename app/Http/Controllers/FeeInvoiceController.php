@@ -16,7 +16,7 @@ class FeeInvoiceController extends Controller
 
     public function index(Request $request): Response
     {
-        $query = FeeInvoice::with(['student:id,first_name,last_name,roll_no', 'schoolClass:id,name', 'section:id,name'])
+        $query = FeeInvoice::with(['student:id,first_name,last_name,roll_number,photo_path', 'schoolClass:id,name', 'section:id,name'])
             ->latest();
 
         if ($request->filled('school_class_id')) {
@@ -38,7 +38,7 @@ class FeeInvoiceController extends Controller
                     ->orWhereHas('student', function ($s) use ($search) {
                         $s->where('first_name', 'like', "%{$search}%")
                             ->orWhere('last_name', 'like', "%{$search}%")
-                            ->orWhere('roll_no', 'like', "%{$search}%");
+                            ->orWhere('roll_number', 'like', "%{$search}%");
                     });
             });
         }

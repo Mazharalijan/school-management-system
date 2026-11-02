@@ -4,11 +4,15 @@ namespace App\Services;
 
 use App\Models\Student;
 use App\Models\StudentEnrollment;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class StudentService
 {
+    public function __construct(protected ImageProcessingService $imageService) {}
+
     /**
      * Paginate students with optional filters
      */
@@ -61,6 +65,12 @@ class StudentService
     public function createStudent(array $data): Student
     {
         return DB::transaction(function () use ($data) {
+            if (isset($data['photo']) && $data['photo'] instanceof UploadedFile) {
+                $bgColor = $data['background_color'] ?? null;
+                $data['photo_path'] = $this->imageService->processProfilePhoto($data['photo'], 'students', 500, $bgColor);
+                unset($data['photo'], $data['background_color']);
+            }
+
             // Auto-generate Admission Number if not provided
             if (empty($data['admission_number'])) {
                 $data['admission_number'] = $this->generateAdmissionNumber();
@@ -87,6 +97,20 @@ class StudentService
     public function updateStudent(Student $student, array $data): Student
     {
         return DB::transaction(function () use ($student, $data) {
+            if (isset($data['photo']) && $data['photo'] instanceof UploadedFile) {
+                if ($student->photo_path && Storage::disk('public')->exists($student->photo_path)) {
+                    Storage::disk('public')->delete($student->photo_path);
+                }
+                $bgColor = $data['background_color'] ?? null;
+                $data['photo_path'] = $this->imageService->processProfilePhoto($data['photo'], 'students', 500, $bgColor);
+                unset($data['photo'], $data['background_color']);
+            } elseif (array_key_exists('photo', $data)) {
+                unset($data['photo']);
+            }
+            if (array_key_exists('background_color', $data)) {
+                unset($data['background_color']);
+            }
+
             $student->update($data);
 
             if (isset($data['school_class_id']) && isset($data['section_id'])) {

@@ -1,6 +1,6 @@
-// resources/js/Pages/ExamClassPapers/marks/components/DmcPrintModal.jsx
 import React from 'react';
 import { X, Printer, Award } from 'lucide-react';
+import ProfileAvatar from '@/components/ProfileAvatar';
 
 export default function DmcPrintModal({ isOpen, onClose, student, classDetails, examTerm, papers, teacher }) {
   if (!isOpen || !student) return null;
@@ -63,24 +63,32 @@ export default function DmcPrintModal({ isOpen, onClose, student, classDetails, 
           </div>
 
           {/* Student Profile Info */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs font-sans border border-slate-200 p-3.5 rounded-xl bg-slate-50">
-            <div>
-              <span className="block text-slate-500 font-medium text-[11px]">Student Name:</span>
-              <strong className="text-slate-900 text-sm">{student.name}</strong>
-            </div>
-            <div>
-              <span className="block text-slate-500 font-medium text-[11px]">Roll Number:</span>
-              <strong className="text-slate-900">{student.roll_no}</strong>
-            </div>
-            <div>
-              <span className="block text-slate-500 font-medium text-[11px]">Class:</span>
-              <strong className="text-slate-900">{classDetails?.name || 'Class'}</strong>
-            </div>
-            <div>
-              <span className="block text-slate-500 font-medium text-[11px]">Class Position:</span>
-              <strong className="text-indigo-700 font-black">
-                {studentResult?.position_in_class ? `#${studentResult.position_in_class}` : 'N/A'}
-              </strong>
+          <div className="flex items-center gap-4 text-xs font-sans border border-slate-200 p-3.5 rounded-xl bg-slate-50">
+            <ProfileAvatar
+              src={student.photo_url}
+              name={student.name}
+              className="w-12 h-12 border-2 border-indigo-200"
+              iconClassName="w-6 h-6"
+            />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 flex-1">
+              <div>
+                <span className="block text-slate-500 font-medium text-[11px]">Student Name:</span>
+                <strong className="text-slate-900 text-sm">{student.name}</strong>
+              </div>
+              <div>
+                <span className="block text-slate-500 font-medium text-[11px]">Roll Number:</span>
+                <strong className="text-slate-900">{student.roll_no}</strong>
+              </div>
+              <div>
+                <span className="block text-slate-500 font-medium text-[11px]">Class:</span>
+                <strong className="text-slate-900">{classDetails?.name || 'Class'}</strong>
+              </div>
+              <div>
+                <span className="block text-slate-500 font-medium text-[11px]">Class Position:</span>
+                <strong className="text-indigo-700 font-black">
+                  {studentResult?.position_in_class ? `#${studentResult.position_in_class}` : 'N/A'}
+                </strong>
+              </div>
             </div>
           </div>
 

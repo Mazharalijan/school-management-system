@@ -24,10 +24,24 @@ class StoreStudentRequest extends FormRequest
             'guardian_phone' => ['required', 'string', 'max:20'],
             'guardian_email' => ['nullable', 'email', 'max:150'],
             'address' => ['nullable', 'string'],
-            'admission_date' => ['required', 'date'],
+            'admission_date' => ['nullable', 'date'],
             'school_class_id' => ['required', 'exists:school_classes,id'],
             'section_id' => ['required', 'exists:sections,id'],
             'roll_number' => ['nullable', 'string', 'max:20'],
+            'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
+            'background_color' => ['nullable', 'string', 'max:30'],
         ];
+    }
+
+    /**
+     * Prepare inputs before validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        if (! $this->has('admission_date') || empty($this->admission_date)) {
+            $this->merge([
+                'admission_date' => date('Y-m-d'),
+            ]);
+        }
     }
 }

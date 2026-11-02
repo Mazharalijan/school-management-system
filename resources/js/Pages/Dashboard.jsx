@@ -2,13 +2,14 @@ import React from 'react';
 import { Head, Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import ProfileAvatar from '@/components/ProfileAvatar';
 import { Badge } from '@/components/ui/badge';
-import { 
-    Users, 
-    GraduationCap, 
-    Receipt, 
-    TrendingUp, 
-    TrendingDown, 
+import {
+    Users,
+    GraduationCap,
+    Receipt,
+    TrendingUp,
+    TrendingDown,
     CreditCard,
     Calendar,
     Layers,
@@ -27,12 +28,12 @@ import {
     BookOpen
 } from 'lucide-react';
 
-export default function Dashboard({ 
-    stats, 
-    recentExpenses = [], 
-    recentFeePayments = [], 
-    monthlyTrends = [], 
-    currentPeriod = 'all_time' 
+export default function Dashboard({
+    stats,
+    recentExpenses = [],
+    recentFeePayments = [],
+    monthlyTrends = [],
+    currentPeriod = 'all_time'
 }) {
     const handlePeriodChange = (periodKey) => {
         router.get(
@@ -193,7 +194,7 @@ export default function Dashboard({
         <AppLayout title="Executive Dashboard">
             <Head title="Executive Dashboard - School Management System" />
 
-            <div className="space-y-5 max-w-7xl mx-auto pb-12 font-sans">
+            <div className="space-y-5 max-w-8xl mx-auto pb-12 font-sans">
                 {/* Header Strip with Integrated Period Selector (Square / Sharp Design) */}
                 <div className="bg-white border border-slate-200 p-5 rounded-none flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
@@ -201,9 +202,6 @@ export default function Dashboard({
                             <h2 className="text-xl font-bold tracking-tight text-slate-900">
                                 Institutional Overview
                             </h2>
-                            <span className="text-[11px] font-semibold tracking-wide uppercase px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200">
-                                SMS Core v2.4
-                            </span>
                         </div>
                         <p className="text-xs text-slate-500 mt-1">
                             Real-time metrics for students, faculty, operating expenses, and financial profit &amp; loss.
@@ -219,11 +217,10 @@ export default function Dashboard({
                                     key={p.key}
                                     type="button"
                                     onClick={() => handlePeriodChange(p.key)}
-                                    className={`px-3 py-1.5 text-xs font-semibold rounded-none transition-colors whitespace-nowrap ${
-                                        active
-                                            ? 'bg-slate-900 text-white shadow-xs'
-                                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
-                                    }`}
+                                    className={`px-3 py-1.5 text-xs font-semibold rounded-none transition-colors whitespace-nowrap ${active
+                                        ? 'bg-slate-900 text-white shadow-xs'
+                                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                                        }`}
                                 >
                                     {p.label}
                                 </button>
@@ -301,7 +298,7 @@ export default function Dashboard({
                     </Card>
 
                     {/* 3. Total Expenses */}
-                    <Card 
+                    <Card
                         onClick={() => router.get('/expenses', { preset: currentPeriod, tab: 'expenses' })}
                         className="rounded-none border border-slate-200 bg-white relative overflow-hidden shadow-none hover:border-slate-400 transition-colors cursor-pointer group"
                     >
@@ -337,7 +334,7 @@ export default function Dashboard({
                     </Card>
 
                     {/* 4. Profit & Loss Status */}
-                    <Card 
+                    <Card
                         onClick={() => router.get('/expenses', { preset: currentPeriod, tab: 'pnl' })}
                         className="rounded-none border border-slate-200 bg-white relative overflow-hidden shadow-none hover:border-slate-400 transition-colors cursor-pointer group"
                     >
@@ -347,11 +344,10 @@ export default function Dashboard({
                                 <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider group-hover:text-slate-900 transition-colors">
                                     Net Profit &amp; Loss
                                 </span>
-                                <div className={`w-8 h-8 rounded-none border flex items-center justify-center transition-colors ${
-                                    isProfit 
-                                        ? 'bg-emerald-50 text-emerald-600 border-emerald-100 group-hover:bg-emerald-100' 
-                                        : 'bg-rose-50 text-rose-600 border-rose-100 group-hover:bg-rose-100'
-                                }`}>
+                                <div className={`w-8 h-8 rounded-none border flex items-center justify-center transition-colors ${isProfit
+                                    ? 'bg-emerald-50 text-emerald-600 border-emerald-100 group-hover:bg-emerald-100'
+                                    : 'bg-rose-50 text-rose-600 border-rose-100 group-hover:bg-rose-100'
+                                    }`}>
                                     {isProfit ? (
                                         <TrendingUp className="w-4 h-4" />
                                     ) : (
@@ -360,16 +356,14 @@ export default function Dashboard({
                                 </div>
                             </div>
                             <div className="mt-3 flex items-baseline gap-2">
-                                <span className={`text-2xl font-extrabold font-mono tracking-tight ${
-                                    isProfit ? 'text-emerald-700' : 'text-slate-900'
-                                }`}>
+                                <span className={`text-2xl font-extrabold font-mono tracking-tight ${isProfit ? 'text-emerald-700' : 'text-slate-900'
+                                    }`}>
                                     {formatCurrency(netAmount)}
                                 </span>
-                                <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 border ${
-                                    isProfit 
-                                        ? 'bg-emerald-100 text-emerald-800 border-emerald-300' 
-                                        : 'bg-rose-100 text-rose-800 border-rose-300'
-                                }`}>
+                                <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 border ${isProfit
+                                    ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                                    : 'bg-rose-100 text-rose-800 border-rose-300'
+                                    }`}>
                                     {isProfit ? 'Surplus' : 'Deficit'}
                                 </span>
                             </div>
@@ -474,7 +468,7 @@ export default function Dashboard({
                                         {monthlyTrends.map((m, idx) => {
                                             const revPercent = Math.min(100, Math.round(((m.revenue || 0) / maxMonthlyVal) * 100));
                                             const expPercent = Math.min(100, Math.round(((m.total_expenses || 0) / maxMonthlyVal) * 100));
-                                            
+
                                             return (
                                                 <div key={idx} className="flex flex-col items-center h-full justify-end group relative">
                                                     {/* Tooltip on hover */}
@@ -484,18 +478,18 @@ export default function Dashboard({
 
                                                     {/* Dual Bars (Sharp rectangular) */}
                                                     <div className="w-full flex items-end justify-center gap-1 h-full">
-                                                        <div 
+                                                        <div
                                                             style={{ height: `${Math.max(revPercent, 4)}%` }}
                                                             className="w-1/2 max-w-[20px] bg-emerald-600 rounded-none transition-all duration-300 hover:brightness-110"
                                                             title={`Revenue: ${formatCurrency(m.revenue)}`}
                                                         />
-                                                        <div 
+                                                        <div
                                                             style={{ height: `${Math.max(expPercent, 4)}%` }}
                                                             className="w-1/2 max-w-[20px] bg-rose-600 rounded-none transition-all duration-300 hover:brightness-110"
                                                             title={`Expenses: ${formatCurrency(m.total_expenses)}`}
                                                         />
                                                     </div>
-                                                    
+
                                                     {/* Month label */}
                                                     <span className="mt-2 text-[10px] sm:text-xs font-semibold text-slate-600 truncate w-full text-center font-mono">
                                                         {m.month?.split(' ')?.[0] || m.month}
@@ -527,9 +521,8 @@ export default function Dashboard({
                                         </div>
                                         <div className="p-3 bg-slate-50 border border-slate-200">
                                             <span className="text-slate-500 text-[11px] block">Net Period Balance</span>
-                                            <span className={`font-bold text-sm font-mono mt-0.5 block ${
-                                                isProfit ? 'text-emerald-700' : 'text-rose-600'
-                                            }`}>
+                                            <span className={`font-bold text-sm font-mono mt-0.5 block ${isProfit ? 'text-emerald-700' : 'text-rose-600'
+                                                }`}>
                                                 {isProfit ? '+' : '-'}{formatCurrency(netAmount)}
                                             </span>
                                         </div>
@@ -570,7 +563,7 @@ export default function Dashboard({
                                                 </span>
                                             </div>
                                             <div className="w-full bg-slate-100 rounded-none h-1.5 overflow-hidden flex">
-                                                <div 
+                                                <div
                                                     className="bg-rose-600 h-1.5 rounded-none transition-all duration-300"
                                                     style={{ width: `${Math.min(100, Math.max(5, cat.percentage))}%` }}
                                                 />
@@ -623,13 +616,20 @@ export default function Dashboard({
                                 <div className="divide-y divide-slate-100 text-xs">
                                     {recentFeePayments.map((payment) => (
                                         <div key={payment.id} className="p-3.5 px-5 flex items-center justify-between hover:bg-slate-50 transition-colors">
-                                            <div className="min-w-0 pr-3">
-                                                <p className="font-semibold text-slate-900 truncate">
-                                                    {payment.student_name}
-                                                </p>
-                                                <p className="text-[11px] text-slate-500 font-mono mt-0.5">
-                                                    {payment.receipt_no} &bull; {payment.date}
-                                                </p>
+                                            <div className="flex items-center gap-3 min-w-0 pr-3">
+                                                <ProfileAvatar
+                                                    src={payment.photo_url}
+                                                    name={payment.student_name}
+                                                    size="sm"
+                                                />
+                                                <div className="min-w-0">
+                                                    <p className="font-semibold text-slate-900 truncate">
+                                                        {payment.student_name}
+                                                    </p>
+                                                    <p className="text-[11px] text-slate-500 font-mono mt-0.5">
+                                                        {payment.receipt_no} &bull; {payment.date}
+                                                    </p>
+                                                </div>
                                             </div>
                                             <div className="text-right shrink-0">
                                                 <span className="font-bold text-emerald-700 font-mono text-sm block">

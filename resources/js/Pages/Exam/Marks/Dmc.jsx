@@ -1,6 +1,7 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
+import ProfileAvatar from '@/components/ProfileAvatar';
 import { Printer, ArrowLeft, Award, CheckCircle, XCircle } from 'lucide-react';
 
 export default function Dmc({ result, subjectMarks = [] }) {
@@ -49,24 +50,32 @@ export default function Dmc({ result, subjectMarks = [] }) {
                     </div>
 
                     {/* Student Info Grid */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs font-sans mb-6">
-                        <div>
-                            <span className="block text-slate-500 font-medium">Student Name</span>
-                            <span className="font-extrabold text-slate-900 text-sm">{studentName}</span>
-                        </div>
-                        <div>
-                            <span className="block text-slate-500 font-medium">Roll Number</span>
-                            <span className="font-bold text-slate-900">{rollNo}</span>
-                        </div>
-                        <div>
-                            <span className="block text-slate-500 font-medium">Class & Section</span>
-                            <span className="font-bold text-slate-900">{result?.school_class?.name}</span>
-                        </div>
-                        <div>
-                            <span className="block text-slate-500 font-medium">Class Position</span>
-                            <span className="font-black text-indigo-700 text-sm">
-                                {result?.position_in_class ? `#${result?.position_in_class}` : 'N/A'}
-                            </span>
+                    <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs font-sans mb-6">
+                        <ProfileAvatar
+                            src={result?.student?.photo_url}
+                            name={studentName}
+                            className="w-14 h-14 border-2 border-indigo-200"
+                            iconClassName="w-7 h-7"
+                        />
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 flex-1">
+                            <div>
+                                <span className="block text-slate-500 font-medium">Student Name</span>
+                                <span className="font-extrabold text-slate-900 text-sm">{studentName}</span>
+                            </div>
+                            <div>
+                                <span className="block text-slate-500 font-medium">Roll Number</span>
+                                <span className="font-bold text-slate-900">{rollNo}</span>
+                            </div>
+                            <div>
+                                <span className="block text-slate-500 font-medium">Class & Section</span>
+                                <span className="font-bold text-slate-900">{result?.school_class?.name}</span>
+                            </div>
+                            <div>
+                                <span className="block text-slate-500 font-medium">Class Position</span>
+                                <span className="font-black text-indigo-700 text-sm">
+                                    {result?.position_in_class ? `#${result?.position_in_class}` : 'N/A'}
+                                </span>
+                            </div>
                         </div>
                     </div>
 

@@ -3,6 +3,7 @@ import TableActionButton from '@/components/TableActionButton';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import ProfileAvatar from '@/components/ProfileAvatar';
 import { 
   Save, 
   Send, 
@@ -275,9 +276,12 @@ export default function MarksEntryGrid({
 
                       <td className="py-2.5 px-4 font-semibold text-slate-900 border-r border-slate-200 sticky left-16 bg-white z-5 shadow-xs">
                         <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold flex items-center justify-center shrink-0">
-                            {student.name?.charAt(0) || 'S'}
-                          </div>
+                          <ProfileAvatar
+                            src={student.photo_url}
+                            name={student.name}
+                            className="w-6 h-6"
+                            iconClassName="w-3.5 h-3.5"
+                          />
                           <span className="truncate max-w-[150px] font-medium text-slate-800" title={student.name}>
                             {student.name}
                           </span>

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Printer, X, UserCheck, GraduationCap, Calendar, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import ProfileAvatar from '@/components/ProfileAvatar';
 
 export default function PrintMarksheetModal({
   isOpen,
@@ -110,7 +111,16 @@ export default function PrintMarksheetModal({
                 {students.map((student) => (
                   <tr key={student.id} className="border-b border-slate-400">
                     <td className="border border-slate-800 py-3 px-2 text-center font-bold">{student.roll_no}</td>
-                    <td className="border border-slate-800 py-3 px-3 font-semibold">{student.name}</td>
+                    <td className="border border-slate-800 py-3 px-3 font-semibold">
+                      <div className="flex items-center gap-2">
+                        <ProfileAvatar
+                          src={student.photo_url}
+                          name={student.name}
+                          size="xs"
+                        />
+                        <span>{student.name}</span>
+                      </div>
+                    </td>
                     {papers.map((paper) => (
                       <td key={paper.id} className="border border-slate-800 py-3 px-2 text-center">
                         {/* Blank entry box for physical writing */}
