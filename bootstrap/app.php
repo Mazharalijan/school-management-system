@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,6 +18,16 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             HandleInertiaRequests::class,
         ]);
+
+        $middleware->redirectGuestsTo(function (Request $request): string {
+            if (! Schema::hasTable('users')) {
+                return route('login');
+            }
+
+            return User::count() === 0 ? route('register') : route('login');
+        });
+
+        $middleware->redirectUsersTo(fn (): string => '/');
 
         if (($_ENV['APP_ENV'] ?? getenv('APP_ENV')) === 'testing') {
             $middleware->validateCsrfTokens(except: ['*']);

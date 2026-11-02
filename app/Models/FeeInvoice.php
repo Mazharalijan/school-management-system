@@ -24,6 +24,16 @@ class FeeInvoice extends Model
         return $this->belongsTo(Student::class);
     }
 
+    public function schoolClass(): BelongsTo
+    {
+        return $this->belongsTo(SchoolClass::class);
+    }
+
+    public function section(): BelongsTo
+    {
+        return $this->belongsTo(Section::class);
+    }
+
     public function items(): HasMany
     {
         return $this->hasMany(FeeInvoiceItem::class);

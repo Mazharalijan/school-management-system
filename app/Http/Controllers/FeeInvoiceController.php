@@ -98,9 +98,10 @@ class FeeInvoiceController extends Controller
         ]);
 
         try {
-            $this->feeService->collectPayment($invoice, $validated, auth()->id());
+            $validated['student_id'] = $invoice->student_id;
+            $this->feeService->processPayment($validated, (int) (auth()->id() ?? 1));
 
-            return back()->with('success', 'Payment recorded successfully.');
+            return back()->with('success', 'Payment recorded and ledger updated successfully.');
         } catch (\Exception $e) {
             return back()->with('error', 'Failed to process payment: '.$e->getMessage());
         }

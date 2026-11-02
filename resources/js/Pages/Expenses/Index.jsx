@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Head, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/components/PageHeader';
@@ -27,6 +27,7 @@ import PrintPnlModal from './components/PrintPnlModal';
 export default function Index({
     pnlSummary,
     expenses,
+    ledgerSummary = {},
     categories = [],
     filters = {},
     paymentMethods = [],
@@ -44,13 +45,28 @@ export default function Index({
     const [customStart, setCustomStart] = useState(filters.start_date || '');
     const [customEnd, setCustomEnd] = useState(filters.end_date || '');
 
+    // Synchronize tab and preset when incoming props change (e.g. navigation from Dashboard)
+    useEffect(() => {
+        if (filters.tab && filters.tab !== currentTab) {
+            setCurrentTab(filters.tab);
+        }
+    }, [filters.tab]);
+
+    useEffect(() => {
+        if (filters.preset && filters.preset !== activePreset) {
+            setActivePreset(filters.preset);
+        }
+        if (filters.start_date) setCustomStart(filters.start_date);
+        if (filters.end_date) setCustomEnd(filters.end_date);
+    }, [filters.preset, filters.start_date, filters.end_date]);
+
     const applyDateFilters = (newParams = {}) => {
         router.get(
             route('expenses.index'),
             {
                 ...filters,
                 ...newParams,
-                tab: currentTab,
+                tab: newParams.tab || currentTab,
             },
             {
                 preserveState: true,
@@ -87,7 +103,8 @@ export default function Index({
     };
 
     const handleOpenEditExpense = (expense) => {
-        setEditingExpense(expense);
+        // Support both raw format and standard expense model format
+        setEditingExpense(expense.raw || expense);
         setIsExpenseModalOpen(true);
     };
 
@@ -108,14 +125,14 @@ export default function Index({
     ];
 
     return (
-        <AppLayout title="Expenses & Profit/Loss (P&L)">
-            <Head title="Expenses & P&L" />
+        <AppLayout title="Expenses & Financial Flow (P&L)">
+            <Head title="Expenses & Ledger" />
 
             <div className="space-y-6">
                 {/* 1. Standard Page Header */}
                 <PageHeader
-                    title="Expenses & Profit/Loss (P&L)"
-                    subtitle="Track operational expenditures, staff payroll settlements, fee revenue inflows, and net operating margins."
+                    title="Expenses & Cash Flow Ledger"
+                    subtitle="Track operational expenditures, staff payroll settlements, fee revenue inflows, and net operating margins in unified real-time."
                     icon={Receipt}
                 >
                     <div className="flex flex-wrap items-center gap-2">
@@ -123,17 +140,17 @@ export default function Index({
                             variant="outline"
                             size="sm"
                             onClick={() => setIsPrintPnlModalOpen(true)}
-                            className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold h-9"
+                            className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold h-9 rounded-none"
                         >
                             <Printer className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
-                            Print P&L Statement
+                            Print Statement
                         </Button>
 
                         <Button
                             variant="outline"
                             size="sm"
                             onClick={() => setIsCategoryModalOpen(true)}
-                            className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold h-9"
+                            className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold h-9 rounded-none"
                         >
                             <FolderPlus className="w-3.5 h-3.5 mr-1.5 text-indigo-600" />
                             + Category
@@ -142,7 +159,7 @@ export default function Index({
                         <Button
                             size="sm"
                             onClick={handleOpenCreateExpense}
-                            className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold h-9 shadow-sm"
+                            className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold h-9 shadow-xs rounded-none"
                         >
                             <Plus className="w-3.5 h-3.5 mr-1.5 text-white" />
                             Record Expense
@@ -150,8 +167,8 @@ export default function Index({
                     </div>
                 </PageHeader>
 
-                {/* 2. Date Preset & Reporting Period Bar */}
-                <div className="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+                {/* 2. Date Preset & Reporting Period Bar (Sharp Rectangular Design) */}
+                <div className="bg-white p-3 sm:p-4 rounded-none border border-slate-200 shadow-none flex flex-col md:flex-row md:items-center justify-between gap-4">
                     {/* Quick Presets */}
                     <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
                         <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-1">Period:</span>
@@ -159,9 +176,9 @@ export default function Index({
                             <button
                                 key={p.id}
                                 onClick={() => handlePresetChange(p.id)}
-                                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                                className={`px-3 py-1.5 rounded-none text-xs font-medium transition-all ${
                                     activePreset === p.id
-                                        ? 'bg-slate-900 text-white font-semibold shadow-sm'
+                                        ? 'bg-slate-900 text-white font-semibold shadow-xs'
                                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
                                 }`}
                             >
@@ -179,7 +196,7 @@ export default function Index({
                                 setCustomStart(e.target.value);
                                 setActivePreset('custom');
                             }}
-                            className="h-8 text-xs w-36"
+                            className="h-8 text-xs w-36 rounded-none"
                         />
                         <span className="text-slate-400">to</span>
                         <Input
@@ -189,9 +206,9 @@ export default function Index({
                                 setCustomEnd(e.target.value);
                                 setActivePreset('custom');
                             }}
-                            className="h-8 text-xs w-36"
+                            className="h-8 text-xs w-36 rounded-none"
                         />
-                        <Button type="submit" size="sm" variant="outline" className="h-8 text-xs px-2.5">
+                        <Button type="submit" size="sm" variant="outline" className="h-8 text-xs px-2.5 rounded-none">
                             Apply
                         </Button>
                     </form>
@@ -199,15 +216,15 @@ export default function Index({
 
                 {/* 3. Domain Tabs */}
                 <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
-                    <TabsList className="bg-slate-100 p-1 border border-slate-200 rounded-lg mb-6 flex flex-wrap h-auto">
-                        <TabsTrigger value="pnl" className="flex items-center gap-2 px-4 py-2 text-xs font-medium">
-                            <TrendingUp className="h-4 w-4 text-emerald-600" /> Profit & Loss Statement & Analytics
+                    <TabsList className="bg-slate-100 p-1 border border-slate-200 rounded-none mb-6 flex flex-wrap h-auto">
+                        <TabsTrigger value="pnl" className="flex items-center gap-2 px-4 py-2 text-xs font-medium rounded-none">
+                            <TrendingUp className="h-4 w-4 text-emerald-600" /> Profit &amp; Loss Statement &amp; Analytics
                         </TabsTrigger>
-                        <TabsTrigger value="expenses" className="flex items-center gap-2 px-4 py-2 text-xs font-medium">
-                            <Receipt className="h-4 w-4 text-rose-600" /> Expenses Ledger ({expenses?.total ?? 0})
+                        <TabsTrigger value="expenses" className="flex items-center gap-2 px-4 py-2 text-xs font-medium rounded-none">
+                            <Receipt className="h-4 w-4 text-rose-600" /> Cash Flow &amp; Expenses Ledger ({expenses?.total ?? 0})
                         </TabsTrigger>
-                        <TabsTrigger value="categories" className="flex items-center gap-2 px-4 py-2 text-xs font-medium">
-                            <Layers className="h-4 w-4 text-indigo-600" /> Expense Categories ({categories.length})
+                        <TabsTrigger value="categories" className="flex items-center gap-2 px-4 py-2 text-xs font-medium rounded-none">
+                            <Layers className="h-4 w-4 text-indigo-600" /> Operating Categories ({categories.length})
                         </TabsTrigger>
                     </TabsList>
 
@@ -219,15 +236,16 @@ export default function Index({
                         />
                     </TabsContent>
 
-                    {/* Tab 2: Expenses Ledger */}
+                    {/* Tab 2: Expenses & Cash Flow Ledger */}
                     <TabsContent value="expenses">
                         <ExpenseLedgerTab
                             expenses={expenses}
+                            ledgerSummary={ledgerSummary}
                             categories={categories}
                             paymentMethods={paymentMethods}
                             filters={filters}
                             onFilterChange={(key, val) => applyDateFilters({ [key]: val })}
-                            onResetFilters={() => applyDateFilters({ search: '', category_id: '', payment_method: '' })}
+                            onResetFilters={() => applyDateFilters({ search: '', category_id: '', payment_method: '', type: 'all' })}
                             onEditExpense={handleOpenEditExpense}
                             onDeleteExpense={handleDeleteExpense}
                         />

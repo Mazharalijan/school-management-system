@@ -266,4 +266,184 @@ class ExpensesAndPnlTest extends TestCase
             ->where('pnlSummary.net_profit_loss.is_profit', true)
         );
     }
+
+    public function test_dashboard_preset_filter_is_applied_to_expenses_page(): void
+    {
+        $response = $this->actingAs($this->user)
+            ->get(route('expenses.index', [
+                'preset' => 'this_year',
+                'tab' => 'expenses',
+            ]));
+
+        $response->assertStatus(200);
+        $response->assertInertia(fn ($page) => $page
+            ->component('Expenses/Index')
+            ->where('filters.preset', 'this_year')
+            ->where('filters.tab', 'expenses')
+            ->where('filters.start_date', now()->startOfYear()->format('Y-m-d'))
+            ->where('filters.end_date', now()->endOfYear()->format('Y-m-d'))
+        );
+    }
+
+    public function test_unified_ledger_aggregates_fee_payments_expenses_and_staff_salaries(): void
+    {
+        $startDate = '2026-05-01';
+        $endDate = '2026-05-31';
+
+        $class = SchoolClass::create(['name' => 'Grade 8', 'code' => 'G8', 'numeric_value' => 8]);
+        $student = Student::create([
+            'admission_number' => 'ADM-LEDGER-01',
+            'first_name' => 'Sara',
+            'last_name' => 'Ahmed',
+            'gender' => 'female',
+            'date_of_birth' => '2012-04-10',
+            'guardian_name' => 'Ahmed Khan',
+            'guardian_relation' => 'Father',
+            'guardian_phone' => '03001234567',
+            'admission_date' => '2024-04-01',
+            'status' => 'active',
+        ]);
+
+        $staff = Staff::create([
+            'employee_id' => 'EMP-LEDGER-01',
+            'first_name' => 'Kamran',
+            'last_name' => 'Khan',
+            'father_name' => 'Alam Khan',
+            'cnic' => '17301-9876543-1',
+            'designation' => 'Math Teacher',
+            'gender' => 'male',
+            'date_of_birth' => '1992-02-02',
+            'joining_date' => '2023-01-01',
+            'qualification' => 'M.Sc Mathematics',
+            'phone' => '03009988776',
+            'email' => 'kamran.khan.ledger@school.test',
+            'salary' => 45000.00,
+            'status' => 'active',
+        ]);
+
+        // 1. Fee Payment (Inflow)
+        FeePayment::create([
+            'receipt_no' => 'REC-202605-001',
+            'student_id' => $student->id,
+            'received_by' => $this->user->id,
+            'amount_paid' => 25000.00,
+            'payment_date' => '2026-05-10',
+            'payment_method' => 'cash',
+        ]);
+
+        // 2. Operating Expense (Outflow)
+        Expense::create([
+            'expense_category_id' => $this->category->id,
+            'title' => 'Laboratory Equipment',
+            'amount' => 10000.00,
+            'expense_date' => '2026-05-15',
+            'payment_method' => 'cash',
+            'created_by' => $this->user->id,
+            'status' => 'paid',
+        ]);
+
+        // 3. Staff Salary (Outflow)
+        StaffSalarySettlement::create([
+            'staff_id' => $staff->id,
+            'voucher_no' => 'SAL-202605-001',
+            'settlement_type' => 'monthly',
+            'month_year' => '2026-05',
+            'base_salary' => 45000.00,
+            'worked_days' => 31,
+            'total_days_in_month' => 31,
+            'gross_payable' => 45000.00,
+            'net_paid' => 45000.00,
+            'payment_method' => 'bank_transfer',
+            'payment_date' => '2026-05-28',
+            'processed_by' => $this->user->id,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->get(route('expenses.index', [
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'preset' => 'custom',
+                'tab' => 'expenses',
+            ]));
+
+        $response->assertStatus(200);
+        $response->assertInertia(fn ($page) => $page
+            ->component('Expenses/Index')
+            ->where('ledgerSummary.total_inflow', fn ($val) => (float) $val === 25000.0)
+            ->where('ledgerSummary.total_outflow', fn ($val) => (float) $val === 55000.0)
+            ->where('ledgerSummary.net_balance', fn ($val) => (float) $val === -30000.0)
+            ->where('ledgerSummary.inflow_count', 1)
+            ->where('ledgerSummary.outflow_count', 2)
+            ->where('ledgerSummary.total_count', 3)
+            ->has('expenses.data', 3)
+        );
+    }
+
+    public function test_unified_ledger_type_filtering(): void
+    {
+        $startDate = '2026-06-01';
+        $endDate = '2026-06-30';
+
+        $student = Student::create([
+            'admission_number' => 'ADM-TYPE-01',
+            'first_name' => 'Ali',
+            'last_name' => 'Raza',
+            'gender' => 'male',
+            'date_of_birth' => '2011-01-01',
+            'guardian_name' => 'Raza Hussain',
+            'guardian_relation' => 'Father',
+            'guardian_phone' => '03009876543',
+            'admission_date' => '2024-04-01',
+            'status' => 'active',
+        ]);
+
+        FeePayment::create([
+            'receipt_no' => 'REC-202606-001',
+            'student_id' => $student->id,
+            'received_by' => $this->user->id,
+            'amount_paid' => 15000.00,
+            'payment_date' => '2026-06-05',
+            'payment_method' => 'online',
+        ]);
+
+        Expense::create([
+            'expense_category_id' => $this->category->id,
+            'title' => 'Office Supplies',
+            'amount' => 5000.00,
+            'expense_date' => '2026-06-12',
+            'payment_method' => 'cash',
+            'created_by' => $this->user->id,
+            'status' => 'paid',
+        ]);
+
+        // Filter only incoming
+        $incomingResponse = $this->actingAs($this->user)
+            ->get(route('expenses.index', [
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'type' => 'incoming',
+            ]));
+
+        $incomingResponse->assertStatus(200);
+        $incomingResponse->assertInertia(fn ($page) => $page
+            ->where('ledgerSummary.total_count', 1)
+            ->where('ledgerSummary.total_inflow', fn ($val) => (float) $val === 15000.0)
+            ->where('ledgerSummary.total_outflow', fn ($val) => (float) $val === 0.0)
+        );
+
+        // Filter only operating
+        $operatingResponse = $this->actingAs($this->user)
+            ->get(route('expenses.index', [
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'type' => 'operating',
+            ]));
+
+        $operatingResponse->assertStatus(200);
+        $operatingResponse->assertInertia(fn ($page) => $page
+            ->where('ledgerSummary.total_count', 1)
+            ->where('ledgerSummary.total_inflow', fn ($val) => (float) $val === 0.0)
+            ->where('ledgerSummary.total_outflow', fn ($val) => (float) $val === 5000.0)
+        );
+    }
 }

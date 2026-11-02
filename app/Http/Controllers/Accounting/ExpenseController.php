@@ -28,7 +28,7 @@ class ExpenseController extends Controller
      */
     public function index(Request $request): Response
     {
-        $preset = $request->query('preset', 'this_month');
+        $preset = $request->query('preset', $request->query('period', 'this_month'));
 
         // Resolve date range from preset or explicit inputs
         switch ($preset) {
@@ -69,6 +69,7 @@ class ExpenseController extends Controller
             'category_id' => $request->query('category_id', ''),
             'payment_method' => $request->query('payment_method', ''),
             'search' => $request->query('search', ''),
+            'type' => $request->query('type', 'all'),
             'preset' => $preset,
             'tab' => $activeTab,
         ];
@@ -76,8 +77,10 @@ class ExpenseController extends Controller
         // 1. Calculate P&L summary
         $pnlSummary = $this->pnlService->getProfitAndLossSummary($startDate, $endDate);
 
-        // 2. Fetch paginated expense records
-        $expenses = $this->expenseService->getExpenses($filters, 15);
+        // 2. Fetch unified financial ledger transactions
+        $ledgerData = $this->expenseService->getFinancialLedger($filters, 15);
+        $expenses = $ledgerData['paginator'];
+        $ledgerSummary = $ledgerData['summary'];
 
         // 3. Fetch expense categories
         $categories = ExpenseCategory::withCount('expenses')
@@ -87,6 +90,7 @@ class ExpenseController extends Controller
         return Inertia::render('Expenses/Index', [
             'pnlSummary' => $pnlSummary,
             'expenses' => $expenses,
+            'ledgerSummary' => $ledgerSummary,
             'categories' => $categories,
             'filters' => $filters,
             'paymentMethods' => [

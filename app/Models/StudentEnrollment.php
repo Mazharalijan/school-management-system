@@ -33,6 +33,11 @@ class StudentEnrollment extends Model
         return $this->belongsTo(SchoolClass::class, 'school_class_id');
     }
 
+    public function schoolClass(): BelongsTo
+    {
+        return $this->school_class();
+    }
+
     public function section(): BelongsTo
     {
         return $this->belongsTo(Section::class);

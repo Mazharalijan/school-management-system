@@ -67,4 +67,12 @@ class SchoolClass extends Model
     {
         return $this->hasMany(ExamClassPaper::class);
     }
+
+    /**
+     * Scope a query to only include active school classes.
+     */
+    public function scopeActive($query)
+    {
+        return $query;
+    }
 }
