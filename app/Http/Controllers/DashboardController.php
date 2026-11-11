@@ -168,6 +168,7 @@ class DashboardController extends Controller
             'recentFeePayments' => $recentFeePayments,
             'monthlyTrends' => $monthlyTrends,
             'currentPeriod' => $period,
+            'dashboardTheme' => \App\Models\SystemSetting::first()?->dashboard_theme ?? 'shadcn',
         ]);
     }
 }

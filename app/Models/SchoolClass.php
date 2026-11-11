@@ -36,6 +36,23 @@ class SchoolClass extends Model
         return $this->hasMany(Section::class, 'school_class_id')->orderBy('name');
     }
 
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(StudentEnrollment::class);
+    }
+
+    public function students(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Student::class,
+            StudentEnrollment::class,
+            'school_class_id',
+            'id',
+            'id',
+            'student_id'
+        );
+    }
+
     public function subjects(): HasManyThrough
     {
         return $this->hasManyThrough(

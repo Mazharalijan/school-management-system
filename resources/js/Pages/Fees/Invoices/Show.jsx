@@ -100,7 +100,7 @@ export default function Show({ invoice }) {
                     <div className="flex justify-between"><span className="text-gray-500">Discount:</span><span>-${invoice.discount}</span></div>
                     <div className="flex justify-between font-bold text-base border-t pt-1"><span>Total Payable:</span><span>${invoice.total_amount}</span></div>
                     <div className="flex justify-between text-emerald-600"><span>Paid to Date:</span><span>${invoice.paid_amount}</span></div>
-                    <div className="flex justify-between font-bold text-rose-600 text-lg border-t pt-1"><span>Balance Due:</span><span>${invoice.due_amount.toFixed(2)}</span></div>
+                    <div className="flex justify-between font-bold text-rose-600 text-lg border-t pt-1"><span>Balance Due:</span><span>${Number(invoice.due_amount || 0).toFixed(2)}</span></div>
                 </div>
 
                 {/* Payments History */}
@@ -130,7 +130,7 @@ export default function Show({ invoice }) {
                                 <input
                                     type="number"
                                     step="0.01"
-                                    max={invoice.due_amount}
+                                    max={Number(invoice.due_amount || 0)}
                                     value={data.amount_paid}
                                     onChange={(e) => setData('amount_paid', e.target.value)}
                                     className="mt-1 w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600"

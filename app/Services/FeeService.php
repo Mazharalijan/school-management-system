@@ -4,10 +4,12 @@ namespace App\Services;
 
 use App\Models\FeeHead;
 use App\Models\FeeInvoice;
+use App\Models\FeeInvoiceItem;
 use App\Models\FeePayment;
 use App\Models\FeeStructure;
 use App\Models\Student;
 use App\Models\StudentFeeProfile;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -155,9 +157,10 @@ class FeeService
 
                 // Add One-Time / Admission Fees if requested and not waived
                 $admissionFeeAmount = 0;
+                $admissionHead = null;
                 if ($includeOneTime && (! $customProfile || ! $customProfile->waive_admission_fee)) {
                     $admissionHead = FeeHead::where('type', 'one_time')
-                        ->where('name', 'like', '%admission%')
+                        ->where('title', 'like', '%admission%')
                         ->first();
 
                     if ($admissionHead) {
@@ -180,7 +183,7 @@ class FeeService
                 $totalAmount = $netMonthly + $previousArrears;
 
                 $invoice = FeeInvoice::create([
-                    'invoice_number' => 'INV-'.date('Ym').'-'.str_pad($student->id, 4, '0', STR_PAD_LEFT).'-'.rand(10, 99),
+                    'invoice_no' => 'INV-'.date('Ym').'-'.str_pad($student->id, 4, '0', STR_PAD_LEFT).'-'.rand(10, 99),
                     'student_id' => $student->id,
                     'school_class_id' => $studentClassId,
                     'section_id' => $enrollment?->section_id,
@@ -198,6 +201,178 @@ class FeeService
                     'due_amount' => $totalAmount,
                     'status' => 'unpaid',
                 ]);
+
+                if ($customProfile) {
+                    FeeInvoiceItem::create([
+                        'fee_invoice_id' => $invoice->id,
+                        'title' => 'Monthly Tuition Fee',
+                        'amount' => $subtotal,
+                    ]);
+                } elseif (isset($classDefaults) && $classDefaults->isNotEmpty()) {
+                    foreach ($classDefaults as $item) {
+                        FeeInvoiceItem::create([
+                            'fee_invoice_id' => $invoice->id,
+                            'fee_head_id' => $item->fee_head_id,
+                            'title' => $item->feeHead?->title ?? 'Fee Item',
+                            'amount' => $item->amount,
+                        ]);
+                    }
+                }
+
+                if ($admissionFeeAmount > 0) {
+                    FeeInvoiceItem::create([
+                        'fee_invoice_id' => $invoice->id,
+                        'fee_head_id' => $admissionHead?->id,
+                        'title' => 'Admission Fee',
+                        'amount' => $admissionFeeAmount,
+                    ]);
+                }
+
+                $generatedCount++;
+            });
+        }
+
+        return $generatedCount;
+    }
+
+    /**
+     * Generate bulk invoices for a specific class/section from the Fee Invoices module.
+     */
+    public function generateBulkInvoices(array $data): int
+    {
+        $classId = (int) $data['school_class_id'];
+        $sectionId = ! empty($data['section_id']) ? (int) $data['section_id'] : null;
+        $month = $data['month'];
+        $issueDate = $data['issue_date'];
+        $dueDate = $data['due_date'];
+
+        $parsedIssue = Carbon::parse($issueDate);
+        $monthOrder = (int) $parsedIssue->format('n');
+        $sessionYear = $parsedIssue->format('Y');
+
+        if (preg_match('/(\d{4})/', $month, $matches)) {
+            $sessionYear = $matches[1];
+        }
+
+        $query = Student::where('status', 'active')
+            ->whereHas('current_enrollment', function ($q) use ($classId, $sectionId) {
+                $q->where('school_class_id', $classId);
+                if ($sectionId) {
+                    $q->where('section_id', $sectionId);
+                }
+            });
+
+        $students = $query->with(['current_enrollment'])->get();
+        $generatedCount = 0;
+
+        foreach ($students as $student) {
+            DB::transaction(function () use (
+                $student,
+                $sessionYear,
+                $month,
+                $monthOrder,
+                $issueDate,
+                $dueDate,
+                $classId,
+                $sectionId,
+                &$generatedCount
+            ) {
+                $exists = FeeInvoice::where('student_id', $student->id)
+                    ->where('month', $month)
+                    ->where('session_year', $sessionYear)
+                    ->exists();
+
+                if ($exists) {
+                    return;
+                }
+
+                $enrollment = $student->current_enrollment;
+                $studentClassId = $enrollment?->school_class_id ?? $classId;
+                $studentSectionId = $enrollment?->section_id ?? $sectionId;
+
+                $customProfile = StudentFeeProfile::where('student_id', $student->id)
+                    ->where('session_year', $sessionYear)
+                    ->first();
+
+                $subtotal = 0;
+                $discount = 0;
+                $itemsToCreate = [];
+
+                if ($customProfile) {
+                    $subtotal = (float) $customProfile->base_monthly_fee;
+                    $discount = (float) $customProfile->monthly_discount;
+                    $itemsToCreate[] = [
+                        'title' => 'Monthly Tuition Fee',
+                        'amount' => $subtotal,
+                        'fee_head_id' => null,
+                    ];
+                } else {
+                    $classDefaults = FeeStructure::with('feeHead')
+                        ->where('school_class_id', $studentClassId)
+                        ->where('session_year', $sessionYear)
+                        ->get();
+
+                    if ($classDefaults->isEmpty()) {
+                        $classDefaults = FeeStructure::with('feeHead')
+                            ->where('school_class_id', $studentClassId)
+                            ->get();
+                    }
+
+                    if ($classDefaults->isNotEmpty()) {
+                        foreach ($classDefaults as $def) {
+                            $itemsToCreate[] = [
+                                'title' => $def->feeHead?->title ?? 'Tuition Fee',
+                                'amount' => (float) $def->amount,
+                                'fee_head_id' => $def->fee_head_id,
+                            ];
+                        }
+                        $subtotal = (float) $classDefaults->sum('amount');
+                    } else {
+                        $subtotal = 0;
+                        $itemsToCreate[] = [
+                            'title' => 'Monthly Tuition Fee',
+                            'amount' => 0,
+                            'fee_head_id' => null,
+                        ];
+                    }
+                }
+
+                $netMonthly = max(0, $subtotal - $discount);
+
+                $previousArrears = (float) FeeInvoice::where('student_id', $student->id)
+                    ->where('due_amount', '>', 0)
+                    ->sum('due_amount');
+
+                $totalAmount = $netMonthly + $previousArrears;
+
+                $invoice = FeeInvoice::create([
+                    'invoice_no' => 'INV-'.date('Ym').'-'.str_pad($student->id, 4, '0', STR_PAD_LEFT).'-'.rand(10, 99),
+                    'student_id' => $student->id,
+                    'school_class_id' => $studentClassId,
+                    'section_id' => $studentSectionId,
+                    'month' => $month,
+                    'month_order' => $monthOrder,
+                    'session_year' => $sessionYear,
+                    'issue_date' => $issueDate,
+                    'due_date' => $dueDate,
+                    'subtotal' => $subtotal,
+                    'discount' => $discount,
+                    'previous_arrears' => $previousArrears,
+                    'fine' => 0.00,
+                    'total_amount' => $totalAmount,
+                    'paid_amount' => 0.00,
+                    'due_amount' => $totalAmount,
+                    'status' => 'unpaid',
+                ]);
+
+                foreach ($itemsToCreate as $item) {
+                    FeeInvoiceItem::create([
+                        'fee_invoice_id' => $invoice->id,
+                        'fee_head_id' => $item['fee_head_id'],
+                        'title' => $item['title'],
+                        'amount' => $item['amount'],
+                    ]);
+                }
 
                 $generatedCount++;
             });

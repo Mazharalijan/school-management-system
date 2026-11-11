@@ -49,4 +49,9 @@ class Subject extends Model
             'school_class_id'
         )->distinct();
     }
+
+    public function schoolClass(): HasManyThrough
+    {
+        return $this->schoolClasses();
+    }
 }

@@ -69,7 +69,7 @@ export default function ManageFeeModal({
 
         setErrorMessage('');
 
-        post('/api/fees/student-profile', {
+        post(route('fees.student-profile.store'), {
             preserveScroll: true,
             onSuccess: () => {
                 if (onSuccess) onSuccess();

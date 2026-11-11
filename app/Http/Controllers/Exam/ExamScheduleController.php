@@ -40,16 +40,16 @@ class ExamScheduleController extends Controller
         return back()->with('success', 'Exam schedule entry added successfully.');
     }
 
-    public function update(StoreExamScheduleRequest $request, ExamSchedule $examSchedule): RedirectResponse
+    public function update(StoreExamScheduleRequest $request, ExamSchedule $schedule): RedirectResponse
     {
-        $examSchedule->update($request->validated());
+        $schedule->update($request->validated());
 
         return back()->with('success', 'Exam schedule entry updated successfully.');
     }
 
-    public function destroy(ExamSchedule $examSchedule): RedirectResponse
+    public function destroy(ExamSchedule $schedule): RedirectResponse
     {
-        $examSchedule->delete();
+        $schedule->delete();
 
         return back()->with('success', 'Exam schedule entry deleted successfully.');
     }

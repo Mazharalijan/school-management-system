@@ -85,6 +85,11 @@ class ClassMatrixService
                 throw new \Exception('Cannot delete the last remaining section of a class.');
             }
 
+            // Prevent removing a section that has active enrolled students
+            if ($section->students()->exists()) {
+                throw new \Exception('Cannot delete section with assigned students.');
+            }
+
             $section->delete();
         });
     }

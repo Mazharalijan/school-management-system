@@ -19,48 +19,31 @@ class ExamPaperController extends Controller
 {
     public function __construct(protected ExamPaperService $paperService) {}
 
-    public function index(Request $request): Response
+    public function index(Request $request): RedirectResponse
     {
-        $papers = ExamClassPaper::with(['schoolClass', 'subject', 'examSchedule.examSession'])
-            ->when($request->school_class_id, fn ($q) => $q->where('school_class_id', $request->school_class_id))
-            ->when($request->print_status, fn ($q) => $q->where('print_status', $request->print_status))
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
-
-        return Inertia::render('Exam/Papers/Index', [
-            'papers' => $papers,
-            'classes' => SchoolClass::all(),
-            'filters' => $request->only(['school_class_id', 'print_status']),
-        ]);
+        return redirect()->route('exam-class-papers.index', $request->query());
     }
 
     public function create(): Response
     {
-        return Inertia::render('Exam/Papers/Create', [
-            'classes' => SchoolClass::all(),
-            'subjects' => Subject::all(),
+        return Inertia::render('ExamClassPapers/Create', [
+            'classes' => SchoolClass::orderBy('numeric_value')->get(),
+            'subjects' => Subject::orderBy('subject_name')->get(),
             'questions' => QuestionBank::with(['chapter', 'topic'])->get(),
         ]);
     }
 
     public function store(StoreExamClassPaperRequest $request): RedirectResponse
     {
-        $this->paperService->createPaperWithSections($request->validated());
+        $paper = $this->paperService->createPaperWithSections($request->validated());
 
-        return redirect()->route('papers.index')->with('success', 'Question paper composed successfully.');
+        return redirect()->route('exam-class-papers.index', ['tab' => 'papers'])
+            ->with('success', 'Question paper composed successfully.');
     }
 
-    public function show(ExamClassPaper $paper): Response
+    public function show(ExamClassPaper $paper): RedirectResponse
     {
-        return Inertia::render('Exam/Papers/Show', [
-            'paper' => $paper->load([
-                'schoolClass',
-                'subject',
-                'sections.questions.questionBank.chapter',
-                'sections.questions.questionBank.topic',
-            ]),
-        ]);
+        return redirect()->route('exam-class-papers.show', $paper->id);
     }
 
     public function updatePrintStatus(UpdatePaperPrintStatusRequest $request, ExamClassPaper $examPaper): RedirectResponse

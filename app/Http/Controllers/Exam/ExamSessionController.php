@@ -33,16 +33,16 @@ class ExamSessionController extends Controller
         return back()->with('success', 'Exam session created successfully.');
     }
 
-    public function update(StoreExamSessionRequest $request, ExamSession $examSession): RedirectResponse
+    public function update(StoreExamSessionRequest $request, ExamSession $session): RedirectResponse
     {
-        $examSession->update($request->validated());
+        $session->update($request->validated());
 
         return back()->with('success', 'Exam session updated successfully.');
     }
 
-    public function destroy(ExamSession $examSession): RedirectResponse
+    public function destroy(ExamSession $session): RedirectResponse
     {
-        $examSession->delete();
+        $session->delete();
 
         return back()->with('success', 'Exam session deleted successfully.');
     }

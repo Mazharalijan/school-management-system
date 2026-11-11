@@ -67,7 +67,7 @@ class ProfitAndLossService
         $payrollExpenses = (float) StaffSalarySettlement::whereBetween('payment_date', [$startDate, $endDate])
             ->sum('net_paid');
 
-        $advancesIssued = (float) StaffSalaryAdvance::whereBetween('advance_date', [$startDate, $endDate])
+        $advancesIssued = (float) StaffSalaryAdvance::whereBetween('issued_date', [$startDate, $endDate])
             ->sum('amount');
 
         // 4. Totals and Net Profit / Loss

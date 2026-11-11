@@ -19,6 +19,7 @@ use App\Http\Controllers\QuestionBankController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StaffSalaryController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentPromotionController;
 use App\Http\Controllers\SystemSettingController;
 use App\Http\Controllers\TimetableController;
 use Illuminate\Support\Facades\Route;
@@ -47,8 +48,15 @@ Route::middleware('auth')->group(function () {
     Route::put('/sections/{section}', [ClassMatrixController::class, 'updateSection'])->name('sections.update');
     Route::delete('/sections/{section}', [ClassMatrixController::class, 'destroySection'])->name('sections.destroy');
 
+    // --- Student Promotion Routes ---
+    Route::prefix('students/promotion')->name('students.promotion.')->group(function () {
+        Route::get('/', [StudentPromotionController::class, 'index'])->name('index');
+        Route::post('/', [StudentPromotionController::class, 'promote'])->name('store');
+        Route::post('/{student}/single', [StudentPromotionController::class, 'promoteSingle'])->name('single');
+    });
+
     // --- Student & Staff Routes ---
-    Route::resource('students', StudentController::class);
+    Route::resource('students', StudentController::class)->except(['create', 'edit', 'show']);
     Route::resource('staff', StaffController::class)->except(['create', 'edit', 'show']);
 
     // --- System Settings Routes ---
@@ -119,10 +127,8 @@ Route::middleware('auth')->group(function () {
     });
 
     // --- Exam Class Papers & Printing Management Routes ---
-    Route::resource('exam-class-papers', ExamClassPaperController::class);
-
     Route::prefix('exam-class-papers')->name('exam-class-papers.')->group(function () {
-        // Print Views & Bulk Printing
+        // Print Views & Bulk Printing (registered before resource to prevent route parameter collision)
         Route::get('/bulk-print', [ExamClassPaperController::class, 'bulkPrint'])->name('bulk-print');
         Route::post('/mark-printed', [ExamClassPaperController::class, 'markPrinted'])->name('mark-printed');
         Route::get('/{examClassPaper}/print-single', [ExamClassPaperController::class, 'printSingle'])->name('print-single');
@@ -130,6 +136,11 @@ Route::middleware('auth')->group(function () {
         // Section Management under Paper context
         Route::post('/{examClassPaper}/sections', [ExamClassPaperController::class, 'storeSection'])->name('sections.store');
     });
+
+    Route::get('/exam-class-papers/{exam_class_paper}/preview', [ExamClassPaperController::class, 'preview'])
+        ->name('exam-class-papers.preview');
+
+    Route::resource('exam-class-papers', ExamClassPaperController::class);
 
     // Flat Section Management Alias Route
     Route::post('paper/sections', [ExamClassPaperController::class, 'storeSection'])->name('paper.sections.store');
@@ -147,8 +158,6 @@ Route::middleware('auth')->group(function () {
         Route::put('/', [ExamClassPaperController::class, 'updateSectionQuestion'])->name('update');
         Route::delete('/', [ExamClassPaperController::class, 'destroySectionQuestion'])->name('destroy');
     });
-    Route::get('/exam-class-papers/{exam_class_paper}/preview', [ExamClassPaperController::class, 'preview'])
-        ->name('exam-class-papers.preview');
 
     // --- Exam Sessions & Schedules Routes ---
     Route::resource('sessions', ExamSessionController::class)->except(['create', 'edit', 'show']);

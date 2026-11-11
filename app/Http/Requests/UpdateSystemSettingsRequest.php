@@ -30,6 +30,7 @@ class UpdateSystemSettingsRequest extends FormRequest
             'address' => ['required', 'string', 'max:500'],
             'invoice_prefix' => ['required', 'string', 'max:20'],
             'receipt_footer_note' => ['nullable', 'string', 'max:500'],
+            'dashboard_theme' => ['nullable', 'string', 'in:shadcn,academic,compact'],
         ];
     }
 }

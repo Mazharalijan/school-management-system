@@ -12,6 +12,7 @@ import {
     Package, 
     Bus,
     Award,
+    TrendingUp,
     LogOut
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -21,6 +22,7 @@ const navigation = [
     { name: 'System Settings', href: '/settings', icon: Settings },
     { name: 'Class Matrix', href: '/classes', icon: GraduationCap },
     { name: 'Students', href: '/students', icon: Users },
+    { name: 'Student Promotion', href: '/students/promotion', icon: TrendingUp },
     { name: 'Teachers & Staff', href: '/staff', icon: Users },
     { name: 'Timetable Generator', href: '/timetable', icon: Calendar },
     { name: 'Question Bank', href: '/question-bank', icon: FileSpreadsheet },
@@ -28,7 +30,7 @@ const navigation = [
     { name: 'Marks & Results', href: '/marks/entry', icon: Award },
     { name: 'Expenses P&L', href: '/expenses', icon: Receipt },
     { name: 'Assets & Inventory', href: '/inventory', icon: Package },
-    { name: 'Transport', href: '/transport', icon: Bus },
+    { name: 'Fee Invoices', href: '/fees/invoices', icon: CreditCard },
 ];
 
 export default function AdminSidebar() {

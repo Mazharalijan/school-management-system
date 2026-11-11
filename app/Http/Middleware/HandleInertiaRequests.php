@@ -52,6 +52,7 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn () => $request->session()->get('success'),
                 'status' => fn () => $request->session()->get('status'),
             ],
+            'system_settings' => fn () => \App\Models\SystemSetting::first(['school_name', 'logo_path', 'dashboard_theme', 'current_session_year', 'currency_symbol']),
         ];
     }
 }

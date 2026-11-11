@@ -211,9 +211,12 @@ class ExamClassPaperService
      */
     public function updatePrintStatuses(array $paperIds, string $status = 'printed'): void
     {
-        ExamClassPaper::whereIn('id', $paperIds)->update([
-            'print_status' => $status,
-        ]);
+        $data = ['print_status' => $status];
+        if ($status === 'printed') {
+            $data['printed_at'] = now();
+        }
+
+        ExamClassPaper::whereIn('id', $paperIds)->update($data);
     }
 
     /**

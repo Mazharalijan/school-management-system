@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
 import {
     Building,
     Globe,
@@ -15,7 +16,11 @@ import {
     Image as ImageIcon,
     Save,
     Calendar,
-    Settings
+    Settings,
+    LayoutDashboard,
+    Sparkles,
+    BarChart3,
+    CheckCircle2
 } from 'lucide-react';
 
 export default function SettingsIndex({ settings = {} }) {
@@ -39,6 +44,7 @@ export default function SettingsIndex({ settings = {} }) {
         address: settings.address || '',
         invoice_prefix: settings.invoice_prefix || 'INV-',
         receipt_footer_note: settings.receipt_footer_note || '',
+        dashboard_theme: settings.dashboard_theme || 'shadcn',
     });
 
     const handleLogoChange = (e) => {
@@ -70,24 +76,24 @@ export default function SettingsIndex({ settings = {} }) {
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* School Branding & Profile */}
-                <Card className="border-slate-200 shadow-sm">
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
                     <CardContent className="p-6">
-                        <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-100 text-slate-800 font-bold text-sm">
-                            <Building className="h-4 w-4 text-blue-600" />
+                        <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-100 dark:border-slate-800 text-slate-800 dark:text-slate-100 font-bold text-sm">
+                            <Building className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                             <span>School Identity & Logo</span>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {/* Logo Upload Box */}
-                            <div className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-slate-200 rounded-lg bg-slate-50/50">
+                            <div className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-lg bg-slate-50/50 dark:bg-slate-950/50">
                                 {logoPreview ? (
                                     <img src={logoPreview} alt="School Logo" className="h-28 w-28 object-contain mb-3 rounded" />
                                 ) : (
-                                    <div className="h-28 w-28 bg-slate-200 rounded flex items-center justify-center text-slate-400 mb-3">
+                                    <div className="h-28 w-28 bg-slate-200 dark:bg-slate-800 rounded flex items-center justify-center text-slate-400 dark:text-slate-500 mb-3">
                                         <ImageIcon className="h-10 w-10" />
                                     </div>
                                 )}
-                                <Label htmlFor="logo" className="cursor-pointer bg-white px-3 py-1.5 border border-slate-200 rounded text-xs font-semibold text-slate-700 hover:bg-slate-50">
+                                <Label htmlFor="logo" className="cursor-pointer bg-white dark:bg-slate-800 px-3 py-1.5 border border-slate-200 dark:border-slate-700 rounded text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700">
                                     Upload Logo
                                 </Label>
                                 <input id="logo" type="file" accept="image/*" className="hidden" onChange={handleLogoChange} />
@@ -102,6 +108,7 @@ export default function SettingsIndex({ settings = {} }) {
                                         value={form.data.school_name}
                                         onChange={(e) => form.setData('school_name', e.target.value)}
                                         required
+                                        className="dark:bg-slate-950 dark:border-slate-800 dark:text-slate-100"
                                     />
                                     {form.errors.school_name && <span className="text-xs text-red-500">{form.errors.school_name}</span>}
                                 </div>
@@ -113,6 +120,7 @@ export default function SettingsIndex({ settings = {} }) {
                                         placeholder="e.g. Excellence in Education"
                                         value={form.data.school_tagline}
                                         onChange={(e) => form.setData('school_tagline', e.target.value)}
+                                        className="dark:bg-slate-950 dark:border-slate-800 dark:text-slate-100"
                                     />
                                 </div>
 
@@ -123,6 +131,7 @@ export default function SettingsIndex({ settings = {} }) {
                                         placeholder="e.g. REG-2026-99"
                                         value={form.data.registration_number}
                                         onChange={(e) => form.setData('registration_number', e.target.value)}
+                                        className="dark:bg-slate-950 dark:border-slate-800 dark:text-slate-100"
                                     />
                                 </div>
                             </div>
@@ -130,11 +139,119 @@ export default function SettingsIndex({ settings = {} }) {
                     </CardContent>
                 </Card>
 
-                {/* Academic & Operations */}
-                <Card className="border-slate-200 shadow-sm">
+                {/* Dashboard Design & Layout Theme */}
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
                     <CardContent className="p-6">
-                        <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-100 text-slate-800 font-bold text-sm">
-                            <Calendar className="h-4 w-4 text-blue-600" />
+                        <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-100 dark:border-slate-800">
+                            <div className="flex items-center gap-2 text-slate-800 dark:text-slate-100 font-bold text-sm">
+                                <LayoutDashboard className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                                <span>Dashboard UI Layout & Design</span>
+                            </div>
+                            <span className="text-xs text-slate-500 dark:text-slate-400">Choose how the main dashboard looks</span>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            {/* Option 1: Shadcn Modern */}
+                            <div
+                                onClick={() => form.setData('dashboard_theme', 'shadcn')}
+                                className={`p-4 rounded-xl border-2 transition-all cursor-pointer flex flex-col justify-between ${
+                                    form.data.dashboard_theme === 'shadcn'
+                                        ? 'border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30 ring-2 ring-indigo-500/20'
+                                        : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-950'
+                                }`}
+                            >
+                                <div>
+                                    <div className="flex items-center justify-between mb-2">
+                                        <Badge className="bg-indigo-600 text-white text-[10px] font-bold">
+                                            Shadcn UI (Recommended)
+                                        </Badge>
+                                        {form.data.dashboard_theme === 'shadcn' && (
+                                            <CheckCircle2 className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                                        )}
+                                    </div>
+                                    <h4 className="font-bold text-slate-900 dark:text-slate-100 text-sm flex items-center gap-1.5">
+                                        <Sparkles className="h-3.5 w-3.5 text-indigo-500" />
+                                        <span>Shadcn Modern</span>
+                                    </h4>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                                        Minimalist zinc dashboard inspired by ui.shadcn.com/examples/dashboard with interactive tabs, metric deltas, and clean bar charts.
+                                    </p>
+                                </div>
+                                <div className="mt-4 pt-3 border-t border-slate-200/60 dark:border-slate-800 text-[11px] font-mono text-indigo-600 dark:text-indigo-400 font-semibold">
+                                    ui.shadcn.com/examples/dashboard
+                                </div>
+                            </div>
+
+                            {/* Option 2: Academic Classic */}
+                            <div
+                                onClick={() => form.setData('dashboard_theme', 'academic')}
+                                className={`p-4 rounded-xl border-2 transition-all cursor-pointer flex flex-col justify-between ${
+                                    form.data.dashboard_theme === 'academic'
+                                        ? 'border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30 ring-2 ring-indigo-500/20'
+                                        : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-950'
+                                }`}
+                            >
+                                <div>
+                                    <div className="flex items-center justify-between mb-2">
+                                        <Badge variant="outline" className="text-slate-600 dark:text-slate-400 border-slate-300 text-[10px]">
+                                            Classic
+                                        </Badge>
+                                        {form.data.dashboard_theme === 'academic' && (
+                                            <CheckCircle2 className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                                        )}
+                                    </div>
+                                    <h4 className="font-bold text-slate-900 dark:text-slate-100 text-sm flex items-center gap-1.5">
+                                        <Building className="h-3.5 w-3.5 text-blue-500" />
+                                        <span>Academic Classic</span>
+                                    </h4>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                                        Traditional school operations dashboard with colored stat cards, gender demographics, class/section count, and detailed tabular feeds.
+                                    </p>
+                                </div>
+                                <div className="mt-4 pt-3 border-t border-slate-200/60 dark:border-slate-800 text-[11px] text-slate-500">
+                                    School Operations Centric
+                                </div>
+                            </div>
+
+                            {/* Option 3: Executive Compact */}
+                            <div
+                                onClick={() => form.setData('dashboard_theme', 'compact')}
+                                className={`p-4 rounded-xl border-2 transition-all cursor-pointer flex flex-col justify-between ${
+                                    form.data.dashboard_theme === 'compact'
+                                        ? 'border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30 ring-2 ring-indigo-500/20'
+                                        : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-950'
+                                }`}
+                            >
+                                <div>
+                                    <div className="flex items-center justify-between mb-2">
+                                        <Badge variant="outline" className="text-emerald-700 dark:text-emerald-400 border-emerald-300 text-[10px]">
+                                            High Density
+                                        </Badge>
+                                        {form.data.dashboard_theme === 'compact' && (
+                                            <CheckCircle2 className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                                        )}
+                                    </div>
+                                    <h4 className="font-bold text-slate-900 dark:text-slate-100 text-sm flex items-center gap-1.5">
+                                        <BarChart3 className="h-3.5 w-3.5 text-emerald-500" />
+                                        <span>Executive Compact</span>
+                                    </h4>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                                        High-density KPI metric grid and financial performance indicators for quick senior administration reviews.
+                                    </p>
+                                </div>
+                                <div className="mt-4 pt-3 border-t border-slate-200/60 dark:border-slate-800 text-[11px] text-slate-500">
+                                    Financial & Metric Dials
+                                </div>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Academic & Operations */}
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+                    <CardContent className="p-6">
+                        <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-100 dark:border-slate-800 text-slate-800 dark:text-slate-100 font-bold text-sm">
+                            <Calendar className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                             <span>Academic & System Operations</span>
                         </div>
 
@@ -146,6 +263,7 @@ export default function SettingsIndex({ settings = {} }) {
                                     placeholder="2026-2027"
                                     value={form.data.current_session_year}
                                     onChange={(e) => form.setData('current_session_year', e.target.value)}
+                                    className="dark:bg-slate-950 dark:border-slate-800 dark:text-slate-100"
                                     required
                                 />
                             </div>
@@ -157,6 +275,7 @@ export default function SettingsIndex({ settings = {} }) {
                                     placeholder="Rs."
                                     value={form.data.currency_symbol}
                                     onChange={(e) => form.setData('currency_symbol', e.target.value)}
+                                    className="dark:bg-slate-950 dark:border-slate-800 dark:text-slate-100"
                                     required
                                 />
                             </div>
@@ -168,6 +287,7 @@ export default function SettingsIndex({ settings = {} }) {
                                     placeholder="PKR"
                                     value={form.data.currency_code}
                                     onChange={(e) => form.setData('currency_code', e.target.value)}
+                                    className="dark:bg-slate-950 dark:border-slate-800 dark:text-slate-100"
                                     required
                                 />
                             </div>
@@ -178,6 +298,7 @@ export default function SettingsIndex({ settings = {} }) {
                                     id="timezone"
                                     value={form.data.timezone}
                                     onChange={(e) => form.setData('timezone', e.target.value)}
+                                    className="dark:bg-slate-950 dark:border-slate-800 dark:text-slate-100"
                                 />
                             </div>
                         </div>
@@ -185,10 +306,10 @@ export default function SettingsIndex({ settings = {} }) {
                 </Card>
 
                 {/* Contact & Address */}
-                <Card className="border-slate-200 shadow-sm">
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
                     <CardContent className="p-6">
-                        <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-100 text-slate-800 font-bold text-sm">
-                            <Phone className="h-4 w-4 text-blue-600" />
+                        <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-100 dark:border-slate-800 text-slate-800 dark:text-slate-100 font-bold text-sm">
+                            <Phone className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                             <span>Contact & Address Information</span>
                         </div>
 
@@ -199,6 +320,7 @@ export default function SettingsIndex({ settings = {} }) {
                                     id="phone"
                                     value={form.data.phone}
                                     onChange={(e) => form.setData('phone', e.target.value)}
+                                    className="dark:bg-slate-950 dark:border-slate-800 dark:text-slate-100"
                                     required
                                 />
                             </div>
@@ -209,6 +331,7 @@ export default function SettingsIndex({ settings = {} }) {
                                     id="alt_phone"
                                     value={form.data.alt_phone}
                                     onChange={(e) => form.setData('alt_phone', e.target.value)}
+                                    className="dark:bg-slate-950 dark:border-slate-800 dark:text-slate-100"
                                 />
                             </div>
 
@@ -219,6 +342,7 @@ export default function SettingsIndex({ settings = {} }) {
                                     type="email"
                                     value={form.data.email}
                                     onChange={(e) => form.setData('email', e.target.value)}
+                                    className="dark:bg-slate-950 dark:border-slate-800 dark:text-slate-100"
                                     required
                                 />
                             </div>
@@ -230,6 +354,7 @@ export default function SettingsIndex({ settings = {} }) {
                                     placeholder="https://myschool.edu.pk"
                                     value={form.data.website}
                                     onChange={(e) => form.setData('website', e.target.value)}
+                                    className="dark:bg-slate-950 dark:border-slate-800 dark:text-slate-100"
                                 />
                             </div>
 
@@ -238,7 +363,7 @@ export default function SettingsIndex({ settings = {} }) {
                                 <textarea
                                     id="address"
                                     rows="2"
-                                    className="w-full p-2.5 text-sm rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full p-2.5 text-sm rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     value={form.data.address}
                                     onChange={(e) => form.setData('address', e.target.value)}
                                     required
@@ -249,10 +374,10 @@ export default function SettingsIndex({ settings = {} }) {
                 </Card>
 
                 {/* Receipts & Invoicing */}
-                <Card className="border-slate-200 shadow-sm">
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
                     <CardContent className="p-6">
-                        <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-100 text-slate-800 font-bold text-sm">
-                            <Receipt className="h-4 w-4 text-blue-600" />
+                        <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-100 dark:border-slate-800 text-slate-800 dark:text-slate-100 font-bold text-sm">
+                            <Receipt className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                             <span>Fee Receipt & Invoice Settings</span>
                         </div>
 
@@ -264,6 +389,7 @@ export default function SettingsIndex({ settings = {} }) {
                                     placeholder="INV-"
                                     value={form.data.invoice_prefix}
                                     onChange={(e) => form.setData('invoice_prefix', e.target.value)}
+                                    className="dark:bg-slate-950 dark:border-slate-800 dark:text-slate-100"
                                     required
                                 />
                             </div>
@@ -275,6 +401,7 @@ export default function SettingsIndex({ settings = {} }) {
                                     placeholder="e.g. Fees once paid are non-refundable."
                                     value={form.data.receipt_footer_note}
                                     onChange={(e) => form.setData('receipt_footer_note', e.target.value)}
+                                    className="dark:bg-slate-950 dark:border-slate-800 dark:text-slate-100"
                                 />
                             </div>
                         </div>

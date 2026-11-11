@@ -218,13 +218,16 @@ class ExamClassPaperController extends Controller
 
     // --- Printing & Bulk Actions ---
 
-    public function printSingle(ExamClassPaper $paper)
+    public function printSingle(ExamClassPaper $examClassPaper)
     {
-        $paper->load([
+        $examClassPaper->load([
             'schoolClass',
             'subject',
+            'examSession',
             'sections.questions.questionBank',
         ]);
+
+        $paper = $examClassPaper;
 
         return view('prints.exam-paper-single', compact('paper'));
     }

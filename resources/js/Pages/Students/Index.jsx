@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
-import { router } from '@inertiajs/react';
+import { router, Link } from '@inertiajs/react';
 import PageHeader from '@/components/PageHeader';
 import FilterBar from '@/components/FilterBar';
 import SearchInput from '@/components/SearchInput';
@@ -9,7 +9,7 @@ import StudentTable from './components/StudentTable';
 import StudentFormModal from './components/StudentFormModal';
 import StudentDetailsModal from './components/StudentDetailsModal';
 import CollectPaymentModal from '@/Pages/Students/components/CollectPaymentModal';
-import { UserPlus } from 'lucide-react';
+import { UserPlus, TrendingUp } from 'lucide-react';
 
 export default function StudentIndex({ students, classes, filters }) {
     // Modal states
@@ -113,7 +113,15 @@ export default function StudentIndex({ students, classes, filters }) {
                 buttonText="New Admission"
                 icon={UserPlus}
                 onButtonClick={handleOpenAdd}
-            />
+            >
+                <Link
+                    href={route('students.promotion.index')}
+                    className="inline-flex items-center space-x-1.5 px-3 py-2 rounded-md bg-indigo-50 text-indigo-700 hover:bg-indigo-100 text-sm font-semibold border border-indigo-200 shadow-sm transition"
+                >
+                    <TrendingUp className="h-4 w-4 text-indigo-600" />
+                    <span>Student Promotion</span>
+                </Link>
+            </PageHeader>
 
             {/* Single-Row Search & Filter Bar */}
             <FilterBar showReset={searchQuery || selectedClassFilter} onReset={handleResetFilter}>
