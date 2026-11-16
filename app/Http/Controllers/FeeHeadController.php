@@ -12,7 +12,7 @@ class FeeHeadController extends Controller
 {
     public function index(): Response
     {
-        $feeHeads = FeeHead::latest()->get();
+        $feeHeads = FeeHead::latest()->paginate(10)->withQueryString();
 
         return Inertia::render('Fees/Heads/Index', [
             'feeHeads' => $feeHeads,

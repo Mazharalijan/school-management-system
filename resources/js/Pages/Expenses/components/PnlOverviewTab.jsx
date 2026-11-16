@@ -170,6 +170,43 @@ export default function PnlOverviewTab({ summary, onOpenPrint }) {
                                 </span>
                             </div>
 
+                            {/* Student Fines Row */}
+                            <div className="px-4 py-2.5 flex items-center justify-between bg-muted/20">
+                                <div>
+                                    <div className="flex items-center gap-1.5">
+                                        <span className="font-semibold text-foreground">Student Fines</span>
+                                        {summary.revenue?.include_fines_in_financial_flow ? (
+                                            <Badge variant="outline" className="text-[9px] bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-300">
+                                                In Financial Flow
+                                            </Badge>
+                                        ) : (
+                                            <Badge variant="outline" className="text-[9px] bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border-amber-300">
+                                                Excluded by Setting
+                                            </Badge>
+                                        )}
+                                    </div>
+                                    <span className="text-[11px] text-muted-foreground">
+                                        {summary.revenue?.fine_collections_count || 0} Paid student penalties (Leave, Exam, Test, Discipline)
+                                    </span>
+                                </div>
+                                <span className="font-bold text-foreground font-mono text-sm">
+                                    Rs. {Number(summary.revenue?.fine_collections || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                                </span>
+                            </div>
+
+                            {/* Exam Paper Money Fees Row */}
+                            <div className="px-4 py-2.5 flex items-center justify-between">
+                                <div>
+                                    <span className="font-semibold text-foreground block">Exam Paper Money Fees</span>
+                                    <span className="text-[11px] text-muted-foreground">
+                                        {summary.revenue?.exam_paper_fees_count || 0} Student paper exam fee collections
+                                    </span>
+                                </div>
+                                <span className="font-bold text-foreground font-mono text-sm text-emerald-600 dark:text-emerald-400">
+                                    Rs. {Number(summary.revenue?.exam_paper_fees || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                                </span>
+                            </div>
+
                             {/* Revenue Method Pills */}
                             {summary.revenue?.by_method?.length > 0 && (
                                 <div className="px-4 py-2 bg-muted/30 flex flex-wrap gap-2 text-[11px]">
@@ -197,6 +234,19 @@ export default function PnlOverviewTab({ summary, onOpenPrint }) {
                                 </div>
                                 <span className="font-bold text-foreground font-mono text-sm">
                                     Rs. {Number(summary.expenses?.payroll_total || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                                </span>
+                            </div>
+
+                            {/* Exam Paper Expenses */}
+                            <div className="px-4 py-2.5 flex items-center justify-between bg-muted/20">
+                                <div>
+                                    <span className="font-semibold text-foreground block">Exam Paper Expenses</span>
+                                    <span className="text-[11px] text-muted-foreground">
+                                        {summary.expenses?.exam_paper_expenses_count || 0} Incurred costs (Printing, photocopying, stationery, marking honorarium)
+                                    </span>
+                                </div>
+                                <span className="font-bold text-foreground font-mono text-sm text-rose-600 dark:text-rose-400">
+                                    Rs. {Number(summary.expenses?.exam_paper_expenses || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
                                 </span>
                             </div>
 
@@ -251,6 +301,46 @@ export default function PnlOverviewTab({ summary, onOpenPrint }) {
 
                 {/* Right Column: Category Distribution & Trends */}
                 <div className="space-y-6">
+                    {/* Exam Paper Money Module Result */}
+                    {summary.exam_paper_accounting && (
+                        <Card className="border-border shadow-xs bg-card text-card-foreground">
+                            <CardHeader className="bg-muted/40 border-b border-border pb-3 flex flex-row items-center justify-between">
+                                <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
+                                    <Coins className="w-4 h-4 text-amber-500" />
+                                    Exam Paper Money P&L
+                                </CardTitle>
+                                <Badge className={
+                                    summary.exam_paper_accounting.is_profit
+                                        ? "bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-300 text-[10px]"
+                                        : "bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border-rose-300 text-[10px]"
+                                }>
+                                    {summary.exam_paper_accounting.is_profit ? 'Paper Profit' : 'Paper Deficit'}
+                                </Badge>
+                            </CardHeader>
+                            <CardContent className="p-4 space-y-2.5">
+                                <div className="flex justify-between items-center text-xs">
+                                    <span className="text-muted-foreground">Paper Fees Collected:</span>
+                                    <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                                        Rs. {Number(summary.exam_paper_accounting.total_collected || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between items-center text-xs">
+                                    <span className="text-muted-foreground">Paper Printing & Stationery:</span>
+                                    <span className="font-mono font-bold text-rose-600 dark:text-rose-400">
+                                        - Rs. {Number(summary.exam_paper_accounting.total_expenses || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                                    </span>
+                                </div>
+                                <div className="pt-2 border-t border-border flex justify-between items-center text-xs font-bold">
+                                    <span className="text-foreground">Net Paper Margin:</span>
+                                    <span className={`font-mono text-sm ${summary.exam_paper_accounting.is_profit ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
+                                        {summary.exam_paper_accounting.is_profit ? '+ Rs. ' : '- Rs. '}
+                                        {Math.abs(summary.exam_paper_accounting.net_profit_loss || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                                    </span>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    )}
+
                     {/* Category Expenditure Share */}
                     <Card className="border-border shadow-xs bg-card text-card-foreground">
                         <CardHeader className="bg-muted/40 border-b border-border pb-3">

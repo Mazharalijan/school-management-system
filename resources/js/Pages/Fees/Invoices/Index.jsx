@@ -227,34 +227,38 @@ export default function Index({ invoices, classes = [], filters = {} }) {
                                                 <td className="px-6 py-4">
                                                     {getStatusBadge(inv.status)}
                                                 </td>
-                                                <td className="px-6 py-4 text-right">
+                                                <td className="px-6 py-4 text-right whitespace-nowrap">
                                                     <div className="flex items-center justify-end gap-1.5">
                                                         {inv.status !== 'paid' && Number(inv.due_amount || 0) > 0 && (
-                                                            <button
+                                                            <Button
                                                                 type="button"
+                                                                variant="outline"
+                                                                size="sm"
                                                                 onClick={() => setCollectingInvoice(inv)}
-                                                                className="inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-2xs transition-colors"
+                                                                className="h-7 px-2.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 border-border hover:bg-muted inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
                                                                 title="Collect Fee Payment"
                                                             >
-                                                                <DollarSign className="w-3.5 h-3.5 mr-1" />
-                                                                Collect
-                                                            </button>
+                                                                <DollarSign className="w-3.5 h-3.5 shrink-0" />
+                                                                <span>Collect</span>
+                                                            </Button>
                                                         )}
-                                                        <button
+                                                        <Button
                                                             type="button"
+                                                            variant="outline"
+                                                            size="sm"
                                                             onClick={() => setPrintingInvoice(inv)}
-                                                            className="inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-semibold bg-muted hover:bg-muted/80 text-foreground border border-border transition-colors"
+                                                            className="h-7 px-2.5 text-xs font-semibold border-border hover:bg-muted inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
                                                             title="Print Invoice / Voucher"
                                                         >
-                                                            <Printer className="w-3.5 h-3.5 mr-1 text-muted-foreground" />
-                                                            Print
-                                                        </button>
+                                                            <Printer className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+                                                            <span>Print</span>
+                                                        </Button>
                                                         <Link
                                                             href={route('fees.invoices.show', inv.id)}
-                                                            className="inline-flex items-center px-2 py-1.5 rounded-md text-xs font-semibold bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground border border-border transition-colors"
+                                                            className="inline-flex items-center justify-center h-7 px-2 rounded-md text-xs font-semibold border border-border bg-background hover:bg-muted text-muted-foreground hover:text-foreground transition-colors shrink-0"
                                                             title="View Full Voucher"
                                                         >
-                                                            <Eye className="w-3.5 h-3.5" />
+                                                            <Eye className="w-3.5 h-3.5 shrink-0" />
                                                         </Link>
                                                     </div>
                                                 </td>

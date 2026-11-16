@@ -23,6 +23,7 @@ class SystemSettingController extends Controller
                 'timezone' => 'Asia/Karachi',
                 'date_format' => 'Y-m-d',
                 'invoice_prefix' => 'INV-',
+                'include_fines_in_financial_flow' => true,
             ]
         );
 

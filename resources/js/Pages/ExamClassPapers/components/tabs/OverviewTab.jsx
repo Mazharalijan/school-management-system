@@ -3,6 +3,7 @@ import { router } from '@inertiajs/react';
 import FilterBar from '@/components/FilterBar';
 import SearchInput from '@/components/SearchInput';
 import FilterSelect from '@/components/FilterSelect';
+import Pagination from '@/components/Pagination';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -769,6 +770,7 @@ export default function OverviewTab({
                             )}
                         </tbody>
                     </table>
+                    <Pagination data={papers} />
                 </div>
             )}
         </div>

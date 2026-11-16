@@ -16,7 +16,9 @@ import {
     School,
     Search,
     Loader2,
-    X
+    X,
+    AlertCircle,
+    Coins,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ProfileAvatar from '@/components/ProfileAvatar';
@@ -47,12 +49,14 @@ const navGroups = [
             { name: 'Question Bank', href: '/question-bank', icon: FileSpreadsheet },
             { name: 'Exams & Papers', href: '/exam-class-papers', icon: FileSpreadsheet },
             { name: 'Marks & Results', href: '/marks/entry', icon: Award },
+            { name: 'Paper Money P&L', href: '/exam-paper-accounting', icon: Coins },
         ],
     },
     {
         label: 'Financials & Assets',
         items: [
             { name: 'Fee Invoices', href: '/fees/invoices', icon: CreditCard },
+            { name: 'Student Fines', href: '/fines', icon: AlertCircle },
             { name: 'Expenses P&L', href: '/expenses', icon: Receipt },
             { name: 'Assets & Inventory', href: '/inventory', icon: Package },
         ],

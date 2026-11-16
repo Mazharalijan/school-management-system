@@ -90,4 +90,14 @@ class Student extends Model
     {
         return $this->hasMany(ExamResult::class);
     }
+
+    public function fines(): HasMany
+    {
+        return $this->hasMany(StudentFine::class);
+    }
+
+    public function paperFees(): HasMany
+    {
+        return $this->hasMany(ExamPaperFee::class);
+    }
 }

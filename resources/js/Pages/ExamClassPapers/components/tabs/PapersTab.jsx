@@ -3,6 +3,7 @@ import { Link, router } from '@inertiajs/react';
 import FilterBar from '@/components/FilterBar';
 import SearchInput from '@/components/SearchInput';
 import FilterSelect from '@/components/FilterSelect';
+import Pagination from '@/components/Pagination';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { FileText, FilePen, Trash2, Layers, Eye, Printer } from 'lucide-react';
@@ -99,6 +100,7 @@ export default function PapersTab({ papers = {}, classes = [], subjects = [], fi
                         ))}
                     </tbody>
                 </table>
+                <Pagination data={papers} />
             </div>
         </div>
     );

@@ -94,7 +94,7 @@ export default function Index({
                 </PageHeader>
 
                 <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
-                    <TabsList className="bg-muted p-1 border border-border rounded-lg mb-6 flex flex-wrap h-auto">
+                    <TabsList className="bg-muted p-1 rounded-lg mb-6 inline-flex flex-wrap gap-1">
                         <TabsTrigger value="overview" className="flex items-center gap-2 px-4 py-2 text-sm font-medium">
                             <LayoutDashboard className="h-4 w-4 text-muted-foreground" /> Overview & Search
                         </TabsTrigger>

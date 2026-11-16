@@ -78,7 +78,7 @@ export default function SubjectsTab({ subjects, classes, filters, onEdit }) {
             </FilterBar>
 
             <DataTable columns={columns} data={subjects} emptyMessage="No subjects found." />
-            <Pagination links={subjects.links} className="mt-4" />
+            <Pagination data={subjects} className="mt-4" />
 
             <SubjectDetailModal
                 isOpen={Boolean(viewingSubject)}

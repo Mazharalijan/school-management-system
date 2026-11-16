@@ -100,7 +100,7 @@ export default function QuestionsTab({ questions, classes, filters, onEdit }) {
             </FilterBar>
 
             <DataTable columns={columns} data={questions} emptyMessage="No questions found in database." />
-            <Pagination links={questions.links} className="mt-4" />
+            <Pagination data={questions} className="mt-4" />
 
             <QuestionDetailModal
                 isOpen={Boolean(viewingQuestion)}

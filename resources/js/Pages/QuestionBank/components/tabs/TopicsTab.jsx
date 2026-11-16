@@ -94,7 +94,7 @@ export default function TopicsTab({ topics, classes, filters, onEdit }) {
             </FilterBar>
 
             <DataTable columns={columns} data={topics} emptyMessage="No topics found." />
-            <Pagination links={topics.links} className="mt-4" />
+            <Pagination data={topics} className="mt-4" />
 
             <TopicDetailModal
                 isOpen={Boolean(viewingTopic)}

@@ -42,4 +42,14 @@ class ExamSession extends Model
     {
         return $this->hasMany(ExamClassPaper::class);
     }
+
+    public function paperFees(): HasMany
+    {
+        return $this->hasMany(ExamPaperFee::class);
+    }
+
+    public function paperExpenses(): HasMany
+    {
+        return $this->hasMany(ExamPaperExpense::class);
+    }
 }

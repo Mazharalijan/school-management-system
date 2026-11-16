@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { router } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import Pagination from '@/components/Pagination';
 import { Printer, CheckCircle2, Clock, AlertCircle, CheckSquare, Square } from 'lucide-react';
 
 export default function PrintTab({ papers = {} }) {
@@ -133,6 +134,7 @@ export default function PrintTab({ papers = {} }) {
                         )}
                     </tbody>
                 </table>
+                <Pagination data={papers} />
             </div>
         </div>
     );

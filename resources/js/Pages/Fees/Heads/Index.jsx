@@ -3,6 +3,7 @@ import { Head, useForm, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import PageHeader from '@/components/PageHeader';
 import TableActionButton from '@/components/TableActionButton';
+import Pagination from '@/components/Pagination';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -11,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Tag, Plus, Pencil, Trash2, X } from 'lucide-react';
 
 export default function Index({ feeHeads = [] }) {
+    const headList = Array.isArray(feeHeads) ? feeHeads : feeHeads?.data || [];
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingHead, setEditingHead] = useState(null);
 
@@ -115,7 +117,7 @@ export default function Index({ feeHeads = [] }) {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-border bg-card">
-                                    {feeHeads.map((head) => (
+                                    {headList.map((head) => (
                                         <tr key={head.id} className="hover:bg-muted/50 transition-colors">
                                             <td className="px-6 py-4 font-semibold text-foreground">{head.title}</td>
                                             <td className="px-6 py-4">
@@ -149,7 +151,7 @@ export default function Index({ feeHeads = [] }) {
                                             </td>
                                         </tr>
                                     ))}
-                                    {feeHeads.length === 0 && (
+                                    {headList.length === 0 && (
                                         <tr>
                                             <td colSpan="5" className="px-6 py-10 text-center text-muted-foreground">
                                                 No fee heads configured yet.
@@ -159,6 +161,8 @@ export default function Index({ feeHeads = [] }) {
                                 </tbody>
                             </table>
                         </div>
+
+                        <Pagination data={feeHeads} />
                     </CardContent>
                 </Card>
 

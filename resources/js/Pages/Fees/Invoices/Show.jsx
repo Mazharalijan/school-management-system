@@ -132,20 +132,22 @@ export default function Show({ invoice }) {
                         )}
 
                         <Button
+                            variant="outline"
                             onClick={handlePrint}
-                            className="h-9 px-3.5 text-xs font-bold gap-1.5 shadow-sm"
+                            className="h-9 px-3.5 text-xs font-semibold gap-1.5 shadow-xs whitespace-nowrap shrink-0 inline-flex items-center"
                         >
-                            <Printer className="w-4 h-4" />
-                            Print Voucher
+                            <Printer className="w-4 h-4 shrink-0" />
+                            <span>Print Voucher</span>
                         </Button>
 
                         {Number(invoice.due_amount || 0) > 0 && (
                             <Button
+                                variant="secondary"
                                 onClick={() => setIsPaymentModalOpen(true)}
-                                className="h-9 px-3.5 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white gap-1.5"
+                                className="h-9 px-3.5 text-xs font-semibold gap-1.5 shadow-xs whitespace-nowrap shrink-0 inline-flex items-center"
                             >
-                                <DollarSign className="w-4 h-4" />
-                                Collect Payment
+                                <DollarSign className="w-4 h-4 shrink-0" />
+                                <span>Collect Payment</span>
                             </Button>
                         )}
                     </div>

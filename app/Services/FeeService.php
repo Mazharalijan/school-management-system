@@ -9,6 +9,7 @@ use App\Models\FeePayment;
 use App\Models\FeeStructure;
 use App\Models\Student;
 use App\Models\StudentFeeProfile;
+use App\Models\StudentFine;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -180,7 +181,15 @@ class FeeService
                     ->where('due_amount', '>', 0)
                     ->sum('due_amount');
 
-                $totalAmount = $netMonthly + $previousArrears;
+                // Check if student has unpaid monthly or year-end fines to bundle into invoice
+                $monthlyFines = StudentFine::where('student_id', $student->id)
+                    ->where('status', 'unpaid')
+                    ->whereIn('collection_mode', ['monthly', 'year_end'])
+                    ->whereNull('fee_invoice_id')
+                    ->get();
+                $totalFines = (float) $monthlyFines->sum('amount');
+
+                $totalAmount = $netMonthly + $previousArrears + $totalFines;
 
                 $invoice = FeeInvoice::create([
                     'invoice_no' => 'INV-'.date('Ym').'-'.str_pad($student->id, 4, '0', STR_PAD_LEFT).'-'.rand(10, 99),
@@ -195,12 +204,21 @@ class FeeService
                     'subtotal' => $subtotal + $admissionFeeAmount,
                     'discount' => $discount,
                     'previous_arrears' => $previousArrears,
-                    'fine' => 0.00,
+                    'fine' => $totalFines,
                     'total_amount' => $totalAmount,
                     'paid_amount' => 0.00,
                     'due_amount' => $totalAmount,
                     'status' => 'unpaid',
                 ]);
+
+                foreach ($monthlyFines as $f) {
+                    $f->update(['fee_invoice_id' => $invoice->id, 'status' => 'invoiced']);
+                    FeeInvoiceItem::create([
+                        'fee_invoice_id' => $invoice->id,
+                        'title' => ucfirst($f->fine_type).' Fine: '.$f->reason,
+                        'amount' => $f->amount,
+                    ]);
+                }
 
                 if ($customProfile) {
                     FeeInvoiceItem::create([
@@ -343,7 +361,15 @@ class FeeService
                     ->where('due_amount', '>', 0)
                     ->sum('due_amount');
 
-                $totalAmount = $netMonthly + $previousArrears;
+                // Check if student has unpaid monthly or year-end fines to bundle into invoice
+                $monthlyFines = StudentFine::where('student_id', $student->id)
+                    ->where('status', 'unpaid')
+                    ->whereIn('collection_mode', ['monthly', 'year_end'])
+                    ->whereNull('fee_invoice_id')
+                    ->get();
+                $totalFines = (float) $monthlyFines->sum('amount');
+
+                $totalAmount = $netMonthly + $previousArrears + $totalFines;
 
                 $invoice = FeeInvoice::create([
                     'invoice_no' => 'INV-'.date('Ym').'-'.str_pad($student->id, 4, '0', STR_PAD_LEFT).'-'.rand(10, 99),
@@ -358,12 +384,21 @@ class FeeService
                     'subtotal' => $subtotal,
                     'discount' => $discount,
                     'previous_arrears' => $previousArrears,
-                    'fine' => 0.00,
+                    'fine' => $totalFines,
                     'total_amount' => $totalAmount,
                     'paid_amount' => 0.00,
                     'due_amount' => $totalAmount,
                     'status' => 'unpaid',
                 ]);
+
+                foreach ($monthlyFines as $f) {
+                    $f->update(['fee_invoice_id' => $invoice->id, 'status' => 'invoiced']);
+                    $itemsToCreate[] = [
+                        'title' => ucfirst($f->fine_type).' Fine: '.$f->reason,
+                        'amount' => $f->amount,
+                        'fee_head_id' => null,
+                    ];
+                }
 
                 foreach ($itemsToCreate as $item) {
                     FeeInvoiceItem::create([

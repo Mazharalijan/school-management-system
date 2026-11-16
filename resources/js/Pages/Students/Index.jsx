@@ -116,9 +116,9 @@ export default function StudentIndex({ students, classes, filters }) {
             >
                 <Link
                     href={route('students.promotion.index')}
-                    className="inline-flex items-center space-x-1.5 px-3 py-2 rounded-md bg-indigo-50 text-indigo-700 hover:bg-indigo-100 text-sm font-semibold border border-indigo-200 shadow-sm transition"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-background hover:bg-muted text-foreground text-sm font-medium transition-colors shadow-xs whitespace-nowrap shrink-0"
                 >
-                    <TrendingUp className="h-4 w-4 text-indigo-600" />
+                    <TrendingUp className="h-4 w-4 text-muted-foreground shrink-0" />
                     <span>Student Promotion</span>
                 </Link>
             </PageHeader>
@@ -157,11 +157,16 @@ export default function StudentIndex({ students, classes, filters }) {
             />
 
             {/* Comprehensive Student Details Modal */}
-            <StudentDetailsModal
-                isOpen={isDetailsModalOpen}
-                onClose={() => setIsDetailsModalOpen(false)}
-                student={selectedStudent}
-            />
+            {selectedStudent && (
+                <StudentDetailsModal
+                    isOpen={isDetailsModalOpen}
+                    onClose={() => {
+                        setIsDetailsModalOpen(false);
+                        setSelectedStudent(null);
+                    }}
+                    student={selectedStudent}
+                />
+            )}
 
             {/* Fee Collection Modal */}
             {selectedStudent && (

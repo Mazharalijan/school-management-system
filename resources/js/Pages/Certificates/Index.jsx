@@ -157,21 +157,21 @@ export default function Index({ certificates, classes = [], filters = {} }) {
                                                             {cert.copy_label} ({cert.print_count}x)
                                                         </Badge>
                                                     </td>
-                                                    <td className="px-6 py-4 text-right">
+                                                    <td className="px-6 py-4 text-right whitespace-nowrap">
                                                         <div className="flex items-center justify-end gap-1.5">
                                                             <Button
                                                                 variant="outline"
-                                                                size="xs"
+                                                                size="sm"
                                                                 onClick={() => setSelectedCertForPrint(cert)}
-                                                                className="font-semibold gap-1 text-xs"
+                                                                className="h-7 px-2.5 font-semibold gap-1.5 text-xs whitespace-nowrap shrink-0 inline-flex items-center"
                                                             >
-                                                                <Printer className="w-3 h-3" />
-                                                                Print Copy
+                                                                <Printer className="w-3.5 h-3.5 shrink-0" />
+                                                                <span>Print Copy</span>
                                                             </Button>
                                                             <button
                                                                 type="button"
                                                                 onClick={() => handleDelete(cert)}
-                                                                className="p-1.5 text-muted-foreground hover:text-destructive rounded-md hover:bg-destructive/10 transition-colors"
+                                                                className="p-1.5 text-muted-foreground hover:text-destructive rounded-md hover:bg-destructive/10 transition-colors shrink-0"
                                                                 title="Delete Certificate"
                                                             >
                                                                 <Trash2 className="w-3.5 h-3.5" />

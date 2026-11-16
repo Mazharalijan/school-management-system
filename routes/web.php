@@ -11,6 +11,7 @@ use App\Http\Controllers\Exam\ExamPaperController;
 use App\Http\Controllers\Exam\ExamScheduleController;
 use App\Http\Controllers\Exam\ExamSessionController;
 use App\Http\Controllers\Exam\StudentMarkController;
+use App\Http\Controllers\ExamPaperAccountingController;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\FeeHeadController;
 use App\Http\Controllers\FeeInvoiceController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\QuestionBankController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StaffSalaryController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentFineController;
 use App\Http\Controllers\StudentPromotionController;
 use App\Http\Controllers\SystemSettingController;
 use App\Http\Controllers\TimetableController;
@@ -225,6 +227,26 @@ Route::middleware('auth')->group(function () {
         Route::put('/{expense}', [ExpenseController::class, 'update'])->name('update');
         Route::delete('/{expense}', [ExpenseController::class, 'destroy'])->name('destroy');
         Route::post('/categories', [ExpenseController::class, 'storeCategory'])->name('categories.store');
+    });
+
+    // --- Student Fines Routes ---
+    Route::prefix('fines')->name('fines.')->group(function () {
+        Route::get('/', [StudentFineController::class, 'index'])->name('index');
+        Route::post('/', [StudentFineController::class, 'store'])->name('store');
+        Route::post('/{fine}/collect', [StudentFineController::class, 'collect'])->name('collect');
+        Route::post('/{fine}/waive', [StudentFineController::class, 'waive'])->name('waive');
+        Route::delete('/{fine}', [StudentFineController::class, 'destroy'])->name('destroy');
+    });
+
+    // --- Exam Paper Money & P&L Module Routes ---
+    Route::prefix('exam-paper-accounting')->name('exam-paper-accounting.')->group(function () {
+        Route::get('/', [ExamPaperAccountingController::class, 'index'])->name('index');
+        Route::post('/fees/generate-class', [ExamPaperAccountingController::class, 'generateClassFees'])->name('fees.generate-class');
+        Route::post('/fees/store', [ExamPaperAccountingController::class, 'storeFee'])->name('fees.store');
+        Route::post('/fees/{paperFee}/collect', [ExamPaperAccountingController::class, 'collectFee'])->name('fees.collect');
+        Route::delete('/fees/{paperFee}', [ExamPaperAccountingController::class, 'destroyFee'])->name('fees.destroy');
+        Route::post('/expenses', [ExamPaperAccountingController::class, 'storeExpense'])->name('expenses.store');
+        Route::delete('/expenses/{expense}', [ExamPaperAccountingController::class, 'destroyExpense'])->name('expenses.destroy');
     });
 
 });

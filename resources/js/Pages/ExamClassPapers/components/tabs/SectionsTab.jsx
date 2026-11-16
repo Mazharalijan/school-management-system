@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import Pagination from '@/components/Pagination';
 import { Plus, Trash2, Edit, Layers, BookOpen } from 'lucide-react';
 import SectionFormModal from '../SectionFormModal';
 
@@ -127,6 +128,7 @@ export default function SectionsTab({
                         )}
                     </tbody>
                 </table>
+                <Pagination data={sections} />
             </div>
 
             {/* Modal for Creating & Updating Sections */}

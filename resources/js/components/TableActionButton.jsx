@@ -19,7 +19,7 @@ export default function TableActionButton({
             variant="ghost"
             size="icon"
             title={title}
-            className={cn("h-8 w-8 transition-colors", variantStyles[variant] || variantStyles.default)}
+            className={cn("h-8 w-8 shrink-0 transition-colors", variantStyles[variant] || variantStyles.default)}
             onClick={onClick}
         >
             <Icon className="h-4 w-4" />

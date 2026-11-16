@@ -102,7 +102,7 @@ export default function ChaptersTab({ chapters, classes, filters, onEdit }) {
             </FilterBar>
 
             <DataTable columns={columns} data={chapters} emptyMessage="No chapters found." />
-            <Pagination links={chapters.links} className="mt-4" />
+            <Pagination data={chapters} className="mt-4" />
 
             <ChapterDetailsModal
                 isOpen={isDetailsModalOpen}

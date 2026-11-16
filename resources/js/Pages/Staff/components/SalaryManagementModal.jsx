@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import ProfileAvatar from '@/components/ProfileAvatar';
+import Pagination from '@/components/Pagination';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import {
     CreditCard,
@@ -76,6 +77,19 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
     const ledgers = useMemo(() => {
         return staff.ledgers || [];
     }, [staff]);
+
+    // History Pagination States
+    const [settlementsPage, setSettlementsPage] = useState(1);
+    const [advancesPage, setAdvancesPage] = useState(1);
+    const historyPageSize = 5;
+
+    const paginatedSettlements = useMemo(() => {
+        return settlements.slice((settlementsPage - 1) * historyPageSize, settlementsPage * historyPageSize);
+    }, [settlements, settlementsPage]);
+
+    const paginatedAdvances = useMemo(() => {
+        return advances.slice((advancesPage - 1) * historyPageSize, advancesPage * historyPageSize);
+    }, [advances, advancesPage]);
 
     // Proration & Daily Rate Calculations
     const now = new Date(settlementForm.data.payment_date || today);
@@ -190,26 +204,26 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
                 </div>
 
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mt-3">
-                    <TabsList className="grid grid-cols-5 bg-muted p-1 rounded-lg">
-                        <TabsTrigger value="monthly-settlement" className="text-xs font-semibold">
-                            <Banknote className="h-3.5 w-3.5 mr-1 text-emerald-600 dark:text-emerald-400" />
-                            Pay Salary
+                    <TabsList className="grid grid-cols-2 sm:grid-cols-5 bg-muted p-1 rounded-lg gap-1">
+                        <TabsTrigger value="monthly-settlement" className="text-xs font-semibold flex items-center justify-center gap-1.5 whitespace-nowrap">
+                            <Banknote className="h-3.5 w-3.5 shrink-0 text-emerald-600 dark:text-emerald-400" />
+                            <span>Pay Salary</span>
                         </TabsTrigger>
-                        <TabsTrigger value="issue-advance" className="text-xs font-semibold">
-                            <CreditCard className="h-3.5 w-3.5 mr-1 text-amber-600 dark:text-amber-400" />
-                            Give Advance
+                        <TabsTrigger value="issue-advance" className="text-xs font-semibold flex items-center justify-center gap-1.5 whitespace-nowrap">
+                            <CreditCard className="h-3.5 w-3.5 shrink-0 text-amber-600 dark:text-amber-400" />
+                            <span>Give Advance</span>
                         </TabsTrigger>
-                        <TabsTrigger value="settlements-history" className="text-xs font-semibold">
-                            <Receipt className="h-3.5 w-3.5 mr-1 text-blue-600 dark:text-blue-400" />
-                            Salary Slips ({settlements.length})
+                        <TabsTrigger value="settlements-history" className="text-xs font-semibold flex items-center justify-center gap-1.5 whitespace-nowrap">
+                            <Receipt className="h-3.5 w-3.5 shrink-0 text-blue-600 dark:text-blue-400" />
+                            <span>Salary Slips ({settlements.length})</span>
                         </TabsTrigger>
-                        <TabsTrigger value="advances-history" className="text-xs font-semibold">
-                            <Clock className="h-3.5 w-3.5 mr-1 text-purple-600 dark:text-purple-400" />
-                            Advances ({advances.length})
+                        <TabsTrigger value="advances-history" className="text-xs font-semibold flex items-center justify-center gap-1.5 whitespace-nowrap">
+                            <Clock className="h-3.5 w-3.5 shrink-0 text-purple-600 dark:text-purple-400" />
+                            <span>Advances ({advances.length})</span>
                         </TabsTrigger>
-                        <TabsTrigger value="ledger-history" className="text-xs font-semibold">
-                            <History className="h-3.5 w-3.5 mr-1 text-muted-foreground" />
-                            Ledger Log
+                        <TabsTrigger value="ledger-history" className="text-xs font-semibold flex items-center justify-center gap-1.5 whitespace-nowrap">
+                            <History className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                            <span>Ledger Log</span>
                         </TabsTrigger>
                     </TabsList>
 
@@ -614,8 +628,8 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-border">
-                                        {settlements.length > 0 ? (
-                                            settlements.map((item) => (
+                                        {paginatedSettlements.length > 0 ? (
+                                            paginatedSettlements.map((item) => (
                                                 <tr key={item.id} className="hover:bg-muted/50 transition-colors">
                                                     <td className="p-2.5 font-mono font-bold text-foreground">
                                                         {item.voucher_no}
@@ -657,6 +671,14 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
                                     </tbody>
                                 </table>
                             </div>
+                            <Pagination
+                                currentPage={settlementsPage}
+                                totalPages={Math.ceil(settlements.length / historyPageSize)}
+                                total={settlements.length}
+                                from={settlements.length > 0 ? (settlementsPage - 1) * historyPageSize + 1 : 0}
+                                to={Math.min(settlementsPage * historyPageSize, settlements.length)}
+                                onPageChange={setSettlementsPage}
+                            />
                         </div>
                     </TabsContent>
 
@@ -677,8 +699,8 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-border">
-                                        {advances.length > 0 ? (
-                                            advances.map((adv) => {
+                                        {paginatedAdvances.length > 0 ? (
+                                            paginatedAdvances.map((adv) => {
                                                 const total = parseFloat(adv.amount || 0);
                                                 const adjusted = parseFloat(adv.adjusted_amount || 0);
                                                 const remaining = Math.max(0, total - adjusted);
@@ -725,6 +747,14 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
                                     </tbody>
                                 </table>
                             </div>
+                            <Pagination
+                                currentPage={advancesPage}
+                                totalPages={Math.ceil(advances.length / historyPageSize)}
+                                total={advances.length}
+                                from={advances.length > 0 ? (advancesPage - 1) * historyPageSize + 1 : 0}
+                                to={Math.min(advancesPage * historyPageSize, advances.length)}
+                                onPageChange={setAdvancesPage}
+                            />
                         </div>
                     </TabsContent>
 

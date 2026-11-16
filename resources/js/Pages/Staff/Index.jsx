@@ -1143,25 +1143,23 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
 
                             {/* RIGHT SIDE: TABS FOR EDUCATIONAL & SALARY DETAILS */}
                             <main className="flex-1 min-w-0">
-                                <Tabs defaultValue="educational-details" className="w-full">
-                                    <div className="border-b border-border mb-4">
-                                        <TabsList className="bg-transparent p-0 h-auto space-x-6">
-                                            <TabsTrigger 
-                                                value="educational-details"
-                                                className="bg-transparent border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary rounded-none px-1 pb-2.5 pt-0 font-semibold text-xs text-muted-foreground shadow-none"
-                                            >
-                                                <Award className="h-3.5 w-3.5 mr-1.5" />
-                                                Educational Details
-                                            </TabsTrigger>
-                                            <TabsTrigger 
-                                                value="salary-details"
-                                                className="bg-transparent border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary rounded-none px-1 pb-2.5 pt-0 font-semibold text-xs text-muted-foreground shadow-none"
-                                            >
-                                                <CreditCard className="h-3.5 w-3.5 mr-1.5" />
-                                                Salary Details
-                                            </TabsTrigger>
-                                        </TabsList>
-                                    </div>
+                                <Tabs defaultValue="educational-details" className="w-full space-y-4">
+                                    <TabsList className="bg-muted p-1 rounded-lg inline-flex gap-1 mb-4">
+                                        <TabsTrigger 
+                                            value="educational-details"
+                                            className="flex items-center gap-1.5"
+                                        >
+                                            <Award className="h-3.5 w-3.5 shrink-0" />
+                                            <span>Educational Details</span>
+                                        </TabsTrigger>
+                                        <TabsTrigger 
+                                            value="salary-details"
+                                            className="flex items-center gap-1.5"
+                                        >
+                                            <CreditCard className="h-3.5 w-3.5 shrink-0" />
+                                            <span>Salary Details</span>
+                                        </TabsTrigger>
+                                    </TabsList>
 
                                     {/* TAB 1: EDUCATIONAL DETAILS */}
                                     <TabsContent value="educational-details" className="mt-0 space-y-4">

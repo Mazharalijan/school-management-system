@@ -48,6 +48,7 @@ export default function SettingsIndex({ settings = {} }) {
         address: settings.address || '',
         invoice_prefix: settings.invoice_prefix || 'INV-',
         receipt_footer_note: settings.receipt_footer_note || '',
+        include_fines_in_financial_flow: settings.include_fines_in_financial_flow !== undefined ? Boolean(settings.include_fines_in_financial_flow) : true,
         dashboard_theme: settings.dashboard_theme || 'shadcn',
         theme_mode: settings.theme_mode || (typeof window !== 'undefined' ? localStorage.getItem('theme') : 'system') || 'system',
     });
@@ -524,15 +525,15 @@ export default function SettingsIndex({ settings = {} }) {
                     </CardContent>
                 </Card>
 
-                {/* Receipts & Invoicing */}
+                {/* Receipts, Invoicing & Fines Financial Flow */}
                 <Card className="border-border bg-card text-card-foreground shadow-sm">
                     <CardContent className="p-6">
                         <div className="flex items-center gap-2 mb-4 pb-2 border-b border-border text-foreground font-bold text-sm">
                             <Receipt className="h-4 w-4 text-primary" />
-                            <span>Fee Receipt & Invoice Settings</span>
+                            <span>Fee Receipt, Invoicing & Fines Financial Flow</span>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                             <div>
                                 <Label htmlFor="invoice_prefix">Invoice Prefix *</Label>
                                 <Input
@@ -552,6 +553,26 @@ export default function SettingsIndex({ settings = {} }) {
                                     value={form.data.receipt_footer_note}
                                     onChange={(e) => form.setData('receipt_footer_note', e.target.value)}
                                 />
+                            </div>
+                        </div>
+
+                        <div className="rounded-lg border border-border/80 bg-muted/30 p-4">
+                            <div className="flex items-start gap-3">
+                                <input
+                                    type="checkbox"
+                                    id="include_fines_in_financial_flow"
+                                    checked={Boolean(form.data.include_fines_in_financial_flow)}
+                                    onChange={(e) => form.setData('include_fines_in_financial_flow', e.target.checked)}
+                                    className="mt-1 h-4 w-4 rounded border-input text-primary focus:ring-ring"
+                                />
+                                <div className="space-y-1">
+                                    <Label htmlFor="include_fines_in_financial_flow" className="cursor-pointer font-semibold text-foreground text-sm">
+                                        Include Student Fines in School Financial Flow & Profit / Loss Statement
+                                    </Label>
+                                    <p className="text-xs text-muted-foreground leading-relaxed">
+                                        When checked, collected fines (leave fines, exam penalties, discipline fines) are recognized as school revenue in the Profit &amp; Loss reports and dashboard financial indicators. When unchecked, fines are accounted as administrative disciplinary penalties and excluded from the school payment flow.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </CardContent>

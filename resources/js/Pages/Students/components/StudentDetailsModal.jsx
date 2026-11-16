@@ -4,16 +4,32 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { GraduationCap, User, Phone, Mail, MapPin, CreditCard, UserRoundX, ShieldCheck, Award, Printer, Plus, FileText } from 'lucide-react';
+import { GraduationCap, User, Phone, Mail, MapPin, CreditCard, UserRoundX, ShieldCheck, Award, Printer, Plus, FileText, AlertCircle, Receipt } from 'lucide-react';
 import ManageFeeModal from './ManageFeeModal';
 import ProfileAvatar from '@/components/ProfileAvatar';
+import Pagination from '@/components/Pagination';
 import CertificatePrintModal from '@/Pages/Certificates/components/CertificatePrintModal';
+import ImposeFineModal from '@/Pages/Fines/components/ImposeFineModal';
+import CollectFineModal from '@/Pages/Fines/components/CollectFineModal';
+import FineReceiptModal from '@/Pages/Fines/components/FineReceiptModal';
+import { cn } from '@/lib/utils';
 
 export default function StudentDetailsModal({ isOpen, onClose, student, currentSessionYear = "2026-2027", }) {
-
+    // All hooks MUST be declared unconditionally at top of component
     const [isFeeModalOpen, setIsFeeModalOpen] = useState(false);
     const [isCertificateModalOpen, setIsCertificateModalOpen] = useState(false);
     const [selectedCertForModal, setSelectedCertForModal] = useState(null);
+    const [isImposeFineOpen, setIsImposeFineOpen] = useState(false);
+    const [collectFine, setCollectFine] = useState(null);
+    const [receiptFine, setReceiptFine] = useState(null);
+
+    // Modal table pagination states
+    const [invoicePage, setInvoicePage] = useState(1);
+    const [resultPage, setResultPage] = useState(1);
+    const [certPage, setCertPage] = useState(1);
+    const [finePage, setFinePage] = useState(1);
+    const modalPageSize = 5;
+
     if (!student) return null;
 
     // --- Dynamic Fee Calculations ---
@@ -28,6 +44,12 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
     const invoicesList = student.invoices || student.fee_invoices || [];
     const certificatesList = student.document_prints || student.documentPrints || [];
     const examResultsList = student.exam_results || student.examResults || [];
+    const finesList = student.fines || [];
+
+    const paginatedInvoices = invoicesList.slice((invoicePage - 1) * modalPageSize, invoicePage * modalPageSize);
+    const paginatedResults = examResultsList.slice((resultPage - 1) * modalPageSize, resultPage * modalPageSize);
+    const paginatedCerts = certificatesList.slice((certPage - 1) * modalPageSize, certPage * modalPageSize);
+    const paginatedFines = finesList.slice((finePage - 1) * modalPageSize, finePage * modalPageSize);
     const admissionInvoice = invoicesList.find((inv) =>
         inv.title?.toLowerCase().includes('admission')
     );
@@ -149,44 +171,55 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                             {/* Quick Document & Printout Actions */}
                             <div className="pt-3 border-t border-border space-y-2">
                                 <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider block">
-                                    Official Documents
+                                    Official Documents & Actions
                                 </span>
-                                <div className="grid grid-cols-2 gap-1.5">
+                                <div className="flex flex-col gap-2">
                                     <Button
                                         variant="outline"
-                                        size="xs"
+                                        size="sm"
                                         onClick={() => {
                                             setSelectedCertForModal(null);
                                             setIsCertificateModalOpen(true);
                                         }}
-                                        className="w-full text-[11px] font-semibold gap-1 justify-center h-7"
+                                        className="w-full justify-start text-xs font-semibold gap-2 h-8 whitespace-nowrap"
                                         title="Issue Certificate"
                                     >
-                                        <Award className="w-3.5 h-3.5 text-amber-600" />
-                                        Certificate
+                                        <Award className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                                        <span>Issue Certificate</span>
                                     </Button>
 
                                     {student.exam_results?.[0] ? (
                                         <Link
                                             href={route('marks.dmc', student.exam_results[0].id)}
-                                            className="inline-flex items-center justify-center gap-1 px-2 py-1 text-[11px] font-semibold rounded-md border border-border bg-background hover:bg-muted text-foreground transition-colors h-7"
+                                            className="w-full inline-flex items-center justify-start gap-2 px-3 py-1.5 text-xs font-semibold rounded-lg border border-border bg-background hover:bg-muted text-foreground transition-colors h-8 whitespace-nowrap"
                                             title="Print DMC"
                                         >
-                                            <Printer className="w-3.5 h-3.5 text-primary" />
-                                            DMC
+                                            <Printer className="w-4 h-4 text-primary shrink-0" />
+                                            <span>Print Latest DMC</span>
                                         </Link>
                                     ) : (
                                         <Button
                                             variant="outline"
-                                            size="xs"
+                                            size="sm"
                                             disabled
-                                            className="w-full text-[11px] font-semibold gap-1 opacity-50 h-7"
+                                            className="w-full justify-start text-xs font-semibold gap-2 opacity-50 h-8 whitespace-nowrap"
                                             title="No examination results on record"
                                         >
-                                            <Printer className="w-3.5 h-3.5" />
-                                            DMC
+                                            <Printer className="w-4 h-4 shrink-0" />
+                                            <span>Print Latest DMC</span>
                                         </Button>
                                     )}
+
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => setIsImposeFineOpen(true)}
+                                        className="w-full justify-start text-xs font-semibold gap-2 h-8 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-900/50 hover:bg-amber-50 dark:hover:bg-amber-950/40 whitespace-nowrap"
+                                        title="Impose Fine"
+                                    >
+                                        <AlertCircle className="w-4 h-4 shrink-0" />
+                                        <span>Impose Fine</span>
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -194,32 +227,25 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
 
                     {/* RIGHT SIDE: TABS FOR FEE HISTORY & RESULT HISTORY */}
                     <main className="flex-1 min-w-0">
-                        <Tabs defaultValue="fee-history" className="w-full">
-                            <div className="border-b border-border mb-4">
-                                <TabsList className="bg-transparent p-0 h-auto space-x-6">
-                                    <TabsTrigger
-                                        value="fee-history"
-                                        className="bg-transparent border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary rounded-none px-1 pb-2.5 pt-0 font-semibold text-xs text-muted-foreground shadow-none"
-                                    >
-                                        <CreditCard className="h-3.5 w-3.5 mr-1.5" />
-                                        Fee History
-                                    </TabsTrigger>
-                                    <TabsTrigger
-                                        value="result-history"
-                                        className="bg-transparent border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary rounded-none px-1 pb-2.5 pt-0 font-semibold text-xs text-muted-foreground shadow-none"
-                                    >
-                                        <GraduationCap className="h-3.5 w-3.5 mr-1.5" />
-                                        Results & DMCs
-                                    </TabsTrigger>
-                                    <TabsTrigger
-                                        value="certificates"
-                                        className="bg-transparent border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary rounded-none px-1 pb-2.5 pt-0 font-semibold text-xs text-muted-foreground shadow-none"
-                                    >
-                                        <Award className="h-3.5 w-3.5 mr-1.5" />
-                                        Certificates
-                                    </TabsTrigger>
-                                </TabsList>
-                            </div>
+                        <Tabs defaultValue="fee-history" className="w-full space-y-4">
+                            <TabsList className="bg-muted p-1 rounded-lg inline-flex flex-wrap gap-1 mb-4">
+                                <TabsTrigger value="fee-history" className="flex items-center gap-1.5">
+                                    <CreditCard className="h-3.5 w-3.5 shrink-0" />
+                                    <span>Fee History</span>
+                                </TabsTrigger>
+                                <TabsTrigger value="result-history" className="flex items-center gap-1.5">
+                                    <GraduationCap className="h-3.5 w-3.5 shrink-0" />
+                                    <span>Results & DMCs</span>
+                                </TabsTrigger>
+                                <TabsTrigger value="certificates" className="flex items-center gap-1.5">
+                                    <Award className="h-3.5 w-3.5 shrink-0" />
+                                    <span>Certificates</span>
+                                </TabsTrigger>
+                                <TabsTrigger value="fines" className="flex items-center gap-1.5">
+                                    <AlertCircle className="h-3.5 w-3.5 shrink-0" />
+                                    <span>Fines ({finesList.length})</span>
+                                </TabsTrigger>
+                            </TabsList>
 
                             <TabsContent value="fee-history" className="mt-0 space-y-4">
                                 {/* DYNAMIC FEE SUMMARY TABLE */}
@@ -263,10 +289,11 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                                     <Button
                                                         variant="outline"
                                                         size="xs"
-                                                        className="text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-950/40"
+                                                        className="h-7 px-2.5 text-xs font-semibold border-border hover:bg-muted inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
                                                         onClick={() => setIsFeeModalOpen(true)}
                                                     >
-                                                        Manage Fee
+                                                        <CreditCard className="w-3.5 h-3.5 shrink-0" />
+                                                        <span>Manage Fee</span>
                                                     </Button>
                                                 </td>
                                             </tr>
@@ -286,8 +313,8 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-border">
-                                            {invoicesList && invoicesList.length > 0 ? (
-                                                invoicesList.map((inv) => (
+                                            {paginatedInvoices && paginatedInvoices.length > 0 ? (
+                                                paginatedInvoices.map((inv) => (
                                                     <tr key={inv.id} className="hover:bg-muted/50">
                                                         <td className="px-3 py-2 font-mono font-bold text-foreground">
                                                             {inv.invoice_number || inv.invoice_no || `INV-${inv.id}`}
@@ -322,6 +349,14 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                             )}
                                         </tbody>
                                     </table>
+                                    <Pagination
+                                        currentPage={invoicePage}
+                                        totalPages={Math.ceil(invoicesList.length / modalPageSize)}
+                                        total={invoicesList.length}
+                                        from={invoicesList.length > 0 ? (invoicePage - 1) * modalPageSize + 1 : 0}
+                                        to={Math.min(invoicePage * modalPageSize, invoicesList.length)}
+                                        onPageChange={setInvoicePage}
+                                    />
                                 </div>
                             </TabsContent>
 
@@ -338,8 +373,8 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-border">
-                                            {examResultsList && examResultsList.length > 0 ? (
-                                                examResultsList.map((res) => (
+                                            {paginatedResults && paginatedResults.length > 0 ? (
+                                                paginatedResults.map((res) => (
                                                     <tr key={res.id} className="hover:bg-muted/50">
                                                         <td className="px-3 py-2 font-medium text-foreground">
                                                             {res.examSession?.title || res.exam_name || 'Term Exam'}
@@ -356,14 +391,14 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                                                 {res.grade}
                                                             </Badge>
                                                         </td>
-                                                        <td className="px-3 py-2 text-right">
+                                                        <td className="px-3 py-2 text-right whitespace-nowrap">
                                                             <Link
                                                                 href={route('marks.dmc', res.id)}
-                                                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 transition-colors"
+                                                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold border border-border bg-secondary hover:bg-secondary/80 text-secondary-foreground transition-colors whitespace-nowrap shrink-0"
                                                                 title="View / Print DMC with Multi-Print Tracking"
                                                             >
-                                                                <Printer className="w-3 h-3" />
-                                                                Print DMC
+                                                                <Printer className="w-3.5 h-3.5 shrink-0" />
+                                                                <span>Print DMC</span>
                                                             </Link>
                                                         </td>
                                                     </tr>
@@ -377,6 +412,14 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                             )}
                                         </tbody>
                                     </table>
+                                    <Pagination
+                                        currentPage={resultPage}
+                                        totalPages={Math.ceil(examResultsList.length / modalPageSize)}
+                                        total={examResultsList.length}
+                                        from={examResultsList.length > 0 ? (resultPage - 1) * modalPageSize + 1 : 0}
+                                        to={Math.min(resultPage * modalPageSize, examResultsList.length)}
+                                        onPageChange={setResultPage}
+                                    />
                                 </div>
                             </TabsContent>
 
@@ -386,15 +429,16 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                         Issued Official Certificates & DMCs
                                     </span>
                                     <Button
-                                        size="xs"
+                                        variant="secondary"
+                                        size="sm"
                                         onClick={() => {
                                             setSelectedCertForModal(null);
                                             setIsCertificateModalOpen(true);
                                         }}
-                                        className="h-7 text-xs font-semibold gap-1 bg-primary text-primary-foreground"
+                                        className="h-7 text-xs font-semibold gap-1.5 whitespace-nowrap shrink-0"
                                     >
-                                        <Plus className="w-3 h-3" />
-                                        Issue Certificate
+                                        <Plus className="w-3.5 h-3.5 shrink-0" />
+                                        <span>Issue Certificate</span>
                                     </Button>
                                 </div>
 
@@ -410,11 +454,11 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-border">
-                                            {certificatesList && certificatesList.length > 0 ? (
-                                                certificatesList.map((cert) => (
+                                            {paginatedCerts && paginatedCerts.length > 0 ? (
+                                                paginatedCerts.map((cert) => (
                                                     <tr key={cert.id} className="hover:bg-muted/50">
                                                         <td className="px-3 py-2 font-mono font-bold text-foreground">
-                                                            {cert.document_number}
+                                                             {cert.document_number}
                                                         </td>
                                                         <td className="px-3 py-2 font-medium text-foreground">
                                                             {cert.title}
@@ -435,7 +479,7 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                                                 {cert.copy_label} ({cert.print_count}x)
                                                             </Badge>
                                                         </td>
-                                                        <td className="px-3 py-2 text-right">
+                                                        <td className="px-3 py-2 text-right whitespace-nowrap">
                                                             <Button
                                                                 variant="outline"
                                                                 size="xs"
@@ -443,10 +487,10 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                                                     setSelectedCertForModal(cert);
                                                                     setIsCertificateModalOpen(true);
                                                                 }}
-                                                                className="h-6 text-[11px] font-semibold gap-1"
+                                                                className="h-6 px-2 text-[11px] font-semibold gap-1.5 whitespace-nowrap shrink-0 inline-flex items-center"
                                                             >
-                                                                <Printer className="w-3 h-3" />
-                                                                Print Copy
+                                                                <Printer className="w-3 h-3 shrink-0" />
+                                                                <span>Print Copy</span>
                                                             </Button>
                                                         </td>
                                                     </tr>
@@ -460,6 +504,117 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                             )}
                                         </tbody>
                                     </table>
+                                    <Pagination
+                                        currentPage={certPage}
+                                        totalPages={Math.ceil(certificatesList.length / modalPageSize)}
+                                        total={certificatesList.length}
+                                        from={certificatesList.length > 0 ? (certPage - 1) * modalPageSize + 1 : 0}
+                                        to={Math.min(certPage * modalPageSize, certificatesList.length)}
+                                        onPageChange={setCertPage}
+                                    />
+                                </div>
+                            </TabsContent>
+                            <TabsContent value="fines" className="mt-0 space-y-3">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-xs font-semibold text-muted-foreground">
+                                        Disciplinary Fines &amp; Penalties Log
+                                    </span>
+                                    <Button
+                                        variant="secondary"
+                                        size="sm"
+                                        onClick={() => setIsImposeFineOpen(true)}
+                                        className="h-7 text-xs font-semibold gap-1.5 whitespace-nowrap shrink-0"
+                                    >
+                                        <Plus className="w-3.5 h-3.5 shrink-0" />
+                                        <span>Impose Fine</span>
+                                    </Button>
+                                </div>
+
+                                <div className="rounded-lg border border-border overflow-hidden bg-card">
+                                    <table className="w-full text-xs text-left text-muted-foreground">
+                                        <thead className="bg-muted/50 text-muted-foreground font-semibold border-b border-border uppercase">
+                                            <tr>
+                                                <th className="px-3 py-2.5">Date</th>
+                                                <th className="px-3 py-2.5">Category</th>
+                                                <th className="px-3 py-2.5">Reason</th>
+                                                <th className="px-3 py-2.5 text-right">Amount</th>
+                                                <th className="px-3 py-2.5 text-center">Status</th>
+                                                <th className="px-3 py-2.5 text-right">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-border">
+                                            {paginatedFines.length > 0 ? (
+                                                paginatedFines.map((fn) => (
+                                                    <tr key={fn.id} className="hover:bg-muted/50">
+                                                        <td className="px-3 py-2 font-mono">
+                                                            {fn.fine_date}
+                                                        </td>
+                                                        <td className="px-3 py-2 capitalize font-semibold text-foreground">
+                                                            {fn.fine_type} Fine
+                                                        </td>
+                                                        <td className="px-3 py-2 text-muted-foreground max-w-[180px] truncate" title={fn.reason}>
+                                                            {fn.reason}
+                                                        </td>
+                                                        <td className="px-3 py-2 text-right font-mono font-bold text-foreground">
+                                                            Rs. {Number(fn.amount).toFixed(2)}
+                                                        </td>
+                                                        <td className="px-3 py-2 text-center">
+                                                            <Badge
+                                                                variant="outline"
+                                                                className={cn(
+                                                                    "text-[10px] capitalize",
+                                                                    fn.status === 'paid'
+                                                                        ? "bg-emerald-50 text-emerald-700 border-emerald-300"
+                                                                        : fn.status === 'waived'
+                                                                        ? "bg-purple-50 text-purple-700 border-purple-300"
+                                                                        : "bg-amber-50 text-amber-700 border-amber-300"
+                                                                )}
+                                                            >
+                                                                {fn.status}
+                                                            </Badge>
+                                                        </td>
+                                                        <td className="px-3 py-2 text-right whitespace-nowrap">
+                                                            {fn.status === 'unpaid' && (
+                                                                <Button
+                                                                    size="xs"
+                                                                    variant="outline"
+                                                                    onClick={() => setCollectFine(fn)}
+                                                                    className="h-6 px-2 text-[11px] text-emerald-600 dark:text-emerald-400 border-border hover:bg-muted whitespace-nowrap shrink-0"
+                                                                >
+                                                                    Collect
+                                                                </Button>
+                                                            )}
+                                                            {fn.status === 'paid' && (
+                                                                <Button
+                                                                    size="xs"
+                                                                    variant="outline"
+                                                                    onClick={() => setReceiptFine(fn)}
+                                                                    className="h-6 px-2 text-[11px] border-border hover:bg-muted inline-flex items-center gap-1 whitespace-nowrap shrink-0"
+                                                                >
+                                                                    <Printer className="w-3 h-3 shrink-0" />
+                                                                    <span>Receipt</span>
+                                                                </Button>
+                                                            )}
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan="6" className="text-center py-6 text-muted-foreground">
+                                                        No fines or disciplinary penalties recorded for this student.
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </table>
+                                    <Pagination
+                                        currentPage={finePage}
+                                        totalPages={Math.ceil(finesList.length / modalPageSize)}
+                                        total={finesList.length}
+                                        from={finesList.length > 0 ? (finePage - 1) * modalPageSize + 1 : 0}
+                                        to={Math.min(finePage * modalPageSize, finesList.length)}
+                                        onPageChange={setFinePage}
+                                    />
                                 </div>
                             </TabsContent>
                         </Tabs>
@@ -467,9 +622,9 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                 </div>
 
                 <DialogFooter className="mt-4 pt-3 border-t border-border">
-                    <Button variant="outline" onClick={onClose}>
-                        <UserRoundX className="h-4 w-4" />
-                        Close Profile
+                    <Button variant="secondary" onClick={onClose} className="whitespace-nowrap shrink-0 inline-flex items-center gap-1.5">
+                        <UserRoundX className="h-4 w-4 shrink-0" />
+                        <span>Close Profile</span>
                     </Button>
                 </DialogFooter>
             </DialogContent>
@@ -493,6 +648,30 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                     setIsCertificateModalOpen(false);
                 }}
             />
+
+            {isImposeFineOpen && (
+                <ImposeFineModal
+                    isOpen={isImposeFineOpen}
+                    onClose={() => setIsImposeFineOpen(false)}
+                    preselectedStudent={student}
+                />
+            )}
+
+            {collectFine && (
+                <CollectFineModal
+                    isOpen={Boolean(collectFine)}
+                    onClose={() => setCollectFine(null)}
+                    fine={collectFine}
+                />
+            )}
+
+            {receiptFine && (
+                <FineReceiptModal
+                    isOpen={Boolean(receiptFine)}
+                    onClose={() => setReceiptFine(null)}
+                    fine={receiptFine}
+                />
+            )}
         </Dialog>
     );
 }

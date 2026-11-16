@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ExamPaperExpense;
+use App\Models\ExamPaperFee;
 use App\Models\Expense;
 use App\Models\FeeInvoice;
 use App\Models\FeePayment;
@@ -10,6 +12,7 @@ use App\Models\Section;
 use App\Models\Staff;
 use App\Models\StaffSalarySettlement;
 use App\Models\Student;
+use App\Models\StudentFine;
 use App\Models\SystemSetting;
 use App\Services\Accounting\ProfitAndLossService;
 use Carbon\Carbon;
@@ -83,10 +86,16 @@ class DashboardController extends Controller
         $pnlSummary = $this->pnlService->getProfitAndLossSummary($startDate, $endDate);
 
         // All-Time Summary for persistent KPI context
-        $allTimeRevenue = (float) FeePayment::sum('amount_paid');
+        $includeFines = (bool) (SystemSetting::first()?->include_fines_in_financial_flow ?? true);
+        $allTimeFeeRevenue = (float) FeePayment::sum('amount_paid');
+        $allTimeFineRevenue = $includeFines ? (float) StudentFine::where('status', 'paid')->sum('paid_amount') : 0.0;
+        $allTimePaperFeeRevenue = (float) ExamPaperFee::where('status', 'paid')->sum('paid_amount');
+        $allTimeRevenue = $allTimeFeeRevenue + $allTimeFineRevenue + $allTimePaperFeeRevenue;
+
         $allTimeOperatingExpenses = (float) Expense::where('status', 'paid')->sum('amount');
         $allTimePayrollExpenses = (float) StaffSalarySettlement::sum('net_paid');
-        $allTimeExpenses = $allTimeOperatingExpenses + $allTimePayrollExpenses;
+        $allTimePaperExpenses = (float) ExamPaperExpense::sum('amount');
+        $allTimeExpenses = $allTimeOperatingExpenses + $allTimePayrollExpenses + $allTimePaperExpenses;
         $allTimeProfitLoss = $allTimeRevenue - $allTimeExpenses;
 
         // 5. Recent Activity

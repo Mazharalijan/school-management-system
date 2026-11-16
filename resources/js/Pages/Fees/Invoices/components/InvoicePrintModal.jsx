@@ -107,11 +107,12 @@ export default function InvoicePrintModal({ isOpen, onClose, invoice }) {
                         )}
 
                         <Button
+                            variant="outline"
                             onClick={handlePrint}
-                            className="h-8 px-3 text-xs font-bold gap-1.5 shadow-sm"
+                            className="h-8 px-3 text-xs font-semibold gap-1.5 shadow-xs whitespace-nowrap shrink-0 inline-flex items-center"
                         >
-                            <Printer className="w-3.5 h-3.5" />
-                            Print Now
+                            <Printer className="w-3.5 h-3.5 shrink-0" />
+                            <span>Print Now</span>
                         </Button>
                     </div>
                 </div>

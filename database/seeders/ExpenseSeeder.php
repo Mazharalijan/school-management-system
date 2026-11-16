@@ -12,11 +12,11 @@ class ExpenseSeeder extends Seeder
 {
     public function run(): void
     {
-        if (ExpenseCategory::count() > 0) {
+        if (Expense::count() > 0) {
             return;
         }
 
-        $userId = User::first()?->id ?? 1;
+        $userId = User::first()?->id;
 
         $categories = [
             ['name' => 'Utility Bills (Power, Water, Net)', 'code' => 'EXP-UTIL', 'description' => 'Electricity, natural gas, municipal water supply, and high-speed fiber internet.'],
@@ -33,7 +33,7 @@ class ExpenseSeeder extends Seeder
 
         $categoryMap = [];
         foreach ($categories as $cat) {
-            $created = ExpenseCategory::create($cat);
+            $created = ExpenseCategory::firstOrCreate(['code' => $cat['code']], $cat);
             $categoryMap[$cat['code']] = $created->id;
         }
 
@@ -154,8 +154,10 @@ class ExpenseSeeder extends Seeder
             ],
         ];
 
-        foreach ($sampleExpenses as $exp) {
+        foreach ($sampleExpenses as $index => $exp) {
+            $expenseDate = Carbon::parse($exp['expense_date']);
             Expense::create(array_merge($exp, [
+                'expense_no' => sprintf('EXP-%s-%04d', $expenseDate->format('Ym'), $index + 1),
                 'created_by' => $userId,
                 'status' => 'paid',
             ]));

@@ -1,10 +1,11 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from '@inertiajs/react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import ProfileAvatar from '@/components/ProfileAvatar';
+import Pagination from '@/components/Pagination';
 import {
     AlertTriangle,
     CreditCard,
@@ -26,6 +27,8 @@ export default function UnpaidStudentsWidget({
 }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('all'); // 'all', 'overdue', 'partially_paid', 'unpaid'
+    const [page, setPage] = useState(1);
+    const pageSize = 6;
 
     const totalDefaulters = unpaidSummary.total_defaulters_count || unpaidStudents.length;
     const totalDue = unpaidSummary.total_unpaid_amount || unpaidStudents.reduce((acc, s) => acc + (s.due_amount || 0), 0);
@@ -51,6 +54,15 @@ export default function UnpaidStudentsWidget({
             return true;
         });
     }, [unpaidStudents, searchTerm, statusFilter]);
+
+    useEffect(() => {
+        setPage(1);
+    }, [searchTerm, statusFilter]);
+
+    const totalPages = Math.ceil(filteredStudents.length / pageSize);
+    const paginatedItems = useMemo(() => {
+        return filteredStudents.slice((page - 1) * pageSize, page * pageSize);
+    }, [filteredStudents, page]);
 
     const isAcademic = variant === 'academic';
 
@@ -159,8 +171,8 @@ export default function UnpaidStudentsWidget({
                         )}
                     </div>
                 ) : (
-                    <div className="overflow-x-auto max-h-[380px] overflow-y-auto divide-y divide-border text-xs">
-                        {filteredStudents.map((item) => (
+                    <div className="overflow-x-auto divide-y divide-border text-xs">
+                        {paginatedItems.map((item) => (
                             <div
                                 key={item.id}
                                 className="p-3.5 px-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-muted/50 transition-colors"
@@ -243,6 +255,15 @@ export default function UnpaidStudentsWidget({
                         ))}
                     </div>
                 )}
+
+                <Pagination
+                    currentPage={page}
+                    totalPages={totalPages}
+                    total={filteredStudents.length}
+                    from={filteredStudents.length > 0 ? (page - 1) * pageSize + 1 : 0}
+                    to={Math.min(page * pageSize, filteredStudents.length)}
+                    onPageChange={setPage}
+                />
             </CardContent>
         </Card>
     );

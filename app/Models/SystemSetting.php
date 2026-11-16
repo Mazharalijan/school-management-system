@@ -27,8 +27,13 @@ class SystemSetting extends Model
         'address',
         'invoice_prefix',
         'receipt_footer_note',
+        'include_fines_in_financial_flow',
         'dashboard_theme',
         'theme_mode',
+    ];
+
+    protected $casts = [
+        'include_fines_in_financial_flow' => 'boolean',
     ];
 
     protected $appends = ['logo_url'];

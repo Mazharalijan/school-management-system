@@ -362,7 +362,7 @@ export default function TimetableIndex({
 
                 {/* Navigation Tabs */}
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                    <TabsList className="bg-muted p-1 rounded-md border border-border grid grid-cols-2 max-w-full mb-6">
+                    <TabsList className="bg-muted p-1 rounded-lg mb-6 inline-flex gap-1">
                         <TabsTrigger value="class_view" className="rounded-md font-bold text-md">
                             Master View
                         </TabsTrigger>

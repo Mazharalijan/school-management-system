@@ -108,6 +108,9 @@ class StudentController extends Controller
             'examResults.examSession',
             'examResults.schoolClass',
             'documentPrints.printLogs.printedBy',
+            'fines.imposedBy',
+            'fines.collectedBy',
+            'paperFees.examSession',
         ]);
 
         return response()->json($student);
