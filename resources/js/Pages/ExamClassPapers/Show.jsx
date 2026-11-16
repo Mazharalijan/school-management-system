@@ -53,7 +53,7 @@ export default function Show({ paper, sections = [], questionBank = [] }) {
                 <div className="flex items-center gap-2">
                     <Link
                         href={route('exam-class-papers.index')}
-                        className="inline-flex items-center text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors"
+                        className="inline-flex items-center text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
                     >
                         <ArrowLeft className="w-3.5 h-3.5 mr-1" />
                         Back to Exam Papers
@@ -61,50 +61,50 @@ export default function Show({ paper, sections = [], questionBank = [] }) {
                 </div>
 
                 {/* Paper Header / Summary Card */}
-                <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="bg-card border border-border rounded-xl p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
-                            <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 shadow-none font-medium">
+                            <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 shadow-none font-medium">
                                 {paper.school_class?.name || paper.school_class?.class_name || 'Class'}
                             </Badge>
-                            <Badge variant="outline" className="bg-slate-50 text-slate-700">
+                            <Badge variant="outline">
                                 {paper.subject?.name || paper.subject?.subject_name || 'Subject'}
                             </Badge>
                         </div>
-                        <h1 className="text-2xl font-bold text-slate-900">{paper.paper_title}</h1>
+                        <h1 className="text-2xl font-bold text-foreground">{paper.paper_title}</h1>
                         {paper.instructions && (
-                            <p className="text-xs text-slate-500 max-w-2xl">
-                                <span className="font-semibold text-slate-700">Instructions:</span> {paper.instructions}
+                            <p className="text-xs text-muted-foreground max-w-2xl">
+                                <span className="font-semibold text-foreground">Instructions:</span> {paper.instructions}
                             </p>
                         )}
                     </div>
 
                     {/* Stats Metrics */}
-                    <div className="flex items-center gap-4 border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0 md:pl-6">
+                    <div className="flex items-center gap-4 border-t md:border-t-0 md:border-l border-border pt-4 md:pt-0 md:pl-6">
                         <div className="text-center px-3">
-                            <div className="flex items-center justify-center text-slate-400 mb-1">
+                            <div className="flex items-center justify-center text-muted-foreground mb-1">
                                 <Award className="w-4 h-4" />
                             </div>
-                            <span className="text-xs text-slate-500 block">Total Marks</span>
-                            <span className="font-bold text-slate-800 text-sm">
+                            <span className="text-xs text-muted-foreground block">Total Marks</span>
+                            <span className="font-bold text-foreground text-sm">
                                 {totalSectionMarks} / {paper.total_marks}
                             </span>
                         </div>
 
-                        <div className="text-center px-3 border-l border-slate-100">
-                            <div className="flex items-center justify-center text-slate-400 mb-1">
+                        <div className="text-center px-3 border-l border-border">
+                            <div className="flex items-center justify-center text-muted-foreground mb-1">
                                 <Clock className="w-4 h-4" />
                             </div>
-                            <span className="text-xs text-slate-500 block">Duration</span>
-                            <span className="font-bold text-slate-800 text-sm">{paper.duration_minutes} Mins</span>
+                            <span className="text-xs text-muted-foreground block">Duration</span>
+                            <span className="font-bold text-foreground text-sm">{paper.duration_minutes} Mins</span>
                         </div>
 
-                        <div className="text-center px-3 border-l border-slate-100">
-                            <div className="flex items-center justify-center text-slate-400 mb-1">
+                        <div className="text-center px-3 border-l border-border">
+                            <div className="flex items-center justify-center text-muted-foreground mb-1">
                                 <Layers className="w-4 h-4" />
                             </div>
-                            <span className="text-xs text-slate-500 block">Sections</span>
-                            <span className="font-bold text-slate-800 text-sm">{sections.length}</span>
+                            <span className="text-xs text-muted-foreground block">Sections</span>
+                            <span className="font-bold text-foreground text-sm">{sections.length}</span>
                         </div>
                     </div>
                 </div>
@@ -112,17 +112,17 @@ export default function Show({ paper, sections = [], questionBank = [] }) {
                 {/* Section Header & Add Button */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <h2 className="text-lg font-semibold text-slate-800 flex items-center gap-2">
-                            <FileText className="w-5 h-5 text-slate-600" />
+                        <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                            <FileText className="w-5 h-5 text-muted-foreground" />
                             Paper Sections & Questions
                         </h2>
-                        <p className="text-xs text-slate-500">
+                        <p className="text-xs text-muted-foreground">
                             Manage sections and attach questions specifically configured for this paper.
                         </p>
                     </div>
                     <Button 
                         onClick={handleOpenCreateModal} 
-                        className="bg-slate-900 text-white hover:bg-slate-800 shadow-sm"
+                        className="shadow-sm font-semibold"
                     >
                         <Plus className="w-4 h-4 mr-1.5" /> Add Section
                     </Button>
@@ -130,16 +130,16 @@ export default function Show({ paper, sections = [], questionBank = [] }) {
 
                 {/* Sections List */}
                 {sections.length === 0 ? (
-                    <div className="bg-white border border-slate-200 rounded-xl py-12 text-center text-slate-400">
-                        <BookOpen className="w-10 h-10 mx-auto mb-3 text-slate-300" />
-                        <h3 className="font-semibold text-slate-700 text-sm">No Sections Configured Yet</h3>
-                        <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
+                    <div className="bg-card border border-border rounded-xl py-12 text-center text-muted-foreground">
+                        <BookOpen className="w-10 h-10 mx-auto mb-3 text-muted-foreground/60" />
+                        <h3 className="font-semibold text-foreground text-sm">No Sections Configured Yet</h3>
+                        <p className="text-xs text-muted-foreground mt-1 max-w-sm mx-auto">
                             Start building your paper by creating sections (e.g. Section A for MCQs, Section B for Short Questions).
                         </p>
                         <Button 
                             onClick={handleOpenCreateModal} 
                             variant="outline"
-                            className="mt-4 text-xs"
+                            className="mt-4 text-xs font-semibold"
                         >
                             <Plus className="w-3.5 h-3.5 mr-1" /> Add First Section
                         </Button>
@@ -149,27 +149,27 @@ export default function Show({ paper, sections = [], questionBank = [] }) {
                         {sections.map((section) => (
                             <div 
                                 key={section.id} 
-                                className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm"
+                                className="bg-card border border-border rounded-xl overflow-hidden shadow-sm"
                             >
                                 {/* Section Sub-header */}
-                                <div className="bg-slate-50/80 px-5 py-3.5 border-b border-slate-200 flex items-center justify-between">
+                                <div className="bg-muted/40 px-5 py-3.5 border-b border-border flex items-center justify-between">
                                     <div className="flex items-center gap-3">
-                                        <Badge className="bg-slate-800 text-white shadow-none font-bold px-2.5 py-0.5">
+                                        <Badge className="font-bold px-2.5 py-0.5">
                                             Section {section.section_name}
                                         </Badge>
-                                        <h3 className="font-semibold text-slate-800 text-sm">
+                                        <h3 className="font-semibold text-foreground text-sm">
                                             {section.title}
                                         </h3>
-                                        <Badge variant="outline" className="bg-white text-slate-600 font-mono text-[11px]">
+                                        <Badge variant="outline" className="font-mono text-[11px]">
                                             Type: {(section.question_type || 'mcq').toUpperCase()}
                                         </Badge>
                                     </div>
 
                                     <div className="flex items-center gap-4">
-                                        <div className="text-xs text-slate-500 font-medium">
-                                            <span className="text-slate-800 font-semibold">{section.total_marks}</span> Marks
+                                        <div className="text-xs text-muted-foreground font-medium">
+                                            <span className="text-foreground font-semibold">{section.total_marks}</span> Marks
                                             <span className="mx-1.5">|</span>
-                                            <span className="text-slate-800 font-semibold">{section.questions?.length || 0}</span> Questions
+                                            <span className="text-foreground font-semibold">{section.questions?.length || 0}</span> Questions
                                         </div>
 
                                         <div className="flex items-center gap-1">
@@ -177,7 +177,7 @@ export default function Show({ paper, sections = [], questionBank = [] }) {
                                                 size="sm" 
                                                 variant="ghost" 
                                                 onClick={() => handleOpenEditModal(section)}
-                                                className="h-8 px-2 text-slate-600 hover:text-slate-900"
+                                                className="h-8 px-2 text-muted-foreground hover:text-foreground"
                                             >
                                                 <Edit className="w-3.5 h-3.5" />
                                             </Button>
@@ -185,7 +185,7 @@ export default function Show({ paper, sections = [], questionBank = [] }) {
                                                 size="sm" 
                                                 variant="ghost" 
                                                 onClick={() => handleDeleteSection(section.id)}
-                                                className="h-8 px-2 text-rose-600 hover:text-rose-700 hover:bg-rose-50"
+                                                className="h-8 px-2 text-destructive hover:bg-destructive/10"
                                             >
                                                 <Trash2 className="w-3.5 h-3.5" />
                                             </Button>
@@ -194,9 +194,9 @@ export default function Show({ paper, sections = [], questionBank = [] }) {
                                 </div>
 
                                 {/* Attached Questions Details */}
-                                <div className="p-4 divide-y divide-slate-100">
+                                <div className="p-4 divide-y divide-border">
                                     {!section.questions || section.questions.length === 0 ? (
-                                        <div className="p-4 text-center text-xs text-slate-400">
+                                        <div className="p-4 text-center text-xs text-muted-foreground">
                                             No questions attached to this section. Click Edit to attach questions.
                                         </div>
                                     ) : (
@@ -204,20 +204,20 @@ export default function Show({ paper, sections = [], questionBank = [] }) {
                                             const bankItem = q.question_bank || q.questionBank || q;
                                             return (
                                                 <div key={q.id || idx} className="py-2.5 first:pt-0 last:pb-0 flex items-start gap-3">
-                                                    <span className="text-xs font-semibold text-slate-400 mt-0.5 w-5 text-right">
+                                                    <span className="text-xs font-semibold text-muted-foreground mt-0.5 w-5 text-right">
                                                         {idx + 1}.
                                                     </span>
                                                     <div className="flex-1">
-                                                        <p className="text-xs text-slate-800 font-medium leading-relaxed">
+                                                        <p className="text-xs text-foreground font-medium leading-relaxed">
                                                             {bankItem.question_text || bankItem.question || 'Question Content'}
                                                         </p>
                                                         {bankItem.chapter && (
-                                                            <span className="text-[10px] text-slate-400 mt-0.5 block">
+                                                            <span className="text-[10px] text-muted-foreground mt-0.5 block">
                                                                 Chapter: {bankItem.chapter.chapter_name || bankItem.chapter.title || 'N/A'}
                                                             </span>
                                                         )}
                                                     </div>
-                                                    <span className="text-[11px] font-semibold text-slate-600 bg-slate-50 border border-slate-200 px-2 py-0.5 rounded">
+                                                    <span className="text-[11px] font-semibold text-muted-foreground bg-muted/40 border border-border px-2 py-0.5 rounded">
                                                         {q.marks || bankItem.marks || 1} M
                                                     </span>
                                                 </div>

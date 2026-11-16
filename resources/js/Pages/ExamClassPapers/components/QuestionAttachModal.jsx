@@ -83,9 +83,9 @@ export default function QuestionAttachModal({ isOpen, onClose, section = null, q
                     </div>
                 </div>
 
-                <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+                <div className="flex justify-end gap-2 pt-3 border-t border-border">
                     <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
-                    <Button type="submit" disabled={processing} className="bg-slate-800 text-white hover:bg-slate-900">
+                    <Button type="submit" disabled={processing} className="font-semibold">
                         Attach Question
                     </Button>
                 </div>

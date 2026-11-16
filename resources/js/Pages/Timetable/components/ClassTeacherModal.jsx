@@ -101,9 +101,9 @@ export default function ClassTeacherModal({
             maxWidth="sm:max-w-xl"
         >
             <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="bg-amber-50 border border-amber-200 p-3.5 rounded-xl text-xs text-amber-800 space-y-1">
-                    <div className="font-bold flex items-center gap-1.5 text-amber-900">
-                        <UserCheck className="w-4 h-4 text-amber-600" /> Full-Time Class Teacher Mode
+                <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 p-3.5 rounded-xl text-xs text-amber-800 dark:text-amber-200 space-y-1">
+                    <div className="font-bold flex items-center gap-1.5 text-amber-900 dark:text-amber-100">
+                        <UserCheck className="w-4 h-4 text-amber-600 dark:text-amber-400" /> Full-Time Class Teacher Mode
                     </div>
                     <p>
                         Marking a class as full-time single teacher means one teacher handles all subjects for this class throughout the school day.
@@ -141,7 +141,7 @@ export default function ClassTeacherModal({
                     )}
                 </div>
 
-                <div className="space-y-4 pt-2 border-t border-slate-100">
+                <div className="space-y-4 pt-2 border-t border-border">
                     <div>
                         <Label>Assigned Class / Full-Time Teacher</Label>
                         <FilterSelect
@@ -155,15 +155,15 @@ export default function ClassTeacherModal({
                         />
                     </div>
 
-                    <div className="flex items-center gap-3 p-3 bg-slate-50 border border-slate-200/80 rounded-xl">
+                    <div className="flex items-center gap-3 p-3 bg-muted/40 border border-border rounded-xl">
                         <input
                             type="checkbox"
                             id="modal_is_full_time"
                             checked={data.is_full_time_teacher_class}
                             onChange={(e) => setData('is_full_time_teacher_class', e.target.checked)}
-                            className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
+                            className="rounded border-input text-indigo-600 focus:ring-indigo-500 h-4 w-4"
                         />
-                        <Label htmlFor="modal_is_full_time" className="text-sm font-semibold text-slate-800 cursor-pointer">
+                        <Label htmlFor="modal_is_full_time" className="text-sm font-semibold text-foreground cursor-pointer">
                             One teacher teaches all subjects for this class (Full-Time Class Teacher)
                         </Label>
                     </div>

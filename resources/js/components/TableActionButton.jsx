@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export default function TableActionButton({
     onClick,
@@ -8,9 +9,9 @@ export default function TableActionButton({
     variant = 'default', // 'default' | 'primary' | 'danger'
 }) {
     const variantStyles = {
-        default: 'text-slate-500 hover:text-slate-800 hover:bg-slate-100',
-        primary: 'text-slate-500 hover:text-blue-600 hover:bg-blue-50',
-        danger: 'text-slate-400 hover:text-red-600 hover:bg-red-50',
+        default: 'text-muted-foreground hover:text-foreground hover:bg-muted',
+        primary: 'text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/40',
+        danger: 'text-muted-foreground hover:text-destructive hover:bg-destructive/10',
     };
 
     return (
@@ -18,7 +19,7 @@ export default function TableActionButton({
             variant="ghost"
             size="icon"
             title={title}
-            className={`h-8 w-8 ${variantStyles[variant] || variantStyles.default}`}
+            className={cn("h-8 w-8 transition-colors", variantStyles[variant] || variantStyles.default)}
             onClick={onClick}
         >
             <Icon className="h-4 w-4" />

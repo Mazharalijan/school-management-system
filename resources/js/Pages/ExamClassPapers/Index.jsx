@@ -65,7 +65,7 @@ export default function Index({
                 >
                     {/* Unified Top Action Buttons */}
                     {currentTab === 'papers' && (
-                        <Button onClick={() => openCreateModal('paper')} className="text-white bg-slate-900 hover:bg-slate-800">
+                        <Button onClick={() => openCreateModal('paper')}>
                             <Plus className="h-4 w-4 mr-2" /> Add Paper
                         </Button>
                     )}
@@ -74,21 +74,19 @@ export default function Index({
                         <div className="flex items-center gap-2">
                             <Button 
                                 variant="outline" 
-                                onClick={() => openCreateModal('ocr')} 
-                                className="border-indigo-200 text-indigo-700 hover:bg-indigo-50"
+                                onClick={() => openCreateModal('ocr')}
                             >
-                                <ScanLine className="h-4 w-4 mr-2 text-indigo-600" /> Offline OCR Scan
+                                <ScanLine className="h-4 w-4 mr-2 text-primary" /> Offline OCR Scan
                             </Button>
 
                             <Button 
                                 variant="outline" 
-                                onClick={() => window.print()} 
-                                className="border-slate-200 text-slate-700 hover:bg-slate-50"
+                                onClick={() => window.print()}
                             >
-                                <Printer className="h-4 w-4 mr-2 text-slate-500" /> Print Sheet
+                                <Printer className="h-4 w-4 mr-2 text-muted-foreground" /> Print Sheet
                             </Button>
 
-                            <Button className="text-white bg-indigo-600 hover:bg-indigo-700">
+                            <Button>
                                 <Save className="h-4 w-4 mr-2" /> Save Marks
                             </Button>
                         </div>
@@ -96,21 +94,21 @@ export default function Index({
                 </PageHeader>
 
                 <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
-                    <TabsList className="bg-slate-100 p-1 border border-slate-200 rounded-lg mb-6 flex flex-wrap h-auto">
+                    <TabsList className="bg-muted p-1 border border-border rounded-lg mb-6 flex flex-wrap h-auto">
                         <TabsTrigger value="overview" className="flex items-center gap-2 px-4 py-2 text-sm font-medium">
-                            <LayoutDashboard className="h-4 w-4 text-slate-600" /> Overview & Search
+                            <LayoutDashboard className="h-4 w-4 text-muted-foreground" /> Overview & Search
                         </TabsTrigger>
                         <TabsTrigger value="papers" className="flex items-center gap-2 px-4 py-2 text-sm font-medium">
-                            <FileText className="h-4 w-4 text-blue-600" /> Paper Management
+                            <FileText className="h-4 w-4 text-primary" /> Paper Management
                         </TabsTrigger>
                         <TabsTrigger value="sections" className="flex items-center gap-2 px-4 py-2 text-sm font-medium">
-                            <Layers className="h-4 w-4 text-emerald-600" /> Section & Question Builder
+                            <Layers className="h-4 w-4 text-emerald-500" /> Section & Question Builder
                         </TabsTrigger>
                         <TabsTrigger value="marks" className="flex items-center gap-2 px-4 py-2 text-sm font-medium">
-                            <Award className="h-4 w-4 text-indigo-600" /> Marks & Evaluation
+                            <Award className="h-4 w-4 text-primary" /> Marks & Evaluation
                         </TabsTrigger>
                         <TabsTrigger value="print" className="flex items-center gap-2 px-4 py-2 text-sm font-medium">
-                            <Printer className="h-4 w-4 text-amber-600" /> Print & Bulk Print
+                            <Printer className="h-4 w-4 text-amber-500" /> Print & Bulk Print
                         </TabsTrigger>
                     </TabsList>
 

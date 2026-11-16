@@ -20,7 +20,7 @@ export default function ProfileAvatar({
             <img
                 src={src}
                 alt={name || 'Profile'}
-                className={cn('object-cover shrink-0 border border-slate-200 shadow-2xs', rounded, className)}
+                className={cn('object-cover shrink-0 border border-border shadow-2xs', rounded, className)}
                 onError={() => setImageFailed(true)}
             />
         );
@@ -29,13 +29,13 @@ export default function ProfileAvatar({
     return (
         <div
             className={cn(
-                'bg-slate-100 text-slate-400 border border-slate-200 flex items-center justify-center shrink-0 select-none shadow-2xs',
+                'bg-muted text-muted-foreground border border-border flex items-center justify-center shrink-0 select-none shadow-2xs',
                 rounded,
                 className
             )}
             title={name || 'User Profile'}
         >
-            <User className={cn('shrink-0 text-slate-400', iconClassName)} />
+            <User className={cn('shrink-0 text-muted-foreground', iconClassName)} />
         </div>
     );
 }

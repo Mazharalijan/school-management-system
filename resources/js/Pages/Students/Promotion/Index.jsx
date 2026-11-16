@@ -154,17 +154,17 @@ export default function PromotionIndex({
                         <div className="flex items-center gap-2 mb-1">
                             <Link
                                 href={route('students.index')}
-                                className="inline-flex items-center text-xs text-slate-500 hover:text-indigo-600 transition font-medium"
+                                className="inline-flex items-center text-xs text-muted-foreground hover:text-primary transition font-medium"
                             >
                                 <ArrowLeft className="w-3.5 h-3.5 mr-1" />
                                 Back to Student Roster
                             </Link>
                         </div>
-                        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                            <TrendingUp className="w-6 h-6 text-indigo-600" />
+                        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+                            <TrendingUp className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
                             <span>Student Academic Promotion</span>
                         </h1>
-                        <p className="text-xs text-slate-500 mt-0.5">
+                        <p className="text-xs text-muted-foreground mt-0.5">
                             Batch promote students to next grade, process skip promotions, retain students, and configure new session fee structures.
                         </p>
                     </div>
@@ -172,14 +172,14 @@ export default function PromotionIndex({
                     <div className="flex items-center gap-2">
                         <Link
                             href={route('fees.invoices.index')}
-                            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 transition"
+                            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-800 transition"
                         >
-                            <CreditCard className="w-4 h-4 text-emerald-600" />
+                            <CreditCard className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                             <span>Fee Invoices</span>
                         </Link>
                         <Link
                             href={route('students.index')}
-                            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition"
+                            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg bg-muted text-muted-foreground hover:bg-muted/80 border border-border transition"
                         >
                             <Users className="w-4 h-4" />
                             <span>Students List</span>
@@ -188,32 +188,32 @@ export default function PromotionIndex({
                 </div>
 
                 {/* Configuration Panel: Source & Target Class Selection */}
-                <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
-                    <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                        <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-                            <Filter className="w-4 h-4 text-indigo-600" />
+                <div className="bg-card text-card-foreground rounded-xl border border-border p-5 shadow-xs space-y-4">
+                    <div className="flex items-center justify-between border-b border-border pb-3">
+                        <h3 className="text-sm font-bold text-foreground uppercase tracking-wider flex items-center gap-2">
+                            <Filter className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                             <span>1. Source & Target Batch Configuration</span>
                         </h3>
-                        <span className="text-xs text-slate-400">Step 1 of 2</span>
+                        <span className="text-xs text-muted-foreground">Step 1 of 2</span>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Source Configuration (Left) */}
-                        <div className="bg-slate-50/70 border border-slate-200/80 rounded-lg p-4 space-y-3">
+                        <div className="bg-muted/40 border border-border rounded-lg p-4 space-y-3">
                             <div className="flex items-center justify-between">
-                                <span className="text-xs font-bold uppercase text-slate-700">Source Class (Current)</span>
-                                <Badge variant="outline" className="bg-white text-slate-600 text-[10px]">
+                                <span className="text-xs font-bold uppercase text-foreground">Source Class (Current)</span>
+                                <Badge variant="outline" className="bg-card text-muted-foreground text-[10px] border-border">
                                     Enrolled Students
                                 </Badge>
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                                 <div>
-                                    <label className="block text-xs font-medium text-slate-600 mb-1">Session Year</label>
+                                    <label className="block text-xs font-medium text-muted-foreground mb-1">Session Year</label>
                                     <select
                                         value={sourceSessionYear}
                                         onChange={handleSourceSessionChange}
-                                        className="w-full text-xs rounded-md border-slate-300 bg-white"
+                                        className="w-full text-xs rounded-md border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
                                     >
                                         {sessionYears.map((yr) => (
                                             <option key={yr} value={yr}>
@@ -224,11 +224,11 @@ export default function PromotionIndex({
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-medium text-slate-600 mb-1">Source Class</label>
+                                    <label className="block text-xs font-medium text-muted-foreground mb-1">Source Class</label>
                                     <select
                                         value={sourceClassId}
                                         onChange={handleSourceClassChange}
-                                        className="w-full text-xs rounded-md border-slate-300 font-semibold text-slate-800 bg-white"
+                                        className="w-full text-xs rounded-md border border-input font-semibold text-foreground bg-background dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
                                     >
                                         {classes.map((cls) => (
                                             <option key={cls.id} value={cls.id}>
@@ -239,11 +239,11 @@ export default function PromotionIndex({
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-medium text-slate-600 mb-1">Source Section</label>
+                                    <label className="block text-xs font-medium text-muted-foreground mb-1">Source Section</label>
                                     <select
                                         value={sourceSectionId}
                                         onChange={handleSourceSectionChange}
-                                        className="w-full text-xs rounded-md border-slate-300 bg-white"
+                                        className="w-full text-xs rounded-md border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
                                     >
                                         <option value="">All Sections</option>
                                         {(sourceClass?.sections || []).map((sec) => (
@@ -257,22 +257,22 @@ export default function PromotionIndex({
                         </div>
 
                         {/* Target Configuration (Right) */}
-                        <div className="bg-indigo-50/40 border border-indigo-200/80 rounded-lg p-4 space-y-3">
+                        <div className="bg-indigo-50/40 dark:bg-indigo-950/20 border border-indigo-200/80 dark:border-indigo-900/50 rounded-lg p-4 space-y-3">
                             <div className="flex items-center justify-between">
-                                <span className="text-xs font-bold uppercase text-indigo-900">Target Class (Promoted To)</span>
+                                <span className="text-xs font-bold uppercase text-indigo-950 dark:text-indigo-300">Target Class (Promoted To)</span>
                                 <div className="flex items-center gap-1">
                                     {isBulkSkipping && (
-                                        <Badge className="bg-amber-100 text-amber-800 border-amber-300 text-[10px]">
+                                        <Badge className="bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-800 text-[10px]">
                                             Class Skip
                                         </Badge>
                                     )}
                                     {isBulkRetaining && (
-                                        <Badge className="bg-rose-100 text-rose-800 border-rose-300 text-[10px]">
+                                        <Badge className="bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border-rose-300 dark:border-rose-800 text-[10px]">
                                             Retain Same Class
                                         </Badge>
                                     )}
                                     {!isBulkSkipping && !isBulkRetaining && (
-                                        <Badge className="bg-indigo-100 text-indigo-800 border-indigo-200 text-[10px]">
+                                        <Badge className="bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800 text-[10px]">
                                             Next Grade
                                         </Badge>
                                     )}
@@ -281,25 +281,25 @@ export default function PromotionIndex({
 
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                                 <div>
-                                    <label className="block text-xs font-medium text-indigo-900 mb-1">Target Session</label>
+                                    <label className="block text-xs font-medium text-indigo-950 dark:text-indigo-300 mb-1">Target Session</label>
                                     <input
                                         type="text"
                                         value={targetSessionYear}
                                         onChange={handleTargetSessionChange}
                                         placeholder="e.g. 2026-2027"
-                                        className="w-full text-xs rounded-md border-indigo-300 bg-white font-semibold text-indigo-900 focus:ring-indigo-500"
+                                        className="w-full text-xs rounded-md border border-indigo-300 dark:border-indigo-800 bg-background text-foreground dark:bg-card font-semibold focus:ring-indigo-500"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-medium text-indigo-900 mb-1">Bulk Target Class</label>
+                                    <label className="block text-xs font-medium text-indigo-950 dark:text-indigo-300 mb-1">Bulk Target Class</label>
                                     <select
                                         value={bulkTargetClassId}
                                         onChange={(e) => {
                                             setBulkTargetClassId(e.target.value);
                                             setBulkTargetSectionId('');
                                         }}
-                                        className="w-full text-xs rounded-md border-indigo-300 font-bold text-indigo-900 bg-white"
+                                        className="w-full text-xs rounded-md border border-indigo-300 dark:border-indigo-800 font-bold text-foreground bg-background dark:bg-card"
                                     >
                                         {classes.map((cls) => {
                                             let label = cls.name;
@@ -322,11 +322,11 @@ export default function PromotionIndex({
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-medium text-indigo-900 mb-1">Target Section</label>
+                                    <label className="block text-xs font-medium text-indigo-950 dark:text-indigo-300 mb-1">Target Section</label>
                                     <select
                                         value={bulkTargetSectionId}
                                         onChange={(e) => setBulkTargetSectionId(e.target.value)}
-                                        className="w-full text-xs rounded-md border-indigo-300 bg-white"
+                                        className="w-full text-xs rounded-md border border-indigo-300 dark:border-indigo-800 bg-background text-foreground dark:bg-card"
                                     >
                                         <option value="">Auto Section (First Available)</option>
                                         {targetSections.map((sec) => (
@@ -343,7 +343,7 @@ export default function PromotionIndex({
 
                 {/* Floating / Sticky Bulk Action Bar */}
                 {selectedStudentIds.length > 0 && (
-                    <div className="sticky top-4 z-30 bg-slate-900 text-white p-3.5 rounded-xl shadow-xl flex flex-col sm:flex-row items-center justify-between gap-3 animate-in fade-in slide-in-from-top duration-200">
+                    <div className="sticky top-4 z-30 bg-slate-900 dark:bg-slate-950 text-white p-3.5 rounded-xl shadow-xl border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 animate-in fade-in slide-in-from-top duration-200">
                         <div className="flex items-center gap-3">
                             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-indigo-500 font-bold text-xs">
                                 {selectedStudentIds.length}
@@ -378,41 +378,41 @@ export default function PromotionIndex({
                 )}
 
                 {/* Student Selection Roster Table */}
-                <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="bg-card text-card-foreground rounded-xl border border-border shadow-xs overflow-hidden">
                     {/* Table Header Bar */}
-                    <div className="p-4 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-slate-50/50">
+                    <div className="p-4 border-b border-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-muted/40">
                         <div className="flex items-center gap-3">
                             <button
                                 type="button"
                                 onClick={handleToggleSelectAll}
-                                className="inline-flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-indigo-600 transition"
+                                className="inline-flex items-center gap-2 text-xs font-bold text-foreground hover:text-primary transition"
                             >
                                 {isAllSelected ? (
-                                    <CheckSquare className="w-4 h-4 text-indigo-600" />
+                                    <CheckSquare className="w-4 h-4 text-primary" />
                                 ) : (
-                                    <Square className="w-4 h-4 text-slate-400" />
+                                    <Square className="w-4 h-4 text-muted-foreground" />
                                 )}
                                 <span>
                                     {isAllSelected ? 'Deselect All' : `Select All Eligible (${eligibleStudents.length})`}
                                 </span>
                             </button>
 
-                            <span className="text-slate-300">|</span>
+                            <span className="text-border">|</span>
 
-                            <div className="text-xs text-slate-500">
-                                Total Enrolled: <strong className="text-slate-800">{students.length}</strong>
+                            <div className="text-xs text-muted-foreground">
+                                Total Enrolled: <strong className="text-foreground">{students.length}</strong>
                             </div>
                         </div>
 
                         <div className="flex items-center gap-2 text-xs">
-                            <span className="text-slate-500">Quick Legend:</span>
-                            <span className="inline-flex items-center gap-1 text-[11px] text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">
+                            <span className="text-muted-foreground">Quick Legend:</span>
+                            <span className="inline-flex items-center gap-1 text-[11px] text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-200 dark:border-indigo-800">
                                 <Sparkles className="w-3 h-3" /> Next Grade
                             </span>
-                            <span className="inline-flex items-center gap-1 text-[11px] text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                            <span className="inline-flex items-center gap-1 text-[11px] text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">
                                 <FastForward className="w-3 h-3" /> Skip Grade
                             </span>
-                            <span className="inline-flex items-center gap-1 text-[11px] text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+                            <span className="inline-flex items-center gap-1 text-[11px] text-rose-700 dark:text-rose-300 bg-rose-50 dark:bg-rose-950/60 px-2 py-0.5 rounded border border-rose-200 dark:border-rose-800">
                                 <RotateCcw className="w-3 h-3" /> Retain
                             </span>
                         </div>
@@ -421,7 +421,7 @@ export default function PromotionIndex({
                     {/* Table Content */}
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-sm">
-                            <thead className="bg-slate-50/90 text-slate-600 uppercase text-[11px] tracking-wider border-b border-slate-200 font-semibold">
+                            <thead className="bg-muted/60 text-muted-foreground uppercase text-[11px] tracking-wider border-b border-border font-semibold">
                                 <tr>
                                     <th className="py-3 px-4 w-12 text-center">
                                         <input
@@ -429,7 +429,7 @@ export default function PromotionIndex({
                                             checked={isAllSelected}
                                             onChange={handleToggleSelectAll}
                                             disabled={eligibleStudents.length === 0}
-                                            className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                                            className="rounded border-input text-indigo-600 focus:ring-indigo-500"
                                         />
                                     </th>
                                     <th className="py-3 px-4">Student Details</th>
@@ -440,7 +440,7 @@ export default function PromotionIndex({
                                     <th className="py-3 px-4 text-right">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-slate-100">
+                            <tbody className="divide-y divide-border">
                                 {students.map((student) => {
                                     const isSelected = selectedStudentIds.includes(student.id);
                                     const studentTargetClassId = rowClassOverrides[student.id] || bulkTargetClassId;
@@ -452,8 +452,8 @@ export default function PromotionIndex({
                                     return (
                                         <tr
                                             key={student.id}
-                                            className={`transition hover:bg-slate-50/80 ${
-                                                isSelected ? 'bg-indigo-50/40' : student.is_already_promoted ? 'bg-emerald-50/20' : ''
+                                            className={`transition hover:bg-muted/50 ${
+                                                isSelected ? 'bg-indigo-50/40 dark:bg-indigo-950/30' : student.is_already_promoted ? 'bg-emerald-50/20 dark:bg-emerald-950/20' : ''
                                             }`}
                                         >
                                             {/* Checkbox */}
@@ -463,7 +463,7 @@ export default function PromotionIndex({
                                                     checked={isSelected}
                                                     onChange={() => handleToggleStudent(student.id)}
                                                     disabled={student.is_already_promoted}
-                                                    className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                                                    className="rounded border-input text-indigo-600 focus:ring-indigo-500"
                                                 />
                                             </td>
 
@@ -477,10 +477,10 @@ export default function PromotionIndex({
                                                         iconClassName="w-4 h-4"
                                                     />
                                                     <div>
-                                                        <div className="font-bold text-slate-900 text-xs sm:text-sm">
+                                                        <div className="font-bold text-foreground text-xs sm:text-sm">
                                                             {student.full_name}
                                                         </div>
-                                                        <div className="text-[11px] text-slate-500 font-mono">
+                                                        <div className="text-[11px] text-muted-foreground font-mono">
                                                             Roll: {student.roll_number || 'N/A'} &bull; Adm: {student.admission_number}
                                                         </div>
                                                     </div>
@@ -490,10 +490,10 @@ export default function PromotionIndex({
                                             {/* Current Class */}
                                             <td className="py-3.5 px-4">
                                                 <div className="space-y-0.5">
-                                                    <Badge variant="outline" className="bg-slate-100 text-slate-800 text-xs font-semibold">
+                                                    <Badge variant="outline" className="bg-muted text-foreground text-xs font-semibold border-border">
                                                         {student.current_class_name} ({student.current_section_name || 'A'})
                                                     </Badge>
-                                                    <span className="block text-[11px] text-slate-400 font-mono">
+                                                    <span className="block text-[11px] text-muted-foreground font-mono">
                                                         {student.current_session_year}
                                                     </span>
                                                 </div>
@@ -502,11 +502,11 @@ export default function PromotionIndex({
                                             {/* Current Fee Profile */}
                                             <td className="py-3.5 px-4">
                                                 <div>
-                                                    <span className="font-bold text-slate-800 font-mono text-xs">
+                                                    <span className="font-bold text-foreground font-mono text-xs">
                                                         ${Number(student.current_net_fee || 0).toFixed(2)}/mo
                                                     </span>
                                                     {student.current_discount > 0 && (
-                                                        <span className="block text-[10px] text-emerald-600 font-medium">
+                                                        <span className="block text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">
                                                             -${Number(student.current_discount).toFixed(2)} ({student.current_discount_reason || 'Concession'})
                                                         </span>
                                                     )}
@@ -516,8 +516,8 @@ export default function PromotionIndex({
                                             {/* Target Class Selector Override */}
                                             <td className="py-3.5 px-4">
                                                 {student.is_already_promoted ? (
-                                                    <div className="text-xs font-semibold text-emerald-700 flex items-center gap-1.5">
-                                                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                                                    <div className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+                                                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                                                         <span>Enrolled in {student.target_enrollment_class} ({student.target_enrollment_section || 'A'})</span>
                                                     </div>
                                                 ) : (
@@ -525,22 +525,22 @@ export default function PromotionIndex({
                                                         <select
                                                             value={studentTargetClassId}
                                                             onChange={(e) => handleRowClassOverride(student.id, e.target.value)}
-                                                            className="text-xs rounded-md border-slate-300 font-medium py-1 px-2 bg-white"
+                                                            className="text-xs rounded-md border border-input font-medium py-1 px-2 bg-background text-foreground dark:bg-card focus:outline-none focus:ring-1 focus:ring-ring"
                                                         >
                                                             {classes.map((cls) => (
                                                                 <option key={cls.id} value={cls.id}>
-                                                                    {cls.name} {cls.id === sourceClass?.id ? '(Repeat)' : ''}
+                                                                  {cls.name} {cls.id === sourceClass?.id ? '(Repeat)' : ''}
                                                                 </option>
                                                             ))}
                                                         </select>
 
                                                         {isRowSkipping && (
-                                                            <span title="Skipping classes" className="text-amber-600">
+                                                            <span title="Skipping classes" className="text-amber-600 dark:text-amber-400">
                                                                 <FastForward className="w-3.5 h-3.5" />
                                                             </span>
                                                         )}
                                                         {isRowRetaining && (
-                                                            <span title="Repeating same class" className="text-rose-600">
+                                                            <span title="Repeating same class" className="text-rose-600 dark:text-rose-400">
                                                                 <RotateCcw className="w-3.5 h-3.5" />
                                                             </span>
                                                         )}
@@ -551,11 +551,11 @@ export default function PromotionIndex({
                                             {/* Status Badge */}
                                             <td className="py-3.5 px-4 text-center">
                                                 {student.is_already_promoted ? (
-                                                    <Badge className="bg-emerald-100 text-emerald-800 border-emerald-300 text-[10px]">
+                                                    <Badge className="bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800 text-[10px]">
                                                         Already Promoted
                                                     </Badge>
                                                 ) : (
-                                                    <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 text-[10px]">
+                                                    <Badge variant="outline" className="bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800 text-[10px]">
                                                         Eligible
                                                     </Badge>
                                                 )}
@@ -567,7 +567,7 @@ export default function PromotionIndex({
                                                     size="sm"
                                                     variant="outline"
                                                     onClick={() => handleOpenSingleModal(student)}
-                                                    className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 border-indigo-200"
+                                                    className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 border-indigo-200 dark:border-indigo-800"
                                                 >
                                                     <TrendingUp className="w-3.5 h-3.5 mr-1" />
                                                     Promote Individually
@@ -579,10 +579,10 @@ export default function PromotionIndex({
 
                                 {students.length === 0 && (
                                     <tr>
-                                        <td colSpan={7} className="py-12 text-center text-slate-400">
+                                        <td colSpan={7} className="py-12 text-center text-muted-foreground">
                                             <Users className="w-8 h-8 mx-auto mb-2 opacity-40" />
                                             <p className="text-sm font-medium">No students found for this class and session.</p>
-                                            <p className="text-xs text-slate-400 mt-1">
+                                            <p className="text-xs text-muted-foreground mt-1">
                                                 Try selecting a different source class or session year above.
                                             </p>
                                         </td>

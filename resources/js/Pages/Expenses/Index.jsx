@@ -140,9 +140,9 @@ export default function Index({
                             variant="outline"
                             size="sm"
                             onClick={() => setIsPrintPnlModalOpen(true)}
-                            className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold h-9 rounded-none"
+                            className="text-xs font-semibold h-9"
                         >
-                            <Printer className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
+                            <Printer className="w-3.5 h-3.5 mr-1.5 text-muted-foreground" />
                             Print Statement
                         </Button>
 
@@ -150,36 +150,36 @@ export default function Index({
                             variant="outline"
                             size="sm"
                             onClick={() => setIsCategoryModalOpen(true)}
-                            className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold h-9 rounded-none"
+                            className="text-xs font-semibold h-9"
                         >
-                            <FolderPlus className="w-3.5 h-3.5 mr-1.5 text-indigo-600" />
+                            <FolderPlus className="w-3.5 h-3.5 mr-1.5 text-primary" />
                             + Category
                         </Button>
 
                         <Button
                             size="sm"
                             onClick={handleOpenCreateExpense}
-                            className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold h-9 shadow-xs rounded-none"
+                            className="bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold h-9 shadow-xs"
                         >
-                            <Plus className="w-3.5 h-3.5 mr-1.5 text-white" />
+                            <Plus className="w-3.5 h-3.5 mr-1.5" />
                             Record Expense
                         </Button>
                     </div>
                 </PageHeader>
 
-                {/* 2. Date Preset & Reporting Period Bar (Sharp Rectangular Design) */}
-                <div className="bg-white p-3 sm:p-4 rounded-none border border-slate-200 shadow-none flex flex-col md:flex-row md:items-center justify-between gap-4">
+                {/* 2. Date Preset & Reporting Period Bar */}
+                <div className="bg-card p-3 sm:p-4 rounded-lg border border-border shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 text-card-foreground">
                     {/* Quick Presets */}
                     <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
-                        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-1">Period:</span>
+                        <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mr-1">Period:</span>
                         {presets.map((p) => (
                             <button
                                 key={p.id}
                                 onClick={() => handlePresetChange(p.id)}
-                                className={`px-3 py-1.5 rounded-none text-xs font-medium transition-all ${
+                                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
                                     activePreset === p.id
-                                        ? 'bg-slate-900 text-white font-semibold shadow-xs'
-                                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
+                                        ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
+                                        : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
                                 }`}
                             >
                                 {p.label}
@@ -196,9 +196,9 @@ export default function Index({
                                 setCustomStart(e.target.value);
                                 setActivePreset('custom');
                             }}
-                            className="h-8 text-xs w-36 rounded-none"
+                            className="h-8 text-xs w-36"
                         />
-                        <span className="text-slate-400">to</span>
+                        <span className="text-muted-foreground">to</span>
                         <Input
                             type="date"
                             value={customEnd}
@@ -206,9 +206,9 @@ export default function Index({
                                 setCustomEnd(e.target.value);
                                 setActivePreset('custom');
                             }}
-                            className="h-8 text-xs w-36 rounded-none"
+                            className="h-8 text-xs w-36"
                         />
-                        <Button type="submit" size="sm" variant="outline" className="h-8 text-xs px-2.5 rounded-none">
+                        <Button type="submit" size="sm" variant="outline" className="h-8 text-xs px-2.5">
                             Apply
                         </Button>
                     </form>
@@ -216,15 +216,15 @@ export default function Index({
 
                 {/* 3. Domain Tabs */}
                 <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
-                    <TabsList className="bg-slate-100 p-1 border border-slate-200 rounded-none mb-6 flex flex-wrap h-auto">
-                        <TabsTrigger value="pnl" className="flex items-center gap-2 px-4 py-2 text-xs font-medium rounded-none">
-                            <TrendingUp className="h-4 w-4 text-emerald-600" /> Profit &amp; Loss Statement &amp; Analytics
+                    <TabsList className="bg-muted p-1 border border-border rounded-lg mb-6 flex flex-wrap h-auto">
+                        <TabsTrigger value="pnl" className="flex items-center gap-2 px-4 py-2 text-xs font-medium">
+                            <TrendingUp className="h-4 w-4 text-emerald-600 dark:text-emerald-400" /> Profit &amp; Loss Statement &amp; Analytics
                         </TabsTrigger>
-                        <TabsTrigger value="expenses" className="flex items-center gap-2 px-4 py-2 text-xs font-medium rounded-none">
-                            <Receipt className="h-4 w-4 text-rose-600" /> Cash Flow &amp; Expenses Ledger ({expenses?.total ?? 0})
+                        <TabsTrigger value="expenses" className="flex items-center gap-2 px-4 py-2 text-xs font-medium">
+                            <Receipt className="h-4 w-4 text-rose-600 dark:text-rose-400" /> Cash Flow &amp; Expenses Ledger ({expenses?.total ?? 0})
                         </TabsTrigger>
-                        <TabsTrigger value="categories" className="flex items-center gap-2 px-4 py-2 text-xs font-medium rounded-none">
-                            <Layers className="h-4 w-4 text-indigo-600" /> Operating Categories ({categories.length})
+                        <TabsTrigger value="categories" className="flex items-center gap-2 px-4 py-2 text-xs font-medium">
+                            <Layers className="h-4 w-4 text-indigo-600 dark:text-indigo-400" /> Operating Categories ({categories.length})
                         </TabsTrigger>
                     </TabsList>
 

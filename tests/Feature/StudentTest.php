@@ -194,4 +194,101 @@ class StudentTest extends TestCase
         $this->assertEquals(500, $width);
         $this->assertEquals(500, $height);
     }
+
+    public function test_can_search_students_by_various_fields(): void
+    {
+        $student = Student::create([
+            'admission_number' => 'ADM-999',
+            'roll_number' => 'ROLL-999',
+            'first_name' => 'Bilal',
+            'last_name' => 'Ahmad',
+            'gender' => 'male',
+            'date_of_birth' => '2012-04-10',
+            'guardian_name' => 'Muhammad Ahmad',
+            'guardian_relation' => 'Father',
+            'guardian_phone' => '03001234567',
+            'father_cnic' => '35201-1234567-1',
+            'admission_date' => '2026-01-01',
+            'status' => 'active',
+        ]);
+
+        // Search by first name
+        $response = $this->actingAs($this->user)->getJson(route('students.search', ['q' => 'Bilal']));
+        $response->assertOk()->assertJsonCount(1);
+        $this->assertEquals($student->id, $response->json('0.id'));
+
+        // Search by full name
+        $response = $this->actingAs($this->user)->getJson(route('students.search', ['q' => 'Bilal Ahmad']));
+        $response->assertOk()->assertJsonCount(1);
+
+        // Search by guardian name
+        $response = $this->actingAs($this->user)->getJson(route('students.search', ['q' => 'Muhammad Ahmad']));
+        $response->assertOk()->assertJsonCount(1);
+
+        // Search by phone
+        $response = $this->actingAs($this->user)->getJson(route('students.search', ['q' => '03001234567']));
+        $response->assertOk()->assertJsonCount(1);
+
+        // Search by father CNIC
+        $response = $this->actingAs($this->user)->getJson(route('students.search', ['q' => '35201-1234567-1']));
+        $response->assertOk()->assertJsonCount(1);
+
+        // Search by roll number
+        $response = $this->actingAs($this->user)->getJson(route('students.search', ['q' => 'ROLL-999']));
+        $response->assertOk()->assertJsonCount(1);
+
+        // Empty query returns empty array
+        $response = $this->actingAs($this->user)->getJson(route('students.search', ['q' => '']));
+        $response->assertOk()->assertJsonCount(0);
+    }
+
+    public function test_can_store_and_update_student_with_father_cnic(): void
+    {
+        $payload = [
+            'first_name' => 'Ali',
+            'last_name' => 'Raza',
+            'gender' => 'male',
+            'date_of_birth' => '2012-01-01',
+            'guardian_name' => 'Raza Khan',
+            'guardian_relation' => 'Father',
+            'guardian_phone' => '03009999999',
+            'father_cnic' => '35202-9876543-1',
+            'school_class_id' => $this->class->id,
+            'section_id' => $this->section->id,
+            'roll_number' => '505',
+        ];
+
+        $response = $this->actingAs($this->user)->post(route('students.store'), $payload);
+        $response->assertSessionHasNoErrors();
+
+        $this->assertDatabaseHas('students', [
+            'first_name' => 'Ali',
+            'father_cnic' => '35202-9876543-1',
+        ]);
+
+        $student = Student::where('first_name', 'Ali')->first();
+
+        // Update CNIC
+        $updatePayload = [
+            'first_name' => 'Ali',
+            'last_name' => 'Raza',
+            'gender' => 'male',
+            'date_of_birth' => '2012-01-01',
+            'guardian_name' => 'Raza Khan',
+            'guardian_relation' => 'Father',
+            'guardian_phone' => '03009999999',
+            'father_cnic' => '35202-1111111-9',
+            'school_class_id' => $this->class->id,
+            'section_id' => $this->section->id,
+            'roll_number' => '505',
+        ];
+
+        $updateResponse = $this->actingAs($this->user)->put(route('students.update', $student), $updatePayload);
+        $updateResponse->assertSessionHasNoErrors();
+
+        $this->assertDatabaseHas('students', [
+            'id' => $student->id,
+            'father_cnic' => '35202-1111111-9',
+        ]);
+    }
 }

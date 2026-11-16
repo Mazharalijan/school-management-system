@@ -9,12 +9,12 @@ export default function ExpenseCategoriesTab({ categories = [], onOpenCreateCate
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <div>
-                    <h3 className="text-sm font-bold text-slate-900">Configured Expense Categories</h3>
-                    <p className="text-xs text-slate-500">Categories define accounting buckets for institutional expenditure</p>
+                    <h3 className="text-sm font-bold text-foreground">Configured Expense Categories</h3>
+                    <p className="text-xs text-muted-foreground">Categories define accounting buckets for institutional expenditure</p>
                 </div>
                 <Button
                     onClick={onOpenCreateCategory}
-                    className="bg-slate-900 hover:bg-slate-800 text-white text-xs h-9 font-semibold"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground text-xs h-9 font-semibold"
                 >
                     <FolderPlus className="w-3.5 h-3.5 mr-1.5" /> + New Category
                 </Button>
@@ -22,27 +22,27 @@ export default function ExpenseCategoriesTab({ categories = [], onOpenCreateCate
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {categories.map((cat) => (
-                    <Card key={cat.id} className="border-slate-200 shadow-sm hover:border-slate-300 transition-all">
-                        <CardHeader className="bg-slate-50/70 border-b border-slate-100 p-4 pb-3 flex flex-row items-center justify-between">
+                    <Card key={cat.id} className="border-border shadow-xs hover:border-border/80 transition-all bg-card text-card-foreground">
+                        <CardHeader className="bg-muted/40 border-b border-border p-4 pb-3 flex flex-row items-center justify-between">
                             <div>
-                                <CardTitle className="text-sm font-bold text-slate-900">
+                                <CardTitle className="text-sm font-bold text-foreground">
                                     {cat.name}
                                 </CardTitle>
-                                <span className="font-mono text-[11px] text-indigo-600 font-semibold block mt-0.5">
+                                <span className="font-mono text-[11px] text-primary font-semibold block mt-0.5">
                                     {cat.code}
                                 </span>
                             </div>
-                            <Badge className="bg-emerald-100 text-emerald-800 hover:bg-emerald-100 border-0 text-[10px]">
+                            <Badge className="bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 text-[10px]">
                                 Active
                             </Badge>
                         </CardHeader>
                         <CardContent className="p-4 space-y-3">
-                            <p className="text-xs text-slate-600 line-clamp-2 min-h-[32px]">
+                            <p className="text-xs text-muted-foreground line-clamp-2 min-h-[32px]">
                                 {cat.description || 'General school operational expenditure allocation.'}
                             </p>
-                            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                            <div className="pt-2 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
                                 <span>Recorded Vouchers:</span>
-                                <Badge variant="outline" className="font-mono font-bold text-slate-800 bg-slate-50">
+                                <Badge variant="outline" className="font-mono font-bold text-foreground bg-muted border-border">
                                     {cat.expenses_count ?? 0} Vouchers
                                 </Badge>
                             </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from '@inertiajs/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export default function Pagination({ links, from, to, total, className = '' }) {
     // Hide pagination if there are no records or only 1 page
@@ -9,12 +10,12 @@ export default function Pagination({ links, from, to, total, className = '' }) {
     }
 
     return (
-        <div className={`flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-3 bg-white border-t border-slate-200 ${className}`}>
+        <div className={cn("flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-3 bg-card border-t border-border text-card-foreground", className)}>
             {/* Meta Details */}
-            <div className="text-sm text-slate-600">
-                Showing <span className="font-semibold text-slate-900">{from ?? 0}</span> to{' '}
-                <span className="font-semibold text-slate-900">{to ?? 0}</span> of{' '}
-                <span className="font-semibold text-slate-900">{total}</span> results
+            <div className="text-sm text-muted-foreground">
+                Showing <span className="font-semibold text-foreground">{from ?? 0}</span> to{' '}
+                <span className="font-semibold text-foreground">{to ?? 0}</span> of{' '}
+                <span className="font-semibold text-foreground">{total}</span> results
             </div>
 
             {/* Pagination Links */}
@@ -28,11 +29,12 @@ export default function Pagination({ links, from, to, total, className = '' }) {
                                 href={link.url || '#'}
                                 preserveScroll
                                 preserveState
-                                className={`inline-flex items-center justify-center h-9 px-3 rounded-md text-sm font-medium transition-colors ${
+                                className={cn(
+                                    "inline-flex items-center justify-center h-9 px-3 rounded-md text-sm font-medium transition-colors border",
                                     !link.url
-                                        ? 'text-slate-300 pointer-events-none cursor-not-allowed'
-                                        : 'text-slate-600 hover:bg-slate-100 border border-slate-200'
-                                }`}
+                                        ? "text-muted-foreground/40 border-border/40 pointer-events-none cursor-not-allowed"
+                                        : "text-muted-foreground hover:text-foreground hover:bg-muted border-border"
+                                )}
                             >
                                 <ChevronLeft className="h-4 w-4 mr-1" />
                                 Previous
@@ -48,11 +50,12 @@ export default function Pagination({ links, from, to, total, className = '' }) {
                                 href={link.url || '#'}
                                 preserveScroll
                                 preserveState
-                                className={`inline-flex items-center justify-center h-9 px-3 rounded-md text-sm font-medium transition-colors ${
+                                className={cn(
+                                    "inline-flex items-center justify-center h-9 px-3 rounded-md text-sm font-medium transition-colors border",
                                     !link.url
-                                        ? 'text-slate-300 pointer-events-none cursor-not-allowed'
-                                        : 'text-slate-600 hover:bg-slate-100 border border-slate-200'
-                                }`}
+                                        ? "text-muted-foreground/40 border-border/40 pointer-events-none cursor-not-allowed"
+                                        : "text-muted-foreground hover:text-foreground hover:bg-muted border-border"
+                                )}
                             >
                                 Next
                                 <ChevronRight className="h-4 w-4 ml-1" />
@@ -60,20 +63,21 @@ export default function Pagination({ links, from, to, total, className = '' }) {
                         );
                     }
 
-                    // Numeric Page Links
+                    // Numbered Page Buttons
                     return (
                         <Link
                             key={key}
                             href={link.url || '#'}
                             preserveScroll
                             preserveState
-                            className={`inline-flex items-center justify-center h-9 min-w-[36px] px-3 rounded-md text-sm font-medium transition-colors ${
+                            className={cn(
+                                "inline-flex items-center justify-center h-9 w-9 rounded-md text-sm font-medium transition-colors border",
                                 link.active
-                                    ? 'bg-slate-800 hover:bg-slate-900 text-white font-semibold'
+                                    ? "bg-primary text-primary-foreground border-primary font-bold shadow-2xs"
                                     : !link.url
-                                    ? 'text-slate-300 cursor-not-allowed'
-                                    : 'text-slate-700 hover:bg-slate-100 border border-slate-200'
-                            }`}
+                                    ? "text-muted-foreground/40 border-border/40 pointer-events-none cursor-not-allowed"
+                                    : "text-muted-foreground hover:text-foreground hover:bg-muted border-border"
+                            )}
                             dangerouslySetInnerHTML={{ __html: link.label }}
                         />
                     );

@@ -36,7 +36,7 @@ export default function SubjectsTab({ subjects, classes, filters, onEdit }) {
     };
 
     const columns = [
-        { header: 'Subject Name', accessor: 'subject_name', className: 'font-semibold text-slate-800' },
+        { header: 'Subject Name', accessor: 'subject_name', className: 'font-semibold text-foreground' },
         {
             header: 'Chapters Count',
             align: 'right',

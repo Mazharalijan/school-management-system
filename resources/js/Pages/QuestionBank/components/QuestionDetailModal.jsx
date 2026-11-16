@@ -9,10 +9,11 @@ export default function QuestionDetailModal({ isOpen, onClose, question }) {
     const modalFooter = (
         <Button
             type="button"
+            variant="outline"
             onClick={onClose}
-            className="bg-slate-800 hover:bg-slate-900 text-white ml-auto"
+            className="ml-auto"
         >
-            <X className="w-4 h-4" />
+            <X className="w-4 h-4 mr-1" />
             Close
         </Button>
     );
@@ -26,61 +27,61 @@ export default function QuestionDetailModal({ isOpen, onClose, question }) {
             maxWidth="sm:max-w-4xl"
         >
             <div className="space-y-4">
-                <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                    <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">
+                <div className="bg-muted/40 p-4 rounded-lg border border-border">
+                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block mb-1">
                         Question Content
                     </span>
-                    <p className="text-slate-800 text-base font-medium whitespace-pre-wrap">
+                    <p className="text-foreground text-base font-medium whitespace-pre-wrap">
                         {question.question}
                     </p>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 border-t pt-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 border-t border-border pt-4">
                     <div>
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
+                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">
                             Type
                         </span>
-                        <span className="text-sm font-semibold text-slate-700 uppercase">
+                        <span className="text-sm font-semibold text-foreground uppercase">
                             {question.question_type}
                         </span>
                     </div>
                     <div>
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
+                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">
                             Class
                         </span>
-                        <span className="text-sm font-semibold text-slate-700">
+                        <span className="text-sm font-semibold text-foreground">
                             {question.school_class?.name || 'N/A'}
                         </span>
                     </div>
                     <div>
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
+                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">
                             Subject
                         </span>
-                        <span className="text-sm font-semibold text-slate-700">
+                        <span className="text-sm font-semibold text-foreground">
                             {question.subject?.subject_name || 'N/A'}
                         </span>
                     </div>
                     <div>
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
+                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">
                             Chapter
                         </span>
-                        <span className="text-sm font-semibold text-slate-700">
+                        <span className="text-sm font-semibold text-foreground">
                             {question.chapter?.name || question.chapter?.chapter_name || 'N/A'}
                         </span>
                     </div>
                     <div>
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
+                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">
                             Topic
                         </span>
-                        <span className="text-sm font-semibold text-slate-700">
+                        <span className="text-sm font-semibold text-foreground">
                             {question.topic?.topic_name || 'N/A'}
                         </span>
                     </div>
                     <div>
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
+                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">
                             Marks
                         </span>
-                        <span className="text-sm font-semibold text-slate-700">
+                        <span className="text-sm font-semibold text-foreground">
                             {question.marks || 1}
                         </span>
                     </div>

@@ -130,9 +130,9 @@ export default function CollectPaymentModal({ isOpen, onClose, student, unpaidIn
       onClose={onClose}
       title={
         <div className="flex justify-between items-center w-full pr-6">
-          <span className="text-xl font-bold">Collect Fee Payment</span>
-          <span className="text-sm font-normal text-slate-500">
-            Admission / Roll: <span className="font-semibold text-slate-800">{student.admission_number || student.roll_number}</span>
+          <span className="text-xl font-bold text-foreground">Collect Fee Payment</span>
+          <span className="text-sm font-normal text-muted-foreground">
+            Admission / Roll: <span className="font-semibold text-foreground">{student.admission_number || student.roll_number}</span>
           </span>
         </div>
       }
@@ -147,7 +147,8 @@ export default function CollectPaymentModal({ isOpen, onClose, student, unpaidIn
             type="submit"
             form="collect-payment-form"
             disabled={processing || !amountPaidInput || parseFloat(amountPaidInput) <= 0}
-            className="bg-slate-800 hover:bg-slate-900 text-white gap-2"
+            variant="default"
+            className="gap-2"
           >
             <UserCheck className="h-4 w-4" />
             {processing ? 'Processing Payment...' : 'Collect Payment'}
@@ -156,7 +157,7 @@ export default function CollectPaymentModal({ isOpen, onClose, student, unpaidIn
       }
     >
       {/* Student Brief Header */}
-      <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 grid grid-cols-2 md:grid-cols-4 gap-4 text-xs mb-4">
+      <div className="bg-muted/40 p-4 rounded-lg border border-border grid grid-cols-2 md:grid-cols-4 gap-4 text-xs mb-4">
         <div className="flex items-center gap-3">
           <ProfileAvatar
             src={student.photo_url}
@@ -165,40 +166,40 @@ export default function CollectPaymentModal({ isOpen, onClose, student, unpaidIn
             iconClassName="w-5 h-5"
           />
           <div>
-            <p className="text-slate-500 uppercase font-medium">Student Name</p>
-            <p className="font-bold text-slate-900 text-sm mt-0.5">{student.first_name} {student.last_name}</p>
-            <p className="text-[11px] text-slate-500">
+            <p className="text-muted-foreground uppercase font-medium">Student Name</p>
+            <p className="font-bold text-foreground text-sm mt-0.5">{student.first_name} {student.last_name}</p>
+            <p className="text-[11px] text-muted-foreground">
               {classInfo?.name || 'Class N/A'} ({sectionInfo?.name || 'Sec N/A'})
             </p>
           </div>
         </div>
 
         <div>
-          <p className="text-slate-500 uppercase font-medium">Monthly Tuition Fee</p>
-          <p className="font-bold text-slate-800 text-sm mt-0.5">
+          <p className="text-muted-foreground uppercase font-medium">Monthly Tuition Fee</p>
+          <p className="font-bold text-foreground text-sm mt-0.5">
             Rs. {totalMonthlyFee.toLocaleString()}
           </p>
-          <p className="text-[11px] text-slate-500">
+          <p className="text-[11px] text-muted-foreground">
             {student?.fee_profile?.items?.length > 0 ? `${student.fee_profile.items.length} Fee Items` : 'Standard Profile'}
           </p>
         </div>
 
         <div>
-          <p className="text-slate-500 uppercase font-medium">Previous Dues / Arrears</p>
-          <p className="font-bold text-amber-700 text-sm mt-0.5">
+          <p className="text-muted-foreground uppercase font-medium">Previous Dues / Arrears</p>
+          <p className="font-bold text-amber-600 dark:text-amber-400 text-sm mt-0.5">
             Rs. {totalDues.toLocaleString()}
           </p>
-          <p className="text-[11px] text-amber-600 font-medium">
+          <p className="text-[11px] text-amber-600 dark:text-amber-400 font-medium">
             {unpaidInvoices.length > 1 ? `${unpaidInvoices.length - 1} Overdue Voucher(s)` : 'No prior arrears'}
           </p>
         </div>
 
         <div>
-          <p className="text-slate-500 uppercase font-medium">Total Balance Payable</p>
-          <p className={`font-bold text-base mt-0.5 ${totalBalanceDue > 0 ? 'text-red-600' : 'text-emerald-600'}`}>
+          <p className="text-muted-foreground uppercase font-medium">Total Balance Payable</p>
+          <p className={`font-bold text-base mt-0.5 ${totalBalanceDue > 0 ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
             Rs. {totalBalanceDue.toLocaleString()}
           </p>
-          <p className="text-[11px] text-slate-500 font-medium">
+          <p className="text-[11px] text-muted-foreground font-medium">
             {totalBalanceDue > 0 ? 'Cumulative Total Due' : 'All Clear / Fully Paid'}
           </p>
         </div>
@@ -229,7 +230,7 @@ export default function CollectPaymentModal({ isOpen, onClose, student, unpaidIn
                   variant="outline"
                   size="sm"
                   onClick={() => handleQuickFill(totalBalanceDue)}
-                  className="text-xs border-blue-200 text-blue-700 hover:bg-blue-50"
+                  className="text-xs border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/40"
                 >
                   Clear Total Balance (Rs. {totalBalanceDue})
                 </Button>
@@ -305,16 +306,16 @@ export default function CollectPaymentModal({ isOpen, onClose, student, unpaidIn
         </div>
 
         {/* Real-time FIFO Allocation Preview Table */}
-        <div className="border border-slate-200 rounded-lg overflow-hidden">
-          <div className="bg-slate-100 px-4 py-2 border-b border-slate-200 flex justify-between items-center">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700">
+        <div className="border border-border rounded-lg overflow-hidden bg-card">
+          <div className="bg-muted/70 px-4 py-2 border-b border-border flex justify-between items-center">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
               Live FIFO Allocation Preview (Chronological Settlement)
             </h4>
-            <span className="text-xs text-slate-500">Oldest voucher settled first</span>
+            <span className="text-xs text-muted-foreground">Oldest voucher settled first</span>
           </div>
 
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200">
+            <thead className="bg-muted/40 text-muted-foreground font-semibold border-b border-border">
               <tr>
                 <th className="p-2.5">Invoice / Month</th>
                 <th className="p-2.5 text-right">Original Due</th>
@@ -323,10 +324,10 @@ export default function CollectPaymentModal({ isOpen, onClose, student, unpaidIn
                 <th className="p-2.5 text-center">New Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-border">
               {fifoAllocations.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="p-4 text-center text-emerald-600 font-medium bg-emerald-50/20">
+                  <td colSpan="5" className="p-4 text-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50/20 dark:bg-emerald-950/20">
                     No outstanding invoices found. Student is fully up to date.
                   </td>
                 </tr>
@@ -335,17 +336,17 @@ export default function CollectPaymentModal({ isOpen, onClose, student, unpaidIn
                   <tr
                     key={inv.id}
                     className={
-                      inv.allocated > 0 ? 'bg-emerald-50/40 transition-colors' : 'hover:bg-slate-50'
+                      inv.allocated > 0 ? 'bg-emerald-50/40 dark:bg-emerald-950/30 transition-colors' : 'hover:bg-muted/50'
                     }
                   >
-                    <td className="p-2.5 font-medium text-slate-800">
+                    <td className="p-2.5 font-medium text-foreground">
                       {inv.month} {inv.session_year}
-                      <span className="block text-[10px] text-slate-400">{inv.invoice_no}</span>
+                      <span className="block text-[10px] text-muted-foreground">{inv.invoice_no}</span>
                     </td>
-                    <td className="p-2.5 text-right text-slate-600">
+                    <td className="p-2.5 text-right text-muted-foreground">
                       Rs. {parseFloat(inv.due_amount).toLocaleString()}
                     </td>
-                    <td className="p-2.5 text-right font-bold text-emerald-600">
+                    <td className="p-2.5 text-right font-bold text-emerald-600 dark:text-emerald-400">
                       {inv.allocated > 0 ? `+Rs. ${inv.allocated.toLocaleString()}` : 'Rs. 0'}
                     </td>
                     <td className="p-2.5 text-right font-semibold text-slate-700">

@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '@/lib/utils';
 
 export default function FilterSelect({
     value = '',
@@ -12,13 +13,17 @@ export default function FilterSelect({
     return (
         <div className={className}>
             <select
-                className="w-full h-10 px-3 py-2 text-sm rounded-md border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={cn(
+                    "w-full h-10 px-3 py-2 text-sm rounded-lg border border-input bg-background text-foreground",
+                    "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-colors",
+                    "dark:bg-card dark:text-foreground"
+                )}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
             >
-                <option value="">{placeholder}</option>
+                <option value="" className="bg-background text-foreground">{placeholder}</option>
                 {options.map((opt) => (
-                    <option key={opt[valueKey]} value={opt[valueKey]}>
+                    <option key={opt[valueKey]} value={opt[valueKey]} className="bg-background text-foreground">
                         {opt[labelKey]}
                     </option>
                 ))}

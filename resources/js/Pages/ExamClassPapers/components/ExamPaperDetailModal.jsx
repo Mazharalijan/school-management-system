@@ -27,7 +27,7 @@ export default function ExamPaperDetailModal({ isOpen, onClose, paper = null }) 
                 <div className="flex justify-between w-full items-center">
                     <Link
                         href={`${route('exam-class-papers.show', paper.id)}?tab=sections`}
-                        className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 hover:text-blue-700"
+                        className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
                     >
                         <Layers className="w-4 h-4" />
                         Open Section Builder &rarr;
@@ -39,44 +39,44 @@ export default function ExamPaperDetailModal({ isOpen, onClose, paper = null }) 
             }
         >
             <div className="space-y-4">
-                <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-3">
-                    <div className="flex items-center gap-2 text-slate-900 font-semibold text-lg">
-                        <FileText className="w-5 h-5 text-blue-600" />
+                <div className="p-4 bg-muted/40 rounded-lg border border-border space-y-3">
+                    <div className="flex items-center gap-2 text-foreground font-semibold text-lg">
+                        <FileText className="w-5 h-5 text-primary" />
                         {paper.paper_title || paper.title}
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4 text-sm pt-3 border-t border-slate-200">
-                        <div className="flex items-center gap-2 text-slate-600">
-                            <GraduationCap className="w-4 h-4 text-slate-400" />
-                            <span className="font-medium text-slate-700">Class:</span>
+                    <div className="grid grid-cols-2 gap-4 text-sm pt-3 border-t border-border">
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <GraduationCap className="w-4 h-4 text-muted-foreground/60" />
+                            <span className="font-medium text-foreground">Class:</span>
                             <span>{paper.school_class?.name || 'N/A'}</span>
                         </div>
 
-                        <div className="flex items-center gap-2 text-slate-600">
-                            <Calendar className="w-4 h-4 text-slate-400" />
-                            <span className="font-medium text-slate-700">Exam Term:</span>
-                            <span className="font-semibold text-indigo-700">
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <Calendar className="w-4 h-4 text-muted-foreground/60" />
+                            <span className="font-medium text-foreground">Exam Term:</span>
+                            <span className="font-semibold text-primary">
                                 {paper.exam_session?.title || paper.exam_schedule?.exam_session?.title || 'General Session'}
                             </span>
                         </div>
 
-                        <div className="flex items-center gap-2 text-slate-600">
-                            <BookOpen className="w-4 h-4 text-slate-400" />
-                            <span className="font-medium text-slate-700">Subject:</span>
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <BookOpen className="w-4 h-4 text-muted-foreground/60" />
+                            <span className="font-medium text-foreground">Subject:</span>
                             <span>{paper.subject?.subject_name || paper.subject?.name || 'N/A'}</span>
                         </div>
 
-                        <div className="flex items-center gap-2 text-slate-600">
-                            <Award className="w-4 h-4 text-slate-400" />
-                            <span className="font-medium text-slate-700">Total Marks:</span>
-                            <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 shadow-none font-semibold">
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <Award className="w-4 h-4 text-muted-foreground/60" />
+                            <span className="font-medium text-foreground">Total Marks:</span>
+                            <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 shadow-none font-semibold">
                                 {paper.total_marks || 0} Marks
                             </Badge>
                         </div>
 
-                        <div className="flex items-center gap-2 text-slate-600">
-                            <Clock className="w-4 h-4 text-slate-400" />
-                            <span className="font-medium text-slate-700">Duration:</span>
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <Clock className="w-4 h-4 text-muted-foreground/60" />
+                            <span className="font-medium text-foreground">Duration:</span>
                             <span>{paper.duration_minutes || 0} mins</span>
                         </div>
                     </div>
@@ -84,8 +84,8 @@ export default function ExamPaperDetailModal({ isOpen, onClose, paper = null }) 
 
                 {paper.instructions && (
                     <div className="space-y-1.5">
-                        <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Instructions</h4>
-                        <div className="p-3 bg-white border border-slate-200 rounded-lg text-sm text-slate-600 whitespace-pre-line">
+                        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Instructions</h4>
+                        <div className="p-3 bg-muted/20 border border-border rounded-lg text-sm text-foreground whitespace-pre-line">
                             {paper.instructions}
                         </div>
                     </div>

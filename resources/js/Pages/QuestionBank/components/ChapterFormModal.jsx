@@ -69,7 +69,7 @@ export default function ChapterFormModal({ isOpen, onClose, chapter = null, clas
                 type="submit"
                 onClick={handleSubmit}
                 disabled={processing}
-                className="bg-slate-800 hover:bg-slate-900 text-white"
+                className="font-semibold"
             >   
                 {isEdit ? <FilePen className="w-4 h-4 mr-1" /> : <PlusIcon className="w-4 h-4 mr-1" />}
                 {isEdit ? 'Update Chapter' : 'Save Chapter'}

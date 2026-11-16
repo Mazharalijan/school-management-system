@@ -26,6 +26,7 @@ import MarksEntryGrid from './components/MarksEntryGrid';
 import OcrScannerModal from './components/OcrScannerModal';
 import DmcPrintModal from './components/DmcPrintModal';
 import PrintMarksheetModal from './components/PrintMarksheetModal';
+import BulkDmcPrintModal from './components/BulkDmcPrintModal';
 
 export default function Index({
   teacher = { id: 1, name: 'Admin User', emp_id: 'EMP-001', designation: 'Class Teacher' },
@@ -65,6 +66,7 @@ export default function Index({
   const [isOcrOpen, setIsOcrOpen] = useState(false);
   const [selectedDmcStudent, setSelectedDmcStudent] = useState(null);
   const [isPrintMarksheetOpen, setIsPrintMarksheetOpen] = useState(false);
+  const [isBulkDmcOpen, setIsBulkDmcOpen] = useState(false);
   const [selectedPrintTeacher, setSelectedPrintTeacher] = useState(teacher?.id || 1);
 
   // Sync state when server props update after navigation
@@ -219,37 +221,47 @@ export default function Index({
               variant="outline"
               size="sm"
               onClick={() => setIsOcrOpen(true)}
-              className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold h-9"
+              className="text-xs font-semibold h-9"
             >
-              <ScanLine className="w-3.5 h-3.5 mr-1.5 text-indigo-600" />
+              <ScanLine className="w-3.5 h-3.5 mr-1.5 text-primary" />
               Offline OCR Scan
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={() => setIsPrintMarksheetOpen(true)}
-              className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold h-9"
+              className="text-xs font-semibold h-9"
             >
-              <Printer className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
+              <Printer className="w-3.5 h-3.5 mr-1.5 text-muted-foreground" />
               Print Marksheet
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsBulkDmcOpen(true)}
+              className="text-xs font-semibold h-9"
+              title="Bulk Print / Download all DMCs as PDF"
+            >
+              <Award className="w-3.5 h-3.5 mr-1.5 text-primary" />
+              Bulk DMCs
             </Button>
             <Button
               variant="outline"
               size="sm"
               disabled={isSaving}
               onClick={() => handleSaveMarks(false)}
-              className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold h-9"
+              className="text-xs font-semibold h-9"
             >
-              {isSaving ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin text-slate-500" /> : <Save className="w-3.5 h-3.5 mr-1.5 text-slate-600" />}
+              {isSaving ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin text-muted-foreground" /> : <Save className="w-3.5 h-3.5 mr-1.5 text-muted-foreground" />}
               Save Draft
             </Button>
             <Button
               size="sm"
               disabled={isSaving}
               onClick={() => handleSaveMarks(true)}
-              className="bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold h-9 shadow-sm"
+              className="text-xs font-semibold h-9 shadow-sm"
             >
-              {isSaving ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin text-white" /> : <Send className="w-3.5 h-3.5 mr-1.5 text-white" />}
+              {isSaving ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" /> : <Send className="w-3.5 h-3.5 mr-1.5" />}
               Save & Prepare Results
             </Button>
           </div>
@@ -299,33 +311,33 @@ export default function Index({
       </FilterBar>
 
       {/* 3. Session & Evaluation Context Card */}
-      <Card className="border-slate-200 shadow-sm">
+      <Card>
         <CardContent className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-700 shrink-0">
+            <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
               <Award className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Examination Term</span>
-              <span className="text-sm font-bold text-slate-800">
+              <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider block">Examination Term</span>
+              <span className="text-sm font-bold text-foreground">
                 {examTerm?.name} {examTerm?.session_year ? `(${examTerm.session_year})` : ''}
               </span>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2 md:pt-0 border-t md:border-t-0 border-border">
             <div>
-              <span className="text-[11px] text-slate-400 block font-medium">Class & Section</span>
+              <span className="text-[11px] text-muted-foreground block font-medium">Class & Section</span>
               <div className="flex items-center gap-1.5 mt-0.5">
-                <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 font-semibold">
+                <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 font-semibold">
                   {classDetails?.name || 'Class'}
                 </Badge>
                 {activeSectionId ? (
-                  <Badge variant="outline" className="bg-slate-100 text-slate-700 font-semibold">
+                  <Badge variant="outline" className="font-semibold">
                     Sec {activeSections.find(s => String(s.id) === String(activeSectionId))?.name || activeSectionId}
                   </Badge>
                 ) : (
-                  <Badge variant="outline" className="bg-slate-100 text-slate-500 font-semibold">
+                  <Badge variant="outline" className="text-muted-foreground font-semibold">
                     All Sections
                   </Badge>
                 )}
@@ -333,18 +345,18 @@ export default function Index({
             </div>
 
             <div>
-              <span className="text-[11px] text-slate-400 block font-medium">Students in Matrix</span>
-              <span className="text-sm font-bold text-slate-800 font-mono">{initialStudents.length}</span>
+              <span className="text-[11px] text-muted-foreground block font-medium">Students in Matrix</span>
+              <span className="text-sm font-bold text-foreground font-mono">{initialStudents.length}</span>
             </div>
 
             <div>
-              <span className="text-[11px] text-slate-400 block font-medium">Papers Evaluated</span>
-              <span className="text-sm font-bold text-slate-800 font-mono">{papers.length} Subjects</span>
+              <span className="text-[11px] text-muted-foreground block font-medium">Papers Evaluated</span>
+              <span className="text-sm font-bold text-foreground font-mono">{papers.length} Subjects</span>
             </div>
 
             <div>
-              <span className="text-[11px] text-slate-400 block font-medium">Class Evaluator</span>
-              <span className="text-xs font-semibold text-slate-700">{teacher?.name || 'Administrator'}</span>
+              <span className="text-[11px] text-muted-foreground block font-medium">Class Evaluator</span>
+              <span className="text-xs font-semibold text-foreground">{teacher?.name || 'Administrator'}</span>
             </div>
           </div>
         </CardContent>
@@ -354,14 +366,14 @@ export default function Index({
       {notification && (
         <div className={`p-4 rounded-lg border flex items-center justify-between text-xs font-bold ${
           notification.type === 'success' 
-            ? 'bg-emerald-50 border-emerald-200 text-emerald-800' 
-            : 'bg-rose-50 border-rose-200 text-rose-800'
+            ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400' 
+            : 'bg-destructive/10 border-destructive/20 text-destructive'
         }`}>
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-600" />
             <span>{notification.message}</span>
           </div>
-          <button onClick={() => setNotification(null)} className="text-slate-400 hover:text-slate-600 font-mono">×</button>
+          <button onClick={() => setNotification(null)} className="text-muted-foreground hover:text-foreground font-mono">×</button>
         </div>
       )}
 
@@ -406,6 +418,16 @@ export default function Index({
         selectedTeacherId={selectedPrintTeacher}
         onTeacherChange={setSelectedPrintTeacher}
         students={studentsData}
+      />
+
+      <BulkDmcPrintModal
+        isOpen={isBulkDmcOpen}
+        onClose={() => setIsBulkDmcOpen(false)}
+        classDetails={classDetails}
+        examTerm={examTerm}
+        papers={papers}
+        students={studentsData}
+        teacher={teacher}
       />
     </div>
   );

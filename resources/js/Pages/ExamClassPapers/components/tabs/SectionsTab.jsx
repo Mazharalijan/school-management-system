@@ -41,28 +41,28 @@ export default function SectionsTab({
     return (
         <div className="space-y-6">
             {/* Header & Controls */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 rounded-xl border border-slate-200">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-card p-4 rounded-xl border border-border text-card-foreground">
                 <div>
-                    <h3 className="font-semibold text-slate-800 flex items-center gap-2">
-                        <Layers className="w-4 h-4 text-slate-600" />
+                    <h3 className="font-semibold text-foreground flex items-center gap-2">
+                        <Layers className="w-4 h-4 text-muted-foreground" />
                         Section Builder
                     </h3>
-                    <p className="text-xs text-slate-500 mt-0.5">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                         Organize paper sections and attach filtered items from the Question Bank.
                     </p>
                 </div>
                 <Button 
                     onClick={handleOpenCreateModal} 
-                    className="bg-slate-900 text-white hover:bg-slate-800 shadow-sm"
+                    className="shadow-sm font-semibold"
                 >
                     <Plus className="w-4 h-4 mr-1.5" /> Create New Section
                 </Button>
             </div>
 
             {/* Existing Sections Listing */}
-            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+            <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm text-card-foreground">
                 <table className="w-full text-left text-sm border-collapse">
-                    <thead className="bg-slate-50/80 border-b border-slate-200 text-slate-500 font-medium">
+                    <thead className="bg-muted/50 border-b border-border text-muted-foreground font-medium">
                         <tr>
                             <th className="px-5 py-3">Paper</th>
                             <th className="px-5 py-3">Section</th>
@@ -72,33 +72,33 @@ export default function SectionsTab({
                             <th className="px-5 py-3 text-right">Actions</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-200">
+                    <tbody className="divide-y divide-border">
                         {sectionList.length === 0 ? (
                             <tr>
-                                <td colSpan="6" className="py-12 text-center text-slate-400">
-                                    <BookOpen className="w-8 h-8 mx-auto mb-2 text-slate-300" />
+                                <td colSpan="6" className="py-12 text-center text-muted-foreground">
+                                    <BookOpen className="w-8 h-8 mx-auto mb-2 text-muted-foreground/60" />
                                     <p className="text-xs">No paper sections created yet.</p>
                                 </td>
                             </tr>
                         ) : (
                             sectionList.map((sec) => (
-                                <tr key={sec.id} className="hover:bg-slate-50/50 transition-colors">
-                                    <td className="px-5 py-3.5 font-medium text-slate-800">
+                                <tr key={sec.id} className="hover:bg-muted/40 transition-colors">
+                                    <td className="px-5 py-3.5 font-medium text-foreground">
                                         {sec.exam_class_paper?.paper_title || 'Unassigned'}
                                     </td>
                                     <td className="px-5 py-3.5">
-                                        <Badge className="bg-slate-100 text-slate-800 border-slate-200 shadow-none font-semibold">
+                                        <Badge variant="outline" className="font-semibold">
                                             Section {sec.section_name}
                                         </Badge>
                                     </td>
-                                    <td className="px-5 py-3.5 font-medium text-slate-700">
+                                    <td className="px-5 py-3.5 font-medium text-foreground">
                                         {sec.title}
                                     </td>
-                                    <td className="px-5 py-3.5 text-slate-600 font-mono text-xs">
+                                    <td className="px-5 py-3.5 text-muted-foreground font-mono text-xs">
                                         {sec.total_marks} Marks
                                     </td>
-                                    <td className="px-5 py-3.5 text-slate-600">
-                                        <Badge variant="outline" className="bg-slate-50 border-slate-200 text-slate-700">
+                                    <td className="px-5 py-3.5 text-muted-foreground">
+                                        <Badge variant="outline">
                                             {sec.questions_count || sec.section_questions?.length || sec.questions?.length || 0} Questions
                                         </Badge>
                                     </td>
@@ -108,15 +108,15 @@ export default function SectionsTab({
                                                 size="sm" 
                                                 variant="outline" 
                                                 onClick={() => handleOpenEditModal(sec)} 
-                                                className="h-8 px-2.5 text-xs"
+                                                className="h-8 px-2.5 text-xs font-semibold"
                                             >
-                                                <Edit className="w-3.5 h-3.5 mr-1 text-slate-500" /> Edit
+                                                <Edit className="w-3.5 h-3.5 mr-1 text-muted-foreground" /> Edit
                                             </Button>
                                             <Button 
                                                 size="sm" 
                                                 variant="destructive" 
                                                 onClick={() => handleDeleteSection(sec.id)} 
-                                                className="h-8 px-2.5 text-xs"
+                                                className="h-8 px-2.5 text-xs font-semibold"
                                             >
                                                 <Trash2 className="w-3.5 h-3.5" />
                                             </Button>

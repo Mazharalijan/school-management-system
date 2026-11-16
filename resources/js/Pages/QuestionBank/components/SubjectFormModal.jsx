@@ -47,7 +47,7 @@ export default function SubjectFormModal({ isOpen, onClose, subject = null, clas
                 type="submit"
                 onClick={handleSubmit}
                 disabled={processing}
-                className="bg-slate-800 hover:bg-slate-900 text-white"
+                className="font-semibold"
             >
                 {isEdit ? (<FilePen className="w-4 h-4" />) : (<PlusIcon className="w-4 h-4" />)}
                 {isEdit ? 'Update Subject' : 'Save Subject'}

@@ -13,6 +13,13 @@ class UpdateSystemSettingsRequest extends FormRequest
 
     public function rules(): array
     {
+        if ($this->has('dashboard_theme') && ! $this->has('school_name')) {
+            return [
+                'dashboard_theme' => ['nullable', 'string', 'in:shadcn,academic,compact'],
+                'theme_mode' => ['nullable', 'string', 'in:light,dark,system'],
+            ];
+        }
+
         return [
             'school_name' => ['required', 'string', 'max:255'],
             'school_tagline' => ['nullable', 'string', 'max:255'],
@@ -31,6 +38,7 @@ class UpdateSystemSettingsRequest extends FormRequest
             'invoice_prefix' => ['required', 'string', 'max:20'],
             'receipt_footer_note' => ['nullable', 'string', 'max:500'],
             'dashboard_theme' => ['nullable', 'string', 'in:shadcn,academic,compact'],
+            'theme_mode' => ['nullable', 'string', 'in:light,dark,system'],
         ];
     }
 }

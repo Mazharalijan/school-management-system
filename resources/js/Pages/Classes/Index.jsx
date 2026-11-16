@@ -183,17 +183,17 @@ export default function ClassMatrixIndex({ matrix }) {
                 {/* Matrix Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {matrix.map((item) => (
-                    <Card key={item.id} className="border-slate-200 shadow-sm hover:border-slate-300 transition-all flex flex-col justify-between">
+                    <Card key={item.id} className="border-border bg-card text-card-foreground shadow-xs hover:border-slate-400 dark:hover:border-slate-600 transition-all flex flex-col justify-between">
                         <div>
-                            <CardHeader className="bg-slate-50 border-b border-slate-100 pb-3 flex flex-row items-center justify-between">
+                            <CardHeader className="bg-muted/40 border-b border-border pb-3 flex flex-row items-center justify-between">
                                 <div>
                                     <div className="flex items-center space-x-2">
-                                        <CardTitle className="text-base font-bold text-slate-800">{item.name}</CardTitle>
-                                        <Badge variant="outline" className="text-xs bg-white text-slate-600 border-slate-300">
+                                        <CardTitle className="text-base font-bold text-foreground">{item.name}</CardTitle>
+                                        <Badge variant="outline" className="text-xs bg-muted text-muted-foreground border-border">
                                             Level {item.numeric_value}
                                         </Badge>
                                     </div>
-                                    <span className="text-xs font-mono text-slate-400">Code: {item.code}</span>
+                                    <span className="text-xs font-mono text-muted-foreground">Code: {item.code}</span>
                                 </div>
                                 <div className="flex items-center space-x-1">
                                     <TableActionButton 
@@ -220,19 +220,19 @@ export default function ClassMatrixIndex({ matrix }) {
                             <CardContent className="pt-4 space-y-3">
                                 <div className="space-y-2">
                                     {item.sections.map((sec) => (
-                                        <div key={sec.id} className="flex items-center justify-between p-2.5 bg-slate-50 rounded-md border border-slate-100 group">
+                                        <div key={sec.id} className="flex items-center justify-between p-2.5 bg-muted/30 rounded-md border border-border group">
                                             <div className="flex items-center space-x-3">
-                                                <div className="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center text-xs font-bold">
+                                                <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">
                                                     {sec.name}
                                                 </div>
                                                 <div>
-                                                    <div className="text-xs font-medium text-slate-700 flex items-center space-x-2">
-                                                        <Users className="h-3 w-3 text-slate-400" />
+                                                    <div className="text-xs font-medium text-foreground flex items-center space-x-2">
+                                                        <Users className="h-3 w-3 text-muted-foreground" />
                                                         <span>Cap: {sec.capacity}</span>
                                                     </div>
                                                     {sec.room_number && (
-                                                        <div className="text-xs text-slate-400 flex items-center space-x-2">
-                                                            <DoorOpen className="h-3 w-3 text-slate-400" />
+                                                        <div className="text-xs text-muted-foreground flex items-center space-x-2">
+                                                            <DoorOpen className="h-3 w-3 text-muted-foreground" />
                                                             <span>Room {sec.room_number}</span>
                                                         </div>
                                                     )}
@@ -240,7 +240,7 @@ export default function ClassMatrixIndex({ matrix }) {
                                             </div>
 
                                             <div className="flex items-center space-x-1">
-                                                <Badge className={sec.is_active ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-100 text-[10px]" : "bg-red-100 text-red-800 text-[10px]"}>
+                                                <Badge className={sec.is_active ? "bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100 text-[10px]" : "bg-red-100 dark:bg-red-950/60 text-red-800 dark:text-red-300 text-[10px]"}>
                                                     {sec.is_active ? "Active" : "Inactive"}
                                                 </Badge>
                                                 
@@ -269,7 +269,7 @@ export default function ClassMatrixIndex({ matrix }) {
                             <Button 
                                 variant="ghost" 
                                 size="sm" 
-                                className="w-full text-xs border border-dashed border-slate-300 hover:bg-slate-50 text-slate-600"
+                                className="w-full text-xs border border-dashed border-border hover:bg-muted text-muted-foreground hover:text-foreground"
                                 onClick={() => handleOpenSectionModal(item.id)}
                             >
                                 <Plus className="h-3 w-3 mr-1" /> Add Section to {item.name}
@@ -452,28 +452,28 @@ export default function ClassMatrixIndex({ matrix }) {
                     {selectedClass && (
                         <div className="space-y-4 py-2">
                             <div className="grid grid-cols-2 gap-3 text-sm">
-                                <div className="p-3 bg-slate-50 rounded-md border">
-                                    <span className="text-xs text-slate-400 block">Class Code</span>
-                                    <span className="font-bold text-slate-800">{selectedClass.code}</span>
+                                <div className="p-3 bg-muted/40 rounded-md border border-border">
+                                    <span className="text-xs text-muted-foreground block">Class Code</span>
+                                    <span className="font-bold text-foreground">{selectedClass.code}</span>
                                 </div>
-                                <div className="p-3 bg-slate-50 rounded-md border">
-                                    <span className="text-xs text-slate-400 block">Numeric Level</span>
-                                    <span className="font-bold text-slate-800">Grade {selectedClass.numeric_value}</span>
+                                <div className="p-3 bg-muted/40 rounded-md border border-border">
+                                    <span className="text-xs text-muted-foreground block">Numeric Level</span>
+                                    <span className="font-bold text-foreground">Grade {selectedClass.numeric_value}</span>
                                 </div>
                             </div>
 
-                            <div className="p-3 bg-slate-50 rounded-md border text-sm">
-                                <span className="text-xs text-slate-400 block">Description</span>
-                                <p className="text-slate-700 mt-0.5">{selectedClass.description || 'No specific description provided.'}</p>
+                            <div className="p-3 bg-muted/40 rounded-md border border-border text-sm">
+                                <span className="text-xs text-muted-foreground block">Description</span>
+                                <p className="text-foreground mt-0.5">{selectedClass.description || 'No specific description provided.'}</p>
                             </div>
 
                             <div>
-                                <span className="text-xs font-semibold text-slate-500 uppercase block mb-2">Attached Sections ({selectedClass.sections?.length})</span>
+                                <span className="text-xs font-semibold text-muted-foreground uppercase block mb-2">Attached Sections ({selectedClass.sections?.length})</span>
                                 <div className="space-y-1.5 max-h-40 overflow-y-auto">
                                     {selectedClass.sections?.map(sec => (
-                                        <div key={sec.id} className="flex justify-between items-center text-xs p-2 bg-white rounded border">
-                                            <span className="font-semibold">Section {sec.name}</span>
-                                            <span className="text-slate-500">Cap: {sec.capacity} | Room: {sec.room_number || 'N/A'}</span>
+                                        <div key={sec.id} className="flex justify-between items-center text-xs p-2 bg-card rounded border border-border text-card-foreground">
+                                            <span className="font-semibold text-foreground">Section {sec.name}</span>
+                                            <span className="text-muted-foreground">Cap: {sec.capacity} | Room: {sec.room_number || 'N/A'}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -578,9 +578,9 @@ export default function ClassMatrixIndex({ matrix }) {
                                 id="is_active" 
                                 checked={editSectionForm.data.is_active}
                                 onChange={e => editSectionForm.setData('is_active', e.target.checked)}
-                                className="rounded border-slate-300 text-blue-600 shadow-sm focus:ring-blue-500"
+                                className="rounded border-input text-blue-600 shadow-sm focus:ring-blue-500"
                             />
-                            <Label htmlFor="is_active" className="text-xs font-medium text-slate-700 cursor-pointer">
+                            <Label htmlFor="is_active" className="text-xs font-medium text-foreground cursor-pointer">
                                 Active Section Status
                             </Label>
                         </div>
@@ -604,31 +604,31 @@ export default function ClassMatrixIndex({ matrix }) {
                     </DialogHeader>
                     {selectedSection && (
                         <div className="space-y-3 py-2 text-sm">
-                            <div className="p-3 bg-slate-50 rounded-md border flex justify-between items-center">
+                            <div className="p-3 bg-muted/40 rounded-md border border-border flex justify-between items-center">
                                 <div>
-                                    <span className="text-xs text-slate-400 block">Parent Class</span>
-                                    <span className="font-bold text-slate-800">{selectedSection.parentClass?.name}</span>
+                                    <span className="text-xs text-muted-foreground block">Parent Class</span>
+                                    <span className="font-bold text-foreground">{selectedSection.parentClass?.name}</span>
                                 </div>
                                 <Badge variant="outline">{selectedSection.parentClass?.code}</Badge>
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
-                                <div className="p-3 bg-slate-50 rounded-md border">
-                                    <span className="text-xs text-slate-400 block">Section Name</span>
-                                    <span className="font-bold text-slate-800">{selectedSection.name}</span>
+                                <div className="p-3 bg-muted/40 rounded-md border border-border">
+                                    <span className="text-xs text-muted-foreground block">Section Name</span>
+                                    <span className="font-bold text-foreground">{selectedSection.name}</span>
                                 </div>
-                                <div className="p-3 bg-slate-50 rounded-md border">
-                                    <span className="text-xs text-slate-400 block">Status</span>
+                                <div className="p-3 bg-muted/40 rounded-md border border-border">
+                                    <span className="text-xs text-muted-foreground block">Status</span>
                                     <span className="font-semibold text-xs flex items-center space-x-1 mt-0.5">
                                         {selectedSection.is_active ? (
                                             <>
                                                 <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
-                                                <span className="text-emerald-700">Active</span>
+                                                <span className="text-emerald-700 dark:text-emerald-400">Active</span>
                                             </>
                                         ) : (
                                             <>
                                                 <XCircle className="h-3.5 w-3.5 text-red-600" />
-                                                <span className="text-red-700">Inactive</span>
+                                                <span className="text-red-700 dark:text-red-400">Inactive</span>
                                             </>
                                         )}
                                     </span>
@@ -636,13 +636,13 @@ export default function ClassMatrixIndex({ matrix }) {
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
-                                <div className="p-3 bg-slate-50 rounded-md border">
-                                    <span className="text-xs text-slate-400 block">Student Capacity</span>
-                                    <span className="font-bold text-slate-800">{selectedSection.capacity} Max</span>
+                                <div className="p-3 bg-muted/40 rounded-md border border-border">
+                                    <span className="text-xs text-muted-foreground block">Student Capacity</span>
+                                    <span className="font-bold text-foreground">{selectedSection.capacity} Max</span>
                                 </div>
-                                <div className="p-3 bg-slate-50 rounded-md border">
-                                    <span className="text-xs text-slate-400 block">Assigned Room</span>
-                                    <span className="font-bold text-slate-800">{selectedSection.room_number || 'Unassigned'}</span>
+                                <div className="p-3 bg-muted/40 rounded-md border border-border">
+                                    <span className="text-xs text-muted-foreground block">Assigned Room</span>
+                                    <span className="font-bold text-foreground">{selectedSection.room_number || 'Unassigned'}</span>
                                 </div>
                             </div>
 

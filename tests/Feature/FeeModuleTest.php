@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\FeeHead;
 use App\Models\FeeInvoice;
+use App\Models\FeePayment;
 use App\Models\FeeStructure;
 use App\Models\SchoolClass;
 use App\Models\Section;
@@ -215,5 +216,39 @@ class FeeModuleTest extends TestCase
             'monthly_discount' => 1000.00,
             'net_monthly_fee' => 4000.00,
         ]);
+    }
+
+    public function test_can_view_fee_invoice(): void
+    {
+        $student = $this->createStudent();
+        $invoice = FeeInvoice::create([
+            'invoice_no' => 'INV-TEST-001',
+            'student_id' => $student->id,
+            'school_class_id' => $this->class->id,
+            'section_id' => $this->section->id,
+            'month' => 'September',
+            'month_order' => 9,
+            'session_year' => '2026',
+            'issue_date' => '2026-09-01',
+            'due_date' => '2026-09-10',
+            'subtotal' => 3000.00,
+            'total_amount' => 3000.00,
+            'paid_amount' => 1000.00,
+            'due_amount' => 2000.00,
+            'status' => 'partially_paid',
+        ]);
+
+        $payment = FeePayment::create([
+            'receipt_no' => 'REC-TEST-001',
+            'student_id' => $student->id,
+            'received_by' => $this->user->id,
+            'amount_paid' => 1000.00,
+            'payment_date' => '2026-09-02',
+            'payment_method' => 'cash',
+        ]);
+        $invoice->payments()->attach($payment->id, ['amount_allocated' => 1000.00]);
+
+        $response = $this->actingAs($this->user)->get(route('fees.invoices.show', $invoice->id));
+        $response->assertOk();
     }
 }

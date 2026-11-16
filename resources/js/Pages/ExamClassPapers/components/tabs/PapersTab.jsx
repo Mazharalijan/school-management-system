@@ -33,9 +33,9 @@ export default function PapersTab({ papers = {}, classes = [], subjects = [], fi
                 <FilterSelect value={selectedSubject} onChange={(val) => { setSelectedSubject(val); applyFilters({ subject_id: val }); }} options={subjects} placeholder="Filter Subject" valueKey="id" labelKey="name" />
             </FilterBar>
 
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+            <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden text-card-foreground">
                 <table className="w-full text-left text-sm border-collapse">
-                    <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 font-medium">
+                    <thead className="bg-muted/50 border-b border-border text-muted-foreground font-medium">
                         <tr>
                             <th className="px-6 py-3.5">Paper Title</th>
                             <th className="px-6 py-3.5">Class</th>
@@ -44,22 +44,22 @@ export default function PapersTab({ papers = {}, classes = [], subjects = [], fi
                             <th className="px-6 py-3.5 text-right">Actions</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-200">
+                    <tbody className="divide-y divide-border">
                         {paperList.map((paper) => (
-                            <tr key={paper.id} className="hover:bg-slate-50/50">
-                                <td className="px-6 py-4 font-semibold text-slate-900">{paper.paper_title || paper.title}</td>
-                                <td className="px-6 py-4">{paper.school_class?.name}</td>
-                                <td className="px-6 py-4 text-slate-600">{paper.subject?.subject_name || paper.subject?.name}</td>
-                                <td className="px-6 py-4">{paper.duration_minutes} mins</td>
+                            <tr key={paper.id} className="hover:bg-muted/40 transition-colors">
+                                <td className="px-6 py-4 font-semibold text-foreground">{paper.paper_title || paper.title}</td>
+                                <td className="px-6 py-4 text-foreground">{paper.school_class?.name}</td>
+                                <td className="px-6 py-4 text-muted-foreground">{paper.subject?.subject_name || paper.subject?.name}</td>
+                                <td className="px-6 py-4 text-foreground">{paper.duration_minutes} mins</td>
                                 <td className="px-6 py-4 text-right">
                                     <div className="flex items-center justify-end gap-2">
                                         {/* Print Preview Button */}
                                         <Link
                                             href={route('exam-class-papers.preview', paper.id)}
-                                            className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 shadow-sm transition-colors"
+                                            className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded border border-border bg-background hover:bg-muted text-foreground shadow-sm transition-colors"
                                             title="Print Preview"
                                         >
-                                            <Printer className="w-3.5 h-3.5 text-slate-500" />
+                                            <Printer className="w-3.5 h-3.5 text-muted-foreground" />
                                             <span>Preview</span>
                                         </Link>
 
@@ -68,7 +68,7 @@ export default function PapersTab({ papers = {}, classes = [], subjects = [], fi
                                             variant="ghost"
                                             size="sm"
                                             onClick={() => onViewDetail(paper)}
-                                            className="h-8 w-8 p-0 text-slate-600 hover:text-slate-900"
+                                            className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
                                             title="View Details"
                                         >
                                             <Eye className="w-4 h-4" />
@@ -77,7 +77,7 @@ export default function PapersTab({ papers = {}, classes = [], subjects = [], fi
                                         {/* Manage Sections Link */}
                                         <Link
                                             href={`${route('exam-class-papers.show', paper.id)}?tab=sections`}
-                                            className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                                            className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded bg-muted hover:bg-muted/80 text-foreground transition-colors"
                                             title="Manage Sections"
                                         >
                                             <Layers className="w-3 h-3" /> Sections
@@ -88,7 +88,7 @@ export default function PapersTab({ papers = {}, classes = [], subjects = [], fi
                                             variant="ghost"
                                             size="sm"
                                             onClick={() => onEdit(paper)}
-                                            className="h-8 w-8 p-0 text-blue-600 hover:bg-blue-50"
+                                            className="h-8 w-8 p-0 text-primary hover:bg-primary/10"
                                             title="Edit Paper"
                                         >
                                             <FilePen className="w-4 h-4" />

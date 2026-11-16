@@ -28,7 +28,7 @@ export default function StudentTable({
         {
             header: 'Admission No',
             accessor: 'admission_number',
-            className: 'font-mono font-bold text-slate-800',
+            className: 'font-mono font-bold text-foreground',
         },
         {
             header: 'Student Name',
@@ -41,10 +41,10 @@ export default function StudentTable({
                         iconClassName="w-4 h-4"
                     />
                     <div>
-                        <div className="font-semibold text-slate-800">
+                        <div className="font-semibold text-foreground">
                             {student.first_name} {student.last_name}
                         </div>
-                        <span className="text-xs text-slate-400 capitalize">
+                        <span className="text-xs text-muted-foreground capitalize">
                             {student.gender} | DOB: {student.date_of_birth}
                         </span>
                     </div>
@@ -59,15 +59,15 @@ export default function StudentTable({
 
                 return classInfo ? (
                     <div className="flex items-center space-x-1.5">
-                        <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                        <Badge variant="outline" className="bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800">
                             {classInfo.name}
                         </Badge>
-                        <Badge variant="outline" className="bg-slate-100 text-slate-700">
+                        <Badge variant="outline" className="bg-muted text-muted-foreground border-border">
                             Sec {sectionInfo?.name || 'N/A'}
                         </Badge>
                     </div>
                 ) : (
-                    <span className="text-xs text-slate-400">Unassigned</span>
+                    <span className="text-xs text-muted-foreground">Unassigned</span>
                 );
             },
         },
@@ -75,10 +75,10 @@ export default function StudentTable({
             header: 'Guardian Info',
             render: (student) => (
                 <div>
-                    <div className="text-xs font-medium text-slate-700">
+                    <div className="text-xs font-medium text-foreground">
                         {student.guardian_name} ({student.guardian_relation})
                     </div>
-                    <div className="text-xs text-slate-400 flex items-center space-x-1 mt-0.5">
+                    <div className="text-xs text-muted-foreground flex items-center space-x-1 mt-0.5">
                         <Phone className="h-3 w-3" />
                         <span>{student.guardian_phone}</span>
                     </div>
@@ -91,8 +91,8 @@ export default function StudentTable({
                 <Badge
                     className={
                         student.status === 'active'
-                            ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-100 border-0'
-                            : 'bg-amber-100 text-amber-800 hover:bg-amber-100 border-0'
+                            ? 'bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-950/70 border-0'
+                            : 'bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-950/70 border-0'
                     }
                 >
                     {student.status}
@@ -134,7 +134,7 @@ export default function StudentTable({
     ];
 
     return (
-        <div className="bg-white rounded-lg shadow border border-slate-200 overflow-hidden">
+        <div className="bg-card text-card-foreground rounded-lg shadow-xs border border-border overflow-hidden">
             <DataTable
                 columns={columns}
                 data={data}

@@ -2,8 +2,12 @@ import React from 'react';
 import { useForm, router, Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import ProfileAvatar from '@/components/ProfileAvatar';
+import PageHeader from '@/components/PageHeader';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { CheckSquare } from 'lucide-react';
 
-export default function Entry({ sessions, classes, subjects, students, existingMarks, filters }) {
+export default function Entry({ sessions = [], classes = [], subjects = [], students = [], existingMarks = {}, filters = {} }) {
     const handleFilterChange = (key, value) => {
         router.get(
             route('marks.entry'),
@@ -52,147 +56,153 @@ export default function Entry({ sessions, classes, subjects, students, existingM
         <AppLayout title="Student Marks Entry">
             <Head title="Marks Entry" />
 
-            <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-center mb-6">
-                    <div>
-                        <h1 className="text-2xl font-bold text-slate-800">Marks Entry</h1>
-                        <p className="text-sm text-slate-500">Select session, class, and subject to record subject marks.</p>
-                    </div>
-
-                    {filters.exam_session_id && filters.school_class_id && (
-                        <button
-                            onClick={handleProcessResults}
-                            className="px-4 py-2 bg-emerald-600 text-white rounded-md text-sm font-semibold hover:bg-emerald-700 shadow"
-                        >
-                            Process Class Results & Ranking
-                        </button>
-                    )}
-                </div>
+            <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 space-y-6">
+                <PageHeader
+                    title="Marks Entry"
+                    subtitle="Select session, class, and subject to record subject marks."
+                    actions={
+                        filters.exam_session_id && filters.school_class_id && (
+                            <Button
+                                onClick={handleProcessResults}
+                                className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm"
+                            >
+                                <CheckSquare className="w-4 h-4 mr-2" />
+                                Process Class Results & Ranking
+                            </Button>
+                        )
+                    }
+                />
 
                 {/* Filters */}
-                <div className="bg-white p-4 rounded-lg shadow border border-slate-200 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                        <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">Exam Session</label>
-                        <select
-                            value={filters.exam_session_id || ''}
-                            onChange={(e) => handleFilterChange('exam_session_id', e.target.value)}
-                            className="w-full border-slate-300 rounded-md text-sm"
-                        >
-                            <option value="">-- Select Session --</option>
-                            {sessions.map((s) => (
-                                <option key={s.id} value={s.id}>{s.title} ({s.session_year})</option>
-                            ))}
-                        </select>
-                    </div>
+                <Card>
+                    <CardContent className="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1.5">Exam Session</label>
+                            <select
+                                value={filters.exam_session_id || ''}
+                                onChange={(e) => handleFilterChange('exam_session_id', e.target.value)}
+                                className="w-full bg-background border border-input rounded-md text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input"
+                            >
+                                <option value="">-- Select Session --</option>
+                                {sessions.map((s) => (
+                                    <option key={s.id} value={s.id}>{s.title} ({s.session_year})</option>
+                                ))}
+                            </select>
+                        </div>
 
-                    <div>
-                        <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">Class</label>
-                        <select
-                            value={filters.school_class_id || ''}
-                            onChange={(e) => handleFilterChange('school_class_id', e.target.value)}
-                            className="w-full border-slate-300 rounded-md text-sm"
-                        >
-                            <option value="">-- Select Class --</option>
-                            {classes.map((c) => (
-                                <option key={c.id} value={c.id}>{c.name}</option>
-                            ))}
-                        </select>
-                    </div>
+                        <div>
+                            <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1.5">Class</label>
+                            <select
+                                value={filters.school_class_id || ''}
+                                onChange={(e) => handleFilterChange('school_class_id', e.target.value)}
+                                className="w-full bg-background border border-input rounded-md text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input"
+                            >
+                                <option value="">-- Select Class --</option>
+                                {classes.map((c) => (
+                                    <option key={c.id} value={c.id}>{c.name}</option>
+                                ))}
+                            </select>
+                        </div>
 
-                    <div>
-                        <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">Subject</label>
-                        <select
-                            value={filters.subject_id || ''}
-                            onChange={(e) => handleFilterChange('subject_id', e.target.value)}
-                            className="w-full border-slate-300 rounded-md text-sm"
-                        >
-                            <option value="">-- Select Subject --</option>
-                            {subjects.map((sub) => (
-                                <option key={sub.id} value={sub.id}>{sub.subject_name}</option>
-                            ))}
-                        </select>
-                    </div>
-                </div>
+                        <div>
+                            <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1.5">Subject</label>
+                            <select
+                                value={filters.subject_id || ''}
+                                onChange={(e) => handleFilterChange('subject_id', e.target.value)}
+                                className="w-full bg-background border border-input rounded-md text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input"
+                            >
+                                <option value="">-- Select Subject --</option>
+                                {subjects.map((sub) => (
+                                    <option key={sub.id} value={sub.id}>{sub.subject_name}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </CardContent>
+                </Card>
 
                 {/* Marks Entry Form */}
                 {students?.length > 0 ? (
-                    <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow border border-slate-200 overflow-hidden">
-                        <table className="min-w-full divide-y divide-slate-200 text-sm">
-                            <thead className="bg-slate-50">
-                                <tr>
-                                    <th className="px-6 py-3 text-left font-semibold text-slate-600 uppercase">Student Name</th>
-                                    <th className="px-6 py-3 text-left font-semibold text-slate-600 uppercase">Absent</th>
-                                    <th className="px-6 py-3 text-left font-semibold text-slate-600 uppercase">Obtained Marks</th>
-                                    <th className="px-6 py-3 text-left font-semibold text-slate-600 uppercase">Total Marks</th>
-                                    <th className="px-6 py-3 text-left font-semibold text-slate-600 uppercase">Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-slate-200">
-                                {students.map((student, idx) => (
-                                    <tr key={student.id} className="hover:bg-slate-50">
-                                        <td className="px-6 py-3 font-medium text-slate-800">
-                                            <div className="flex items-center gap-2.5">
-                                                <ProfileAvatar
-                                                    src={student.photo_url}
-                                                    name={student.name}
-                                                    size="sm"
-                                                />
-                                                <span>{student.name}</span>
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-3">
-                                            <input
-                                                type="checkbox"
-                                                checked={data.marks[idx]?.is_absent || false}
-                                                onChange={(e) => handleMarkChange(idx, 'is_absent', e.target.checked)}
-                                                className="rounded border-slate-300 text-indigo-600"
-                                            />
-                                        </td>
-                                        <td className="px-6 py-3">
-                                            <input
-                                                type="number"
-                                                step="0.01"
-                                                disabled={data.marks[idx]?.is_absent}
-                                                value={data.marks[idx]?.obtained_marks || ''}
-                                                onChange={(e) => handleMarkChange(idx, 'obtained_marks', e.target.value)}
-                                                className="w-32 border-slate-300 rounded-md text-sm disabled:bg-slate-100"
-                                            />
-                                        </td>
-                                        <td className="px-6 py-3">
-                                            <input
-                                                type="number"
-                                                value={data.marks[idx]?.total_marks || 100}
-                                                onChange={(e) => handleMarkChange(idx, 'total_marks', e.target.value)}
-                                                className="w-32 border-slate-300 rounded-md text-sm"
-                                            />
-                                        </td>
-                                        <td className="px-6 py-3">
-                                            <input
-                                                type="text"
-                                                value={data.marks[idx]?.remarks || ''}
-                                                onChange={(e) => handleMarkChange(idx, 'remarks', e.target.value)}
-                                                placeholder="Optional remarks"
-                                                className="w-full border-slate-300 rounded-md text-sm"
-                                            />
-                                        </td>
+                    <form onSubmit={handleSubmit} className="bg-card text-card-foreground rounded-xl shadow-sm border border-border overflow-hidden">
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full divide-y divide-border text-sm">
+                                <thead className="bg-muted/50">
+                                    <tr>
+                                        <th className="px-6 py-3 text-left font-semibold text-muted-foreground uppercase text-xs">Student Name</th>
+                                        <th className="px-6 py-3 text-left font-semibold text-muted-foreground uppercase text-xs">Absent</th>
+                                        <th className="px-6 py-3 text-left font-semibold text-muted-foreground uppercase text-xs">Obtained Marks</th>
+                                        <th className="px-6 py-3 text-left font-semibold text-muted-foreground uppercase text-xs">Total Marks</th>
+                                        <th className="px-6 py-3 text-left font-semibold text-muted-foreground uppercase text-xs">Remarks</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <div className="p-4 bg-slate-50 border-t flex justify-end">
-                            <button
+                                </thead>
+                                <tbody className="divide-y divide-border">
+                                    {students.map((student, idx) => (
+                                        <tr key={student.id} className="hover:bg-muted/40 transition-colors">
+                                            <td className="px-6 py-3 font-medium text-foreground">
+                                                <div className="flex items-center gap-2.5">
+                                                    <ProfileAvatar
+                                                        src={student.photo_url}
+                                                        name={student.name}
+                                                        size="sm"
+                                                    />
+                                                    <span>{student.name}</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-3">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={data.marks[idx]?.is_absent || false}
+                                                    onChange={(e) => handleMarkChange(idx, 'is_absent', e.target.checked)}
+                                                    className="rounded border-input text-primary focus:ring-ring bg-background h-4 w-4"
+                                                />
+                                            </td>
+                                            <td className="px-6 py-3">
+                                                <input
+                                                    type="number"
+                                                    step="0.01"
+                                                    disabled={data.marks[idx]?.is_absent}
+                                                    value={data.marks[idx]?.obtained_marks || ''}
+                                                    onChange={(e) => handleMarkChange(idx, 'obtained_marks', e.target.value)}
+                                                    className="w-32 bg-background border border-input rounded-md text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input disabled:bg-muted/50 disabled:text-muted-foreground"
+                                                />
+                                            </td>
+                                            <td className="px-6 py-3">
+                                                <input
+                                                    type="number"
+                                                    value={data.marks[idx]?.total_marks || 100}
+                                                    onChange={(e) => handleMarkChange(idx, 'total_marks', e.target.value)}
+                                                    className="w-32 bg-background border border-input rounded-md text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input"
+                                                />
+                                            </td>
+                                            <td className="px-6 py-3">
+                                                <input
+                                                    type="text"
+                                                    value={data.marks[idx]?.remarks || ''}
+                                                    onChange={(e) => handleMarkChange(idx, 'remarks', e.target.value)}
+                                                    placeholder="Optional remarks"
+                                                    className="w-full bg-background border border-input rounded-md text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input placeholder:text-muted-foreground"
+                                                />
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="p-4 bg-muted/40 border-t border-border flex justify-end">
+                            <Button
                                 type="submit"
                                 disabled={processing}
-                                className="px-6 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 shadow"
+                                className="shadow-sm font-semibold"
                             >
                                 Save Marks Batch
-                            </button>
+                            </Button>
                         </div>
                     </form>
                 ) : (
-                    <div className="bg-white p-8 text-center rounded-lg border text-slate-500">
-                        Select a session, class, and subject above to enter student marks.
-                    </div>
+                    <Card>
+                        <CardContent className="p-12 text-center text-muted-foreground">
+                            Select a session, class, and subject above to enter student marks.
+                        </CardContent>
+                    </Card>
                 )}
             </div>
         </AppLayout>

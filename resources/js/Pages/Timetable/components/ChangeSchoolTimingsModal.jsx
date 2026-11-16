@@ -127,78 +127,78 @@ export default function ChangeSchoolTimingsModal({
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4">
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-lg w-full p-6 space-y-5">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
+            <div className="bg-card text-card-foreground rounded-2xl border border-border shadow-2xl max-w-lg w-full p-6 space-y-5">
                 {/* Header */}
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div className="flex items-center justify-between border-b border-border pb-3">
                     <div className="flex items-center gap-2.5">
-                        <div className="p-2.5 bg-amber-50 text-amber-600 rounded-xl">
+                        <div className="p-2.5 bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 rounded-xl">
                             <Clock className="w-5 h-5" />
                         </div>
                         <div>
-                            <h2 className="text-lg font-black text-slate-900">Shift School Timings</h2>
-                            <p className="text-xs text-slate-500 font-medium">
+                            <h2 className="text-lg font-black text-foreground">Shift School Timings</h2>
+                            <p className="text-xs text-muted-foreground font-medium">
                                 Recalculates all class periods automatically.
                             </p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100">
+                    <button onClick={onClose} className="text-muted-foreground hover:text-foreground p-1.5 rounded-lg hover:bg-muted">
                         <X className="w-5 h-5" />
                     </button>
                 </div>
 
                 {errorMsg && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs font-semibold flex items-center gap-2">
+                    <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 rounded-xl text-red-700 dark:text-red-300 text-xs font-semibold flex items-center gap-2">
                         <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
                         <span>{errorMsg}</span>
                     </div>
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div className="grid grid-cols-2 gap-3 bg-muted/40 p-4 rounded-xl border border-border">
                         <div>
-                            <Label className="text-xs font-bold text-slate-700 block mb-1">New Start Time</Label>
+                            <Label className="text-xs font-bold text-foreground block mb-1">New Start Time</Label>
                             <Input
                                 type="time"
                                 value={newStartTime}
                                 onChange={(e) => setNewStartTime(e.target.value)}
                                 required
-                                className="h-9 text-xs bg-white"
+                                className="h-9 text-xs bg-background text-foreground dark:bg-card border-input"
                             />
                         </div>
                         <div>
-                            <Label className="text-xs font-bold text-slate-700 block mb-1">New End Time</Label>
+                            <Label className="text-xs font-bold text-foreground block mb-1">New End Time</Label>
                             <Input
                                 type="time"
                                 value={newEndTime}
                                 onChange={(e) => setNewEndTime(e.target.value)}
                                 required
-                                className="h-9 text-xs bg-white"
+                                className="h-9 text-xs bg-background text-foreground dark:bg-card border-input"
                             />
                         </div>
                     </div>
 
                     {/* Live Period Recalculation Preview */}
                     {period1Preview && (
-                        <div className="p-3.5 bg-indigo-50/70 border border-indigo-200 rounded-xl space-y-1.5">
-                            <div className="text-[11px] font-bold text-indigo-900 flex items-center gap-1.5">
-                                <RefreshCw className="w-3.5 h-3.5 text-indigo-600" /> Auto-Shift Preview (Period 1)
+                        <div className="p-3.5 bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 rounded-xl space-y-1.5">
+                            <div className="text-[11px] font-bold text-indigo-950 dark:text-indigo-300 flex items-center gap-1.5">
+                                <RefreshCw className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" /> Auto-Shift Preview (Period 1)
                             </div>
-                            <div className="flex items-center justify-between text-xs font-semibold text-slate-700 pt-1">
-                                <span className="text-slate-500 line-through">{period1Preview.oldFormatted}</span>
+                            <div className="flex items-center justify-between text-xs font-semibold text-foreground pt-1">
+                                <span className="text-muted-foreground line-through">{period1Preview.oldFormatted}</span>
                                 <ArrowRight className="w-4 h-4 text-indigo-500" />
-                                <span className="text-indigo-700 font-extrabold bg-indigo-100 px-2 py-0.5 rounded-md">
+                                <span className="text-indigo-700 dark:text-indigo-300 font-extrabold bg-indigo-100 dark:bg-indigo-950/60 px-2 py-0.5 rounded-md">
                                     {period1Preview.newFormatted}
                                 </span>
                             </div>
-                            <p className="text-[10px] text-indigo-600/80 italic mt-1">
+                            <p className="text-[10px] text-indigo-600 dark:text-indigo-400 italic mt-1">
                                 Shift Difference: {timeDeltaInMinutes > 0 ? `+${timeDeltaInMinutes}` : timeDeltaInMinutes} Minutes across all periods.
                             </p>
                         </div>
                     )}
 
                     {/* Footer Actions */}
-                    <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
+                    <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-border">
                         <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
                             Cancel
                         </Button>

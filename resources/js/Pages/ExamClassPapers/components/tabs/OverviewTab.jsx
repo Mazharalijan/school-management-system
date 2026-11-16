@@ -135,19 +135,19 @@ export default function OverviewTab({
         switch (status) {
             case 'printed':
                 return (
-                    <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 shadow-none font-medium text-xs">
+                    <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 shadow-none font-medium text-xs">
                         <CheckCircle2 className="w-3 h-3 mr-1" /> Printed
                     </Badge>
                 );
             case 'queued':
                 return (
-                    <Badge className="bg-amber-50 text-amber-700 border-amber-200 shadow-none font-medium text-xs">
+                    <Badge variant="outline" className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20 shadow-none font-medium text-xs">
                         <Clock className="w-3 h-3 mr-1" /> Queued
                     </Badge>
                 );
             default:
                 return (
-                    <Badge variant="outline" className="bg-slate-50 text-slate-600 border-slate-200 font-medium text-xs">
+                    <Badge variant="outline" className="bg-muted text-muted-foreground border-border font-medium text-xs">
                         <Printer className="w-3 h-3 mr-1" /> Pending
                     </Badge>
                 );
@@ -160,10 +160,10 @@ export default function OverviewTab({
     return (
         <div className="space-y-6">
             {/* Top Navigation & Breadcrumb Trail */}
-            <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-xs">
+            <div className="bg-card border border-border rounded-xl p-4 shadow-xs text-card-foreground">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     {/* Breadcrumbs */}
-                    <nav className="flex items-center flex-wrap gap-2 text-sm text-slate-500">
+                    <nav className="flex items-center flex-wrap gap-2 text-sm text-muted-foreground">
                         <button
                             type="button"
                             onClick={() => {
@@ -173,8 +173,8 @@ export default function OverviewTab({
                                 applyFilters({ school_class_id: '', exam_session_id: '', subject_id: '' });
                             }}
                             className={cn(
-                                "flex items-center gap-1.5 font-medium transition-colors hover:text-blue-600",
-                                !selectedClassId ? "text-blue-600 font-semibold" : "text-slate-600"
+                                "flex items-center gap-1.5 font-medium transition-colors hover:text-primary",
+                                !selectedClassId ? "text-primary font-semibold" : "text-muted-foreground"
                             )}
                         >
                             <GraduationCap className="h-4 w-4" />
@@ -183,7 +183,7 @@ export default function OverviewTab({
 
                         {currentClass && (
                             <>
-                                <ChevronRight className="h-3.5 w-3.5 text-slate-400" />
+                                <ChevronRight className="h-3.5 w-3.5 text-muted-foreground/60" />
                                 <button
                                     type="button"
                                     onClick={() => {
@@ -192,8 +192,8 @@ export default function OverviewTab({
                                         applyFilters({ exam_session_id: '', subject_id: '' });
                                     }}
                                     className={cn(
-                                        "font-medium transition-colors hover:text-blue-600",
-                                        !selectedTermId ? "text-blue-600 font-semibold" : "text-slate-600"
+                                        "font-medium transition-colors hover:text-primary",
+                                        !selectedTermId ? "text-primary font-semibold" : "text-muted-foreground"
                                     )}
                                 >
                                     {currentClass.name}
@@ -203,7 +203,7 @@ export default function OverviewTab({
 
                         {currentTerm && (
                             <>
-                                <ChevronRight className="h-3.5 w-3.5 text-slate-400" />
+                                <ChevronRight className="h-3.5 w-3.5 text-muted-foreground/60" />
                                 <button
                                     type="button"
                                     onClick={() => {
@@ -211,8 +211,8 @@ export default function OverviewTab({
                                         applyFilters({ subject_id: '' });
                                     }}
                                     className={cn(
-                                        "font-medium transition-colors hover:text-blue-600",
-                                        !selectedSubjectId ? "text-blue-600 font-semibold" : "text-slate-600"
+                                        "font-medium transition-colors hover:text-primary",
+                                        !selectedSubjectId ? "text-primary font-semibold" : "text-muted-foreground"
                                     )}
                                 >
                                     {currentTerm.title}
@@ -222,8 +222,8 @@ export default function OverviewTab({
 
                         {currentSubject && (
                             <>
-                                <ChevronRight className="h-3.5 w-3.5 text-slate-400" />
-                                <span className="font-semibold text-blue-600">
+                                <ChevronRight className="h-3.5 w-3.5 text-muted-foreground/60" />
+                                <span className="font-semibold text-primary">
                                     {currentSubject.subject_name}
                                 </span>
                             </>
@@ -237,21 +237,21 @@ export default function OverviewTab({
                                 variant="outline"
                                 size="sm"
                                 onClick={handleResetAll}
-                                className="h-8 text-xs text-slate-600 border-slate-200 hover:bg-slate-50"
+                                className="h-8 text-xs text-muted-foreground border-border hover:bg-muted"
                             >
-                                <RotateCcw className="h-3.5 w-3.5 mr-1 text-slate-500" /> Reset All
+                                <RotateCcw className="h-3.5 w-3.5 mr-1" /> Reset All
                             </Button>
                         )}
 
-                        <div className="flex items-center rounded-lg border border-slate-200 p-0.5 bg-slate-50">
+                        <div className="flex items-center rounded-lg border border-border p-0.5 bg-muted">
                             <button
                                 type="button"
                                 onClick={() => setViewMode('hierarchy')}
                                 className={cn(
                                     "flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md transition-colors",
                                     viewMode === 'hierarchy' 
-                                        ? "bg-white text-slate-800 shadow-xs" 
-                                        : "text-slate-500 hover:text-slate-800"
+                                        ? "bg-background text-foreground shadow-xs font-semibold" 
+                                        : "text-muted-foreground hover:text-foreground"
                                 )}
                                 title="Class & Term Explorer"
                             >
@@ -263,8 +263,8 @@ export default function OverviewTab({
                                 className={cn(
                                     "flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md transition-colors",
                                     viewMode === 'flat' 
-                                        ? "bg-white text-slate-800 shadow-xs" 
-                                        : "text-slate-500 hover:text-slate-800"
+                                        ? "bg-background text-foreground shadow-xs font-semibold" 
+                                        : "text-muted-foreground hover:text-foreground"
                                 )}
                                 title="Table View"
                             >
@@ -275,7 +275,7 @@ export default function OverviewTab({
                 </div>
 
                 {/* Search & Global Filter Bar */}
-                <div className="mt-4 pt-3 border-t border-slate-100 flex flex-col md:flex-row items-center gap-3">
+                <div className="mt-4 pt-3 border-t border-border flex flex-col md:flex-row items-center gap-3">
                     <div className="flex-1 w-full">
                         <SearchInput
                             value={searchQuery}
@@ -308,18 +308,18 @@ export default function OverviewTab({
             {viewMode === 'hierarchy' ? (
                 <>
                     {/* SECTION 1: CLASSES OVERVIEW */}
-                    <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs space-y-3">
+                    <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-3 text-card-foreground">
                         <div className="flex items-center justify-between">
                             <div>
-                                <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-                                    <GraduationCap className="h-5 w-5 text-blue-600" />
+                                <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+                                    <GraduationCap className="h-5 w-5 text-primary" />
                                     Classes Overview
                                 </h3>
-                                <p className="text-xs text-slate-500">
+                                <p className="text-xs text-muted-foreground">
                                     Click any class below to inspect its exam terms (First Term, Second Term, Third Term) and papers.
                                 </p>
                             </div>
-                            <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">
+                            <span className="text-xs font-semibold text-muted-foreground bg-muted px-2.5 py-1 rounded-full">
                                 {classes.length} Classes Available
                             </span>
                         </div>
@@ -336,38 +336,38 @@ export default function OverviewTab({
                                         className={cn(
                                             "flex flex-col text-left p-3.5 rounded-xl border transition-all text-xs relative group cursor-pointer",
                                             isSelected
-                                                ? "border-blue-500 bg-blue-50/70 shadow-xs ring-2 ring-blue-500/20"
-                                                : "border-slate-200 bg-white hover:border-blue-300 hover:bg-slate-50/80 shadow-2xs"
+                                                ? "border-primary bg-primary/10 shadow-xs ring-2 ring-primary/20"
+                                                : "border-border bg-card hover:border-primary/40 hover:bg-muted/40 shadow-2xs"
                                         )}
                                     >
                                         <div className="flex items-center justify-between mb-1.5">
                                             <span className={cn(
                                                 "font-semibold text-sm",
-                                                isSelected ? "text-blue-900" : "text-slate-800 group-hover:text-blue-600"
+                                                isSelected ? "text-primary font-bold" : "text-foreground group-hover:text-primary"
                                             )}>
                                                 {cls.name}
                                             </span>
                                             {cls.code && (
-                                                <span className="text-[10px] uppercase font-bold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">
+                                                <span className="text-[10px] uppercase font-bold text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
                                                     {cls.code}
                                                 </span>
                                             )}
                                         </div>
 
-                                        <div className="flex items-center justify-between text-slate-500 mt-auto pt-2 border-t border-slate-100 text-[11px]">
+                                        <div className="flex items-center justify-between text-muted-foreground mt-auto pt-2 border-t border-border text-[11px]">
                                             <span>{cls.sections_count || 1} {cls.sections_count === 1 ? 'Section' : 'Sections'}</span>
                                             <span className={cn(
                                                 "font-medium px-1.5 py-0.5 rounded text-[10px]",
                                                 cls.class_papers_count > 0 
-                                                    ? "bg-blue-100 text-blue-700 font-semibold" 
-                                                    : "bg-slate-100 text-slate-500"
+                                                    ? "bg-primary/10 text-primary font-semibold" 
+                                                    : "bg-muted text-muted-foreground"
                                             )}>
                                                 {cls.class_papers_count ?? 0} {cls.class_papers_count === 1 ? 'Paper' : 'Papers'}
                                             </span>
                                         </div>
 
                                         {isSelected && (
-                                            <div className="absolute top-2 right-2 h-2 w-2 rounded-full bg-blue-600" />
+                                            <div className="absolute top-2 right-2 h-2 w-2 rounded-full bg-primary" />
                                         )}
                                     </button>
                                 );
@@ -377,16 +377,16 @@ export default function OverviewTab({
 
                     {/* SECTION 2: EXAM TERMS (Shown when class is selected) */}
                     {selectedClassId ? (
-                        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs space-y-3 animate-in fade-in duration-200">
+                        <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-3 text-card-foreground animate-in fade-in duration-200">
                             <div className="flex items-center justify-between flex-wrap gap-2">
                                 <div>
                                     <div className="flex items-center gap-2">
-                                        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-                                            <Calendar className="h-5 w-5 text-indigo-600" />
-                                            Exam Terms for <span className="text-blue-600">{currentClass?.name}</span>
+                                        <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+                                            <Calendar className="h-5 w-5 text-primary" />
+                                            Exam Terms for <span className="text-primary">{currentClass?.name}</span>
                                         </h3>
                                     </div>
-                                    <p className="text-xs text-slate-500">
+                                    <p className="text-xs text-muted-foreground">
                                         Select an examination term to explore papers, marks, and print schedules.
                                     </p>
                                 </div>
@@ -398,8 +398,8 @@ export default function OverviewTab({
                                         className={cn(
                                             "px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors",
                                             !selectedTermId
-                                                ? "bg-indigo-600 text-white border-indigo-600"
-                                                : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                                                ? "bg-primary text-primary-foreground border-primary"
+                                                : "bg-background text-muted-foreground border-border hover:bg-muted"
                                         )}
                                     >
                                         All Terms
@@ -419,14 +419,14 @@ export default function OverviewTab({
                                             className={cn(
                                                 "p-4 rounded-xl border text-left cursor-pointer transition-all relative flex flex-col justify-between group",
                                                 isSelected
-                                                    ? "border-indigo-500 bg-indigo-50/70 ring-2 ring-indigo-500/20 shadow-xs"
-                                                    : "border-slate-200 bg-white hover:border-indigo-300 hover:bg-slate-50/80 shadow-2xs"
+                                                    ? "border-primary bg-primary/10 ring-2 ring-primary/20 shadow-xs"
+                                                    : "border-border bg-card hover:border-primary/40 hover:bg-muted/40 shadow-2xs"
                                             )}
                                         >
                                             <div className="flex items-start justify-between gap-2 mb-2">
                                                 <div>
                                                     <div className="flex items-center gap-1.5 mb-1">
-                                                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-100 text-indigo-700">
+                                                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-primary/10 text-primary">
                                                             Term {termNumber}
                                                         </span>
                                                         <Badge
@@ -434,8 +434,8 @@ export default function OverviewTab({
                                                             className={cn(
                                                                 "text-[10px] uppercase tracking-wider font-semibold capitalize",
                                                                 term.status === 'published'
-                                                                    ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                                                                    : "bg-slate-50 text-slate-600 border-slate-200"
+                                                                    ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20"
+                                                                    : "bg-muted text-muted-foreground border-border"
                                                             )}
                                                         >
                                                             {term.status}
@@ -443,38 +443,38 @@ export default function OverviewTab({
                                                     </div>
                                                     <h4 className={cn(
                                                         "text-base font-bold",
-                                                        isSelected ? "text-indigo-950 font-bold" : "text-slate-900 group-hover:text-indigo-600"
+                                                        isSelected ? "text-primary font-bold" : "text-foreground group-hover:text-primary"
                                                     )}>
                                                         {term.title}
                                                     </h4>
-                                                    <p className="text-xs text-slate-500 mt-0.5">
+                                                    <p className="text-xs text-muted-foreground mt-0.5">
                                                         Academic Session: {term.session_year || '2026-2027'}
                                                     </p>
                                                 </div>
                                             </div>
 
-                                            <div className="flex items-center justify-between text-xs text-slate-500 pt-3 border-t border-slate-100">
+                                            <div className="flex items-center justify-between text-xs text-muted-foreground pt-3 border-t border-border">
                                                 <span className="flex items-center gap-1 text-[11px]">
-                                                    <Clock className="w-3 h-3 text-slate-400" />
+                                                    <Clock className="w-3 h-3 text-muted-foreground/60" />
                                                     {term.start_date ? new Date(term.start_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : 'Scheduled'}
                                                 </span>
                                                 <span className={cn(
                                                     "font-medium text-xs",
-                                                    isSelected ? "text-indigo-700" : "text-slate-700"
+                                                    isSelected ? "text-primary font-bold" : "text-foreground"
                                                 )}>
                                                     Select Term &rarr;
                                                 </span>
                                             </div>
 
                                             {isSelected && (
-                                                <div className="absolute top-2 right-2 h-2 w-2 rounded-full bg-indigo-600" />
+                                                <div className="absolute top-2 right-2 h-2 w-2 rounded-full bg-primary" />
                                             )}
                                         </div>
                                     );
                                 })}
 
                                 {examSessions.length === 0 && (
-                                    <div className="col-span-full py-8 text-center text-slate-400">
+                                    <div className="col-span-full py-8 text-center text-muted-foreground">
                                         No exam terms configured yet. Add exam sessions from the Exam Sessions tab.
                                     </div>
                                 )}
@@ -482,26 +482,26 @@ export default function OverviewTab({
                         </div>
                     ) : (
                         /* Instructional Banner when no class selected */
-                        <div className="bg-slate-50 border border-dashed border-slate-300 rounded-xl p-8 text-center">
-                            <GraduationCap className="h-10 w-10 text-slate-400 mx-auto mb-2 opacity-75" />
-                            <h4 className="text-sm font-semibold text-slate-800">No Class Selected</h4>
-                            <p className="text-xs text-slate-500 max-w-md mx-auto mt-1">
+                        <div className="bg-muted/40 border border-dashed border-border rounded-xl p-8 text-center">
+                            <GraduationCap className="h-10 w-10 text-muted-foreground mx-auto mb-2 opacity-75" />
+                            <h4 className="text-sm font-semibold text-foreground">No Class Selected</h4>
+                            <p className="text-xs text-muted-foreground max-w-md mx-auto mt-1">
                                 Click on any Class card above to reveal its examination terms (such as First Term, Second Term, and Third Term) and access subject exam papers.
                             </p>
                         </div>
                     )}
 
                     {/* SECTION 3: SUBJECT FILTER & PAPERS IN SELECTED TERM */}
-                    <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs space-y-4">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                    <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4 text-card-foreground">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-border">
                             <div>
-                                <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-                                    <BookOpen className="h-5 w-5 text-blue-600" />
+                                <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+                                    <BookOpen className="h-5 w-5 text-primary" />
                                     Exam Papers
-                                    {currentClass && <span className="text-slate-500 font-normal">in {currentClass.name}</span>}
-                                    {currentTerm && <span className="text-indigo-600 font-semibold">• {currentTerm.title}</span>}
+                                    {currentClass && <span className="text-muted-foreground font-normal">in {currentClass.name}</span>}
+                                    {currentTerm && <span className="text-primary font-semibold">• {currentTerm.title}</span>}
                                 </h3>
-                                <p className="text-xs text-slate-500 mt-0.5">
+                                <p className="text-xs text-muted-foreground mt-0.5">
                                     Filter by subject or create a new question paper.
                                 </p>
                             </div>
@@ -513,7 +513,7 @@ export default function OverviewTab({
                                         exam_session_id: selectedTermId ? Number(selectedTermId) : '',
                                         subject_id: selectedSubjectId ? Number(selectedSubjectId) : '',
                                     })}
-                                    className="bg-slate-900 hover:bg-slate-800 text-white text-xs h-9 shadow-xs"
+                                    className="text-xs h-9 shadow-xs font-semibold"
                                 >
                                     <Plus className="h-4 w-4 mr-1.5" /> Create Exam Paper
                                 </Button>
@@ -522,8 +522,8 @@ export default function OverviewTab({
 
                         {/* Subject Filter Pills */}
                         <div className="space-y-1.5">
-                            <label className="text-xs font-semibold text-slate-600 flex items-center gap-1.5">
-                                <Filter className="w-3.5 h-3.5 text-slate-400" />
+                            <label className="text-xs font-semibold text-muted-foreground flex items-center gap-1.5">
+                                <Filter className="w-3.5 h-3.5 text-muted-foreground/60" />
                                 Filter by Subject:
                             </label>
 
@@ -534,8 +534,8 @@ export default function OverviewTab({
                                     className={cn(
                                         "px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors cursor-pointer",
                                         !selectedSubjectId
-                                            ? "bg-blue-600 text-white border-blue-600 shadow-xs"
-                                            : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+                                            ? "bg-primary text-primary-foreground border-primary shadow-xs font-semibold"
+                                            : "bg-muted/50 text-muted-foreground border-border hover:bg-muted"
                                     )}
                                 >
                                     All Subjects
@@ -551,8 +551,8 @@ export default function OverviewTab({
                                             className={cn(
                                                 "px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors cursor-pointer flex items-center gap-1.5",
                                                 isSelected
-                                                    ? "bg-blue-600 text-white border-blue-600 shadow-xs font-semibold"
-                                                    : "bg-white text-slate-700 border-slate-200 hover:border-blue-300 hover:bg-blue-50/40"
+                                                    ? "bg-primary text-primary-foreground border-primary shadow-xs font-semibold"
+                                                    : "bg-background text-foreground border-border hover:border-primary/40 hover:bg-muted/40"
                                             )}
                                         >
                                             <span>{sub.subject_name}</span>
@@ -569,31 +569,31 @@ export default function OverviewTab({
                                 return (
                                     <div
                                         key={paper.id}
-                                        className="bg-white border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all rounded-xl p-4 flex flex-col justify-between space-y-3 group"
+                                        className="bg-card border border-border hover:border-primary/40 hover:shadow-md transition-all rounded-xl p-4 flex flex-col justify-between space-y-3 group text-card-foreground"
                                     >
                                         <div className="space-y-2">
                                             {/* Header Tags */}
                                             <div className="flex items-start justify-between gap-2">
-                                                <Badge className="bg-blue-50 text-blue-700 border-blue-200 shadow-none font-semibold text-xs">
+                                                <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 shadow-none font-semibold text-xs">
                                                     {paper.subject?.subject_name || 'Subject'}
                                                 </Badge>
                                                 {renderBadge(paper.print_status)}
                                             </div>
 
                                             {/* Paper Title */}
-                                            <h4 className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors text-sm line-clamp-2">
+                                            <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm line-clamp-2">
                                                 {paper.paper_title || paper.title}
                                             </h4>
 
                                             {/* Meta details */}
-                                            <div className="flex items-center flex-wrap gap-2 text-xs text-slate-500 pt-1">
-                                                <span className="font-medium text-slate-700">
+                                            <div className="flex items-center flex-wrap gap-2 text-xs text-muted-foreground pt-1">
+                                                <span className="font-medium text-foreground">
                                                     {paper.school_class?.name}
                                                 </span>
                                                 {paperTerm && (
                                                     <>
                                                         <span>•</span>
-                                                        <span className="text-indigo-600 font-medium">
+                                                        <span className="text-primary font-medium">
                                                             {paperTerm.title}
                                                         </span>
                                                     </>
@@ -602,8 +602,8 @@ export default function OverviewTab({
                                         </div>
 
                                         {/* Metrics & Footer */}
-                                        <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                                            <div className="flex items-center gap-3 text-slate-500 font-medium">
+                                        <div className="pt-3 border-t border-border flex items-center justify-between text-xs">
+                                            <div className="flex items-center gap-3 text-muted-foreground font-medium">
                                                 <span>{paper.total_marks} Marks</span>
                                                 <span>•</span>
                                                 <span>{paper.duration_minutes || 120} Min</span>
@@ -615,7 +615,7 @@ export default function OverviewTab({
                                                     variant="ghost"
                                                     size="sm"
                                                     onClick={() => window.open(route('exam-class-papers.preview', paper.id), '_blank')}
-                                                    className="h-8 w-8 p-0 text-slate-600 hover:text-indigo-600"
+                                                    className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
                                                     title="Preview & Print"
                                                 >
                                                     <Printer className="w-4 h-4" />
@@ -624,7 +624,7 @@ export default function OverviewTab({
                                                     variant="ghost"
                                                     size="sm"
                                                     onClick={() => onViewDetail(paper)}
-                                                    className="h-8 w-8 p-0 text-slate-600 hover:text-blue-600"
+                                                    className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
                                                     title="View Details"
                                                 >
                                                     <Eye className="w-4 h-4" />
@@ -633,7 +633,7 @@ export default function OverviewTab({
                                                     variant="ghost"
                                                     size="sm"
                                                     onClick={() => onEditPaper(paper)}
-                                                    className="h-8 w-8 p-0 text-slate-600 hover:text-blue-600"
+                                                    className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
                                                     title="Edit Paper"
                                                 >
                                                     <FilePen className="w-4 h-4" />
@@ -642,7 +642,7 @@ export default function OverviewTab({
                                                     variant="ghost"
                                                     size="sm"
                                                     onClick={() => handleDelete(paper.id)}
-                                                    className="h-8 w-8 p-0 text-rose-500 hover:text-rose-700"
+                                                    className="h-8 w-8 p-0 text-destructive hover:bg-destructive/10"
                                                     title="Delete Paper"
                                                 >
                                                     <Trash2 className="w-4 h-4" />
@@ -656,10 +656,10 @@ export default function OverviewTab({
 
                         {/* Empty State */}
                         {paperList.length === 0 && (
-                            <div className="py-12 text-center text-slate-400 bg-slate-50/50 rounded-xl border border-dashed border-slate-200">
-                                <FileText className="w-10 h-10 mx-auto mb-2 text-slate-300" />
-                                <h4 className="text-sm font-semibold text-slate-700">No Exam Papers Found</h4>
-                                <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1">
+                            <div className="py-12 text-center text-muted-foreground bg-muted/30 rounded-xl border border-dashed border-border">
+                                <FileText className="w-10 h-10 mx-auto mb-2 text-muted-foreground/60" />
+                                <h4 className="text-sm font-semibold text-foreground">No Exam Papers Found</h4>
+                                <p className="text-xs text-muted-foreground max-w-sm mx-auto mt-1">
                                     No paper matching the selected Class, Term, and Subject criteria.
                                 </p>
                                 <Button
@@ -670,7 +670,7 @@ export default function OverviewTab({
                                     })}
                                     variant="outline"
                                     size="sm"
-                                    className="mt-3 text-xs border-slate-200"
+                                    className="mt-3 text-xs border-border"
                                 >
                                     <Plus className="w-3.5 h-3.5 mr-1" /> Create Paper Now
                                 </Button>
@@ -680,9 +680,9 @@ export default function OverviewTab({
                 </>
             ) : (
                 /* FLAT TABLE VIEW (Optional view mode) */
-                <div className="bg-white border border-slate-200 rounded-xl shadow-xs overflow-hidden">
+                <div className="bg-card border border-border rounded-xl shadow-xs overflow-hidden text-card-foreground">
                     <table className="w-full text-left text-sm border-collapse">
-                        <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 font-medium">
+                        <thead className="bg-muted/50 border-b border-border text-muted-foreground font-medium">
                             <tr>
                                 <th className="px-6 py-3.5">Title</th>
                                 <th className="px-6 py-3.5">Class / Subject</th>
@@ -692,26 +692,26 @@ export default function OverviewTab({
                                 <th className="px-6 py-3.5 text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-200">
+                        <tbody className="divide-y divide-border">
                             {paperList.map((paper) => {
                                 const paperTerm = paper.exam_session || paper.exam_schedule?.exam_session;
                                 return (
-                                    <tr key={paper.id} className="hover:bg-slate-50/50">
-                                        <td className="px-6 py-4 font-semibold text-slate-900">
+                                    <tr key={paper.id} className="hover:bg-muted/40 transition-colors">
+                                        <td className="px-6 py-4 font-semibold text-foreground">
                                             {paper.paper_title || paper.title}
                                         </td>
                                         <td className="px-6 py-4 text-xs">
-                                            <span className="font-semibold text-slate-800">{paper.school_class?.name}</span>
-                                            <span className="text-slate-400"> • </span>
-                                            <span className="text-slate-500">{paper.subject?.subject_name || paper.subject?.name}</span>
+                                            <span className="font-semibold text-foreground">{paper.school_class?.name}</span>
+                                            <span className="text-muted-foreground/60"> • </span>
+                                            <span className="text-muted-foreground">{paper.subject?.subject_name || paper.subject?.name}</span>
                                         </td>
                                         <td className="px-6 py-4 text-xs">
-                                            <span className="font-medium text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
+                                            <span className="font-medium text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">
                                                 {paperTerm?.title || 'General'}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <Badge className="bg-blue-50 text-blue-700 border-blue-200 shadow-none font-semibold">
+                                            <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 shadow-none font-semibold">
                                                 {paper.total_marks} Marks
                                             </Badge>
                                         </td>
@@ -722,7 +722,7 @@ export default function OverviewTab({
                                                     variant="ghost"
                                                     size="sm"
                                                     onClick={() => window.open(route('exam-class-papers.preview', paper.id), '_blank')}
-                                                    className="h-8 w-8 p-0 text-slate-600 hover:text-indigo-600"
+                                                    className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
                                                     title="Preview & Print"
                                                 >
                                                     <Printer className="w-4 h-4" />
@@ -731,7 +731,7 @@ export default function OverviewTab({
                                                     variant="ghost"
                                                     size="sm"
                                                     onClick={() => onViewDetail(paper)}
-                                                    className="h-8 w-8 p-0 text-slate-600"
+                                                    className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
                                                     title="View Details"
                                                 >
                                                     <Eye className="w-4 h-4" />
@@ -740,7 +740,7 @@ export default function OverviewTab({
                                                     variant="ghost"
                                                     size="sm"
                                                     onClick={() => onEditPaper(paper)}
-                                                    className="h-8 w-8 p-0 text-blue-600"
+                                                    className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
                                                     title="Edit Paper"
                                                 >
                                                     <FilePen className="w-4 h-4" />
@@ -749,7 +749,7 @@ export default function OverviewTab({
                                                     variant="ghost"
                                                     size="sm"
                                                     onClick={() => handleDelete(paper.id)}
-                                                    className="h-8 w-8 p-0 text-rose-600"
+                                                    className="h-8 w-8 p-0 text-destructive hover:bg-destructive/10"
                                                     title="Delete Paper"
                                                 >
                                                     <Trash2 className="w-4 h-4" />
@@ -761,8 +761,8 @@ export default function OverviewTab({
                             })}
                             {paperList.length === 0 && (
                                 <tr>
-                                    <td colSpan="6" className="px-6 py-12 text-center text-slate-400">
-                                        <FileText className="w-8 h-8 mx-auto mb-2 text-slate-300" />
+                                    <td colSpan="6" className="px-6 py-12 text-center text-muted-foreground">
+                                        <FileText className="w-8 h-8 mx-auto mb-2 text-muted-foreground/60" />
                                         No paper records found.
                                     </td>
                                 </tr>

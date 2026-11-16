@@ -155,13 +155,13 @@ export default function PaperFormModal({ isOpen, onClose, paper = null, classes 
                         value={data.instructions}
                         onChange={(e) => setData('instructions', e.target.value)}
                         placeholder="Write instructions for candidates..."
-                        className="w-full mt-1 border border-slate-200 rounded-md p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+                        className="w-full mt-1 border border-input bg-background text-foreground rounded-md p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
                     />
                 </div>
 
-                <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+                <div className="flex justify-end gap-2 pt-3 border-t border-border">
                     <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
-                    <Button type="submit" disabled={processing} className="bg-slate-800 text-white hover:bg-slate-900">
+                    <Button type="submit" disabled={processing} className="font-semibold">
                         {isEdit ? 'Update Paper' : 'Save Paper'}
                     </Button>
                 </div>

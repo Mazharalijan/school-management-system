@@ -62,22 +62,22 @@ export default function Index({
                     subtitle="Manage academic questions, subjects, chapters, and topics seamlessly."
                 >
                     {currentTab === 'questions' && (
-                        <Button onClick={() => openCreateModal('question')} className="text-white">
+                        <Button onClick={() => openCreateModal('question')}>
                             <Plus className="h-4 w-4 mr-2" /> Add Question
                         </Button>
                     )}
                     {currentTab === 'subjects' && (
-                        <Button onClick={() => openCreateModal('subject')} className="text-white">
+                        <Button onClick={() => openCreateModal('subject')}>
                             <Plus className="h-4 w-4 mr-2" /> Add Subject
                         </Button>
                     )}
                     {currentTab === 'chapters' && (
-                        <Button onClick={() => openCreateModal('chapter')} className="text-white">
+                        <Button onClick={() => openCreateModal('chapter')}>
                             <Plus className="h-4 w-4 mr-2" /> Add Chapter
                         </Button>
                     )}
                     {currentTab === 'topics' && (
-                        <Button onClick={() => openCreateModal('topic')} className="text-white">
+                        <Button onClick={() => openCreateModal('topic')}>
                             <Plus className="h-4 w-4 mr-2" /> Add Topic
                         </Button>
                     )}
@@ -85,7 +85,7 @@ export default function Index({
 
                 {/* Main Tabs Navigation */}
                 <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
-                    <TabsList className="bg-slate-100 p-1 border border-slate-200 rounded-lg mb-6 flex flex-wrap h-auto">
+                    <TabsList className="bg-muted p-1 border border-border rounded-lg mb-6 flex flex-wrap h-auto">
                         <TabsTrigger value="questions" className="flex items-center gap-2 px-4 py-2">
                             <HelpCircle className="h-4 w-4" /> Questions
                         </TabsTrigger>

@@ -88,8 +88,8 @@ export default function ManageFeeModal({
             onClose={onClose}
             title={
                 <div className="flex items-center justify-between w-full pr-6">
-                    <span>Manage Fee Discount</span>
-                    <Badge variant="outline" className="font-mono bg-slate-50 text-slate-700">
+                    <span className="text-foreground">Manage Fee Discount</span>
+                    <Badge variant="outline" className="font-mono bg-muted text-muted-foreground border-border">
                         Session: {currentSessionYear}
                     </Badge>
                 </div>
@@ -104,7 +104,7 @@ export default function ManageFeeModal({
                         type="submit"
                         form="manage-fee-form"
                         disabled={hasPaidInvoice || processing}
-                        className="bg-blue-600 hover:bg-blue-700 text-white"
+                        variant="default"
                     >
                         {processing ? 'Saving...' : 'Save Fee Profile'}
                     </Button>
@@ -114,8 +114,8 @@ export default function ManageFeeModal({
             <form id="manage-fee-form" onSubmit={handleSubmit} className="space-y-4">
                 {/* PAID LOCKOUT NOTICE */}
                 {hasPaidInvoice && (
-                    <Alert className="bg-amber-50 border-amber-200 text-amber-800">
-                        <Lock className="h-4 w-4 text-amber-600 shrink-0" />
+                    <Alert className="bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300">
+                        <Lock className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0" />
                         <AlertDescription className="text-xs font-medium ml-2">
                             Fee profile is locked because an invoice has already been paid for this student in session {currentSessionYear}.
                         </AlertDescription>
@@ -124,8 +124,8 @@ export default function ManageFeeModal({
 
                 {/* API OR INERTIA ERROR DISPLAY */}
                 {(errorMessage || Object.keys(errors).length > 0) && (
-                    <Alert className="bg-rose-50 border-rose-200 text-rose-800">
-                        <AlertCircle className="h-4 w-4 text-rose-600 shrink-0" />
+                    <Alert className="bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300">
+                        <AlertCircle className="h-4 w-4 text-rose-600 dark:text-rose-400 shrink-0" />
                         <AlertDescription className="text-xs font-medium ml-2">
                             {errorMessage || Object.values(errors)[0]}
                         </AlertDescription>
@@ -133,7 +133,7 @@ export default function ManageFeeModal({
                 )}
 
                 {/* STUDENT INFORMATION HEADER */}
-                <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 flex justify-between items-center text-xs">
+                <div className="bg-muted/40 p-3 rounded-lg border border-border flex justify-between items-center text-xs">
                     <div className="flex items-center gap-2.5">
                         <ProfileAvatar
                             src={student.photo_url}
@@ -142,15 +142,15 @@ export default function ManageFeeModal({
                             iconClassName="w-4 h-4"
                         />
                         <div>
-                            <span className="text-slate-500 block">Student Name</span>
-                            <span className="font-bold text-slate-800">
+                            <span className="text-muted-foreground block">Student Name</span>
+                            <span className="font-bold text-foreground">
                                 {student.first_name} {student.last_name}
                             </span>
                         </div>
                     </div>
                     <div className="text-right">
-                        <span className="text-slate-500 block">Class & Section</span>
-                        <span className="font-semibold text-slate-700">
+                        <span className="text-muted-foreground block">Class & Section</span>
+                        <span className="font-semibold text-foreground">
                             {student.current_enrollment?.school_class?.name || 'N/A'}
                         </span>
                     </div>
@@ -158,20 +158,20 @@ export default function ManageFeeModal({
 
                 {/* BASE VS NET FEE READOUT */}
                 <div className="grid grid-cols-2 gap-3">
-                    <div className="p-3 bg-blue-50/50 border border-blue-100 rounded-lg">
-                        <Label className="text-slate-500 text-[11px] uppercase font-semibold">
+                    <div className="p-3 bg-blue-50/50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50 rounded-lg">
+                        <Label className="text-muted-foreground text-[11px] uppercase font-semibold">
                             Standard Monthly Fee
                         </Label>
-                        <p className="text-lg font-bold text-slate-800 mt-0.5">
+                        <p className="text-lg font-bold text-foreground mt-0.5">
                             Rs. {baseFee.toLocaleString()}
                         </p>
                     </div>
 
-                    <div className="p-3 bg-emerald-50/50 border border-emerald-100 rounded-lg">
-                        <Label className="text-emerald-700 text-[11px] uppercase font-semibold">
+                    <div className="p-3 bg-emerald-50/50 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50 rounded-lg">
+                        <Label className="text-emerald-700 dark:text-emerald-400 text-[11px] uppercase font-semibold">
                             Net Monthly Payable
                         </Label>
-                        <p className="text-lg font-bold text-emerald-800 mt-0.5">
+                        <p className="text-lg font-bold text-emerald-800 dark:text-emerald-300 mt-0.5">
                             Rs. {calculatedNetFee.toLocaleString()}
                         </p>
                     </div>
@@ -179,7 +179,7 @@ export default function ManageFeeModal({
 
                 {/* DISCOUNT INPUT */}
                 <div className="space-y-1.5">
-                    <Label htmlFor="monthly_discount" className="text-xs font-semibold text-slate-700">
+                    <Label htmlFor="monthly_discount" className="text-xs font-semibold text-foreground">
                         Monthly Discount / Concession (Rs.)
                     </Label>
                     <div className="relative">
@@ -194,7 +194,7 @@ export default function ManageFeeModal({
                             className="pl-8 text-sm font-semibold"
                             placeholder="0"
                         />
-                        <Percent className="h-4 w-4 absolute left-2.5 top-2.5 text-slate-400" />
+                        <Percent className="h-4 w-4 absolute left-2.5 top-2.5 text-muted-foreground" />
                     </div>
                     {errors.monthly_discount && (
                         <p className="text-xs text-red-500">{errors.monthly_discount}</p>
@@ -202,7 +202,7 @@ export default function ManageFeeModal({
                 </div>
 
                 {/* ADMISSION FEE WAIVER */}
-                <div className="flex items-start space-x-3 pt-2 border-t border-slate-100">
+                <div className="flex items-start space-x-3 pt-2 border-t border-border">
                     <Checkbox
                         id="waive_admission_fee"
                         disabled={hasPaidInvoice || processing}
@@ -211,10 +211,10 @@ export default function ManageFeeModal({
                         className="mt-0.5"
                     />
                     <div className="grid gap-1 leading-none">
-                        <label htmlFor="waive_admission_fee" className="text-xs font-semibold text-slate-800 cursor-pointer">
+                        <label htmlFor="waive_admission_fee" className="text-xs font-semibold text-foreground cursor-pointer">
                             Waive Admission Fee Entirely
                         </label>
-                        <p className="text-[11px] text-slate-500">
+                        <p className="text-[11px] text-muted-foreground">
                             Exempt this student from paying initial admission/enrollment fees.
                         </p>
                     </div>
@@ -222,7 +222,7 @@ export default function ManageFeeModal({
 
                 {/* CONCESSION REASON */}
                 <div className="space-y-1.5 pt-1">
-                    <Label htmlFor="discount_reason" className="text-xs font-semibold text-slate-700">
+                    <Label htmlFor="discount_reason" className="text-xs font-semibold text-foreground">
                         Concession Reason / Category
                     </Label>
                     <Input

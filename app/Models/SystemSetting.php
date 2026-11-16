@@ -28,6 +28,7 @@ class SystemSetting extends Model
         'invoice_prefix',
         'receipt_footer_note',
         'dashboard_theme',
+        'theme_mode',
     ];
 
     protected $appends = ['logo_url'];

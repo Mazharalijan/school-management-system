@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expense;
+use App\Models\FeeInvoice;
 use App\Models\FeePayment;
 use App\Models\SchoolClass;
 use App\Models\Section;
 use App\Models\Staff;
 use App\Models\StaffSalarySettlement;
 use App\Models\Student;
+use App\Models\SystemSetting;
 use App\Services\Accounting\ProfitAndLossService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -124,6 +126,41 @@ class DashboardController extends Controller
         $referenceDate = Carbon::now()->format('Y-m-d');
         $monthlyTrends = $this->pnlService->getMonthlyTrends($referenceDate, 6);
 
+        // 6. Unpaid Students & Defaulters List
+        $unpaidInvoices = FeeInvoice::with(['student', 'schoolClass', 'section'])
+            ->whereIn('status', ['unpaid', 'partially_paid', 'overdue'])
+            ->where('due_amount', '>', 0)
+            ->orderBy('due_date', 'asc')
+            ->orderBy('due_amount', 'desc')
+            ->take(25)
+            ->get()
+            ->map(fn ($invoice) => [
+                'id' => $invoice->id,
+                'invoice_no' => $invoice->invoice_no,
+                'student_id' => $invoice->student_id,
+                'student_name' => $invoice->student?->full_name ?? 'Student',
+                'photo_url' => $invoice->student?->photo_url,
+                'admission_number' => $invoice->student?->admission_number ?? 'N/A',
+                'roll_number' => $invoice->student?->roll_number ?? 'N/A',
+                'class_name' => $invoice->schoolClass?->name ?? 'N/A',
+                'section_name' => $invoice->section?->name ?? 'Default',
+                'guardian_name' => $invoice->student?->guardian_name ?? 'Parent',
+                'guardian_phone' => $invoice->student?->guardian_phone ?? '',
+                'month' => $invoice->month,
+                'due_date' => Carbon::parse($invoice->due_date)->format('M d, Y'),
+                'is_overdue' => Carbon::parse($invoice->due_date)->isPast(),
+                'total_amount' => (float) $invoice->total_amount,
+                'paid_amount' => (float) $invoice->paid_amount,
+                'due_amount' => (float) $invoice->due_amount,
+                'status' => $invoice->status,
+            ]);
+
+        $unpaidSummary = [
+            'total_defaulters_count' => FeeInvoice::where('due_amount', '>', 0)->distinct('student_id')->count('student_id'),
+            'total_unpaid_invoices' => FeeInvoice::where('due_amount', '>', 0)->count(),
+            'total_unpaid_amount' => (float) FeeInvoice::where('due_amount', '>', 0)->sum('due_amount'),
+        ];
+
         return Inertia::render('Dashboard', [
             'stats' => [
                 'students' => [
@@ -166,9 +203,12 @@ class DashboardController extends Controller
             ],
             'recentExpenses' => $recentExpenses,
             'recentFeePayments' => $recentFeePayments,
+            'unpaidStudents' => $unpaidInvoices,
+            'unpaidSummary' => $unpaidSummary,
             'monthlyTrends' => $monthlyTrends,
             'currentPeriod' => $period,
-            'dashboardTheme' => \App\Models\SystemSetting::first()?->dashboard_theme ?? 'shadcn',
+            'dashboardTheme' => SystemSetting::first()?->dashboard_theme ?? 'shadcn',
+            'themeMode' => SystemSetting::first()?->theme_mode ?? 'system',
         ]);
     }
 }

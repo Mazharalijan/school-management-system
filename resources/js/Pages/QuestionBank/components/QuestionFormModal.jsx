@@ -79,7 +79,7 @@ export default function QuestionFormModal({ isOpen, onClose, question = null, cl
                 type="submit"
                 onClick={handleSubmit}
                 disabled={processing}
-                className="bg-slate-800 hover:bg-slate-900 text-white"
+                className="font-semibold"
             >
                 {isEdit ? (<FilePen className="w-4 h-4" />) : (<PlusIcon className="w-4 h-4" />)}
                 {isEdit ? 'Update Question' : 'Save Question'}
@@ -97,8 +97,8 @@ export default function QuestionFormModal({ isOpen, onClose, question = null, cl
         >
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Statement */}
-                <div className="border-b pb-4">
-                    <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <div className="border-b border-border pb-4">
+                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                         Question Statement
                     </span>
                     <div className="mt-2">
@@ -108,14 +108,14 @@ export default function QuestionFormModal({ isOpen, onClose, question = null, cl
                             onChange={(content) => setData('question', content)}
                          />
                         {errors.question && (
-                            <p className="text-xs text-red-500 mt-1">{errors.question}</p>
+                            <p className="text-xs text-destructive mt-1">{errors.question}</p>
                         )}
                     </div>
                 </div>
 
                 {/* Academic Placement */}
                 <div className="pb-2">
-                    <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                         Academic Placement & Details
                     </span>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">

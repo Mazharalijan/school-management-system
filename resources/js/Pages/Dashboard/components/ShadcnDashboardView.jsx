@@ -25,17 +25,20 @@ import {
     ChevronDown,
     Check,
     CheckCircle2,
-    SlidersHorizontal,
     PieChart,
     Wallet,
     Award,
-    BookOpen
+    BookOpen,
+    AlertTriangle
 } from 'lucide-react';
+import UnpaidStudentsWidget from './UnpaidStudentsWidget';
 
 export default function ShadcnDashboardView({
     stats,
     recentExpenses = [],
     recentFeePayments = [],
+    unpaidStudents = [],
+    unpaidSummary = {},
     monthlyTrends = [],
     currentPeriod = 'all_time',
     onPeriodChange,
@@ -44,7 +47,6 @@ export default function ShadcnDashboardView({
     formatCurrency,
 }) {
     const [periodDropdownOpen, setPeriodDropdownOpen] = useState(false);
-    const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
     const [hoveredBarIndex, setHoveredBarIndex] = useState(null);
 
     const fin = stats.financials?.selected_period || {};
@@ -105,7 +107,7 @@ export default function ShadcnDashboardView({
     ];
 
     return (
-        <div className="space-y-6 max-w-7xl mx-auto pb-12 font-sans">
+        <div className="space-y-6 w-full pb-12 font-sans">
             {/* Top Bar: Title, Date Preset Picker, Download, & Theme Switcher */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
@@ -170,65 +172,6 @@ export default function ShadcnDashboardView({
                         <Download className="h-4 w-4" />
                         <span>Download</span>
                     </Button>
-
-                    {/* Quick Dashboard Design Switcher */}
-                    <div className="relative">
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => {
-                                setThemeDropdownOpen(!themeDropdownOpen);
-                                setPeriodDropdownOpen(false);
-                            }}
-                            className="h-9 px-3 text-xs font-medium border-border bg-background hover:bg-muted text-foreground flex items-center gap-1.5"
-                            title="Switch Dashboard Design"
-                        >
-                            <SlidersHorizontal className="h-3.5 w-3.5 text-muted-foreground" />
-                            <span className="hidden sm:inline">Design:</span>
-                            <span className="capitalize font-semibold text-primary">{activeTheme}</span>
-                            <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
-                        </Button>
-
-                        {themeDropdownOpen && (
-                            <div className="absolute right-0 mt-2 w-52 bg-popover text-popover-foreground rounded-lg border border-border shadow-md py-1 z-30 animate-in fade-in-50 zoom-in-95">
-                                <div className="px-3 py-1.5 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
-                                    Dashboard UI Design
-                                </div>
-                                {[
-                                    { key: 'shadcn', label: 'Shadcn Modern', desc: 'Minimalist Zinc cards & tabs' },
-                                    { key: 'academic', label: 'Academic Operational', desc: 'Detailed station & directory' },
-                                    { key: 'compact', label: 'Executive Compact', desc: 'High density executive overview' },
-                                ].map((t) => (
-                                    <button
-                                        key={t.key}
-                                        type="button"
-                                        onClick={() => {
-                                            onThemeChange(t.key);
-                                            setThemeDropdownOpen(false);
-                                        }}
-                                        className={`w-full px-3 py-2 text-left text-xs hover:bg-muted transition-colors ${
-                                            activeTheme === t.key ? 'bg-muted font-semibold text-primary' : 'text-foreground'
-                                        }`}
-                                    >
-                                        <div className="flex items-center justify-between">
-                                            <span>{t.label}</span>
-                                            {activeTheme === t.key && <Check className="h-3.5 w-3.5 text-primary" />}
-                                        </div>
-                                        <p className="text-[10px] text-muted-foreground mt-0.5">{t.desc}</p>
-                                    </button>
-                                ))}
-                                <div className="border-t border-border mt-1 pt-1 px-3 py-1.5">
-                                    <Link
-                                        href="/settings"
-                                        className="text-[11px] text-primary hover:underline flex items-center gap-1"
-                                    >
-                                        <span>Manage in System Settings</span>
-                                        <ArrowUpRight className="h-3 w-3" />
-                                    </Link>
-                                </div>
-                            </div>
-                        )}
-                    </div>
                 </div>
             </div>
 
@@ -236,6 +179,15 @@ export default function ShadcnDashboardView({
             <Tabs defaultValue="overview" className="space-y-4">
                 <TabsList className="bg-muted p-1 rounded-lg inline-flex">
                     <TabsTrigger value="overview">Overview</TabsTrigger>
+                    <TabsTrigger value="defaulters" className="flex items-center gap-1.5">
+                        <AlertTriangle className="w-3.5 h-3.5 text-destructive" />
+                        <span>Unpaid Students</span>
+                        {unpaidStudents.length > 0 && (
+                            <span className="ml-1 px-1.5 py-0.2 rounded-full text-[10px] font-mono bg-destructive/15 text-destructive font-bold">
+                                {unpaidStudents.length}
+                            </span>
+                        )}
+                    </TabsTrigger>
                     <TabsTrigger value="analytics">Analytics</TabsTrigger>
                     <TabsTrigger value="reports">Reports</TabsTrigger>
                     <TabsTrigger value="notifications">Notifications</TabsTrigger>
@@ -495,6 +447,13 @@ export default function ShadcnDashboardView({
                         </Card>
                     </div>
 
+                    {/* Unpaid Student Fees & Defaulters Section */}
+                    <UnpaidStudentsWidget
+                        unpaidStudents={unpaidStudents}
+                        unpaidSummary={unpaidSummary}
+                        formatCurrency={formatCurrency}
+                    />
+
                     {/* Quick Access Modules (Modern Minimal Grid) */}
                     <div className="space-y-2">
                         <div className="flex items-center justify-between">
@@ -533,7 +492,16 @@ export default function ShadcnDashboardView({
                     </div>
                 </TabsContent>
 
-                {/* 2. ANALYTICS TAB */}
+                {/* 2. UNPAID STUDENTS & DEFAULTERS TAB */}
+                <TabsContent value="defaulters" className="space-y-4">
+                    <UnpaidStudentsWidget
+                        unpaidStudents={unpaidStudents}
+                        unpaidSummary={unpaidSummary}
+                        formatCurrency={formatCurrency}
+                    />
+                </TabsContent>
+
+                {/* 3. ANALYTICS TAB */}
                 <TabsContent value="analytics" className="space-y-4">
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                         {/* Expense Categories Breakdown */}

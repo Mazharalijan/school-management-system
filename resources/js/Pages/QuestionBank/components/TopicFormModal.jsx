@@ -74,7 +74,7 @@ export default function TopicFormModal({ isOpen, onClose, topic = null, classes 
                 type="submit"
                 onClick={handleSubmit}
                 disabled={processing}
-                className="bg-slate-800 hover:bg-slate-900 text-white"
+                className="font-semibold"
             >
                 {isEdit ? (<FilePen className="w-4 h-4" />) : (<PlusIcon className="w-4 h-4" />)}
                 {isEdit ? 'Update Topic' : 'Save Topic'}

@@ -139,7 +139,7 @@ export default function SlotFormModal({
                         <select
                             value={data.school_class_id}
                             onChange={(e) => setData({ ...data, school_class_id: e.target.value, section_id: '' })}
-                            className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-xl border border-slate-200 bg-white font-medium focus:ring-2 focus:ring-indigo-500"
+                            className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-xl border border-input bg-background text-foreground dark:bg-card font-medium focus:ring-2 focus:ring-ring"
                             required
                         >
                             <option value="">-- Select Class --</option>
@@ -158,7 +158,7 @@ export default function SlotFormModal({
                             <select
                                 value={data.section_id}
                                 onChange={(e) => setData('section_id', e.target.value)}
-                                className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-xl border border-slate-200 bg-white font-medium focus:ring-2 focus:ring-indigo-500"
+                                className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-xl border border-input bg-background text-foreground dark:bg-card font-medium focus:ring-2 focus:ring-ring"
                             >
                                 <option value="">All Sections / Default</option>
                                 {availableSections.map((sec) => (
@@ -177,7 +177,7 @@ export default function SlotFormModal({
                         <select
                             value={data.day_of_week}
                             onChange={(e) => setData('day_of_week', e.target.value)}
-                            className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-xl border border-slate-200 bg-white font-medium capitalize"
+                            className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-xl border border-input bg-background text-foreground dark:bg-card font-medium capitalize"
                             required
                         >
                             {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map((d) => (
@@ -263,7 +263,7 @@ export default function SlotFormModal({
                     </div>
                 </div>
 
-                <div className="flex justify-between items-center pt-4 border-t border-slate-100">
+                <div className="flex justify-between items-center pt-4 border-t border-border">
                     {isEdit ? (
                         <Button type="button" variant="destructive" size="sm" onClick={handleDelete}>
                             <Trash2 className="w-4 h-4 mr-1" /> Delete Slot

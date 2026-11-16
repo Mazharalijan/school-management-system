@@ -60,7 +60,7 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Write q
         editorProps: {
             attributes: {
                 class:
-                    'prose prose-sm max-w-none p-4 min-h-[160px] focus:outline-none focus:ring-0 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_blockquote]:border-l-4 [&_blockquote]:border-slate-300 [&_blockquote]:pl-4 [&_blockquote]:italic [&_table]:border-collapse [&_table]:w-full [&_td]:border [&_td]:border-slate-300 [&_td]:p-2 [&_th]:border [&_th]:border-slate-300 [&_th]:p-2 [&_th]:bg-slate-100',
+                    'prose prose-sm dark:prose-invert max-w-none p-4 min-h-[160px] focus:outline-none focus:ring-0 text-foreground [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_blockquote]:border-l-4 [&_blockquote]:border-border [&_blockquote]:pl-4 [&_blockquote]:italic [&_table]:border-collapse [&_table]:w-full [&_td]:border [&_td]:border-border [&_td]:p-2 [&_th]:border [&_th]:border-border [&_th]:p-2 [&_th]:bg-muted',
             },
         },
     });
@@ -81,20 +81,20 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Write q
             title={title}
             className={`p-1.5 text-xs rounded transition-colors ${
                 isActive
-                    ? 'bg-slate-200 text-slate-900 font-semibold shadow-inner'
-                    : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/60'
+                    ? 'bg-accent text-accent-foreground font-semibold shadow-inner'
+                    : 'bg-background hover:bg-muted text-foreground border border-border'
             }`}
         >
             {children}
         </button>
     );
 
-    const Divider = () => <div className="w-px h-5 bg-slate-300 my-auto mx-1" />;
+    const Divider = () => <div className="w-px h-5 bg-border my-auto mx-1" />;
 
     return (
-        <div className="text-sm mt-2 rounded-md border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <div className="text-sm mt-2 rounded-md border border-input bg-card text-foreground focus-within:ring-2 focus-within:ring-ring">
             {/* CKEditor Style Multi-Row Toolbar */}
-            <div className="flex flex-wrap items-center gap-1 border-b border-slate-200 bg-slate-50 p-2 text-slate-700">
+            <div className="flex flex-wrap items-center gap-1 border-b border-border bg-muted/40 p-2 text-foreground">
                 
                 {/* History Options */}
                 <ToolButton onClick={() => editor.chain().focus().undo().run()} title="Undo">

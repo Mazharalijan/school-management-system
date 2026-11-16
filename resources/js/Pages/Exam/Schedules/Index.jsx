@@ -130,17 +130,17 @@ export default function Index({ schedules, examSessions = [], classes = [], subj
 
                 {/* Schedule Create / Edit Form Card */}
                 {isCreating && (
-                    <Card className="border-indigo-100 shadow-sm">
-                        <CardHeader className="bg-indigo-50/50 border-b border-indigo-100 pb-3 flex flex-row items-center justify-between">
-                            <CardTitle className="text-base font-bold text-slate-800 flex items-center gap-2">
-                                <Plus className="h-4 w-4 text-indigo-600" />
+                    <Card className="border-border shadow-xs bg-card text-card-foreground">
+                        <CardHeader className="bg-muted/40 border-b border-border pb-3 flex flex-row items-center justify-between">
+                            <CardTitle className="text-base font-bold text-foreground flex items-center gap-2">
+                                <Plus className="h-4 w-4 text-primary" />
                                 {editingSchedule ? 'Edit Schedule Entry' : 'Add New Exam Schedule'}
                             </CardTitle>
                             <Button
                                 variant="ghost"
                                 size="sm"
                                 onClick={handleCloseForm}
-                                className="h-8 w-8 p-0 text-slate-400 hover:text-slate-600"
+                                className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
                             >
                                 <X className="h-4 w-4" />
                             </Button>
@@ -150,7 +150,7 @@ export default function Index({ schedules, examSessions = [], classes = [], subj
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
-                                        <Label htmlFor="session_select" className="text-xs font-bold text-slate-600 uppercase">
+                                        <Label htmlFor="session_select" className="text-xs font-bold text-muted-foreground uppercase">
                                             Exam Session *
                                         </Label>
                                         <FilterSelect
@@ -166,7 +166,7 @@ export default function Index({ schedules, examSessions = [], classes = [], subj
                                     </div>
 
                                     <div>
-                                        <Label htmlFor="class_select" className="text-xs font-bold text-slate-600 uppercase">
+                                        <Label htmlFor="class_select" className="text-xs font-bold text-muted-foreground uppercase">
                                             Class *
                                         </Label>
                                         <FilterSelect
@@ -182,7 +182,7 @@ export default function Index({ schedules, examSessions = [], classes = [], subj
                                     </div>
 
                                     <div>
-                                        <Label htmlFor="subject_select" className="text-xs font-bold text-slate-600 uppercase">
+                                        <Label htmlFor="subject_select" className="text-xs font-bold text-muted-foreground uppercase">
                                             Subject *
                                         </Label>
                                         <FilterSelect
@@ -200,7 +200,7 @@ export default function Index({ schedules, examSessions = [], classes = [], subj
 
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
-                                        <Label htmlFor="exam_date" className="text-xs font-bold text-slate-600 uppercase">
+                                        <Label htmlFor="exam_date" className="text-xs font-bold text-muted-foreground uppercase">
                                             Exam Date *
                                         </Label>
                                         <Input
@@ -215,7 +215,7 @@ export default function Index({ schedules, examSessions = [], classes = [], subj
                                     </div>
 
                                     <div>
-                                        <Label htmlFor="start_time" className="text-xs font-bold text-slate-600 uppercase">
+                                        <Label htmlFor="start_time" className="text-xs font-bold text-muted-foreground uppercase">
                                             Start Time *
                                         </Label>
                                         <Input
@@ -230,7 +230,7 @@ export default function Index({ schedules, examSessions = [], classes = [], subj
                                     </div>
 
                                     <div>
-                                        <Label htmlFor="end_time" className="text-xs font-bold text-slate-600 uppercase">
+                                        <Label htmlFor="end_time" className="text-xs font-bold text-muted-foreground uppercase">
                                             End Time *
                                         </Label>
                                         <Input
@@ -247,7 +247,7 @@ export default function Index({ schedules, examSessions = [], classes = [], subj
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <Label htmlFor="total_marks" className="text-xs font-bold text-slate-600 uppercase">
+                                        <Label htmlFor="total_marks" className="text-xs font-bold text-muted-foreground uppercase">
                                             Total Marks *
                                         </Label>
                                         <Input
@@ -255,14 +255,14 @@ export default function Index({ schedules, examSessions = [], classes = [], subj
                                             type="number"
                                             value={data.total_marks}
                                             onChange={(e) => setData('total_marks', e.target.value)}
-                                            className="mt-1"
+                                            className="mt-1 font-mono"
                                             required
                                         />
                                         {errors.total_marks && <span className="text-xs text-red-500">{errors.total_marks}</span>}
                                     </div>
 
                                     <div>
-                                        <Label htmlFor="passing_marks" className="text-xs font-bold text-slate-600 uppercase">
+                                        <Label htmlFor="passing_marks" className="text-xs font-bold text-muted-foreground uppercase">
                                             Passing Marks *
                                         </Label>
                                         <Input
@@ -270,18 +270,18 @@ export default function Index({ schedules, examSessions = [], classes = [], subj
                                             type="number"
                                             value={data.passing_marks}
                                             onChange={(e) => setData('passing_marks', e.target.value)}
-                                            className="mt-1"
+                                            className="mt-1 font-mono"
                                             required
                                         />
                                         {errors.passing_marks && <span className="text-xs text-red-500">{errors.passing_marks}</span>}
                                     </div>
                                 </div>
 
-                                <div className="flex justify-end gap-2 pt-3 border-t">
+                                <div className="flex justify-end gap-2 pt-3 border-t border-border">
                                     <Button type="button" variant="outline" onClick={handleCloseForm}>
                                         Cancel
                                     </Button>
-                                    <Button type="submit" disabled={processing} className="bg-slate-900 hover:bg-slate-800 text-white">
+                                    <Button type="submit" disabled={processing} className="bg-primary hover:bg-primary/90 text-primary-foreground">
                                         {editingSchedule ? 'Update Schedule' : 'Save Schedule'}
                                     </Button>
                                 </div>
@@ -291,55 +291,55 @@ export default function Index({ schedules, examSessions = [], classes = [], subj
                 )}
 
                 {/* Schedules Table Card */}
-                <Card className="border-slate-200 shadow-sm">
+                <Card className="border-border shadow-xs bg-card text-card-foreground">
                     <CardContent className="p-0">
                         <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-slate-200 text-sm">
-                                <thead className="bg-slate-50">
+                            <table className="min-w-full divide-y divide-border text-sm">
+                                <thead className="bg-muted/60">
                                     <tr>
-                                        <th className="px-6 py-3.5 text-left font-bold text-slate-600 uppercase text-xs">Exam Date</th>
-                                        <th className="px-6 py-3.5 text-left font-bold text-slate-600 uppercase text-xs">Session</th>
-                                        <th className="px-6 py-3.5 text-left font-bold text-slate-600 uppercase text-xs">Class & Subject</th>
-                                        <th className="px-6 py-3.5 text-left font-bold text-slate-600 uppercase text-xs">Time</th>
-                                        <th className="px-6 py-3.5 text-left font-bold text-slate-600 uppercase text-xs">Marks</th>
-                                        <th className="px-6 py-3.5 text-right font-bold text-slate-600 uppercase text-xs">Actions</th>
+                                        <th className="px-6 py-3.5 text-left font-bold text-muted-foreground uppercase text-xs border-b border-border">Exam Date</th>
+                                        <th className="px-6 py-3.5 text-left font-bold text-muted-foreground uppercase text-xs border-b border-border">Session</th>
+                                        <th className="px-6 py-3.5 text-left font-bold text-muted-foreground uppercase text-xs border-b border-border">Class & Subject</th>
+                                        <th className="px-6 py-3.5 text-left font-bold text-muted-foreground uppercase text-xs border-b border-border">Time</th>
+                                        <th className="px-6 py-3.5 text-left font-bold text-muted-foreground uppercase text-xs border-b border-border">Marks</th>
+                                        <th className="px-6 py-3.5 text-right font-bold text-muted-foreground uppercase text-xs border-b border-border">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-slate-200 bg-white">
+                                <tbody className="divide-y divide-border bg-card">
                                     {schedules?.data?.length > 0 ? (
                                         schedules.data.map((schedule) => (
-                                            <tr key={schedule.id} className="hover:bg-slate-50/80 transition-colors">
-                                                <td className="px-6 py-4 font-semibold text-slate-900">
+                                            <tr key={schedule.id} className="hover:bg-muted/50 transition-colors">
+                                                <td className="px-6 py-4 font-semibold text-foreground">
                                                     <span className="flex items-center gap-1.5">
-                                                        <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                                                        <Calendar className="w-3.5 h-3.5 text-muted-foreground" />
                                                         {schedule.exam_date}
                                                     </span>
                                                 </td>
-                                                <td className="px-6 py-4 text-slate-600 text-xs">
-                                                    <Badge variant="outline" className="bg-slate-50 text-slate-700 border-slate-200">
+                                                <td className="px-6 py-4 text-muted-foreground text-xs">
+                                                    <Badge variant="outline" className="bg-muted text-foreground border-border">
                                                         {schedule.exam_session?.title || 'N/A'}
                                                     </Badge>
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <div className="flex items-center gap-2">
-                                                        <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 font-semibold text-xs">
+                                                        <Badge variant="outline" className="bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800 font-semibold text-xs">
                                                             {schedule.school_class?.name}
                                                         </Badge>
-                                                        <span className="text-slate-800 font-medium">
+                                                        <span className="text-foreground font-medium">
                                                             {schedule.subject?.subject_name}
                                                         </span>
                                                     </div>
                                                 </td>
-                                                <td className="px-6 py-4 text-slate-600 text-xs">
+                                                <td className="px-6 py-4 text-muted-foreground text-xs">
                                                     <span className="flex items-center gap-1.5 font-mono">
-                                                        <Clock className="w-3.5 h-3.5 text-slate-400" />
+                                                        <Clock className="w-3.5 h-3.5 text-muted-foreground" />
                                                         {schedule.start_time} - {schedule.end_time}
                                                     </span>
                                                 </td>
-                                                <td className="px-6 py-4 text-slate-700 text-xs">
-                                                    <span className="font-semibold text-emerald-700">Pass: {schedule.passing_marks}</span>
-                                                    <span className="text-slate-300 mx-1.5">/</span>
-                                                    <span className="font-semibold text-slate-900">Total: {schedule.total_marks}</span>
+                                                <td className="px-6 py-4 text-foreground text-xs font-mono">
+                                                    <span className="font-semibold text-emerald-600 dark:text-emerald-400">Pass: {schedule.passing_marks}</span>
+                                                    <span className="text-muted-foreground mx-1.5">/</span>
+                                                    <span className="font-semibold text-foreground">Total: {schedule.total_marks}</span>
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
                                                     <div className="flex items-center justify-end space-x-1">
@@ -361,7 +361,7 @@ export default function Index({ schedules, examSessions = [], classes = [], subj
                                         ))
                                     ) : (
                                         <tr>
-                                            <td colSpan="6" className="text-center py-10 text-slate-400">
+                                            <td colSpan="6" className="text-center py-10 text-muted-foreground">
                                                 No exam schedule entries found.
                                             </td>
                                         </tr>

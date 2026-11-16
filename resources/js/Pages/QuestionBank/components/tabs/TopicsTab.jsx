@@ -44,7 +44,7 @@ export default function TopicsTab({ topics, classes, filters, onEdit }) {
     };
 
     const columns = [
-        { header: 'Topic Name', accessor: 'topic_name', className: 'font-semibold text-slate-800' },
+        { header: 'Topic Name', accessor: 'topic_name', className: 'font-semibold text-foreground' },
         { header: 'Chapter', render: (item) => item.chapter?.chapter_name || item.chapter?.name || 'N/A' },
         { header: 'Subject', render: (item) => item.chapter?.subject?.subject_name || item.subject?.subject_name || 'N/A' },
         {

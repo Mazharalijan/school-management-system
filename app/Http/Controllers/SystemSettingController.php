@@ -33,7 +33,7 @@ class SystemSettingController extends Controller
 
     public function update(UpdateSystemSettingsRequest $request): RedirectResponse
     {
-        $settings = SystemSetting::firstOrFail();
+        $settings = SystemSetting::firstOrCreate(['id' => 1]);
         $data = $request->validated();
 
         if ($request->hasFile('logo')) {

@@ -52,7 +52,7 @@ export default function ChaptersTab({ chapters, classes, filters, onEdit }) {
     };
 
     const columns = [
-        { header: 'Chapter Name', render: (item) => item.chapter_name || item.name, className: 'font-semibold text-slate-800' },
+        { header: 'Chapter Name', render: (item) => item.chapter_name || item.name, className: 'font-semibold text-foreground' },
         { header: 'Subject', render: (item) => item.subject?.subject_name || 'N/A' },
         { header: 'Class', render: (item) => item.subject?.school_class?.name || item.school_class?.name || 'N/A' },
         {

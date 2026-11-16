@@ -39,6 +39,7 @@ class UpdateStudentRequest extends FormRequest
             'guardian_name' => ['required', 'string', 'max:100'],
             'guardian_relation' => ['required', 'string', 'max:50'],
             'guardian_phone' => ['required', 'string', 'max:20'],
+            'father_cnic' => ['nullable', 'string', 'max:25'],
             'guardian_email' => ['nullable', 'email', 'max:100'],
             'address' => ['nullable', 'string', 'max:255'],
 

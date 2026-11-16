@@ -13,12 +13,16 @@
         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
 
         <!-- Early Theme Detection Script (Zero-FOUC Dark Mode) -->
+        @php
+            $defaultThemeMode = \App\Models\SystemSetting::first()?->theme_mode ?? 'system';
+        @endphp
         <script>
             (function() {
                 try {
-                    const theme = localStorage.getItem('theme');
+                    const defaultMode = '{{ $defaultThemeMode }}';
+                    const theme = localStorage.getItem('theme') || defaultMode;
                     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    if (theme === 'dark' || (!theme && prefersDark)) {
+                    if (theme === 'dark' || (theme === 'system' && prefersDark)) {
                         document.documentElement.classList.add('dark');
                     } else {
                         document.documentElement.classList.remove('dark');

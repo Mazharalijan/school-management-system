@@ -270,14 +270,14 @@ export default function TimetableIndex({
 
         if (!slot) {
             return (
-                <td key={period} className="p-3 border-r border-slate-200 text-center align-middle">
+                <td key={period} className="p-3 border-r border-border text-center align-middle">
                     <div className="flex flex-col items-center justify-center gap-1">
-                        <span className="text-[11px] text-slate-300 font-medium">Free</span>
+                        <span className="text-[11px] text-muted-foreground font-medium">Free</span>
                         <Button
                             onClick={() => handleOpenAddSlot(row.classId, row.sectionId, period)}
                             variant="ghost"
                             size="sm"
-                            className="h-6 text-[10px] text-indigo-600 hover:bg-indigo-50 px-2"
+                            className="h-6 text-[10px] text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 px-2"
                         >
                             <PlusIcon className="w-3 h-3 mr-0.5" /> Assign
                         </Button>
@@ -287,24 +287,24 @@ export default function TimetableIndex({
         }
 
         return (
-            <td key={period} className="p-2 border-r border-slate-200 bg-indigo-50/20 align-middle">
+            <td key={period} className="p-2 border-r border-border bg-indigo-50/20 dark:bg-indigo-950/20 align-middle">
                 <div
                     onClick={() => handleOpenEditSlot(slot)}
-                    className="p-2.5 bg-white border border-indigo-200 rounded-xl shadow-2xs hover:shadow-md cursor-pointer transition-all space-y-0.5 group"
+                    className="p-2.5 bg-card dark:bg-slate-900 border border-indigo-200 dark:border-indigo-900/60 rounded-xl shadow-2xs hover:shadow-md cursor-pointer transition-all space-y-0.5 group"
                 >
-                    <div className="font-bold text-indigo-900 group-hover:text-indigo-600 text-xs">
+                    <div className="font-bold text-indigo-950 dark:text-indigo-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 text-xs">
                         {slot.subject?.subject_name || 'Subject'}
                     </div>
-                    <div className="text-[11px] text-slate-600 font-medium">
+                    <div className="text-[11px] text-muted-foreground font-medium">
                         {slot.staff ? `${slot.staff.first_name} ${slot.staff.last_name}` : 'Unassigned'}
                     </div>
                     {slot.start_time && slot.end_time && (
-                        <div className="text-[10px] text-indigo-600 font-bold">
+                        <div className="text-[10px] text-indigo-600 dark:text-indigo-400 font-bold">
                             {slot.start_time} - {slot.end_time}
                         </div>
                     )}
                     {slot.room_number && (
-                        <div className="text-[10px] text-slate-400 font-medium">
+                        <div className="text-[10px] text-muted-foreground font-medium">
                             Room: {slot.room_number}
                         </div>
                     )}
@@ -317,14 +317,14 @@ export default function TimetableIndex({
         <AppLayout title="Timetable Management">
             <Head title="Timetable Engine" />
 
-            <div className="max-w-9xl mx-auto py-6 px-2 sm:px-6 lg:px-8 space-y-6">
+            <div className="w-full py-6 px-2 sm:px-6 lg:px-8 space-y-6">
                 {/* Header Actions Toolbar */}
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-md border border-slate-200/80">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-card text-card-foreground p-6 rounded-md border border-border">
                     <div>
-                        <h1 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-                            <Calendar className="w-7 h-7 text-indigo-600" /> Timetable Engine
+                        <h1 className="text-2xl font-black text-foreground tracking-tight flex items-center gap-2">
+                            <Calendar className="w-7 h-7 text-indigo-600 dark:text-indigo-400" /> Timetable Engine
                         </h1>
-                        <p className="text-sm text-slate-500 font-medium mt-0.5">
+                        <p className="text-sm text-muted-foreground font-medium mt-0.5">
                             Manage schedules, breaks, and teacher assignments for {academicYear}.
                         </p>
                     </div>
@@ -333,21 +333,21 @@ export default function TimetableIndex({
                         <Button
                             onClick={() => setIsTimingModalOpen(true)}
                             variant="outline"
-                            className="border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold"
+                            className="border-border text-foreground hover:bg-muted font-semibold"
                         >
-                            <Clock className="w-4 h-4 mr-1.5 text-amber-600" /> Shift School Timings
+                            <Clock className="w-4 h-4 mr-1.5 text-amber-600 dark:text-amber-400" /> Shift School Timings
                         </Button>
                         <Button
                             onClick={() => setIsBreakModalOpen(true)}
                             variant="outline"
-                            className="border-amber-300 bg-amber-50 text-amber-900 hover:bg-amber-100 font-semibold"
+                            className="border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 hover:bg-amber-100 dark:hover:bg-amber-900/40 font-semibold"
                         >
-                            <Utensils className="w-4 h-4 mr-1.5 text-amber-600" /> Manage Break Time
+                            <Utensils className="w-4 h-4 mr-1.5 text-amber-600 dark:text-amber-400" /> Manage Break Time
                         </Button>
                         <Button
                             onClick={() => setTeacherModalOpen(true)}
                             variant="outline"
-                            className="border-indigo-200 text-indigo-700 hover:bg-indigo-50 font-semibold"
+                            className="border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 font-semibold"
                         >
                             <UserCheck className="w-4 h-4 mr-1.5" /> Full-Time Teacher Config
                         </Button>
@@ -362,7 +362,7 @@ export default function TimetableIndex({
 
                 {/* Navigation Tabs */}
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                    <TabsList className="bg-slate-100 p-1 rounded-md border border-slate-200 grid grid-cols-2 max-w-full mb-6">
+                    <TabsList className="bg-muted p-1 rounded-md border border-border grid grid-cols-2 max-w-full mb-6">
                         <TabsTrigger value="class_view" className="rounded-md font-bold text-md">
                             Master View
                         </TabsTrigger>
@@ -373,12 +373,12 @@ export default function TimetableIndex({
 
                     {/* TAB 1: MASTER VIEW */}
                     <TabsContent value="class_view" className="space-y-3">
-                        <div className="bg-white rounded-md shadow-sm border border-slate-200 overflow-hidden">
-                            <div className="overflow-x-auto">
-                                <table className="min-w-full divide-y divide-slate-200 text-sm border-collapse">
-                                    <thead className="bg-slate-900 text-white">
+                        <div className="bg-card text-card-foreground rounded-md shadow-xs border border-border overflow-hidden">
+                            <div className="overflow-x-auto max-h-[75vh] overflow-y-auto">
+                                <table className="min-w-full divide-y divide-border text-sm border-collapse">
+                                    <thead className="bg-slate-900 dark:bg-slate-950 text-white sticky top-0 z-30 shadow-xs">
                                         <tr>
-                                            <th className="px-6 py-4 text-left font-bold uppercase text-xs w-72 min-w-[280px] border-r border-slate-800 sticky left-0 bg-slate-900 z-20">
+                                            <th className="px-6 py-4 text-left font-bold uppercase text-xs w-72 min-w-[280px] border-r border-slate-800 sticky left-0 top-0 bg-slate-900 dark:bg-slate-950 z-40">
                                                 Class / Section
                                             </th>
 
@@ -411,21 +411,21 @@ export default function TimetableIndex({
                                         </tr>
                                     </thead>
 
-                                    <tbody className="divide-y divide-slate-200 bg-white">
+                                    <tbody className="divide-y divide-border bg-card">
                                         {classRows.map((row) => {
                                             const teacher = staffMembers.find((s) => String(s.id) === String(row.classTeacherId));
 
                                             return (
-                                                <tr key={row.key} className="hover:bg-slate-50/50">
+                                                <tr key={row.key} className="hover:bg-muted/50">
                                                     {/* COLUMN 1: CLASS / SECTION NAME */}
-                                                    <td className="px-6 py-4 bg-slate-100 font-bold text-slate-800 border-r border-slate-200 sticky left-0 bg-slate-100 z-10 w-72 min-w-[280px]">
-                                                        <div className="text-base font-extrabold text-slate-900">{row.title}</div>
+                                                    <td className="px-6 py-4 bg-muted/80 dark:bg-slate-900 font-bold text-foreground border-r border-border sticky left-0 z-10 w-72 min-w-[280px]">
+                                                        <div className="text-base font-extrabold text-foreground">{row.title}</div>
                                                         {row.isFullTime ? (
                                                             <span className="text-[10px] bg-amber-400 text-slate-950 px-2 py-0.5 rounded font-black uppercase mt-1 inline-block tracking-wider">
                                                                 Full-Day Teacher Mode
                                                             </span>
                                                         ) : (
-                                                            <span className="text-xs text-slate-500 font-medium block mt-0.5">
+                                                            <span className="text-xs text-muted-foreground font-medium block mt-0.5">
                                                                 {teacher ? `Teacher: ${teacher.first_name} ${teacher.last_name}` : 'No Class Teacher'}
                                                             </span>
                                                         )}
@@ -436,36 +436,36 @@ export default function TimetableIndex({
                                                         <>
                                                             <td
                                                                 colSpan={periodsBeforeBreak.length}
-                                                                className="p-3 bg-indigo-50/40 text-center border-r border-indigo-200 align-middle h-full"
+                                                                className="p-3 bg-indigo-50/40 dark:bg-indigo-950/30 text-center border-r border-indigo-200 dark:border-indigo-900/60 align-middle h-full"
                                                             >
-                                                                <div className="flex flex-col items-center justify-center h-full min-h-[90px] p-4 bg-white rounded-xl border border-indigo-200 shadow-2xs space-y-1">
-                                                                    <UserCheck className="w-6 h-6 text-indigo-600" />
-                                                                    <div className="font-black text-indigo-950 text-sm">
+                                                                <div className="flex flex-col items-center justify-center h-full min-h-[90px] p-4 bg-card dark:bg-slate-900 rounded-xl border border-indigo-200 dark:border-indigo-900/60 shadow-2xs space-y-1">
+                                                                    <UserCheck className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+                                                                    <div className="font-black text-indigo-950 dark:text-indigo-200 text-sm">
                                                                         {teacher ? `${teacher.first_name} ${teacher.last_name}` : 'Unassigned Class Teacher'}
                                                                     </div>
-                                                                    <div className="text-xs text-slate-500 font-medium">
+                                                                    <div className="text-xs text-muted-foreground font-medium">
                                                                         Dedicated Full-Day Class Teacher (Morning Session)
                                                                     </div>
                                                                 </div>
                                                             </td>
 
-                                                            <td className="p-3 bg-amber-100/70 border-r border-amber-300 text-center align-middle">
-                                                                <div className="text-xs font-black text-amber-900 uppercase tracking-wider">{breakConfig.title}</div>
-                                                                <div className="text-[11px] text-amber-700 font-bold mt-0.5">
+                                                            <td className="p-3 bg-amber-100/70 dark:bg-amber-950/40 border-r border-amber-300 dark:border-amber-800 text-center align-middle">
+                                                                <div className="text-xs font-black text-amber-900 dark:text-amber-200 uppercase tracking-wider">{breakConfig.title}</div>
+                                                                <div className="text-[11px] text-amber-700 dark:text-amber-400 font-bold mt-0.5">
                                                                     {breakConfig.startTime} - {breakConfig.endTime}
                                                                 </div>
                                                             </td>
 
                                                             <td
                                                                 colSpan={periodsAfterBreak.length}
-                                                                className="p-3 bg-indigo-50/40 text-center border-r border-indigo-200 align-middle h-full"
+                                                                className="p-3 bg-indigo-50/40 dark:bg-indigo-950/30 text-center border-r border-indigo-200 dark:border-indigo-900/60 align-middle h-full"
                                                             >
-                                                                <div className="flex flex-col items-center justify-center h-full min-h-[90px] p-4 bg-white rounded-xl border border-indigo-200 shadow-2xs space-y-1">
-                                                                    <UserCheck className="w-6 h-6 text-indigo-600" />
-                                                                    <div className="font-black text-indigo-950 text-sm">
+                                                                <div className="flex flex-col items-center justify-center h-full min-h-[90px] p-4 bg-card dark:bg-slate-900 rounded-xl border border-indigo-200 dark:border-indigo-900/60 shadow-2xs space-y-1">
+                                                                    <UserCheck className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+                                                                    <div className="font-black text-indigo-950 dark:text-indigo-200 text-sm">
                                                                         {teacher ? `${teacher.first_name} ${teacher.last_name}` : 'Unassigned Class Teacher'}
                                                                     </div>
-                                                                    <div className="text-xs text-slate-500 font-medium">
+                                                                    <div className="text-xs text-muted-foreground font-medium">
                                                                         Dedicated Full-Day Class Teacher (Afternoon Session)
                                                                     </div>
                                                                 </div>
@@ -476,9 +476,9 @@ export default function TimetableIndex({
                                                         <>
                                                             {periodsBeforeBreak.map((period) => renderPeriodTd(row, period))}
 
-                                                            <td className="p-3 bg-amber-50/80 border-r border-amber-200 text-center align-middle">
-                                                                <div className="text-xs font-extrabold text-amber-900 uppercase">{breakConfig.title}</div>
-                                                                <div className="text-[10px] text-amber-700 font-semibold mt-0.5">
+                                                            <td className="p-3 bg-amber-50/80 dark:bg-amber-950/30 border-r border-amber-200 dark:border-amber-900/60 text-center align-middle">
+                                                                <div className="text-xs font-extrabold text-amber-900 dark:text-amber-200 uppercase">{breakConfig.title}</div>
+                                                                <div className="text-[10px] text-amber-700 dark:text-amber-400 font-semibold mt-0.5">
                                                                     {breakConfig.startTime} - {breakConfig.endTime}
                                                                 </div>
                                                             </td>
@@ -499,15 +499,15 @@ export default function TimetableIndex({
                     <TabsContent value="teacher_view">
                         <div className="space-y-5">
                             {/* Top Controls & Workload Summary */}
-                            <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div className="bg-card text-card-foreground p-5 rounded-2xl border border-border shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
                                 <div className="w-full md:w-80">
-                                    <Label className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 block">
+                                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1.5 block">
                                         Select Teacher / Staff Member
                                     </Label>
                                     <select
                                         value={selectedStaffId}
                                         onChange={(e) => setSelectedStaffId(e.target.value)}
-                                        className="w-full h-11 px-3.5 py-2 text-sm rounded-xl border border-slate-200 bg-slate-50/50 font-semibold text-slate-800 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-hidden"
+                                        className="w-full h-11 px-3.5 py-2 text-sm rounded-xl border border-input bg-background text-foreground dark:bg-card font-semibold focus:ring-2 focus:ring-ring focus:border-transparent transition-all outline-hidden"
                                     >
                                         <option value="">-- Choose Teacher --</option>
                                         {staffMembers.map((s) => (
@@ -539,16 +539,16 @@ export default function TimetableIndex({
                                     return (
                                         <div className="flex flex-wrap items-center gap-2.5 pt-1 md:pt-0">
                                             {isFullDayTeacher && (
-                                                <div className="px-3.5 py-1.5 rounded-xl bg-amber-500/10 text-amber-800 border border-amber-200 text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
+                                                <div className="px-3.5 py-1.5 rounded-xl bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
                                                     <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
                                                     Full-Day Teacher
                                                 </div>
                                             )}
-                                            <div className="px-3.5 py-1.5 rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100 text-xs font-bold">
-                                                Assigned Periods: <span className="font-extrabold text-indigo-900">{uniqueAssignedPeriods}</span>
+                                            <div className="px-3.5 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-900/60 text-xs font-bold">
+                                                Assigned Periods: <span className="font-extrabold text-indigo-950 dark:text-indigo-200">{uniqueAssignedPeriods}</span>
                                             </div>
-                                            <div className="px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 border border-slate-200/70 text-xs font-bold">
-                                                Free Periods: <span className="font-extrabold text-slate-800">{Math.max(0, dynamicPeriods.length - uniqueAssignedPeriods)}</span>
+                                            <div className="px-3.5 py-1.5 rounded-xl bg-muted text-muted-foreground border border-border text-xs font-bold">
+                                                Free Periods: <span className="font-extrabold text-foreground">{Math.max(0, dynamicPeriods.length - uniqueAssignedPeriods)}</span>
                                             </div>
                                         </div>
                                     );
@@ -556,12 +556,12 @@ export default function TimetableIndex({
                             </div>
 
                             {!selectedStaffId ? (
-                                <div className="bg-white py-16 px-4 text-center rounded-2xl border border-dashed border-slate-200 space-y-3">
-                                    <div className="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto text-xl font-bold">
+                                <div className="bg-card text-card-foreground py-16 px-4 text-center rounded-2xl border border-dashed border-border space-y-3">
+                                    <div className="w-12 h-12 rounded-full bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mx-auto text-xl font-bold">
                                         i
                                     </div>
-                                    <div className="text-slate-700 font-bold text-base">No Teacher Selected</div>
-                                    <p className="text-xs text-slate-400 max-w-sm mx-auto">
+                                    <div className="text-foreground font-bold text-base">No Teacher Selected</div>
+                                    <p className="text-xs text-muted-foreground max-w-sm mx-auto">
                                         Select a staff member from the dropdown above to inspect their daily timetable schedule and teaching workload.
                                     </p>
                                 </div>
@@ -576,19 +576,19 @@ export default function TimetableIndex({
                                         if (fullTimeClasses.length === 0) return null;
 
                                         return (
-                                            <div className="p-4 bg-gradient-to-r from-amber-50 via-amber-50/80 to-orange-50 border border-amber-200/80 rounded-2xl shadow-2xs space-y-2">
-                                                <div className="flex items-center gap-2 text-amber-900 font-extrabold text-sm">
-                                                    <UserCheck className="w-5 h-5 text-amber-600" />
+                                            <div className="p-4 bg-gradient-to-r from-amber-50 dark:from-amber-950/40 via-amber-50/80 dark:via-amber-950/30 to-orange-50 dark:to-orange-950/40 border border-amber-200/80 dark:border-amber-800 rounded-2xl shadow-2xs space-y-2">
+                                                <div className="flex items-center gap-2 text-amber-900 dark:text-amber-200 font-extrabold text-sm">
+                                                    <UserCheck className="w-5 h-5 text-amber-600 dark:text-amber-400" />
                                                     Dedicated Full-Day Class Teacher Mode
                                                 </div>
-                                                <p className="text-xs text-amber-800/90 font-medium">
+                                                <p className="text-xs text-amber-800/90 dark:text-amber-300 font-medium">
                                                     This teacher is assigned to conduct all learning sessions for the following class(es):
                                                 </p>
                                                 <div className="flex flex-wrap gap-2 pt-1">
                                                     {fullTimeClasses.map((cls) => (
                                                         <span
                                                             key={cls.key}
-                                                            className="px-3 py-1 bg-white border border-amber-300 text-amber-950 font-bold text-xs rounded-xl shadow-2xs"
+                                                            className="px-3 py-1 bg-card border border-amber-300 dark:border-amber-700 text-amber-950 dark:text-amber-300 font-bold text-xs rounded-xl shadow-2xs"
                                                         >
                                                             {cls.title}
                                                         </span>
@@ -632,31 +632,31 @@ export default function TimetableIndex({
                                             return (
                                                 <div
                                                     key={period}
-                                                    className="bg-white rounded-2xl border border-slate-200/80 shadow-2xs hover:shadow-md transition-all overflow-hidden flex flex-col sm:flex-row items-stretch"
+                                                    className="bg-card text-card-foreground rounded-2xl border border-border shadow-2xs hover:shadow-md transition-all overflow-hidden flex flex-col sm:flex-row items-stretch"
                                                 >
                                                     {/* Left Side: Period Badge & Time Column */}
-                                                    <div className="sm:w-44 bg-slate-50 border-b sm:border-b-0 sm:border-r border-slate-200/80 p-4 flex flex-col justify-center items-center text-center shrink-0">
-                                                        <span className="text-xs font-black uppercase text-slate-400 tracking-wider">
+                                                    <div className="sm:w-44 bg-muted/40 border-b sm:border-b-0 sm:border-r border-border p-4 flex flex-col justify-center items-center text-center shrink-0">
+                                                        <span className="text-xs font-black uppercase text-muted-foreground tracking-wider">
                                                             Slot #{period}
                                                         </span>
-                                                        <span className="text-base font-black text-slate-800 mt-0.5">
+                                                        <span className="text-base font-black text-foreground mt-0.5">
                                                             Period {period}
                                                         </span>
                                                         {sampleSlot?.start_time && sampleSlot?.end_time && (
-                                                            <span className="mt-2 text-[11px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 rounded-full">
+                                                            <span className="mt-2 text-[11px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-100 dark:border-indigo-900/60 px-2.5 py-0.5 rounded-full">
                                                                 {sampleSlot.start_time} - {sampleSlot.end_time}
                                                             </span>
                                                         )}
                                                     </div>
 
                                                     {/* Right Side: Class & Subject Details */}
-                                                    <div className="flex-1 p-4 flex items-center bg-white">
+                                                    <div className="flex-1 p-4 flex items-center bg-card">
                                                         {fullTimeClasses.length > 0 ? (
                                                             <div className="flex flex-wrap items-center gap-3">
-                                                                <span className="px-3 py-1 bg-amber-100 text-amber-900 border border-amber-200 rounded-lg text-xs font-extrabold">
+                                                                <span className="px-3 py-1 bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-200 dark:border-amber-800 rounded-lg text-xs font-extrabold">
                                                                     Full-Day Session
                                                                 </span>
-                                                                <span className="font-bold text-slate-900 text-sm">
+                                                                <span className="font-bold text-foreground text-sm">
                                                                     {fullTimeClasses.map((c) => c.title).join(', ')}
                                                                 </span>
                                                             </div>
@@ -665,23 +665,23 @@ export default function TimetableIndex({
                                                                 {slots.map((slot, idx) => (
                                                                     <div
                                                                         key={slot.id || idx}
-                                                                        className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-slate-50/80 border border-slate-200/60"
+                                                                        className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-muted/30 border border-border"
                                                                     >
                                                                         <div className="flex items-center gap-3">
-                                                                            <div className="w-2.5 h-2.5 rounded-full bg-indigo-600"></div>
+                                                                            <div className="w-2.5 h-2.5 rounded-full bg-indigo-600 dark:bg-indigo-400"></div>
                                                                             <div>
-                                                                                <div className="text-sm font-extrabold text-slate-900">
+                                                                                <div className="text-sm font-extrabold text-foreground">
                                                                                     {slot.schoolClass?.name} {slot.section?.name ? `(${slot.section.name})` : ''}
                                                                                 </div>
-                                                                                <div className="text-xs font-semibold text-slate-500 mt-0.5">
-                                                                                    Subject: <span className="text-indigo-900 font-bold">{slot.subject?.subject_name || 'N/A'}</span>
+                                                                                <div className="text-xs font-semibold text-muted-foreground mt-0.5">
+                                                                                    Subject: <span className="text-indigo-950 dark:text-indigo-300 font-bold">{slot.subject?.subject_name || 'N/A'}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
 
                                                                         <div className="flex items-center gap-2">
                                                                             {slot.room_number && (
-                                                                                <span className="text-xs font-bold text-slate-600 bg-white border border-slate-200 px-2.5 py-1 rounded-lg">
+                                                                                <span className="text-xs font-bold text-foreground bg-card border border-border px-2.5 py-1 rounded-lg">
                                                                                     Room: {slot.room_number}
                                                                                 </span>
                                                                             )}
@@ -690,8 +690,8 @@ export default function TimetableIndex({
                                                                 ))}
                                                             </div>
                                                         ) : (
-                                                            <div className="flex items-center gap-2 text-slate-400 text-xs font-semibold italic py-1">
-                                                                <span className="w-2 h-2 rounded-full bg-slate-300"></span>
+                                                            <div className="flex items-center gap-2 text-muted-foreground text-xs font-semibold italic py-1">
+                                                                <span className="w-2 h-2 rounded-full bg-muted-foreground/40"></span>
                                                                 Free Period — No teaching session scheduled
                                                             </div>
                                                         )}

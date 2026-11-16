@@ -23,6 +23,11 @@ class FeePayment extends Model
         return $this->belongsTo(User::class, 'received_by');
     }
 
+    public function receivedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'received_by');
+    }
+
     public function invoices(): BelongsToMany
     {
         return $this->belongsToMany(FeeInvoice::class, 'fee_invoice_payment')

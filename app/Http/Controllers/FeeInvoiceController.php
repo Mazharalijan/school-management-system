@@ -89,8 +89,9 @@ class FeeInvoiceController extends Controller
 
     public function collectPayment(Request $request, FeeInvoice $invoice): RedirectResponse
     {
+        $maxAmount = max(0.01, (float) $invoice->due_amount);
         $validated = $request->validate([
-            'amount_paid' => 'required|numeric|min:1|max:'.$invoice->due_amount,
+            'amount_paid' => 'required|numeric|min:0.01|max:'.$maxAmount,
             'payment_date' => 'required|date',
             'payment_method' => 'required|in:cash,bank_transfer,cheque,online',
             'transaction_reference' => 'nullable|string|max:255',

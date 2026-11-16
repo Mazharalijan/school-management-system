@@ -10,10 +10,11 @@ export default function TopicDetailModal({ isOpen, onClose, topic }) {
     const modalFooter = (
         <Button
             type="button"
+            variant="outline"
             onClick={onClose}
-            className="bg-slate-800 hover:bg-slate-900 text-white ml-auto"
+            className="ml-auto"
         >
-            <X className="w-4 h-4" />
+            <X className="w-4 h-4 mr-1" />
             Close
         </Button>
     );
@@ -27,12 +28,12 @@ export default function TopicDetailModal({ isOpen, onClose, topic }) {
             maxWidth="sm:max-w-4xl"
         >
             <div className="space-y-4">
-                <div className="grid grid-cols-1 gap-4 border-b pb-4">
+                <div className="grid grid-cols-1 gap-4 border-b border-border pb-4">
                     <div>
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
+                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">
                             Topic Name
                         </span>
-                        <span className="text-base font-semibold text-slate-800">
+                        <span className="text-base font-semibold text-foreground">
                             {topic.topic_name}
                         </span>
                     </div>
@@ -40,26 +41,26 @@ export default function TopicDetailModal({ isOpen, onClose, topic }) {
 
                 <div className="grid grid-cols-3 gap-2">
                     <div>
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
+                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">
                             Class
                         </span>
-                        <span className="text-sm font-semibold text-slate-700">
+                        <span className="text-sm font-semibold text-foreground">
                             {topic?.chapter?.school_class?.name || 'N/A'}
                         </span>
                     </div>
                     <div>
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
+                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">
                             Subject
                         </span>
-                        <span className="text-sm font-semibold text-slate-700">
+                        <span className="text-sm font-semibold text-foreground">
                             {topic?.chapter?.subject?.subject_name || 'N/A'}
                         </span>
                     </div>
                     <div>
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
+                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">
                             Chapter
                         </span>
-                        <span className="text-sm font-semibold text-slate-700">
+                        <span className="text-sm font-semibold text-foreground">
                             {topic?.chapter?.chapter_name || 'N/A'}
                         </span>
                     </div>

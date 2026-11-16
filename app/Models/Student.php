@@ -25,6 +25,7 @@ class Student extends Model
         'guardian_name',
         'guardian_relation',
         'guardian_phone',
+        'father_cnic',
         'guardian_email',
         'address',
         'admission_date',
@@ -78,5 +79,15 @@ class Student extends Model
     public function payments(): HasMany
     {
         return $this->hasMany(FeePayment::class);
+    }
+
+    public function documentPrints(): HasMany
+    {
+        return $this->hasMany(StudentDocumentPrint::class);
+    }
+
+    public function examResults(): HasMany
+    {
+        return $this->hasMany(ExamResult::class);
     }
 }

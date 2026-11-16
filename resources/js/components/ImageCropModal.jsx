@@ -450,7 +450,7 @@ export default function ImageCropModal({
             maxWidth="sm:max-w-3xl"
             footer={
                 <div className="flex items-center justify-between w-full">
-                    <Button type="button" variant="ghost" onClick={handleReset} className="text-xs text-slate-500">
+                    <Button type="button" variant="ghost" onClick={handleReset} className="text-xs text-muted-foreground">
                         <RefreshCw className="w-3.5 h-3.5 mr-1" />
                         Reset Adjustments
                     </Button>
@@ -461,7 +461,7 @@ export default function ImageCropModal({
                         <Button
                             type="button"
                             onClick={handleApply}
-                            className="bg-blue-600 hover:bg-blue-700 text-white"
+                            className="bg-primary hover:bg-primary/90 text-primary-foreground"
                         >
                             <Check className="w-4 h-4 mr-1.5" />
                             Apply & Use Photo
@@ -474,7 +474,7 @@ export default function ImageCropModal({
                 {/* Viewport Canvas */}
                 <div className="md:col-span-7 flex flex-col items-center">
                     <div
-                        className="relative border-2 border-slate-800 bg-slate-900 rounded-lg overflow-hidden cursor-move select-none shadow-inner"
+                        className="relative border-2 border-border bg-slate-950 rounded-lg overflow-hidden cursor-move select-none shadow-inner"
                         onMouseDown={handleMouseDown}
                         onMouseMove={handleMouseMove}
                         onMouseUp={handleMouseUp}
@@ -494,12 +494,12 @@ export default function ImageCropModal({
 
                     {/* Quick Canvas Controls */}
                     <div className="flex items-center gap-3 mt-3 w-full max-w-[380px]">
-                        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-md border border-slate-200">
+                        <div className="flex items-center gap-1 bg-muted p-1 rounded-md border border-border">
                             <button
                                 type="button"
                                 onClick={() => setZoom((z) => Math.max(0.5, z - 0.1))}
                                 title="Zoom Out"
-                                className="p-1 hover:bg-white rounded text-slate-700 transition"
+                                className="p-1 hover:bg-background rounded text-foreground transition"
                             >
                                 <ZoomOut className="w-4 h-4" />
                             </button>
@@ -510,27 +510,27 @@ export default function ImageCropModal({
                                 step={0.05}
                                 value={zoom}
                                 onChange={(e) => setZoom(parseFloat(e.target.value))}
-                                className="w-24 h-1.5 bg-slate-300 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                                className="w-24 h-1.5 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
                             />
                             <button
                                 type="button"
                                 onClick={() => setZoom((z) => Math.min(3, z + 0.1))}
                                 title="Zoom In"
-                                className="p-1 hover:bg-white rounded text-slate-700 transition"
+                                className="p-1 hover:bg-background rounded text-foreground transition"
                             >
                                 <ZoomIn className="w-4 h-4" />
                             </button>
-                            <span className="text-[11px] font-mono text-slate-600 px-1 font-semibold">
+                            <span className="text-[11px] font-mono text-muted-foreground px-1 font-semibold">
                                 {zoom.toFixed(1)}x
                             </span>
                         </div>
 
-                        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-md border border-slate-200 ml-auto">
+                        <div className="flex items-center gap-1 bg-muted p-1 rounded-md border border-border ml-auto">
                             <button
                                 type="button"
                                 onClick={() => setRotation((r) => (r - 90 + 360) % 360)}
                                 title="Rotate Left 90°"
-                                className="p-1.5 hover:bg-white rounded text-slate-700 transition"
+                                className="p-1.5 hover:bg-background rounded text-foreground transition"
                             >
                                 <RotateCcw className="w-4 h-4" />
                             </button>
@@ -538,7 +538,7 @@ export default function ImageCropModal({
                                 type="button"
                                 onClick={() => setRotation((r) => (r + 90) % 360)}
                                 title="Rotate Right 90°"
-                                className="p-1.5 hover:bg-white rounded text-slate-700 transition"
+                                className="p-1.5 hover:bg-background rounded text-foreground transition"
                             >
                                 <RotateCw className="w-4 h-4" />
                             </button>
@@ -549,8 +549,8 @@ export default function ImageCropModal({
                 {/* Sidebar Controls */}
                 <div className="md:col-span-5 space-y-4">
                     {/* Aspect Ratio Correction */}
-                    <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg">
-                        <Label className="text-xs font-bold text-slate-700 uppercase tracking-wider block mb-2">
+                    <div className="p-3 bg-muted/30 border border-border rounded-lg">
+                        <Label className="text-xs font-bold text-foreground uppercase tracking-wider block mb-2">
                             Aspect Ratio Format
                         </Label>
                         <div className="grid grid-cols-2 gap-2">
@@ -559,8 +559,8 @@ export default function ImageCropModal({
                                 onClick={() => setAspectRatio('1:1')}
                                 className={`flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold rounded-md border transition ${
                                     aspectRatio === '1:1'
-                                        ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                                        : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+                                        ? 'bg-primary text-primary-foreground border-primary shadow-sm'
+                                        : 'bg-card text-foreground border-border hover:bg-accent'
                                 }`}
                             >
                                 <Square className="w-3.5 h-3.5" />
@@ -571,8 +571,8 @@ export default function ImageCropModal({
                                 onClick={() => setAspectRatio('3:4')}
                                 className={`flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold rounded-md border transition ${
                                     aspectRatio === '3:4'
-                                        ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                                        : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+                                        ? 'bg-primary text-primary-foreground border-primary shadow-sm'
+                                        : 'bg-card text-foreground border-border hover:bg-accent'
                                 }`}
                             >
                                 <Crop className="w-3.5 h-3.5" />
@@ -580,12 +580,12 @@ export default function ImageCropModal({
                             </button>
                         </div>
                         {aspectRatio === '1:1' && (
-                            <label className="flex items-center gap-2 mt-2.5 text-[11px] text-slate-600 cursor-pointer">
+                            <label className="flex items-center gap-2 mt-2.5 text-[11px] text-muted-foreground cursor-pointer">
                                 <input
                                     type="checkbox"
                                     checked={showCircleGuide}
                                     onChange={(e) => setShowCircleGuide(e.target.checked)}
-                                    className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5"
+                                    className="rounded border-input text-primary focus:ring-ring w-3.5 h-3.5 bg-background"
                                 />
                                 Show circular avatar guideline
                             </label>
@@ -593,14 +593,14 @@ export default function ImageCropModal({
                     </div>
 
                     {/* Background Color Customization */}
-                    <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg">
+                    <div className="p-3 bg-muted/30 border border-border rounded-lg">
                         <div className="flex items-center justify-between mb-2">
-                            <Label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-                                <Palette className="w-3.5 h-3.5 text-blue-600" />
+                            <Label className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
+                                <Palette className="w-3.5 h-3.5 text-primary" />
                                 Background Color
                             </Label>
                             {bgColor !== 'original' && (
-                                <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded uppercase">
+                                <span className="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-bold px-1.5 py-0.5 rounded uppercase">
                                     Active
                                 </span>
                             )}
@@ -614,8 +614,8 @@ export default function ImageCropModal({
                                     onClick={() => setBgColor(preset.id)}
                                     className={`flex items-center gap-2 p-2 rounded-md border text-left transition ${
                                         bgColor === preset.id
-                                            ? 'border-blue-600 ring-2 ring-blue-100 bg-white shadow-sm'
-                                            : 'border-slate-200 bg-white hover:bg-slate-100'
+                                            ? 'border-primary ring-2 ring-primary/20 bg-background shadow-sm'
+                                            : 'border-border bg-card hover:bg-accent'
                                     }`}
                                 >
                                     <span
@@ -626,7 +626,7 @@ export default function ImageCropModal({
                                             <Check className={`w-3 h-3 ${preset.id === 'white' ? 'text-slate-900' : 'text-white'}`} />
                                         )}
                                     </span>
-                                    <span className="text-xs font-medium text-slate-800 leading-tight">
+                                    <span className="text-xs font-medium text-foreground leading-tight">
                                         {preset.name}
                                     </span>
                                 </button>
@@ -634,10 +634,10 @@ export default function ImageCropModal({
                         </div>
 
                         {bgColor !== 'original' && (
-                            <div className="mt-3 pt-3 border-t border-slate-200 space-y-2.5">
+                            <div className="mt-3 pt-3 border-t border-border space-y-2.5">
                                 <div className="flex items-center justify-between text-xs">
-                                    <span className="text-slate-600 font-medium">Smart Backdrop Tolerance:</span>
-                                    <span className="font-mono text-slate-800 font-bold">{tolerance}%</span>
+                                    <span className="text-muted-foreground font-medium">Smart Backdrop Tolerance:</span>
+                                    <span className="font-mono text-foreground font-bold">{tolerance}%</span>
                                 </div>
                                 <input
                                     type="range"
@@ -646,9 +646,9 @@ export default function ImageCropModal({
                                     step={1}
                                     value={tolerance}
                                     onChange={(e) => setTolerance(parseInt(e.target.value, 10))}
-                                    className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                                    className="w-full h-1.5 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
                                 />
-                                <p className="text-[11px] text-slate-400 leading-tight">
+                                <p className="text-[11px] text-muted-foreground leading-tight">
                                     Increases or decreases edge detection sensitivity to replace uneven wall backdrops with clean {bgColor}.
                                 </p>
                             </div>

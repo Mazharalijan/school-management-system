@@ -1,71 +1,136 @@
-import React from 'react';
-import { Link, usePage } from '@inertiajs/react';
+import React, { useState, useEffect } from 'react';
+import { usePage } from '@inertiajs/react';
 import AdminSidebar from '@/components/AdminSidebar';
 import ThemeToggle from '@/components/ThemeToggle';
 import { Button } from '@/components/ui/button';
-import { Printer, LogOut } from 'lucide-react';
+import { Printer, Search } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import ToastContainer from '@/components/Toast';
+import CommandPalette from '@/components/CommandPalette';
 
 export default function AppLayout({ title, children }) {
     const { props } = usePage();
-    const user = props.auth?.user;
+    const initialTheme = props.system_settings?.dashboard_theme || 'shadcn';
+
+    const [currentTheme, setCurrentTheme] = useState(() => {
+        try {
+            return localStorage.getItem('dashboard_theme') || initialTheme;
+        } catch (e) {
+            return initialTheme;
+        }
+    });
+
+    const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+
+    useEffect(() => {
+        const handleThemeChanged = (e) => {
+            const next = e.detail || localStorage.getItem('dashboard_theme') || initialTheme;
+            setCurrentTheme(next);
+        };
+
+        window.addEventListener('dashboard-theme-changed', handleThemeChanged);
+        return () => window.removeEventListener('dashboard-theme-changed', handleThemeChanged);
+    }, [initialTheme]);
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                setIsCommandPaletteOpen((prev) => !prev);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
+    const isAcademic = currentTheme === 'academic';
+    const isCompact = currentTheme === 'compact';
 
     return (
-        <div className="h-screen h-[100dvh] w-full flex bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased overflow-hidden">
-            {/* Sidebar (Permanently fixed on the left) */}
-            <AdminSidebar />
+        <div className="h-screen h-[100dvh] w-full flex bg-background text-foreground font-sans antialiased overflow-hidden selection:bg-primary selection:text-primary-foreground">
+            {/* Sidebar (Adapts style to Academic Classic / Shadcn Modern / Compact) */}
+            <AdminSidebar dashboardTheme={currentTheme} />
 
-            {/* Main Area */}
+            {/* Main Content Area */}
             <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
-                {/* Top Header (Permanently fixed at the top) */}
-                <header className="h-16 shrink-0 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between no-print z-10">
-                    <h1 className="text-xl font-bold text-slate-800 dark:text-slate-100">{title || 'Dashboard'}</h1>
-                    <div className="flex items-center space-x-3">
-                        <ThemeToggle />
+                {/* Top Header */}
+                <header
+                    className={cn(
+                        "shrink-0 px-6 flex items-center justify-between no-print z-10 transition-colors border-b",
+                        isCompact ? "h-14 px-4" : "h-16",
+                        isAcademic
+                            ? "bg-card border-border"
+                            : "bg-background/95 backdrop-blur-xs border-border"
+                    )}
+                >
+                    <h1
+                        className={cn(
+                            "font-bold tracking-tight text-foreground font-sans",
+                            isCompact ? "text-lg" : "text-xl"
+                        )}
+                    >
+                        {title || 'Dashboard'}
+                    </h1>
 
-                        <Button 
-                            variant="outline" 
+                    <div className="flex items-center space-x-3">
+                        {/* Quick Command Palette Button */}
+                        <Button
+                            variant="outline"
                             size="sm"
-                            onClick={() => window.print()}
-                            className="flex items-center space-x-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
+                            onClick={() => setIsCommandPaletteOpen(true)}
+                            className="hidden md:flex items-center gap-2 h-8 px-2.5 text-xs text-muted-foreground hover:text-foreground border-border bg-background hover:bg-muted"
+                            title="Quick Search / Command Palette (Ctrl+K)"
                         >
-                            <Printer className="h-4 w-4" />
-                            <span>Print Page</span>
+                            <Search className="h-3.5 w-3.5" />
+                            <span>Quick Search...</span>
+                            <kbd className="pointer-events-none inline-flex h-4 select-none items-center gap-0.5 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                                <span>⌘</span>K
+                            </kbd>
                         </Button>
 
-                        <div className="h-5 w-px bg-slate-200 dark:bg-slate-800 hidden sm:block" />
+                        <ThemeToggle
+                            className={cn(
+                                isAcademic
+                                    ? "rounded-none border-border bg-muted text-foreground"
+                                    : isCompact
+                                    ? "rounded-md h-8 w-8"
+                                    : "rounded-lg"
+                            )}
+                        />
 
-                        <div className="hidden sm:flex items-center space-x-2.5">
-                            <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-200 text-xs font-semibold">
-                                {user?.first_name?.[0] || user?.name?.[0] || 'U'}
-                            </div>
-                            <div className="text-left hidden md:block">
-                                <p className="text-xs font-semibold text-slate-800 dark:text-slate-200 leading-tight">
-                                    {user?.name || `${user?.first_name || ''} ${user?.last_name || ''}`.trim() || 'Operator'}
-                                </p>
-                                <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">
-                                    {user?.email || 'admin@school.edu.pk'}
-                                </p>
-                            </div>
-                        </div>
-
-                        <Link
-                            href={route('logout')}
-                            method="post"
-                            as="button"
-                            className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 border border-slate-200 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-800 transition-colors"
-                            title="Sign Out"
+                        {/* Print Button (Adapts to theme) */}
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => window.print()}
+                            className={cn(
+                                "flex items-center space-x-2 transition-all font-semibold",
+                                isAcademic
+                                    ? "bg-primary hover:bg-primary/90 text-primary-foreground border-primary rounded-none shadow-xs text-xs h-8 px-3.5"
+                                    : isCompact
+                                    ? "h-8 px-2.5 text-xs rounded-md border-border bg-background hover:bg-muted text-foreground"
+                                    : "h-8 px-3 text-xs rounded-lg text-muted-foreground hover:text-foreground border-border bg-background hover:bg-muted"
+                            )}
                         >
-                            <LogOut className="h-3.5 w-3.5" />
-                            <span className="hidden sm:inline">Sign Out</span>
-                        </Link>
+                            <Printer className="h-4 w-4" />
+                            <span className="hidden sm:inline">Print Page</span>
+                        </Button>
                     </div>
                 </header>
 
-                {/* Main Content Workspace (Independent internal scroll) */}
-                <main className="flex-1 p-6 overflow-y-auto min-h-0 focus:outline-none bg-slate-50 dark:bg-slate-950">
+                {/* Main Content Workspace (Full-width scroll container) */}
+                <main className="flex-1 p-5 md:p-6 overflow-y-auto min-h-0 focus:outline-none bg-muted/20 dark:bg-background transition-colors w-full">
                     {children}
                 </main>
             </div>
+
+            {/* Global Toast Notifications & Command Palette */}
+            <ToastContainer />
+            <CommandPalette
+                isOpen={isCommandPaletteOpen}
+                onClose={() => setIsCommandPaletteOpen(false)}
+            />
         </div>
     );
 }

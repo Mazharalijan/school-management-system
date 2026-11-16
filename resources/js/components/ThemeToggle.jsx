@@ -1,26 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { usePage } from '@inertiajs/react';
 import { Sun, Moon, Laptop } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function ThemeToggle({ className = '' }) {
+    const { props } = usePage();
+    const systemSettingTheme = props.system_settings?.theme_mode;
+
     const [theme, setTheme] = useState('system');
     const [isDark, setIsDark] = useState(false);
-
-    useEffect(() => {
-        const storedTheme = localStorage.getItem('theme') || 'system';
-        setTheme(storedTheme);
-        applyTheme(storedTheme);
-
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        const handleChange = () => {
-            if (localStorage.getItem('theme') === 'system' || !localStorage.getItem('theme')) {
-                applyTheme('system');
-            }
-        };
-
-        mediaQuery.addEventListener('change', handleChange);
-        return () => mediaQuery.removeEventListener('change', handleChange);
-    }, []);
 
     const applyTheme = (targetTheme) => {
         const root = document.documentElement;
@@ -36,6 +24,40 @@ export default function ThemeToggle({ className = '' }) {
         }
     };
 
+    useEffect(() => {
+        let initial = 'system';
+        try {
+            initial = localStorage.getItem('theme') || systemSettingTheme || 'system';
+        } catch (e) {
+            initial = systemSettingTheme || 'system';
+        }
+
+        setTheme(initial);
+        applyTheme(initial);
+
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleMediaChange = () => {
+            const current = localStorage.getItem('theme') || 'system';
+            if (current === 'system') {
+                applyTheme('system');
+            }
+        };
+
+        const handleCustomThemeEvent = (e) => {
+            const newMode = e.detail || 'system';
+            setTheme(newMode);
+            applyTheme(newMode);
+        };
+
+        mediaQuery.addEventListener('change', handleMediaChange);
+        window.addEventListener('theme-changed', handleCustomThemeEvent);
+
+        return () => {
+            mediaQuery.removeEventListener('change', handleMediaChange);
+            window.removeEventListener('theme-changed', handleCustomThemeEvent);
+        };
+    }, [systemSettingTheme]);
+
     const toggleTheme = () => {
         let nextTheme;
         if (theme === 'light') {
@@ -47,8 +69,11 @@ export default function ThemeToggle({ className = '' }) {
         }
 
         setTheme(nextTheme);
-        localStorage.setItem('theme', nextTheme);
+        try {
+            localStorage.setItem('theme', nextTheme);
+        } catch (e) {}
         applyTheme(nextTheme);
+        window.dispatchEvent(new CustomEvent('theme-changed', { detail: nextTheme }));
     };
 
     return (
@@ -56,8 +81,8 @@ export default function ThemeToggle({ className = '' }) {
             variant="outline"
             size="sm"
             onClick={toggleTheme}
-            className={`h-9 w-9 p-0 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-xs ${className}`}
-            title={`Current theme: ${theme.toUpperCase()} (Click to change)`}
+            className={`h-9 w-9 p-0 rounded-lg border border-border bg-card text-foreground hover:bg-muted transition-colors shadow-xs ${className}`}
+            title={`Theme Mode: ${theme.toUpperCase()} (Click to toggle)`}
             aria-label="Toggle theme"
         >
             {theme === 'dark' ? (

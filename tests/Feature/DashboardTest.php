@@ -7,6 +7,7 @@ use App\Models\ExpenseCategory;
 use App\Models\FeePayment;
 use App\Models\Staff;
 use App\Models\Student;
+use App\Models\SystemSetting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -147,6 +148,98 @@ class DashboardTest extends TestCase
             ->component('Dashboard')
             ->where('currentPeriod', 'this_month')
         );
+    }
+
+    public function test_dashboard_renders_custom_theme_from_system_settings(): void
+    {
+        $user = User::factory()->create();
+
+        SystemSetting::create([
+            'school_name' => 'Al-Hikmah Academy',
+            'current_session_year' => '2026-2027',
+            'currency_symbol' => 'Rs.',
+            'currency_code' => 'PKR',
+            'timezone' => 'Asia/Karachi',
+            'date_format' => 'Y-m-d',
+            'invoice_prefix' => 'INV-',
+            'dashboard_theme' => 'academic',
+        ]);
+
+        $response = $this->actingAs($user)->get('/');
+
+        $response->assertStatus(200);
+        $response->assertInertia(fn ($page) => $page
+            ->component('Dashboard')
+            ->where('dashboardTheme', 'academic')
+        );
+    }
+
+    public function test_system_settings_allows_updating_dashboard_theme(): void
+    {
+        $user = User::factory()->create();
+
+        $setting = SystemSetting::create([
+            'school_name' => 'Al-Hikmah Academy',
+            'current_session_year' => '2026-2027',
+            'currency_symbol' => 'Rs.',
+            'currency_code' => 'PKR',
+            'timezone' => 'Asia/Karachi',
+            'date_format' => 'Y-m-d',
+            'invoice_prefix' => 'INV-',
+            'dashboard_theme' => 'shadcn',
+        ]);
+
+        $updateResponse = $this->actingAs($user)->post(route('settings.update'), [
+            'school_name' => 'Al-Hikmah Updated',
+            'current_session_year' => '2026-2027',
+            'currency_symbol' => 'Rs.',
+            'currency_code' => 'PKR',
+            'timezone' => 'Asia/Karachi',
+            'date_format' => 'Y-m-d',
+            'invoice_prefix' => 'INV-',
+            'phone' => '+92 300 1234567',
+            'email' => 'info@alhikmah.edu.pk',
+            'address' => 'Main Campus, Lahore',
+            'dashboard_theme' => 'compact',
+            'theme_mode' => 'dark',
+        ]);
+
+        $updateResponse->assertRedirect();
+        $this->assertDatabaseHas('system_settings', [
+            'id' => $setting->id,
+            'dashboard_theme' => 'compact',
+            'theme_mode' => 'dark',
+        ]);
+    }
+
+    public function test_system_settings_supports_quick_theme_update_without_full_form(): void
+    {
+        $user = User::factory()->create();
+
+        $setting = SystemSetting::create([
+            'school_name' => 'Al-Hikmah Academy',
+            'current_session_year' => '2026-2027',
+            'currency_symbol' => 'Rs.',
+            'currency_code' => 'PKR',
+            'timezone' => 'Asia/Karachi',
+            'date_format' => 'Y-m-d',
+            'invoice_prefix' => 'INV-',
+            'phone' => '03001234567',
+            'email' => 'admin@school.com',
+            'address' => 'City Campus',
+            'dashboard_theme' => 'shadcn',
+        ]);
+
+        $updateResponse = $this->actingAs($user)->post(route('settings.update'), [
+            'dashboard_theme' => 'academic',
+        ]);
+
+        $updateResponse->assertRedirect();
+        $this->assertDatabaseHas('system_settings', [
+            'id' => $setting->id,
+            'dashboard_theme' => 'academic',
+            'school_name' => 'Al-Hikmah Academy',
+        ]);
     }
 
     public function test_all_quick_navigation_routes_are_accessible(): void

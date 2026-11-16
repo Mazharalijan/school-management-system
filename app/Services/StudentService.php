@@ -23,6 +23,8 @@ class StudentService
                 'current_enrollment.school_class',
                 'current_enrollment.section',
                 'feeProfile.items.feeHead', // Eager-load student-specific fee structure & overrides
+                'examResults.examSession',
+                'documentPrints.printLogs.printedBy',
                 'invoices' => function ($query) {
                     $query->whereIn('status', ['unpaid', 'partially_paid', 'overdue'])
                         ->orderBy('session_year', 'asc')

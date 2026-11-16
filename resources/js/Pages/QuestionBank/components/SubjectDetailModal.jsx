@@ -10,9 +10,11 @@ export default function SubjectDetailModal({ isOpen, onClose, subject }) {
     const modalFooter = (
         <Button
             type="button"
+            variant="outline"
             onClick={onClose}
-            className="bg-slate-800 hover:bg-slate-900 text-white ml-auto"
-        >   <X className="w-4 h-4" />
+            className="ml-auto"
+        >
+            <X className="w-4 h-4 mr-1" />
             Close
         </Button>
     );
@@ -26,21 +28,21 @@ export default function SubjectDetailModal({ isOpen, onClose, subject }) {
             maxWidth="sm:max-w-4xl"
         >
             <div className="space-y-4">
-                <div className="grid grid-cols-2 md:grid-cols-2 gap-4 border-b pb-4">
-                    <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <div className="grid grid-cols-2 md:grid-cols-2 gap-4 border-b border-border pb-4">
+                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                         Subject Name
                     </span>
-                    <span className="text-base font-semibold text-slate-800">
+                    <span className="text-base font-semibold text-foreground">
                         {subject.subject_name}
                     </span>
                 </div>
 
                 {subject.chapters && subject.chapters.length > 0 && (
                     <div>
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">
+                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block mb-2">
                             Associated Chapters
                         </span>
-                        <ul className="list-disc list-inside text-sm text-slate-700 space-y-1">
+                        <ul className="list-disc list-inside text-sm text-foreground space-y-1">
                             {subject.chapters.map((ch) => (
                                 <li key={ch.id}>{ch.name || ch.chapter_name + ` (${ch.school_class?.name || 'N/A'})`}</li>
                             ))}

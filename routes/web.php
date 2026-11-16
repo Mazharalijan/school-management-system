@@ -3,6 +3,7 @@
 use App\Http\Controllers\Accounting\ExpenseController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ClassMatrixController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Exam\ExamClassPaperController;
@@ -56,8 +57,18 @@ Route::middleware('auth')->group(function () {
     });
 
     // --- Student & Staff Routes ---
+    Route::get('students/search', [StudentController::class, 'search'])->name('students.search');
     Route::resource('students', StudentController::class)->except(['create', 'edit', 'show']);
+    Route::get('students/{student}', [StudentController::class, 'show'])->name('students.show');
     Route::resource('staff', StaffController::class)->except(['create', 'edit', 'show']);
+
+    // --- Student Certificates & Document Print Routes ---
+    Route::prefix('certificates')->name('certificates.')->group(function () {
+        Route::get('/', [CertificateController::class, 'index'])->name('index');
+        Route::post('/', [CertificateController::class, 'store'])->name('store');
+        Route::post('/{certificate}/print', [CertificateController::class, 'recordPrint'])->name('record-print');
+        Route::delete('/{certificate}', [CertificateController::class, 'destroy'])->name('destroy');
+    });
 
     // --- System Settings Routes ---
     Route::get('/settings', [SystemSettingController::class, 'edit'])->name('settings.edit');
@@ -173,6 +184,7 @@ Route::middleware('auth')->group(function () {
     Route::post('marks/bulk-store', [StudentMarkController::class, 'storeBulkMarks'])->name('marks.bulk-store');
     Route::post('marks/process-results', [StudentMarkController::class, 'processResults'])->name('marks.process-results');
     Route::get('marks/dmc/{examResult}', [StudentMarkController::class, 'dmcView'])->name('marks.dmc');
+    Route::post('marks/dmc/{examResult}/print', [StudentMarkController::class, 'recordDmcPrint'])->name('marks.dmc.print');
 
     // --- Timetable Generator & Schedule Routes ---
 

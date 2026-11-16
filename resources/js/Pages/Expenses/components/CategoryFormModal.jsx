@@ -33,17 +33,17 @@ export default function CategoryFormModal({ isOpen, onClose }) {
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-md bg-card text-card-foreground border-border">
                 <DialogHeader>
-                    <DialogTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
-                        <FolderPlus className="w-4 h-4 text-indigo-600" />
+                    <DialogTitle className="text-base font-bold text-foreground flex items-center gap-2">
+                        <FolderPlus className="w-4 h-4 text-primary" />
                         Create Expense Category
                     </DialogTitle>
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-4 pt-2">
                     <div>
-                        <Label htmlFor="category_name" className="text-xs font-bold text-slate-600 uppercase">
+                        <Label htmlFor="category_name" className="text-xs font-bold text-muted-foreground uppercase">
                             Category Name *
                         </Label>
                         <Input
@@ -65,7 +65,7 @@ export default function CategoryFormModal({ isOpen, onClose }) {
                     </div>
 
                     <div>
-                        <Label htmlFor="category_code" className="text-xs font-bold text-slate-600 uppercase">
+                        <Label htmlFor="category_code" className="text-xs font-bold text-muted-foreground uppercase">
                             Category Code
                         </Label>
                         <Input
@@ -80,7 +80,7 @@ export default function CategoryFormModal({ isOpen, onClose }) {
                     </div>
 
                     <div>
-                        <Label htmlFor="category_desc" className="text-xs font-bold text-slate-600 uppercase">
+                        <Label htmlFor="category_desc" className="text-xs font-bold text-muted-foreground uppercase">
                             Description
                         </Label>
                         <textarea
@@ -89,18 +89,18 @@ export default function CategoryFormModal({ isOpen, onClose }) {
                             placeholder="Describe purpose of this expense bucket..."
                             value={data.description}
                             onChange={(e) => setData('description', e.target.value)}
-                            className="mt-1 w-full p-2.5 text-xs rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900"
+                            className="mt-1 w-full p-2.5 text-xs rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                         />
                     </div>
 
-                    <DialogFooter className="pt-3 border-t">
+                    <DialogFooter className="pt-3 border-t border-border">
                         <Button type="button" variant="outline" onClick={onClose}>
                             Cancel
                         </Button>
                         <Button
                             type="submit"
                             disabled={processing}
-                            className="bg-slate-900 hover:bg-slate-800 text-white font-semibold"
+                            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                         >
                             {processing ? (
                                 <>

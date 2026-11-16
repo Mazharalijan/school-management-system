@@ -44,14 +44,14 @@ export default function QuestionsTab({ questions, classes, filters, onEdit }) {
             header: 'Question',
             accessor: 'question',
             render: (item) => (
-                <div className="max-w-md truncate font-medium text-slate-800" title={item.question}>
+                <div className="max-w-md truncate font-medium text-foreground" title={item.question}>
                     {item.question}
                 </div>
             ),
         },
         { header: 'Class', render: (item) => item.school_class?.name || '-' },
         { header: 'Subject', render: (item) => item.subject?.subject_name || '-' },
-        { header: 'Type', render: (item) => <span className="uppercase text-xs font-semibold px-2 py-1 bg-slate-100 rounded text-slate-700">{item.question_type}</span> },
+        { header: 'Type', render: (item) => <span className="uppercase text-xs font-semibold px-2 py-1 bg-muted rounded text-muted-foreground">{item.question_type}</span> },
         { header: 'Marks', accessor: 'marks', align: 'right' },
         {
             header: 'Actions',

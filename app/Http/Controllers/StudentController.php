@@ -7,8 +7,10 @@ use App\Http\Requests\UpdateStudentRequest;
 use App\Models\SchoolClass;
 use App\Models\Student;
 use App\Services\StudentService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -53,5 +55,61 @@ class StudentController extends Controller
         $student->delete();
 
         return redirect()->back()->with('success', 'Student record removed.');
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $term = trim((string) $request->query('q', ''));
+        if (mb_strlen($term) < 1) {
+            return response()->json([]);
+        }
+
+        $driver = DB::getDriverName();
+        $concatSql = $driver === 'sqlite' ? "first_name || ' ' || last_name" : "CONCAT(first_name, ' ', last_name)";
+
+        $students = Student::with([
+            'current_enrollment.school_class',
+            'current_enrollment.section',
+            'enrollments.school_class',
+            'enrollments.section',
+            'feeProfile.items.feeHead',
+            'invoices',
+            'examResults.examSession',
+            'examResults.schoolClass',
+            'documentPrints.printLogs.printedBy',
+        ])
+            ->where(function ($q) use ($term, $concatSql) {
+                $q->where('first_name', 'like', "%{$term}%")
+                    ->orWhere('last_name', 'like', "%{$term}%")
+                    ->orWhereRaw("{$concatSql} LIKE ?", ["%{$term}%"])
+                    ->orWhere('roll_number', 'like', "%{$term}%")
+                    ->orWhere('admission_number', 'like', "%{$term}%")
+                    ->orWhere('guardian_name', 'like', "%{$term}%")
+                    ->orWhere('guardian_phone', 'like', "%{$term}%")
+                    ->orWhere('father_cnic', 'like', "%{$term}%")
+                    ->orWhereHas('current_enrollment.school_class', fn ($cq) => $cq->where('name', 'like', "%{$term}%"))
+                    ->orWhereHas('current_enrollment.section', fn ($sq) => $sq->where('name', 'like', "%{$term}%"));
+            })
+            ->take(10)
+            ->get();
+
+        return response()->json($students);
+    }
+
+    public function show(Student $student): JsonResponse
+    {
+        $student->load([
+            'current_enrollment.school_class',
+            'current_enrollment.section',
+            'enrollments.school_class',
+            'enrollments.section',
+            'feeProfile.items.feeHead',
+            'invoices',
+            'examResults.examSession',
+            'examResults.schoolClass',
+            'documentPrints.printLogs.printedBy',
+        ]);
+
+        return response()->json($student);
     }
 }

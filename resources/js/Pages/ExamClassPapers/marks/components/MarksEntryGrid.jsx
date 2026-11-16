@@ -113,13 +113,13 @@ export default function MarksEntryGrid({
   };
 
   const calculateGrade = (percentage) => {
-    if (percentage >= 90) return { label: 'A+', variant: 'bg-emerald-100 text-emerald-800' };
-    if (percentage >= 80) return { label: 'A', variant: 'bg-emerald-50 text-emerald-700' };
-    if (percentage >= 70) return { label: 'B', variant: 'bg-blue-50 text-blue-700' };
-    if (percentage >= 60) return { label: 'C', variant: 'bg-amber-50 text-amber-700' };
-    if (percentage >= 50) return { label: 'D', variant: 'bg-orange-50 text-orange-700' };
-    if (percentage >= 33) return { label: 'E', variant: 'bg-yellow-50 text-yellow-800' };
-    return { label: 'F', variant: 'bg-rose-100 text-rose-800' };
+    if (percentage >= 90) return { label: 'A+', variant: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' };
+    if (percentage >= 80) return { label: 'A', variant: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' };
+    if (percentage >= 70) return { label: 'B', variant: 'bg-blue-500/10 text-blue-600 dark:text-blue-400' };
+    if (percentage >= 60) return { label: 'C', variant: 'bg-amber-500/10 text-amber-600 dark:text-amber-400' };
+    if (percentage >= 50) return { label: 'D', variant: 'bg-orange-500/10 text-orange-600 dark:text-orange-400' };
+    if (percentage >= 33) return { label: 'E', variant: 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400' };
+    return { label: 'F', variant: 'bg-destructive/10 text-destructive' };
   };
 
   const handleAddStudent = (e) => {
@@ -144,8 +144,8 @@ export default function MarksEntryGrid({
     <div className="space-y-4">
       {/* Quick Add Row Action & Count Indicator */}
       <div className="flex items-center justify-between">
-        <div className="text-xs text-slate-500 font-medium">
-          Showing <span className="font-semibold text-slate-900">{filteredStudents.length}</span> students across <span className="font-semibold text-slate-900">{papers.length}</span> subject papers
+        <div className="text-xs text-muted-foreground font-medium">
+          Showing <span className="font-semibold text-foreground">{filteredStudents.length}</span> students across <span className="font-semibold text-foreground">{papers.length}</span> subject papers
         </div>
 
         <Button
@@ -153,7 +153,7 @@ export default function MarksEntryGrid({
           variant="outline"
           size="sm"
           onClick={() => setShowAddForm(!showAddForm)}
-          className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold h-8"
+          className="text-xs font-semibold h-8"
         >
           {showAddForm ? (
             <>
@@ -161,7 +161,7 @@ export default function MarksEntryGrid({
             </>
           ) : (
             <>
-              <UserPlus className="w-3.5 h-3.5 mr-1 text-emerald-600" /> Quick Add Student Row
+              <UserPlus className="w-3.5 h-3.5 mr-1 text-primary" /> Quick Add Student Row
             </>
           )}
         </Button>
@@ -169,13 +169,13 @@ export default function MarksEntryGrid({
 
       {/* Inline Quick Add Student Form */}
       {showAddForm && (
-        <form onSubmit={handleAddStudent} className="p-3.5 bg-slate-50 border border-slate-200 rounded-lg flex flex-wrap items-center gap-3 text-xs">
+        <form onSubmit={handleAddStudent} className="p-3.5 bg-muted/30 border border-border rounded-lg flex flex-wrap items-center gap-3 text-xs">
           <Input
             type="text"
             placeholder="Roll No (e.g. 505)"
             value={newStudent.roll_no}
             onChange={(e) => setNewStudent(prev => ({ ...prev, roll_no: e.target.value }))}
-            className="w-36 h-8 text-xs bg-white"
+            className="w-36 h-8 text-xs bg-background"
             required
           />
           <Input
@@ -183,53 +183,53 @@ export default function MarksEntryGrid({
             placeholder="Student Full Name"
             value={newStudent.name}
             onChange={(e) => setNewStudent(prev => ({ ...prev, name: e.target.value }))}
-            className="flex-1 min-w-[200px] h-8 text-xs bg-white"
+            className="flex-1 min-w-[200px] h-8 text-xs bg-background"
             required
           />
-          <Button type="submit" size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold h-8 text-xs">
+          <Button type="submit" size="sm" className="font-bold h-8 text-xs">
             Append to Grid
           </Button>
         </form>
       )}
 
       {/* Primary Unified Marks Evaluation Table */}
-      <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs text-left text-slate-600">
-            <thead className="text-[11px] uppercase bg-slate-50 text-slate-500 font-semibold border-b border-slate-200 tracking-wider">
+      <div className="bg-card rounded-lg shadow-sm border border-border overflow-hidden text-card-foreground">
+        <div className="overflow-x-auto max-h-[70vh] overflow-y-auto">
+          <table className="w-full text-xs text-left text-muted-foreground border-collapse">
+            <thead className="text-[11px] uppercase bg-muted text-muted-foreground font-semibold border-b border-border tracking-wider sticky top-0 z-20 shadow-xs">
               <tr>
-                <th className="py-3 px-3 text-center border-r border-slate-200 w-16 sticky left-0 bg-slate-50 z-10 shadow-xs">
+                <th className="py-3 px-3 text-center border-r border-border w-16 sticky left-0 top-0 bg-muted z-30 shadow-xs">
                   Roll #
                 </th>
-                <th className="py-3 px-4 border-r border-slate-200 min-w-[180px] sticky left-16 bg-slate-50 z-10 shadow-xs">
+                <th className="py-3 px-4 border-r border-border min-w-[180px] sticky left-16 top-0 bg-muted z-30 shadow-xs">
                   Student Name
                 </th>
 
                 {/* Subject Columns */}
                 {papers.map((paper) => (
-                  <th key={paper.subject_id || paper.id} className="py-2.5 px-3 border-r border-slate-200 text-center min-w-[125px]">
-                    <div className="font-bold text-slate-800 normal-case text-xs truncate max-w-[130px] mx-auto">
+                  <th key={paper.subject_id || paper.id} className="py-2.5 px-3 border-r border-border text-center min-w-[125px]">
+                    <div className="font-bold text-foreground normal-case text-xs truncate max-w-[130px] mx-auto">
                       {paper.subject_name || paper.name || 'Subject'}
                     </div>
-                    <div className="text-[10px] text-slate-400 font-mono mt-0.5">
+                    <div className="text-[10px] text-muted-foreground font-mono mt-0.5">
                       Max: {paper.total_marks || 100} • Pass: {paper.passing_marks ?? Math.round((paper.total_marks || 100) * 0.33)}
                     </div>
                   </th>
                 ))}
 
-                <th className="py-3 px-3 text-center border-r border-slate-200 bg-slate-100/60 font-bold text-slate-700 min-w-[95px]">
+                <th className="py-3 px-3 text-center border-r border-border bg-muted/80 font-bold text-foreground min-w-[95px]">
                   Total Obtained
                 </th>
-                <th className="py-3 px-2 text-center border-r border-slate-200 min-w-[65px]">
+                <th className="py-3 px-2 text-center border-r border-border min-w-[65px]">
                   %age
                 </th>
-                <th className="py-3 px-2 text-center border-r border-slate-200 min-w-[65px]">
+                <th className="py-3 px-2 text-center border-r border-border min-w-[65px]">
                   Grade
                 </th>
-                <th className="py-3 px-2 text-center border-r border-slate-200 min-w-[75px]">
+                <th className="py-3 px-2 text-center border-r border-border min-w-[75px]">
                   Result
                 </th>
-                <th className="py-3 px-2 text-center border-r border-slate-200 min-w-[65px]">
+                <th className="py-3 px-2 text-center border-r border-border min-w-[65px]">
                   Rank
                 </th>
                 <th className="py-3 px-2 text-center min-w-[60px]">
@@ -238,10 +238,10 @@ export default function MarksEntryGrid({
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-border">
               {filteredStudents.length === 0 ? (
                 <tr>
-                  <td colSpan={papers.length + 7} className="text-center py-10 text-slate-400">
+                  <td colSpan={papers.length + 7} className="text-center py-10 text-muted-foreground">
                     No students match the current filters or no students are enrolled in this class.
                   </td>
                 </tr>
@@ -269,12 +269,12 @@ export default function MarksEntryGrid({
                   const position = student.result?.position_in_class || liveRankMap[student.id] || 1;
 
                   return (
-                    <tr key={student.id} className="hover:bg-slate-50/80 transition-colors">
-                      <td className="py-2.5 px-3 text-center font-mono font-bold text-slate-800 bg-white border-r border-slate-200 sticky left-0 z-5 shadow-xs">
+                    <tr key={student.id} className="hover:bg-muted/40 transition-colors">
+                      <td className="py-2.5 px-3 text-center font-mono font-bold text-foreground bg-card border-r border-border sticky left-0 z-5 shadow-xs">
                         {student.roll_no}
                       </td>
 
-                      <td className="py-2.5 px-4 font-semibold text-slate-900 border-r border-slate-200 sticky left-16 bg-white z-5 shadow-xs">
+                      <td className="py-2.5 px-4 font-semibold text-foreground border-r border-border sticky left-16 bg-card z-5 shadow-xs">
                         <div className="flex items-center gap-2">
                           <ProfileAvatar
                             src={student.photo_url}
@@ -282,7 +282,7 @@ export default function MarksEntryGrid({
                             className="w-6 h-6"
                             iconClassName="w-3.5 h-3.5"
                           />
-                          <span className="truncate max-w-[150px] font-medium text-slate-800" title={student.name}>
+                          <span className="truncate max-w-[150px] font-medium text-foreground" title={student.name}>
                             {student.name}
                           </span>
                         </div>
@@ -297,7 +297,7 @@ export default function MarksEntryGrid({
                         const isBelowPass = !isAbsent && markVal !== '' && Number(markVal) < passThreshold;
 
                         return (
-                          <td key={subKey} className="py-1.5 px-2 border-r border-slate-200 text-center">
+                          <td key={subKey} className="py-1.5 px-2 border-r border-border text-center">
                             <div className="flex items-center justify-center gap-1">
                               <input
                                 type="number"
@@ -310,12 +310,12 @@ export default function MarksEntryGrid({
                                 placeholder={isAbsent ? 'ABS' : '0'}
                                 className={`w-14 h-8 text-center text-xs font-bold rounded border transition-all ${
                                   isAbsent
-                                    ? 'bg-rose-50 border-rose-300 text-rose-600 font-bold italic'
+                                    ? 'bg-destructive/10 border-destructive/40 text-destructive font-bold italic'
                                     : isBelowPass
-                                    ? 'bg-rose-50 border-rose-300 text-rose-700 font-bold focus:ring-1 focus:ring-rose-500'
+                                    ? 'bg-destructive/10 border-destructive/40 text-destructive font-bold focus:ring-1 focus:ring-destructive'
                                     : markVal !== ''
-                                    ? 'bg-blue-50/50 border-blue-200 text-blue-900 font-bold focus:ring-1 focus:ring-blue-500'
-                                    : 'bg-white border-slate-200 text-slate-700 focus:ring-1 focus:ring-blue-500'
+                                    ? 'bg-primary/10 border-primary/30 text-primary font-bold focus:ring-1 focus:ring-ring'
+                                    : 'bg-background border-input text-foreground focus:ring-1 focus:ring-ring'
                                 }`}
                               />
                               <button
@@ -325,8 +325,8 @@ export default function MarksEntryGrid({
                                 onClick={() => handleAbsentToggle(student.id, subKey)}
                                 className={`p-1 rounded transition-all ${
                                   isAbsent
-                                    ? 'bg-rose-600 text-white hover:bg-rose-700'
-                                    : 'bg-slate-100 text-slate-400 hover:text-rose-600 hover:bg-rose-50'
+                                    ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
+                                    : 'bg-muted text-muted-foreground hover:text-destructive hover:bg-destructive/10'
                                 }`}
                               >
                                 <UserX className="w-3.5 h-3.5" />
@@ -337,41 +337,41 @@ export default function MarksEntryGrid({
                       })}
 
                       {/* Total Obtained */}
-                      <td className="py-2.5 px-3 text-center bg-slate-50/60 border-r border-slate-200 font-mono">
-                        <span className="text-xs font-bold text-slate-900">
+                      <td className="py-2.5 px-3 text-center bg-muted/30 border-r border-border font-mono">
+                        <span className="text-xs font-bold text-foreground">
                           {totalObtained}
                         </span>
-                        <span className="text-[10px] text-slate-400 block font-normal">
+                        <span className="text-[10px] text-muted-foreground block font-normal">
                           / {grandTotalMax}
                         </span>
                       </td>
 
                       {/* Percentage */}
-                      <td className="py-2.5 px-2 text-center border-r border-slate-200 font-mono font-bold text-slate-800">
+                      <td className="py-2.5 px-2 text-center border-r border-border font-mono font-bold text-foreground">
                         {percentage}%
                       </td>
 
                       {/* Grade */}
-                      <td className="py-2.5 px-2 text-center border-r border-slate-200">
-                        <Badge className={`${gradeInfo.variant} border-0 text-[10px] font-bold py-0 px-2`}>
+                      <td className="py-2.5 px-2 text-center border-r border-border">
+                        <Badge variant="outline" className={`${gradeInfo.variant} text-[10px] font-bold py-0 px-2`}>
                           {gradeInfo.label}
                         </Badge>
                       </td>
 
                       {/* Pass / Fail Status */}
-                      <td className="py-2.5 px-2 text-center border-r border-slate-200">
-                        <Badge className={
+                      <td className="py-2.5 px-2 text-center border-r border-border">
+                        <Badge variant="outline" className={
                           isPassed 
-                            ? 'bg-emerald-100 text-emerald-800 border-0 text-[10px] font-bold py-0 px-2' 
-                            : 'bg-rose-100 text-rose-800 border-0 text-[10px] font-bold py-0 px-2'
+                            ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 text-[10px] font-bold py-0 px-2' 
+                            : 'bg-destructive/10 text-destructive border-destructive/20 text-[10px] font-bold py-0 px-2'
                         }>
                           {isPassed ? 'PASS' : 'FAIL'}
                         </Badge>
                       </td>
 
                       {/* Rank / Position */}
-                      <td className="py-2.5 px-2 text-center border-r border-slate-200">
-                        <Badge variant="outline" className="font-mono text-slate-700 bg-slate-50 text-[10px] font-bold">
+                      <td className="py-2.5 px-2 text-center border-r border-border">
+                        <Badge variant="outline" className="font-mono text-[10px] font-bold">
                           #{position}
                         </Badge>
                       </td>
@@ -394,8 +394,8 @@ export default function MarksEntryGrid({
         </div>
 
         {/* Unified Footer Matching Students UI */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-3 bg-white border-t border-slate-200 text-xs">
-          <div className="flex items-center gap-2 text-slate-600">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-3 bg-muted/40 border-t border-border text-xs">
+          <div className="flex items-center gap-2 text-muted-foreground">
             <CheckCircle className="w-4 h-4 text-emerald-600" />
             <span>Automatic position ranking & pass/fail calculations active. Total: <strong>{filteredStudents.length}</strong></span>
           </div>
@@ -407,9 +407,9 @@ export default function MarksEntryGrid({
               size="sm"
               disabled={isSaving}
               onClick={onSaveDraft}
-              className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold h-8"
+              className="text-xs font-semibold h-8"
             >
-              {isSaving ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin text-slate-500" /> : <Save className="w-3.5 h-3.5 mr-1.5 text-slate-600" />}
+              {isSaving ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin text-muted-foreground" /> : <Save className="w-3.5 h-3.5 mr-1.5 text-muted-foreground" />}
               Save Draft
             </Button>
 
@@ -418,9 +418,9 @@ export default function MarksEntryGrid({
               size="sm"
               disabled={isSaving}
               onClick={onPrepareResults}
-              className="bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold h-8 shadow-sm"
+              className="text-xs font-semibold h-8 shadow-sm"
             >
-              {isSaving ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin text-white" /> : <Send className="w-3.5 h-3.5 mr-1.5 text-white" />}
+              {isSaving ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" /> : <Send className="w-3.5 h-3.5 mr-1.5" />}
               Save & Prepare Results
             </Button>
           </div>

@@ -13,8 +13,8 @@ export default function PageHeader({
     return (
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
             <div>
-                <h2 className="text-xl font-semibold text-slate-800">{title}</h2>
-                {subtitle && <p className="text-sm text-slate-500">{subtitle}</p>}
+                <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100 tracking-tight">{title}</h2>
+                {subtitle && <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">{subtitle}</p>}
             </div>
 
             <div className="flex items-center gap-3">

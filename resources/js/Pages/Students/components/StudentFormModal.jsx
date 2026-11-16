@@ -145,7 +145,7 @@ export default function StudentFormModal({
                         type="submit"
                         form="student-form"
                         disabled={form.processing}
-                        className="bg-slate-800 hover:bg-slate-900 text-white"
+                        variant="default"
                     >
                         {form.processing ? (
                             isEditMode ? 'Updating...' : 'Admitting...'
@@ -158,7 +158,6 @@ export default function StudentFormModal({
                                 <UserPlus /> Save & Admit Student
                             </>
                         )}
-
                     </Button>
                 </>
             }
@@ -182,8 +181,8 @@ export default function StudentFormModal({
                 )}
 
                 {/* Academic Placement */}
-                <div className="border-b pb-3">
-                    <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <div className="border-b border-border pb-3">
+                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                         Academic Placement
                     </span>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
@@ -191,7 +190,7 @@ export default function StudentFormModal({
                             <Label htmlFor="school_class_id">Class *</Label>
                             <select
                                 id="school_class_id"
-                                className="w-full h-10 px-3 py-2 text-sm rounded-md border border-slate-200 bg-white"
+                                className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
                                 value={form.data.school_class_id}
                                 onChange={(e) => {
                                     form.setData({
@@ -220,7 +219,7 @@ export default function StudentFormModal({
                             <Label htmlFor="section_id">Section *</Label>
                             <select
                                 id="section_id"
-                                className="w-full h-10 px-3 py-2 text-sm rounded-md border border-slate-200 bg-white disabled:bg-slate-100"
+                                className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground dark:bg-card disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-ring"
                                 value={form.data.section_id}
                                 onChange={(e) =>
                                     form.setData('section_id', e.target.value)
@@ -259,24 +258,24 @@ export default function StudentFormModal({
                 </div>
 
                 {/* Personal Information */}
-                <div className="border-b pb-3">
-                    <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <div className="border-b border-border pb-3">
+                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                         Personal Information
                     </span>
 
                     {/* Profile Photo Upload with Crop & Background Adjustments */}
-                    <div className="mt-2 mb-3 p-3.5 bg-slate-50 border border-slate-200 rounded-lg">
+                    <div className="mt-2 mb-3 p-3.5 bg-muted/40 border border-border rounded-lg">
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                             <div className="relative group shrink-0">
                                 <ProfileAvatar
                                     src={photoPreview}
                                     name={form.data.first_name}
-                                    className="w-16 h-16 border-2 border-slate-300 shadow-sm"
+                                    className="w-16 h-16 border-2 border-slate-300 dark:border-slate-700 shadow-sm"
                                     iconClassName="w-8 h-8"
                                 />
                                 {form.data.background_color && form.data.background_color !== 'original' && (
                                     <span
-                                        className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white shadow-sm"
+                                        className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white dark:border-slate-900 shadow-sm"
                                         style={{
                                             backgroundColor:
                                                 form.data.background_color === 'white'
@@ -292,10 +291,10 @@ export default function StudentFormModal({
 
                             <div className="flex-1 min-w-0 space-y-2">
                                 <div className="flex items-center justify-between">
-                                    <Label className="text-xs font-semibold text-slate-800">
+                                    <Label className="text-xs font-semibold text-foreground">
                                         Student Profile Photo
                                     </Label>
-                                    <span className="text-[11px] text-slate-400 font-medium">
+                                    <span className="text-[11px] text-muted-foreground font-medium">
                                         Aspect Ratio: 1:1 Square (Auto-corrected)
                                     </span>
                                 </div>
@@ -322,7 +321,7 @@ export default function StudentFormModal({
                                                     setRawImageForCrop(photoPreview);
                                                     setIsCropModalOpen(true);
                                                 }}
-                                                className="text-xs h-8 text-slate-700"
+                                                className="text-xs h-8 text-foreground"
                                             >
                                                 <Crop className="w-3.5 h-3.5 mr-1 text-blue-600" />
                                                 Crop / Background
@@ -333,7 +332,7 @@ export default function StudentFormModal({
                                                 variant="ghost"
                                                 size="sm"
                                                 onClick={handleRemovePhoto}
-                                                className="text-xs h-8 text-rose-600 hover:text-rose-700 hover:bg-rose-50"
+                                                className="text-xs h-8 text-rose-600 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/40"
                                             >
                                                 <Trash2 className="w-3.5 h-3.5 mr-1" />
                                                 Remove
@@ -342,7 +341,7 @@ export default function StudentFormModal({
                                     )}
                                 </div>
 
-                                <p className="text-[11px] text-slate-500 leading-tight">
+                                <p className="text-[11px] text-muted-foreground leading-tight">
                                     Upload JPEG, PNG, or WEBP up to 5MB. You can resize, crop to 1:1, or apply an official <strong>white or green background</strong> before saving.
                                 </p>
 
@@ -405,7 +404,7 @@ export default function StudentFormModal({
                             <Label htmlFor="gender">Gender *</Label>
                             <select
                                 id="gender"
-                                className="w-full h-10 px-3 py-2 text-sm rounded-md border border-slate-200 bg-white"
+                                className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
                                 value={form.data.gender}
                                 onChange={(e) =>
                                     form.setData('gender', e.target.value)
@@ -434,7 +433,7 @@ export default function StudentFormModal({
 
                 {/* Guardian Contact */}
                 <div>
-                    <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                         Guardian Contact
                     </span>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">

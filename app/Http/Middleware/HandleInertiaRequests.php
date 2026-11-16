@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\SystemSetting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -52,7 +53,20 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn () => $request->session()->get('success'),
                 'status' => fn () => $request->session()->get('status'),
             ],
-            'system_settings' => fn () => \App\Models\SystemSetting::first(['school_name', 'logo_path', 'dashboard_theme', 'current_session_year', 'currency_symbol']),
+            'system_settings' => fn () => SystemSetting::first([
+                'school_name',
+                'school_tagline',
+                'logo_path',
+                'dashboard_theme',
+                'theme_mode',
+                'current_session_year',
+                'currency_symbol',
+                'phone',
+                'email',
+                'address',
+                'receipt_footer_note',
+                'registration_number',
+            ]),
         ];
     }
 }

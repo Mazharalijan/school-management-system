@@ -259,14 +259,14 @@ export default function SectionFormModal({
                 </div>
 
                 {/* Questions Checkbox Selection Area */}
-                <div className="border border-slate-200 rounded-lg p-3 bg-slate-50/50 space-y-3">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-200">
+                <div className="border border-border rounded-lg p-3 bg-muted/30 space-y-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-border">
                         <div>
-                            <h4 className="font-semibold text-sm text-slate-800">
+                            <h4 className="font-semibold text-sm text-foreground">
                                 Select Questions ({data.question_ids.length} selected)
                             </h4>
-                            <p className="text-xs text-slate-500">
-                                Filtered by subject & type: <span className="font-medium text-slate-700">{data.question_type.toUpperCase()}</span>
+                            <p className="text-xs text-muted-foreground">
+                                Filtered by subject & type: <span className="font-medium text-foreground">{data.question_type.toUpperCase()}</span>
                             </p>
                         </div>
 
@@ -275,7 +275,7 @@ export default function SectionFormModal({
                                 placeholder="Search questions..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="h-8 text-xs w-48 bg-white"
+                                className="h-8 text-xs w-48 bg-background"
                             />
                             {filteredQuestions.length > 0 && (
                                 <Button
@@ -294,11 +294,11 @@ export default function SectionFormModal({
                     {/* Question List */}
                     <div className="max-h-60 overflow-y-auto space-y-2 pr-1">
                         {!data.exam_class_paper_id ? (
-                            <div className="py-8 text-center text-xs text-slate-500">
+                            <div className="py-8 text-center text-xs text-muted-foreground">
                                 Please select an exam paper above to load relevant questions.
                             </div>
                         ) : filteredQuestions.length === 0 ? (
-                            <div className="py-8 text-center text-xs text-slate-500">
+                            <div className="py-8 text-center text-xs text-muted-foreground">
                                 No questions found matching this subject and question type ({data.question_type}).
                             </div>
                         ) : (
@@ -308,27 +308,27 @@ export default function SectionFormModal({
                                     <label
                                         key={q.id}
                                         className={`flex items-start gap-3 p-2.5 rounded border text-xs cursor-pointer transition-colors ${isChecked
-                                                ? 'bg-emerald-50/60 border-emerald-300'
-                                                : 'bg-white border-slate-200 hover:border-slate-300'
+                                                ? 'bg-primary/10 border-primary/40'
+                                                : 'bg-card border-border hover:border-primary/20'
                                             }`}
                                     >
                                         <input
                                             type="checkbox"
                                             checked={isChecked}
                                             onChange={() => handleToggleQuestion(q.id)}
-                                            className="mt-0.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 h-4 w-4"
+                                            className="mt-0.5 rounded border-input text-primary focus:ring-ring h-4 w-4 bg-background"
                                         />
                                         <div className="flex-1">
-                                            <p className="text-slate-800 font-medium leading-relaxed">
+                                            <p className="text-foreground font-medium leading-relaxed">
                                                 {q.question_text || q.question}
                                             </p>
                                             {q.chapter && (
-                                                <span className="text-[10px] text-slate-400 mt-0.5 block">
+                                                <span className="text-[10px] text-muted-foreground mt-0.5 block">
                                                     Chapter: {q.chapter.chapter_name || q.chapter.title || 'N/A'}
                                                 </span>
                                             )}
                                         </div>
-                                        <span className="text-[11px] font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded">
+                                        <span className="text-[11px] font-semibold text-muted-foreground bg-muted border border-border px-2 py-0.5 rounded">
                                             {q.marks || 1} M
                                         </span>
                                     </label>
@@ -342,14 +342,14 @@ export default function SectionFormModal({
                 </div>
 
                 {/* Footer Controls */}
-                <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+                <div className="flex justify-end gap-2 pt-3 border-t border-border">
                     <Button type="button" variant="outline" onClick={onClose}>
                         Cancel
                     </Button>
                     <Button
                         type="submit"
                         disabled={processing || !data.exam_class_paper_id}
-                        className="bg-slate-800 text-white hover:bg-slate-900"
+                        className="font-semibold"
                     >
                         {isEdit ? 'Update Section' : 'Save Section'}
                     </Button>

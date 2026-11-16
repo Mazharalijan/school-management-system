@@ -8,8 +8,10 @@ use App\Http\Requests\Exam\StoreBulkStudentMarksRequest;
 use App\Models\ExamResult;
 use App\Models\ExamSession;
 use App\Models\SchoolClass;
+use App\Models\StudentDocumentPrint;
 use App\Models\StudentMark;
 use App\Services\Exam\MarksAndResultService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -101,9 +103,57 @@ class StudentMarkController extends Controller
             ->where('student_id', $examResult->student_id)
             ->get();
 
+        $documentPrint = StudentDocumentPrint::with('printLogs.printedBy:id,name')
+            ->where('student_id', $examResult->student_id)
+            ->where('document_type', 'dmc')
+            ->where('exam_result_id', $examResult->id)
+            ->first();
+
         return Inertia::render('Exam/Marks/Dmc', [
             'result' => $examResult,
             'subjectMarks' => $subjectMarks,
+            'documentPrint' => $documentPrint,
+        ]);
+    }
+
+    /**
+     * Record a DMC print event and increment print count
+     */
+    public function recordDmcPrint(Request $request, ExamResult $examResult): JsonResponse
+    {
+        $examResult->load(['student', 'schoolClass', 'examSession']);
+
+        $documentPrint = StudentDocumentPrint::firstOrCreate(
+            [
+                'student_id' => $examResult->student_id,
+                'document_type' => 'dmc',
+                'exam_result_id' => $examResult->id,
+            ],
+            [
+                'sub_type' => 'dmc_term',
+                'document_number' => 'DMC-'.date('Y').'-'.str_pad((string) $examResult->id, 5, '0', STR_PAD_LEFT),
+                'title' => 'Detailed Marks Certificate - '.($examResult->examSession?->title ?? 'Examination'),
+                'exam_session_id' => $examResult->exam_session_id,
+                'issue_date' => now()->toDateString(),
+                'print_count' => 1,
+                'last_printed_at' => now(),
+                'created_by' => auth()->id(),
+            ]
+        );
+
+        $printerType = $request->input('printer_type', 'standard');
+        $notes = $request->input('notes');
+
+        // If it was already existing and printed before, recordPrint increments count
+        $log = $documentPrint->recordPrint($printerType, auth()->id(), $notes, true);
+
+        return response()->json([
+            'success' => true,
+            'document_print' => $documentPrint->fresh('printLogs.printedBy:id,name'),
+            'print_count' => $documentPrint->print_count,
+            'copy_label' => $documentPrint->copy_label,
+            'log' => $log,
+            'last_printed_at' => $documentPrint->last_printed_at?->format('Y-m-d H:i:s'),
         ]);
     }
 }

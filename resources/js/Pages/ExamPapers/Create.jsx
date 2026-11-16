@@ -98,14 +98,14 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
             <Head title="Exam Paper Builder" />
 
             <div className="py-6 w-full max-w-7xl mx-auto space-y-6">
-                <div className="flex items-center justify-between bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <div className="flex items-center justify-between bg-card p-6 rounded-xl border border-border shadow-sm">
                     <div className="flex items-center gap-3">
-                        <div className="p-3 bg-indigo-50 text-indigo-600 rounded-lg">
+                        <div className="p-3 bg-primary/10 text-primary rounded-lg">
                             <FileText className="h-6 w-6" />
                         </div>
                         <div>
-                            <h1 className="text-xl font-bold text-slate-900">Exam Paper Builder</h1>
-                            <p className="text-xs text-slate-500 mt-0.5">
+                            <h1 className="text-xl font-bold text-foreground">Exam Paper Builder</h1>
+                            <p className="text-xs text-muted-foreground mt-0.5">
                                 Assemble questions into structured paper sections.
                             </p>
                         </div>
@@ -113,9 +113,9 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    <Card className="border-slate-200 shadow-sm">
-                        <CardHeader className="bg-slate-50/50 pb-3">
-                            <CardTitle className="text-sm font-bold text-slate-800">Paper Details</CardTitle>
+                    <Card>
+                        <CardHeader className="bg-muted/40 pb-3 border-b border-border">
+                            <CardTitle className="text-sm font-bold text-foreground">Paper Details</CardTitle>
                         </CardHeader>
                         <CardContent className="pt-4 grid grid-cols-1 md:grid-cols-4 gap-4">
                             <div className="md:col-span-2">
@@ -132,7 +132,7 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
                             <div>
                                 <Label className="text-xs font-semibold">Class *</Label>
                                 <select
-                                    className="mt-1 w-full h-9 text-xs rounded-md border border-slate-200 bg-white px-3"
+                                    className="mt-1 w-full h-9 text-xs rounded-md border border-input bg-background text-foreground px-3 focus:ring-1 focus:ring-ring focus:border-input"
                                     value={form.data.school_class_id}
                                     onChange={(e) => {
                                         form.setData('school_class_id', e.target.value);
@@ -152,7 +152,7 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
                             <div>
                                 <Label className="text-xs font-semibold">Subject *</Label>
                                 <select
-                                    className="mt-1 w-full h-9 text-xs rounded-md border border-slate-200 bg-white px-3"
+                                    className="mt-1 w-full h-9 text-xs rounded-md border border-input bg-background text-foreground px-3 focus:ring-1 focus:ring-ring focus:border-input disabled:opacity-50"
                                     value={form.data.subject_id}
                                     onChange={(e) => {
                                         form.setData('subject_id', e.target.value);
@@ -190,7 +190,7 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
                                     onChange={(e) => form.setData('total_marks', e.target.value)}
                                     required
                                 />
-                                <span className="text-[10px] text-slate-500 mt-1 block">
+                                <span className="text-[10px] text-muted-foreground mt-1 block">
                                     Current assigned marks: <strong>{calculatedTotalMarks}</strong>
                                 </span>
                             </div>
@@ -207,43 +207,43 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
                     </Card>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <Card className="border-slate-200 shadow-sm lg:col-span-1 h-[600px] flex flex-col">
-                            <CardHeader className="bg-slate-50/50 pb-3 border-b border-slate-200">
-                                <CardTitle className="text-xs font-bold text-slate-800 flex items-center gap-2">
-                                    <Layers className="w-4 h-4 text-indigo-600" /> Question Bank Pool ({initialQuestions.length})
+                        <Card className="lg:col-span-1 h-[600px] flex flex-col">
+                            <CardHeader className="bg-muted/40 pb-3 border-b border-border">
+                                <CardTitle className="text-xs font-bold text-foreground flex items-center gap-2">
+                                    <Layers className="w-4 h-4 text-primary" /> Question Bank Pool ({initialQuestions.length})
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="pt-3 flex-1 overflow-y-auto space-y-2">
                                 {!form.data.subject_id ? (
-                                    <p className="text-xs text-slate-400 text-center py-10">
+                                    <p className="text-xs text-muted-foreground text-center py-10">
                                         Select a Class and Subject above to load available questions.
                                     </p>
                                 ) : initialQuestions.length === 0 ? (
-                                    <p className="text-xs text-slate-400 text-center py-10">
+                                    <p className="text-xs text-muted-foreground text-center py-10">
                                         No questions found in the bank for this subject.
                                     </p>
                                 ) : (
                                     initialQuestions.map((q) => (
                                         <div
                                             key={q.id}
-                                            className="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-xs space-y-2 hover:border-indigo-300 transition"
+                                            className="p-2.5 bg-muted/30 rounded-lg border border-border text-xs space-y-2 hover:border-primary/40 transition"
                                         >
                                             <div className="flex items-center justify-between">
-                                                <span className="font-semibold uppercase px-1.5 py-0.5 bg-indigo-100 text-indigo-700 rounded text-[10px]">
+                                                <span className="font-semibold uppercase px-1.5 py-0.5 bg-primary/10 text-primary rounded text-[10px]">
                                                     {q.type}
                                                 </span>
-                                                <span className="text-slate-500">{q.default_marks} Marks</span>
+                                                <span className="text-muted-foreground">{q.default_marks} Marks</span>
                                             </div>
-                                            <p className="text-slate-800 font-medium line-clamp-2">{q.question}</p>
+                                            <p className="text-foreground font-medium line-clamp-2">{q.question}</p>
                                             
-                                            <div className="flex flex-wrap gap-1 pt-1 border-t border-slate-200">
+                                            <div className="flex flex-wrap gap-1 pt-1 border-t border-border">
                                                 {form.data.sections.map((sec, sIdx) => (
                                                     <Button
                                                         key={sIdx}
                                                         type="button"
                                                         size="sm"
                                                         variant="outline"
-                                                        className="h-6 text-[10px] px-2 bg-white"
+                                                        className="h-6 text-[10px] px-2"
                                                         onClick={() => addQuestionToSection(sIdx, q)}
                                                     >
                                                         + Add to Sec {String.fromCharCode(65 + sIdx)}
@@ -258,14 +258,14 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
 
                         <div className="lg:col-span-2 space-y-4">
                             {form.data.sections.map((section, sIndex) => (
-                                <Card key={sIndex} className="border-slate-200 shadow-sm">
-                                    <div className="bg-slate-100/70 px-4 py-2 border-b border-slate-200 flex items-center justify-between">
+                                <Card key={sIndex}>
+                                    <div className="bg-muted/50 px-4 py-2 border-b border-border flex items-center justify-between">
                                         <div className="flex items-center gap-2">
-                                            <span className="font-bold text-xs text-indigo-700">
+                                            <span className="font-bold text-xs text-primary">
                                                 Section {String.fromCharCode(65 + sIndex)}
                                             </span>
                                             <Input
-                                                className="h-7 text-xs w-64 bg-white"
+                                                className="h-7 text-xs w-64 bg-background"
                                                 value={section.section_name}
                                                 onChange={(e) => {
                                                     const updated = [...form.data.sections];
@@ -281,7 +281,7 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
                                                 variant="ghost"
                                                 size="sm"
                                                 onClick={() => removeSection(sIndex)}
-                                                className="h-7 text-xs text-red-600 hover:bg-red-50"
+                                                className="h-7 text-xs text-destructive hover:bg-destructive/10"
                                             >
                                                 <Trash2 className="w-3.5 h-3.5" />
                                             </Button>
@@ -304,40 +304,40 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
                                         </div>
 
                                         <div className="space-y-2">
-                                            <span className="text-[11px] font-bold text-slate-700 block">
+                                            <span className="text-[11px] font-bold text-foreground block">
                                                 Assigned Questions ({section.questions.length})
                                             </span>
 
                                             {section.questions.length === 0 ? (
-                                                <div className="border border-dashed border-slate-200 p-4 text-center rounded text-xs text-slate-400">
+                                                <div className="border border-dashed border-border p-4 text-center rounded text-xs text-muted-foreground">
                                                     No questions added here yet. Click "+ Add to Sec..." from the question bank.
                                                 </div>
                                             ) : (
                                                 section.questions.map((q, qIndex) => (
                                                     <div
                                                         key={qIndex}
-                                                        className="flex items-center justify-between bg-slate-50 p-2.5 rounded border border-slate-200 text-xs gap-3"
+                                                        className="flex items-center justify-between bg-muted/30 p-2.5 rounded border border-border text-xs gap-3"
                                                     >
                                                         <div className="flex-1">
-                                                            <span className="font-semibold text-slate-500 mr-2">Q{qIndex + 1}.</span>
-                                                            <span className="text-slate-800">{q.question_text}</span>
+                                                            <span className="font-semibold text-muted-foreground mr-2">Q{qIndex + 1}.</span>
+                                                            <span className="text-foreground">{q.question_text}</span>
                                                         </div>
                                                         <div className="flex items-center gap-2">
                                                             <div className="w-20">
                                                                 <Input
                                                                     type="number"
                                                                     step="0.5"
-                                                                    className="h-7 text-xs bg-white"
+                                                                    className="h-7 text-xs bg-background"
                                                                     value={q.marks}
                                                                     onChange={(e) => updateQuestionMarks(sIndex, qIndex, e.target.value)}
                                                                 />
                                                             </div>
-                                                            <span className="text-slate-500 text-[10px]">Marks</span>
+                                                            <span className="text-muted-foreground text-[10px]">Marks</span>
                                                             <Button
                                                                 type="button"
                                                                 variant="ghost"
                                                                 size="sm"
-                                                                className="h-7 w-7 p-0 text-red-500 hover:bg-red-50"
+                                                                className="h-7 w-7 p-0 text-destructive hover:bg-destructive/10"
                                                                 onClick={() => removeQuestionFromSection(sIndex, qIndex)}
                                                             >
                                                                 <Trash2 className="w-3.5 h-3.5" />
@@ -358,13 +358,13 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
                                     onClick={addSection}
                                     className="gap-2 text-xs font-semibold"
                                 >
-                                    <Plus className="w-4 h-4 text-indigo-600" /> Add New Section
+                                    <Plus className="w-4 h-4 text-primary" /> Add New Section
                                 </Button>
 
                                 <Button
                                     type="submit"
                                     disabled={form.processing}
-                                    className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-6"
+                                    className="font-bold px-6"
                                 >
                                     Save & Publish Exam Paper
                                 </Button>

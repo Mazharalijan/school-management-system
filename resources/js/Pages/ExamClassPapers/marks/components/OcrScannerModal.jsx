@@ -39,35 +39,35 @@ export default function OcrScannerModal({ isOpen, onClose, onApplyOcrData }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white rounded-2xl max-w-5xl w-full border border-slate-200 shadow-2xl flex flex-col max-h-[90vh] overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+      <div className="bg-card text-card-foreground rounded-2xl max-w-5xl w-full border border-border shadow-2xl flex flex-col max-h-[90vh] overflow-hidden">
         
         {/* Modal Header */}
-        <div className="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-900 text-white">
+        <div className="p-5 border-b border-border flex items-center justify-between bg-card text-foreground">
           <div className="flex items-center gap-2 font-bold text-sm">
-            <Scan className="w-5 h-5 text-indigo-400" /> Offline Tesseract OCR Scanner
+            <Scan className="w-5 h-5 text-primary" /> Offline Tesseract OCR Scanner
           </div>
-          <button onClick={onClose} className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800">
+          <button onClick={onClose} className="p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 overflow-y-auto flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 bg-slate-50">
+        <div className="p-6 overflow-y-auto flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 bg-muted/20">
           
           {/* Left: Upload Box & Image Preview */}
           <div className="space-y-4">
-            <div className="border-2 border-dashed border-slate-300 bg-white rounded-2xl p-6 text-center hover:border-indigo-500 transition-colors">
+            <div className="border-2 border-dashed border-border bg-card rounded-2xl p-6 text-center hover:border-primary/50 transition-colors">
               <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" id="ocr-upload" />
               <label htmlFor="ocr-upload" className="cursor-pointer flex flex-col items-center gap-2">
-                <Upload className="w-8 h-8 text-indigo-600" />
-                <span className="text-xs font-bold text-slate-700">Click to upload paper scan</span>
-                <span className="text-[10px] text-slate-400">Supports JPG, PNG, or Scanned PDF Page</span>
+                <Upload className="w-8 h-8 text-primary" />
+                <span className="text-xs font-bold text-foreground">Click to upload paper scan</span>
+                <span className="text-[10px] text-muted-foreground">Supports JPG, PNG, or Scanned PDF Page</span>
               </label>
             </div>
 
             {imagePreview && (
-              <div className="bg-slate-900 rounded-2xl p-2 border border-slate-800 max-h-72 overflow-hidden flex items-center justify-center">
+              <div className="bg-background rounded-2xl p-2 border border-border max-h-72 overflow-hidden flex items-center justify-center">
                 <img src={imagePreview} alt="Scan preview" className="max-h-64 object-contain rounded-lg" />
               </div>
             )}
@@ -75,7 +75,7 @@ export default function OcrScannerModal({ isOpen, onClose, onApplyOcrData }) {
             <button
               disabled={!imagePreview || isScanning}
               onClick={triggerOfflineOcr}
-              className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-300 text-white font-bold text-xs transition-all flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-xl bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-primary-foreground font-bold text-xs transition-all flex items-center justify-center gap-2"
             >
               {isScanning ? (
                 <><RefreshCw className="w-4 h-4 animate-spin" /> Processing with Bundled Tesseract...</>
@@ -86,25 +86,25 @@ export default function OcrScannerModal({ isOpen, onClose, onApplyOcrData }) {
           </div>
 
           {/* Right: Extracted Grid Preview */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-4 flex flex-col justify-between">
+          <div className="bg-card rounded-2xl border border-border p-4 flex flex-col justify-between text-card-foreground">
             <div>
-              <h4 className="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-3">
+              <h4 className="text-xs font-extrabold text-foreground uppercase tracking-wider mb-3">
                 Extracted Data Verification
               </h4>
 
               {scannedResults ? (
                 <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
                   {scannedResults.map((item, idx) => (
-                    <div key={idx} className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs font-bold">
+                    <div key={idx} className="p-3 bg-muted/40 rounded-xl border border-border flex items-center justify-between text-xs font-bold">
                       <div>
-                        <span className="text-slate-900">Roll #{item.roll_no}</span> - <span className="text-slate-600">{item.name}</span>
+                        <span className="text-foreground">Roll #{item.roll_no}</span> - <span className="text-muted-foreground">{item.name}</span>
                       </div>
                       <div className="flex gap-2 text-[11px]">
                         {item.is_absent ? (
-                          <span className="text-rose-600 font-extrabold bg-rose-50 px-2 py-0.5 rounded">ABSENT</span>
+                          <span className="text-destructive font-extrabold bg-destructive/10 px-2 py-0.5 rounded">ABSENT</span>
                         ) : (
                           Object.entries(item.marks).map(([pId, m]) => (
-                            <span key={pId} className="bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded border border-indigo-100">
+                            <span key={pId} className="bg-primary/10 text-primary px-2 py-0.5 rounded border border-primary/20">
                               P{pId}: {m}
                             </span>
                           ))
@@ -114,7 +114,7 @@ export default function OcrScannerModal({ isOpen, onClose, onApplyOcrData }) {
                   ))}
                 </div>
               ) : (
-                <div className="h-64 flex flex-col items-center justify-center text-slate-400 text-xs font-medium text-center">
+                <div className="h-64 flex flex-col items-center justify-center text-muted-foreground text-xs font-medium text-center">
                   Upload an image and run OCR to preview extracted text here before populating the form.
                 </div>
               )}

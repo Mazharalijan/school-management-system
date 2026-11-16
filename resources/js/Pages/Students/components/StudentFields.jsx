@@ -11,14 +11,14 @@ export default function StudentFields({ form, classes = [], sections = [] }) {
     return (
         <div className="space-y-4">
             {/* Academic Placement */}
-            <div className="border-b pb-3">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Academic Placement</span>
+            <div className="border-b border-border pb-3">
+                <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Academic Placement</span>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
                     <div>
                         <Label htmlFor="school_class_id">Class *</Label>
                         <select
                             id="school_class_id"
-                            className="w-full h-10 px-3 py-2 text-sm rounded-md border border-slate-200 bg-white"
+                            className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground focus:ring-1 focus:ring-ring focus:border-input"
                             value={form.data.school_class_id || ''}
                             onChange={(e) => {
                                 form.setData({
@@ -34,14 +34,14 @@ export default function StudentFields({ form, classes = [], sections = [] }) {
                                 <option key={c.id} value={c.id}>{c.name}</option>
                             ))}
                         </select>
-                        {form.errors?.school_class_id && <span className="text-xs text-red-500">{form.errors.school_class_id}</span>}
+                        {form.errors?.school_class_id && <span className="text-xs text-destructive">{form.errors.school_class_id}</span>}
                     </div>
 
                     <div>
                         <Label htmlFor="section_id">Section *</Label>
                         <select
                             id="section_id"
-                            className="w-full h-10 px-3 py-2 text-sm rounded-md border border-slate-200 bg-white disabled:bg-slate-100"
+                            className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground disabled:bg-muted disabled:text-muted-foreground focus:ring-1 focus:ring-ring focus:border-input"
                             value={form.data.section_id || ''}
                             onChange={(e) => form.setData('section_id', e.target.value)}
                             disabled={!form.data.school_class_id}
@@ -52,7 +52,7 @@ export default function StudentFields({ form, classes = [], sections = [] }) {
                                 <option key={s.id} value={s.id}>{s.name}</option>
                             ))}
                         </select>
-                        {form.errors?.section_id && <span className="text-xs text-red-500">{form.errors.section_id}</span>}
+                        {form.errors?.section_id && <span className="text-xs text-destructive">{form.errors.section_id}</span>}
                     </div>
 
                     <div>
@@ -68,8 +68,8 @@ export default function StudentFields({ form, classes = [], sections = [] }) {
             </div>
 
             {/* Personal Information */}
-            <div className="border-b pb-3">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Personal Information</span>
+            <div className="border-b border-border pb-3">
+                <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Personal Information</span>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
                     <div>
                         <Label htmlFor="first_name">First Name *</Label>
@@ -79,7 +79,7 @@ export default function StudentFields({ form, classes = [], sections = [] }) {
                             onChange={(e) => form.setData('first_name', e.target.value)}
                             required
                         />
-                        {form.errors?.first_name && <span className="text-xs text-red-500">{form.errors.first_name}</span>}
+                        {form.errors?.first_name && <span className="text-xs text-destructive">{form.errors.first_name}</span>}
                     </div>
 
                     <div>
@@ -90,14 +90,14 @@ export default function StudentFields({ form, classes = [], sections = [] }) {
                             onChange={(e) => form.setData('last_name', e.target.value)}
                             required
                         />
-                        {form.errors?.last_name && <span className="text-xs text-red-500">{form.errors.last_name}</span>}
+                        {form.errors?.last_name && <span className="text-xs text-destructive">{form.errors.last_name}</span>}
                     </div>
 
                     <div>
                         <Label htmlFor="gender">Gender *</Label>
                         <select
                             id="gender"
-                            className="w-full h-10 px-3 py-2 text-sm rounded-md border border-slate-200 bg-white"
+                            className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground focus:ring-1 focus:ring-ring focus:border-input"
                             value={form.data.gender || 'male'}
                             onChange={(e) => form.setData('gender', e.target.value)}
                         >
@@ -122,8 +122,8 @@ export default function StudentFields({ form, classes = [], sections = [] }) {
 
             {/* Guardian Contact */}
             <div>
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Guardian Contact</span>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
+                <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Guardian Contact</span>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mt-2">
                     <div>
                         <Label htmlFor="guardian_name">Guardian Name *</Label>
                         <Input
@@ -153,6 +153,16 @@ export default function StudentFields({ form, classes = [], sections = [] }) {
                             value={form.data.guardian_phone || ''}
                             onChange={(e) => form.setData('guardian_phone', e.target.value)}
                             required
+                        />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="father_cnic">Father / Guardian CNIC</Label>
+                        <Input
+                            id="father_cnic"
+                            placeholder="xxxxx-xxxxxxx-x"
+                            value={form.data.father_cnic || ''}
+                            onChange={(e) => form.setData('father_cnic', e.target.value)}
                         />
                     </div>
                 </div>

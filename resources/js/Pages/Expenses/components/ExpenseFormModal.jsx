@@ -79,10 +79,10 @@ export default function ExpenseFormModal({
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-xl max-h-[90vh] overflow-y-auto">
+            <DialogContent className="sm:max-w-xl max-h-[90vh] overflow-y-auto bg-card text-card-foreground border-border">
                 <DialogHeader>
-                    <DialogTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
-                        {isEdit ? <Pencil className="w-4 h-4 text-indigo-600" /> : <Plus className="w-4 h-4 text-emerald-600" />}
+                    <DialogTitle className="text-base font-bold text-foreground flex items-center gap-2">
+                        {isEdit ? <Pencil className="w-4 h-4 text-primary" /> : <Plus className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />}
                         {isEdit ? 'Edit Expense Record' : 'Record New School Expense'}
                     </DialogTitle>
                 </DialogHeader>
@@ -91,14 +91,14 @@ export default function ExpenseFormModal({
                     {/* Category & Title */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <Label htmlFor="category" className="text-xs font-bold text-slate-600 uppercase">
+                            <Label htmlFor="category" className="text-xs font-bold text-muted-foreground uppercase">
                                 Expense Category *
                             </Label>
                             <select
                                 id="category"
                                 value={data.expense_category_id}
                                 onChange={(e) => setData('expense_category_id', e.target.value)}
-                                className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900"
+                                className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                 required
                             >
                                 <option value="">-- Select Category --</option>
@@ -112,7 +112,7 @@ export default function ExpenseFormModal({
                         </div>
 
                         <div>
-                            <Label htmlFor="amount" className="text-xs font-bold text-slate-600 uppercase">
+                            <Label htmlFor="amount" className="text-xs font-bold text-muted-foreground uppercase">
                                 Amount (PKR / Rs.) *
                             </Label>
                             <Input
@@ -130,7 +130,7 @@ export default function ExpenseFormModal({
                     </div>
 
                     <div>
-                        <Label htmlFor="title" className="text-xs font-bold text-slate-600 uppercase">
+                        <Label htmlFor="title" className="text-xs font-bold text-muted-foreground uppercase">
                             Expense Title / Purpose *
                         </Label>
                         <Input
@@ -148,7 +148,7 @@ export default function ExpenseFormModal({
                     {/* Date & Payment Method */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <Label htmlFor="expense_date" className="text-xs font-bold text-slate-600 uppercase">
+                            <Label htmlFor="expense_date" className="text-xs font-bold text-muted-foreground uppercase">
                                 Expense Date *
                             </Label>
                             <Input
@@ -163,14 +163,14 @@ export default function ExpenseFormModal({
                         </div>
 
                         <div>
-                            <Label htmlFor="payment_method" className="text-xs font-bold text-slate-600 uppercase">
+                            <Label htmlFor="payment_method" className="text-xs font-bold text-muted-foreground uppercase">
                                 Payment Method *
                             </Label>
                             <select
                                 id="payment_method"
                                 value={data.payment_method}
                                 onChange={(e) => setData('payment_method', e.target.value)}
-                                className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900"
+                                className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                 required
                             >
                                 <option value="cash">Cash in Hand</option>
@@ -185,7 +185,7 @@ export default function ExpenseFormModal({
                     {/* Payee / Vendor & Reference # */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <Label htmlFor="paid_to" className="text-xs font-bold text-slate-600 uppercase">
+                            <Label htmlFor="paid_to" className="text-xs font-bold text-muted-foreground uppercase">
                                 Paid To / Payee / Vendor
                             </Label>
                             <Input
@@ -200,7 +200,7 @@ export default function ExpenseFormModal({
                         </div>
 
                         <div>
-                            <Label htmlFor="reference_no" className="text-xs font-bold text-slate-600 uppercase">
+                            <Label htmlFor="reference_no" className="text-xs font-bold text-muted-foreground uppercase">
                                 Reference / Invoice / Cheque #
                             </Label>
                             <Input
@@ -218,7 +218,7 @@ export default function ExpenseFormModal({
                     {/* Notes & Status */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="md:col-span-2">
-                            <Label htmlFor="notes" className="text-xs font-bold text-slate-600 uppercase">
+                            <Label htmlFor="notes" className="text-xs font-bold text-muted-foreground uppercase">
                                 Description / Notes
                             </Label>
                             <textarea
@@ -227,20 +227,20 @@ export default function ExpenseFormModal({
                                 placeholder="Additional details or justification..."
                                 value={data.notes}
                                 onChange={(e) => setData('notes', e.target.value)}
-                                className="mt-1 w-full p-2.5 text-xs rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900"
+                                className="mt-1 w-full p-2.5 text-xs rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                             />
                             {errors.notes && <span className="text-xs text-rose-500 mt-0.5">{errors.notes}</span>}
                         </div>
 
                         <div>
-                            <Label htmlFor="status" className="text-xs font-bold text-slate-600 uppercase">
+                            <Label htmlFor="status" className="text-xs font-bold text-muted-foreground uppercase">
                                 Status
                             </Label>
                             <select
                                 id="status"
                                 value={data.status}
                                 onChange={(e) => setData('status', e.target.value)}
-                                className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900"
+                                className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                             >
                                 <option value="paid">Paid & Completed</option>
                                 <option value="pending">Pending Approval</option>
@@ -249,14 +249,14 @@ export default function ExpenseFormModal({
                         </div>
                     </div>
 
-                    <DialogFooter className="pt-3 border-t">
+                    <DialogFooter className="pt-3 border-t border-border">
                         <Button type="button" variant="outline" onClick={onClose}>
                             Cancel
                         </Button>
                         <Button
                             type="submit"
                             disabled={processing}
-                            className="bg-slate-900 hover:bg-slate-800 text-white font-semibold"
+                            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                         >
                             {processing ? (
                                 <>
