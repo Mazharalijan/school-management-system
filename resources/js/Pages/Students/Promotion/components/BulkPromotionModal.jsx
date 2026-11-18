@@ -98,7 +98,7 @@ export default function BulkPromotionModal({
         >
             <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Promotion Header Banner */}
-                <div className="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-950/40 dark:to-blue-950/40 border border-indigo-200 dark:border-indigo-800 rounded-lg p-4">
+                <div className="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-950/40 dark:to-blue-950/40 border border-indigo-200 dark:border-indigo-800 rounded-sm p-4">
                     <div className="flex items-center justify-between">
                         <div>
                             <span className="text-xs font-semibold text-indigo-700 dark:text-indigo-300 uppercase tracking-wider block">
@@ -148,11 +148,11 @@ export default function BulkPromotionModal({
                     <label className="block text-xs font-bold text-foreground uppercase tracking-wider mb-1.5">
                         Students to be Promoted ({selectedStudents.length})
                     </label>
-                    <div className="max-h-24 overflow-y-auto p-2 bg-muted/40 border border-border rounded-md flex flex-wrap gap-1.5">
+                    <div className="max-h-24 overflow-y-auto p-2 bg-muted/40 border border-border rounded-xs flex flex-wrap gap-1.5">
                         {selectedStudents.map((s) => (
                             <span
                                 key={s.id}
-                                className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-card border border-border text-foreground"
+                                className="inline-flex items-center px-2 py-0.5 rounded-xs text-xs font-medium bg-card border border-border text-foreground"
                             >
                                 {s.full_name} <span className="text-muted-foreground ml-1">({s.roll_number || s.admission_number})</span>
                             </span>
@@ -161,7 +161,7 @@ export default function BulkPromotionModal({
                 </div>
 
                 {/* Fee Decision Options */}
-                <div className="border border-border rounded-lg p-4 bg-card text-card-foreground space-y-4">
+                <div className="border border-border rounded-sm p-4 bg-card text-card-foreground space-y-4">
                     <div className="flex items-center justify-between border-b border-border pb-2">
                         <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-foreground">
                             <DollarSign className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -175,7 +175,7 @@ export default function BulkPromotionModal({
                         <label className="block text-xs font-semibold text-foreground">Monthly Tuition Fee</label>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                             <label
-                                className={`p-3 rounded-lg border flex items-start space-x-2.5 cursor-pointer transition ${
+                                className={`p-3 rounded-xs border flex items-start space-x-2.5 cursor-pointer transition ${
                                     data.fee_strategy === 'class_default'
                                         ? 'border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/40 ring-1 ring-indigo-500'
                                         : 'border-border hover:border-slate-400 dark:hover:border-slate-600'
@@ -198,7 +198,7 @@ export default function BulkPromotionModal({
                             </label>
 
                             <label
-                                className={`p-3 rounded-lg border flex items-start space-x-2.5 cursor-pointer transition ${
+                                className={`p-3 rounded-xs border flex items-start space-x-2.5 cursor-pointer transition ${
                                     data.fee_strategy === 'custom'
                                         ? 'border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/40 ring-1 ring-indigo-500'
                                         : 'border-border hover:border-slate-400 dark:hover:border-slate-600'
@@ -230,7 +230,7 @@ export default function BulkPromotionModal({
                                     min="0"
                                     value={data.base_monthly_fee}
                                     onChange={(e) => setData('base_monthly_fee', e.target.value)}
-                                    className="w-full text-sm rounded-md border border-input bg-background text-foreground dark:bg-card font-mono"
+                                    className="w-full text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card font-mono"
                                     required
                                 />
                             </div>
@@ -251,7 +251,7 @@ export default function BulkPromotionModal({
                                 onChange={(e) => setData('admission_fee', e.target.value)}
                                 disabled={data.waive_admission_fee}
                                 placeholder="0.00"
-                                className={`w-full text-sm rounded-md border border-input bg-background text-foreground dark:bg-card font-mono ${
+                                className={`w-full text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card font-mono ${
                                     data.waive_admission_fee ? 'bg-muted text-muted-foreground' : ''
                                 }`}
                             />
@@ -261,7 +261,7 @@ export default function BulkPromotionModal({
                                     id="bulk_waive_admission"
                                     checked={data.waive_admission_fee}
                                     onChange={(e) => setData('waive_admission_fee', e.target.checked)}
-                                    className="rounded border-input text-indigo-600 focus:ring-indigo-500 h-4 w-4 mr-2"
+                                    className="rounded-xs border-input text-indigo-600 focus:ring-indigo-500 h-4 w-4 mr-2"
                                 />
                                 <label htmlFor="bulk_waive_admission" className="text-xs text-muted-foreground font-medium cursor-pointer">
                                     Waive admission fee for all selected students
@@ -275,7 +275,7 @@ export default function BulkPromotionModal({
                         <label className="block text-xs font-semibold text-foreground">Discount & Concession Policy</label>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                             <label
-                                className={`p-2.5 rounded-lg border text-xs cursor-pointer transition ${
+                                className={`p-2.5 rounded-xs border text-xs cursor-pointer transition ${
                                     data.discount_strategy === 'keep_existing'
                                         ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950/40 font-semibold text-indigo-900 dark:text-indigo-200'
                                         : 'border-border text-muted-foreground dark:bg-card'
@@ -293,7 +293,7 @@ export default function BulkPromotionModal({
                             </label>
 
                             <label
-                                className={`p-2.5 rounded-lg border text-xs cursor-pointer transition ${
+                                className={`p-2.5 rounded-xs border text-xs cursor-pointer transition ${
                                     data.discount_strategy === 'reset_zero'
                                         ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950/40 font-semibold text-indigo-900 dark:text-indigo-200'
                                         : 'border-border text-muted-foreground dark:bg-card'
@@ -311,7 +311,7 @@ export default function BulkPromotionModal({
                             </label>
 
                             <label
-                                className={`p-2.5 rounded-lg border text-xs cursor-pointer transition ${
+                                className={`p-2.5 rounded-xs border text-xs cursor-pointer transition ${
                                     data.discount_strategy === 'custom'
                                         ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950/40 font-semibold text-indigo-900 dark:text-indigo-200'
                                         : 'border-border text-muted-foreground dark:bg-card'
@@ -339,7 +339,7 @@ export default function BulkPromotionModal({
                                         min="0"
                                         value={data.custom_discount}
                                         onChange={(e) => setData('custom_discount', e.target.value)}
-                                        className="w-full text-sm rounded-md border border-input bg-background text-foreground dark:bg-card font-mono"
+                                        className="w-full text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card font-mono"
                                     />
                                 </div>
                                 <div>
@@ -349,7 +349,7 @@ export default function BulkPromotionModal({
                                         value={data.custom_discount_reason}
                                         onChange={(e) => setData('custom_discount_reason', e.target.value)}
                                         placeholder="e.g. Annual Promo Concession"
-                                        className="w-full text-sm rounded-md border border-input bg-background text-foreground dark:bg-card"
+                                        className="w-full text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card"
                                     />
                                 </div>
                             </div>

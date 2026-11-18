@@ -44,7 +44,7 @@ export default function Login({ status }) {
             <div className="w-full max-w-md relative z-10">
                 {/* Brand Header */}
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 shadow-xl shadow-indigo-500/20 mb-4 ring-1 ring-white/20">
+                    <div className="inline-flex items-center justify-center p-3 rounded-xs bg-gradient-to-tr from-blue-600 to-indigo-600 shadow-xl shadow-indigo-500/20 mb-4 ring-1 ring-white/20">
                         <GraduationCap className="h-8 w-8 text-white" />
                     </div>
                     <h1 className="text-2xl font-bold tracking-tight text-white">
@@ -56,7 +56,7 @@ export default function Login({ status }) {
                 </div>
 
                 {/* Login Glassmorphic Card */}
-                <div className="bg-slate-900/70 border border-slate-800/80 backdrop-blur-xl rounded-2xl p-8 shadow-2xl ring-1 ring-white/5">
+                <div className="bg-slate-900/70 border border-slate-800/80 backdrop-blur-xl rounded-sm p-8 shadow-2xl ring-1 ring-white/5">
                     <div className="mb-6">
                         <h2 className="text-xl font-semibold text-white tracking-tight">
                             Welcome back
@@ -67,14 +67,14 @@ export default function Login({ status }) {
                     </div>
 
                     {status && (
-                        <div className="mb-5 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center gap-2">
+                        <div className="mb-5 p-3 rounded-sm bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center gap-2">
                             <ShieldCheck className="h-4 w-4 shrink-0" />
                             <span>{status}</span>
                         </div>
                     )}
 
                     {errors.email && (
-                        <div className="mb-5 p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs flex items-center gap-2">
+                        <div className="mb-5 p-3 rounded-sm bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs flex items-center gap-2">
                             <AlertCircle className="h-4 w-4 shrink-0" />
                             <span>{errors.email}</span>
                         </div>
@@ -100,7 +100,7 @@ export default function Login({ status }) {
                                     value={data.email}
                                     onChange={(e) => setData('email', e.target.value)}
                                     placeholder="operator@school.edu.pk"
-                                    className="pl-9 bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all text-sm rounded-xl"
+                                    className="pl-9 bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all text-sm rounded-xs"
                                 />
                             </div>
                         </div>
@@ -125,7 +125,7 @@ export default function Login({ status }) {
                                     value={data.password}
                                     onChange={(e) => setData('password', e.target.value)}
                                     placeholder="••••••••••••"
-                                    className="pl-9 pr-10 bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all text-sm rounded-xl"
+                                    className="pl-9 pr-10 bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all text-sm rounded-xs"
                                 />
                                 <button
                                     type="button"
@@ -162,7 +162,7 @@ export default function Login({ status }) {
                         <Button
                             type="submit"
                             disabled={processing}
-                            className="w-full mt-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 text-white font-medium py-2.5 rounded-xl shadow-lg shadow-indigo-600/25 transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50"
+                            className="w-full mt-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 text-white font-medium py-2.5 rounded-xs shadow-lg shadow-indigo-600/25 transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50"
                         >
                             {processing ? (
                                 <>

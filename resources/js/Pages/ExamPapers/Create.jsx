@@ -98,9 +98,9 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
             <Head title="Exam Paper Builder" />
 
             <div className="py-6 w-full max-w-7xl mx-auto space-y-6">
-                <div className="flex items-center justify-between bg-card p-6 rounded-xl border border-border shadow-sm">
+                <div className="flex items-center justify-between bg-card p-6 rounded-sm border border-border shadow-sm">
                     <div className="flex items-center gap-3">
-                        <div className="p-3 bg-primary/10 text-primary rounded-lg">
+                        <div className="p-3 bg-primary/10 text-primary rounded-xs">
                             <FileText className="h-6 w-6" />
                         </div>
                         <div>
@@ -132,7 +132,7 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
                             <div>
                                 <Label className="text-xs font-semibold">Class *</Label>
                                 <select
-                                    className="mt-1 w-full h-9 text-xs rounded-md border border-input bg-background text-foreground px-3 focus:ring-1 focus:ring-ring focus:border-input"
+                                    className="mt-1 w-full h-9 text-xs rounded-xs border border-input bg-background text-foreground px-3 focus:ring-1 focus:ring-ring focus:border-input"
                                     value={form.data.school_class_id}
                                     onChange={(e) => {
                                         form.setData('school_class_id', e.target.value);
@@ -152,7 +152,7 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
                             <div>
                                 <Label className="text-xs font-semibold">Subject *</Label>
                                 <select
-                                    className="mt-1 w-full h-9 text-xs rounded-md border border-input bg-background text-foreground px-3 focus:ring-1 focus:ring-ring focus:border-input disabled:opacity-50"
+                                    className="mt-1 w-full h-9 text-xs rounded-xs border border-input bg-background text-foreground px-3 focus:ring-1 focus:ring-ring focus:border-input disabled:opacity-50"
                                     value={form.data.subject_id}
                                     onChange={(e) => {
                                         form.setData('subject_id', e.target.value);
@@ -226,10 +226,10 @@ export default function ExamPaperCreate({ classes = [], initialQuestions = [], f
                                     initialQuestions.map((q) => (
                                         <div
                                             key={q.id}
-                                            className="p-2.5 bg-muted/30 rounded-lg border border-border text-xs space-y-2 hover:border-primary/40 transition"
+                                            className="p-2.5 bg-muted/30 rounded-xs border border-border text-xs space-y-2 hover:border-primary/40 transition"
                                         >
                                             <div className="flex items-center justify-between">
-                                                <span className="font-semibold uppercase px-1.5 py-0.5 bg-primary/10 text-primary rounded text-[10px]">
+                                                <span className="font-semibold uppercase px-1.5 py-0.5 bg-primary/10 text-primary rounded-xs text-[10px]">
                                                     {q.type}
                                                 </span>
                                                 <span className="text-muted-foreground">{q.default_marks} Marks</span>

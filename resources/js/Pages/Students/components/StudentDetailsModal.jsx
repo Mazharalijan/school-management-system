@@ -89,7 +89,7 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
 
                 <div className="flex flex-col md:flex-row gap-6 mt-2">
                     {/* LEFT SIDEBAR: BASIC INFO */}
-                    <aside className="w-full md:w-72 shrink-0 space-y-4 bg-muted/40 p-4 rounded-xl border border-border">
+                    <aside className="w-full md:w-72 shrink-0 space-y-4 bg-muted/40 p-4 rounded-sm border border-border">
                         <div className="flex flex-col items-center text-center pb-4 border-b border-border">
                             <ProfileAvatar
                                 src={student.photo_url}
@@ -191,7 +191,7 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                     {student.exam_results?.[0] ? (
                                         <Link
                                             href={route('marks.dmc', student.exam_results[0].id)}
-                                            className="w-full inline-flex items-center justify-start gap-2 px-3 py-1.5 text-xs font-semibold rounded-lg border border-border bg-background hover:bg-muted text-foreground transition-colors h-8 whitespace-nowrap"
+                                            className="w-full inline-flex items-center justify-start gap-2 px-3 py-1.5 text-xs font-semibold rounded-xs border border-border bg-background hover:bg-muted text-foreground transition-colors h-8 whitespace-nowrap"
                                             title="Print DMC"
                                         >
                                             <Printer className="w-4 h-4 text-primary shrink-0" />
@@ -228,7 +228,7 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                     {/* RIGHT SIDE: TABS FOR FEE HISTORY & RESULT HISTORY */}
                     <main className="flex-1 min-w-0">
                         <Tabs defaultValue="fee-history" className="w-full space-y-4">
-                            <TabsList className="bg-muted p-1 rounded-lg inline-flex flex-wrap gap-1 mb-4">
+                            <TabsList className="bg-muted p-1 rounded-sm inline-flex flex-wrap gap-1 mb-4">
                                 <TabsTrigger value="fee-history" className="flex items-center gap-1.5">
                                     <CreditCard className="h-3.5 w-3.5 shrink-0" />
                                     <span>Fee History</span>
@@ -249,7 +249,7 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
 
                             <TabsContent value="fee-history" className="mt-0 space-y-4">
                                 {/* DYNAMIC FEE SUMMARY TABLE */}
-                                <div className="rounded-lg border border-border overflow-hidden bg-card">
+                                <div className="rounded-sm border border-border overflow-hidden bg-card">
                                     <table className="w-full text-xs text-left text-muted-foreground">
                                         <thead className="bg-muted/50 text-muted-foreground font-semibold border-b border-border uppercase">
                                             <tr>
@@ -302,7 +302,7 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                 </div>
 
                                 {/* INVOICE HISTORY TABLE */}
-                                <div className="rounded-lg border border-border overflow-hidden bg-card">
+                                <div className="rounded-sm border border-border overflow-hidden bg-card">
                                     <table className="w-full text-xs text-left text-muted-foreground">
                                         <thead className="bg-muted/50 text-muted-foreground font-semibold border-b border-border uppercase">
                                             <tr>
@@ -361,7 +361,7 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                             </TabsContent>
 
                             <TabsContent value="result-history" className="mt-0">
-                                <div className="rounded-lg border border-border overflow-hidden bg-card">
+                                <div className="rounded-sm border border-border overflow-hidden bg-card">
                                     <table className="w-full text-xs text-left text-muted-foreground">
                                         <thead className="bg-muted/50 text-muted-foreground font-semibold border-b border-border uppercase">
                                             <tr>
@@ -394,7 +394,7 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                                         <td className="px-3 py-2 text-right whitespace-nowrap">
                                                             <Link
                                                                 href={route('marks.dmc', res.id)}
-                                                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold border border-border bg-secondary hover:bg-secondary/80 text-secondary-foreground transition-colors whitespace-nowrap shrink-0"
+                                                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs text-xs font-semibold border border-border bg-secondary hover:bg-secondary/80 text-secondary-foreground transition-colors whitespace-nowrap shrink-0"
                                                                 title="View / Print DMC with Multi-Print Tracking"
                                                             >
                                                                 <Printer className="w-3.5 h-3.5 shrink-0" />
@@ -442,7 +442,7 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                     </Button>
                                 </div>
 
-                                <div className="rounded-lg border border-border overflow-hidden bg-card">
+                                <div className="rounded-sm border border-border overflow-hidden bg-card">
                                     <table className="w-full text-xs text-left text-muted-foreground">
                                         <thead className="bg-muted/50 text-muted-foreground font-semibold border-b border-border uppercase">
                                             <tr>
@@ -530,7 +530,7 @@ export default function StudentDetailsModal({ isOpen, onClose, student, currentS
                                     </Button>
                                 </div>
 
-                                <div className="rounded-lg border border-border overflow-hidden bg-card">
+                                <div className="rounded-sm border border-border overflow-hidden bg-card">
                                     <table className="w-full text-xs text-left text-muted-foreground">
                                         <thead className="bg-muted/50 text-muted-foreground font-semibold border-b border-border uppercase">
                                             <tr>

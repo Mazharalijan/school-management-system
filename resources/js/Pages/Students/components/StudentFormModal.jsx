@@ -165,7 +165,7 @@ export default function StudentFormModal({
             <form id="student-form" onSubmit={handleSubmit} className="space-y-4">
                 {/* Global Error Banner */}
                 {Object.keys(form.errors).length > 0 && (
-                    <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-lg text-rose-800 text-xs flex items-start gap-2.5">
+                    <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-sm text-rose-800 text-xs flex items-start gap-2.5">
                         <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                         <div className="space-y-1">
                             <p className="font-bold">Please correct the following errors:</p>
@@ -190,7 +190,7 @@ export default function StudentFormModal({
                             <Label htmlFor="school_class_id">Class *</Label>
                             <select
                                 id="school_class_id"
-                                className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
+                                className="w-full h-10 px-3 py-2 text-sm mt-2 rounded-xs border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
                                 value={form.data.school_class_id}
                                 onChange={(e) => {
                                     form.setData({
@@ -219,7 +219,7 @@ export default function StudentFormModal({
                             <Label htmlFor="section_id">Section *</Label>
                             <select
                                 id="section_id"
-                                className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground dark:bg-card disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-ring"
+                                className="w-full h-10 px-3 py-2 text-sm mt-2 rounded-xs border border-input bg-background text-foreground dark:bg-card disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-ring"
                                 value={form.data.section_id}
                                 onChange={(e) =>
                                     form.setData('section_id', e.target.value)
@@ -247,6 +247,7 @@ export default function StudentFormModal({
                             <Label htmlFor="roll_number">Roll Number</Label>
                             <Input
                                 id="roll_number"
+                                className="mt-2"
                                 placeholder="e.g. 101"
                                 value={form.data.roll_number}
                                 onChange={(e) =>
@@ -264,7 +265,7 @@ export default function StudentFormModal({
                     </span>
 
                     {/* Profile Photo Upload with Crop & Background Adjustments */}
-                    <div className="mt-2 mb-3 p-3.5 bg-muted/40 border border-border rounded-lg">
+                    <div className="mt-2 mb-3 p-3.5 bg-muted/40 border border-border rounded-xs">
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                             <div className="relative group shrink-0">
                                 <ProfileAvatar
@@ -300,7 +301,7 @@ export default function StudentFormModal({
                                 </div>
 
                                 <div className="flex flex-wrap items-center gap-2">
-                                    <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-md shadow-sm cursor-pointer transition">
+                                    <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xs shadow-sm cursor-pointer transition">
                                         <Upload className="w-3.5 h-3.5" />
                                         <span>{photoPreview ? 'Change Photo' : 'Upload Photo'}</span>
                                         <input
@@ -370,6 +371,7 @@ export default function StudentFormModal({
                             <Label htmlFor="first_name">First Name *</Label>
                             <Input
                                 id="first_name"
+                                className="mt-2"
                                 value={form.data.first_name}
                                 onChange={(e) =>
                                     form.setData('first_name', e.target.value)
@@ -387,6 +389,7 @@ export default function StudentFormModal({
                             <Label htmlFor="last_name">Last Name *</Label>
                             <Input
                                 id="last_name"
+                                className="mt-2"
                                 value={form.data.last_name}
                                 onChange={(e) =>
                                     form.setData('last_name', e.target.value)
@@ -404,7 +407,7 @@ export default function StudentFormModal({
                             <Label htmlFor="gender">Gender *</Label>
                             <select
                                 id="gender"
-                                className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
+                                className="w-full h-10 px-3 py-2 text-sm mt-2 rounded-xs border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
                                 value={form.data.gender}
                                 onChange={(e) =>
                                     form.setData('gender', e.target.value)
@@ -420,6 +423,7 @@ export default function StudentFormModal({
                             <Label htmlFor="date_of_birth">Date of Birth *</Label>
                             <Input
                                 id="date_of_birth"
+                                className="mt-2"
                                 type="date"
                                 value={form.data.date_of_birth}
                                 onChange={(e) =>
@@ -441,6 +445,7 @@ export default function StudentFormModal({
                             <Label htmlFor="guardian_name">Guardian Name *</Label>
                             <Input
                                 id="guardian_name"
+                                className="mt-2"
                                 value={form.data.guardian_name}
                                 onChange={(e) =>
                                     form.setData('guardian_name', e.target.value)
@@ -453,6 +458,7 @@ export default function StudentFormModal({
                             <Label htmlFor="guardian_relation">Relation *</Label>
                             <Input
                                 id="guardian_relation"
+                                className="mt-2"
                                 placeholder="Father, Mother..."
                                 value={form.data.guardian_relation}
                                 onChange={(e) =>
@@ -469,6 +475,7 @@ export default function StudentFormModal({
                             <Label htmlFor="guardian_phone">Phone Number *</Label>
                             <Input
                                 id="guardian_phone"
+                                className="mt-2"
                                 placeholder="+92 300 0000000"
                                 value={form.data.guardian_phone}
                                 onChange={(e) =>

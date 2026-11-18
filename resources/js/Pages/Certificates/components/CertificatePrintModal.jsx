@@ -155,14 +155,14 @@ export default function CertificatePrintModal({
 
                 {/* Customizer Panel (Hidden on print) */}
                 {!localCert && (
-                    <div className="p-3.5 bg-muted/40 border border-border rounded-xl space-y-3 text-xs print:hidden">
+                    <div className="p-3.5 bg-muted/40 border border-border rounded-xs space-y-3 text-xs print:hidden">
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             <div>
                                 <label className="block font-bold text-muted-foreground uppercase text-[10px] mb-1">Certificate Type</label>
                                 <select
                                     value={subType}
                                     onChange={(e) => setSubType(e.target.value)}
-                                    className="w-full px-2.5 py-1.5 text-xs rounded-md border border-input bg-background text-foreground"
+                                    className="w-full px-2.5 py-1.5 text-xs rounded-xs border border-input bg-background text-foreground"
                                 >
                                     <option value="character">Character Certificate</option>
                                     <option value="leaving">School Leaving Certificate (SLC)</option>
@@ -176,7 +176,7 @@ export default function CertificatePrintModal({
                                     type="date"
                                     value={issueDate}
                                     onChange={(e) => setIssueDate(e.target.value)}
-                                    className="w-full px-2.5 py-1.5 text-xs rounded-md border border-input bg-background text-foreground"
+                                    className="w-full px-2.5 py-1.5 text-xs rounded-xs border border-input bg-background text-foreground"
                                 />
                             </div>
                             <div>
@@ -186,7 +186,7 @@ export default function CertificatePrintModal({
                                     value={conduct}
                                     onChange={(e) => setConduct(e.target.value)}
                                     placeholder="e.g. Exemplary, Very Good"
-                                    className="w-full px-2.5 py-1.5 text-xs rounded-md border border-input bg-background text-foreground"
+                                    className="w-full px-2.5 py-1.5 text-xs rounded-xs border border-input bg-background text-foreground"
                                 />
                             </div>
                         </div>
@@ -199,7 +199,7 @@ export default function CertificatePrintModal({
                                     value={reason}
                                     onChange={(e) => setReason(e.target.value)}
                                     placeholder="e.g. Higher studies, Personal reasons"
-                                    className="w-full px-2.5 py-1.5 text-xs rounded-md border border-input bg-background text-foreground"
+                                    className="w-full px-2.5 py-1.5 text-xs rounded-xs border border-input bg-background text-foreground"
                                 />
                             </div>
                             <div>
@@ -209,7 +209,7 @@ export default function CertificatePrintModal({
                                     value={remarks}
                                     onChange={(e) => setRemarks(e.target.value)}
                                     placeholder="Custom commendation or remarks"
-                                    className="w-full px-2.5 py-1.5 text-xs rounded-md border border-input bg-background text-foreground"
+                                    className="w-full px-2.5 py-1.5 text-xs rounded-xs border border-input bg-background text-foreground"
                                 />
                             </div>
                         </div>
@@ -220,7 +220,7 @@ export default function CertificatePrintModal({
                 <div className="mt-4 flex justify-center">
                     <div
                         id="printable-certificate"
-                        className="w-full bg-white text-black p-8 sm:p-12 border-8 border-double border-amber-800/80 rounded-xl shadow-md relative overflow-hidden font-serif print:border-8 print:border-double print:border-black print:shadow-none print:m-0 print:p-8"
+                        className="w-full bg-white text-black p-8 sm:p-12 border-8 border-double border-amber-800/80 rounded-sm shadow-md relative overflow-hidden font-serif print:border-8 print:border-double print:border-black print:shadow-none print:m-0 print:p-8"
                     >
                         {/* Copy Stamp Badge (Original vs Duplicate) */}
                         <div className="absolute top-4 right-4 print:top-4 print:right-4 text-right">

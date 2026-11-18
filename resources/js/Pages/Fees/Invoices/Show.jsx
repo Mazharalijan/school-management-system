@@ -72,13 +72,13 @@ export default function Show({ invoice }) {
 
                     <div className="flex flex-wrap items-center gap-2.5">
                         {/* Printer Type Selector */}
-                        <div className="flex items-center rounded-lg border border-border bg-muted/50 p-0.5 text-xs">
+                        <div className="flex items-center rounded-xs border border-border bg-muted/50 p-0.5 text-xs">
                             <span className="text-[11px] font-semibold text-muted-foreground px-2">Printer:</span>
                             <button
                                 type="button"
                                 onClick={() => setPrinterType('standard')}
                                 className={cn(
-                                    "px-2.5 py-1 font-semibold rounded-md transition-colors flex items-center gap-1",
+                                    "px-2.5 py-1 font-semibold rounded-xs transition-colors flex items-center gap-1",
                                     printerType === 'standard'
                                         ? "bg-primary text-primary-foreground shadow-xs"
                                         : "text-muted-foreground hover:text-foreground"
@@ -91,7 +91,7 @@ export default function Show({ invoice }) {
                                 type="button"
                                 onClick={() => setPrinterType('mini')}
                                 className={cn(
-                                    "px-2.5 py-1 font-semibold rounded-md transition-colors flex items-center gap-1",
+                                    "px-2.5 py-1 font-semibold rounded-xs transition-colors flex items-center gap-1",
                                     printerType === 'mini'
                                         ? "bg-primary text-primary-foreground shadow-xs"
                                         : "text-muted-foreground hover:text-foreground"
@@ -103,12 +103,12 @@ export default function Show({ invoice }) {
                         </div>
 
                         {printerType === 'standard' && (
-                            <div className="flex items-center rounded-lg border border-border bg-muted/50 p-0.5 text-xs">
+                            <div className="flex items-center rounded-xs border border-border bg-muted/50 p-0.5 text-xs">
                                 <button
                                     type="button"
                                     onClick={() => setStandardLayout('single')}
                                     className={cn(
-                                        "px-2 py-1 text-[11px] font-medium rounded-md transition-colors",
+                                        "px-2 py-1 text-[11px] font-medium rounded-xs transition-colors",
                                         standardLayout === 'single'
                                             ? "bg-primary text-primary-foreground"
                                             : "text-muted-foreground hover:text-foreground"
@@ -120,7 +120,7 @@ export default function Show({ invoice }) {
                                     type="button"
                                     onClick={() => setStandardLayout('3copy')}
                                     className={cn(
-                                        "px-2 py-1 text-[11px] font-medium rounded-md transition-colors",
+                                        "px-2 py-1 text-[11px] font-medium rounded-xs transition-colors",
                                         standardLayout === '3copy'
                                             ? "bg-primary text-primary-foreground"
                                             : "text-muted-foreground hover:text-foreground"
@@ -295,7 +295,7 @@ export default function Show({ invoice }) {
                                 {['STUDENT COPY', 'ACCOUNTS / SCHOOL COPY', 'BANK COPY'].map((copyTitle) => (
                                     <div
                                         key={copyTitle}
-                                        className="border-2 border-dashed border-gray-300 p-3 rounded-lg text-xs space-y-3 flex flex-col justify-between"
+                                        className="border-2 border-dashed border-gray-300 p-3 rounded-sm text-xs space-y-3 flex flex-col justify-between"
                                     >
                                         <div>
                                             <div className="text-center pb-2 border-b border-gray-200">
@@ -351,7 +351,7 @@ export default function Show({ invoice }) {
                         /* STANDARD A4 SINGLE PAGE VOUCHER */
                         <div
                             id="printable-standard-invoice"
-                            className="w-full bg-card text-card-foreground p-8 rounded-2xl shadow-xs border border-border space-y-6 print:bg-white print:text-black print:shadow-none print:border-none print:p-0"
+                            className="w-full bg-card text-card-foreground p-8 rounded-sm shadow-xs border border-border space-y-6 print:bg-white print:text-black print:shadow-none print:border-none print:p-0"
                         >
                             {/* Header */}
                             <div className="flex justify-between items-start border-b border-border print:border-gray-300 pb-5">
@@ -385,7 +385,7 @@ export default function Show({ invoice }) {
                             </div>
 
                             {/* Student Metadata Box */}
-                            <div className="flex items-center gap-4 bg-muted/40 p-4 rounded-xl border border-border print:bg-gray-50 print:border-gray-200 text-xs">
+                            <div className="flex items-center gap-4 bg-muted/40 p-4 rounded-xs border border-border print:bg-gray-50 print:border-gray-200 text-xs">
                                 <ProfileAvatar
                                     src={student.photo_url}
                                     name={studentName}
@@ -487,7 +487,7 @@ export default function Show({ invoice }) {
                                     </h4>
                                     <div className="space-y-1.5 text-xs">
                                         {payments.map((p) => (
-                                            <div key={p.id} className="flex justify-between items-center bg-muted/40 p-2.5 rounded-lg border border-border print:bg-gray-50 print:border-gray-200">
+                                            <div key={p.id} className="flex justify-between items-center bg-muted/40 p-2.5 rounded-xs border border-border print:bg-gray-50 print:border-gray-200">
                                                 <span>
                                                     Receipt: <strong>{p.receipt_no}</strong> ({p.payment_date}) via <span className="capitalize">{p.payment_method}</span>
                                                     {p.transaction_reference ? ` • Ref: ${p.transaction_reference}` : ''}
@@ -525,7 +525,7 @@ export default function Show({ invoice }) {
                 {/* Collect Payment Modal */}
                 {isPaymentModalOpen && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                        <div className="bg-card text-card-foreground rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4 border border-border animate-in fade-in-50 zoom-in-95">
+                        <div className="bg-card text-card-foreground rounded-sm shadow-2xl max-w-md w-full p-6 space-y-4 border border-border animate-in fade-in-50 zoom-in-95">
                             <div className="flex items-center justify-between pb-3 border-b border-border">
                                 <div>
                                     <h3 className="font-bold text-base text-foreground">Collect Fee Payment</h3>
@@ -548,7 +548,7 @@ export default function Show({ invoice }) {
                                         max={Number(invoice.due_amount || 0)}
                                         value={data.amount_paid}
                                         onChange={(e) => setData('amount_paid', e.target.value)}
-                                        className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                        className="w-full px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                         required
                                     />
                                     {errors.amount_paid && (
@@ -565,7 +565,7 @@ export default function Show({ invoice }) {
                                             type="date"
                                             value={data.payment_date}
                                             onChange={(e) => setData('payment_date', e.target.value)}
-                                            className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                            className="w-full px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                             required
                                         />
                                     </div>
@@ -576,7 +576,7 @@ export default function Show({ invoice }) {
                                         <select
                                             value={data.payment_method}
                                             onChange={(e) => setData('payment_method', e.target.value)}
-                                            className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                            className="w-full px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                         >
                                             <option value="cash">Cash</option>
                                             <option value="bank_transfer">Bank Transfer</option>
@@ -595,7 +595,7 @@ export default function Show({ invoice }) {
                                         placeholder="e.g. TXN-123456"
                                         value={data.transaction_reference}
                                         onChange={(e) => setData('transaction_reference', e.target.value)}
-                                        className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                        className="w-full px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                     />
                                 </div>
 
@@ -608,7 +608,7 @@ export default function Show({ invoice }) {
                                         placeholder="e.g. Paid in full by father"
                                         value={data.note}
                                         onChange={(e) => setData('note', e.target.value)}
-                                        className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                        className="w-full px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                     />
                                 </div>
 

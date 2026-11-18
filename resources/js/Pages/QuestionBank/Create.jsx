@@ -150,7 +150,7 @@ export default function Create({ classes = [] }) {
 
             <div className="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8 space-y-6">
                 {/* Header & Back Action */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-card p-6 rounded-2xl shadow-sm border border-border text-card-foreground">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-card p-6 rounded-sm shadow-sm border border-border text-card-foreground">
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
                             <Link
@@ -171,14 +171,14 @@ export default function Create({ classes = [] }) {
 
                     <div className="flex items-center gap-3">
                         <Link href={route('question-bank.index')}>
-                            <Button variant="outline" className="rounded-xl">
+                            <Button variant="outline" className="rounded-xs">
                                 Cancel
                             </Button>
                         </Link>
                         <Button
                             onClick={handleSubmit}
                             disabled={processing}
-                            className="rounded-xl font-semibold px-6 shadow-sm"
+                            className="rounded-xs font-semibold px-6 shadow-sm"
                         >
                             <CheckCircle2 className="w-4 h-4 mr-2" />
                             {processing ? 'Saving...' : 'Save All Questions'}
@@ -195,7 +195,7 @@ export default function Create({ classes = [] }) {
                         return (
                             <div
                                 key={card.id}
-                                className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden transition-all duration-200 text-card-foreground"
+                                className="bg-card rounded-sm border border-border shadow-sm overflow-hidden transition-all duration-200 text-card-foreground"
                             >
                                 {/* Topic Card Header */}
                                 <div className="bg-muted/80 text-foreground px-6 py-4 flex items-center justify-between border-b border-border">
@@ -214,7 +214,7 @@ export default function Create({ classes = [] }) {
                                             variant="ghost"
                                             size="sm"
                                             onClick={() => removeTopicCard(cardIndex)}
-                                            className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
+                                            className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-xs transition-colors"
                                         >
                                             <Trash2 className="w-4 h-4 mr-1.5" />
                                             Remove Card
@@ -240,7 +240,7 @@ export default function Create({ classes = [] }) {
                                                         e.target.value
                                                     )
                                                 }
-                                                className="w-full h-10 px-3 py-2 text-sm rounded-xl border border-input bg-background text-foreground font-medium focus:ring-1 focus:ring-ring focus:outline-none transition-all"
+                                                className="w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground font-medium focus:ring-1 focus:ring-ring focus:outline-none transition-all"
                                                 required
                                             >
                                                 <option value="">-- Select Class --</option>
@@ -273,7 +273,7 @@ export default function Create({ classes = [] }) {
                                                     )
                                                 }
                                                 disabled={!card.school_class_id}
-                                                className="w-full h-10 px-3 py-2 text-sm rounded-xl border border-input bg-background text-foreground font-medium focus:ring-1 focus:ring-ring focus:outline-none disabled:bg-muted disabled:text-muted-foreground transition-all"
+                                                className="w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground font-medium focus:ring-1 focus:ring-ring focus:outline-none disabled:bg-muted disabled:text-muted-foreground transition-all"
                                                 required
                                             >
                                                 <option value="">-- Select Subject --</option>
@@ -306,7 +306,7 @@ export default function Create({ classes = [] }) {
                                                     )
                                                 }
                                                 disabled={!card.subject_id}
-                                                className="w-full h-10 px-3 py-2 text-sm rounded-xl border border-input bg-background text-foreground font-medium focus:ring-1 focus:ring-ring focus:outline-none disabled:bg-muted disabled:text-muted-foreground transition-all"
+                                                className="w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground font-medium focus:ring-1 focus:ring-ring focus:outline-none disabled:bg-muted disabled:text-muted-foreground transition-all"
                                             >
                                                 <option value="">-- Select Chapter (Optional) --</option>
                                                 {chapters.map((ch) => (
@@ -333,7 +333,7 @@ export default function Create({ classes = [] }) {
                                                     )
                                                 }
                                                 disabled={!card.chapter_id}
-                                                className="w-full h-10 px-3 py-2 text-sm rounded-xl border border-input bg-background text-foreground font-medium focus:ring-1 focus:ring-ring focus:outline-none disabled:bg-muted disabled:text-muted-foreground transition-all"
+                                                className="w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground font-medium focus:ring-1 focus:ring-ring focus:outline-none disabled:bg-muted disabled:text-muted-foreground transition-all"
                                             >
                                                 <option value="">-- Select Topic (Optional) --</option>
                                                 {topics.map((top) => (
@@ -361,7 +361,7 @@ export default function Create({ classes = [] }) {
                                         {card.questions.map((q, qIndex) => (
                                             <div
                                                 key={q.id}
-                                                className="bg-muted/30 p-4 rounded-xl border border-border relative space-y-3"
+                                                className="bg-muted/30 p-4 rounded-xs border border-border relative space-y-3"
                                             >
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-2">
@@ -403,7 +403,7 @@ export default function Create({ classes = [] }) {
                                                                     e.target.value
                                                                 )
                                                             }
-                                                            className="w-full h-9 text-xs rounded-lg border border-input bg-background text-foreground mt-1 font-medium focus:ring-1 focus:ring-ring focus:outline-none"
+                                                            className="w-full h-9 text-xs rounded-xs border border-input bg-background text-foreground mt-1 font-medium focus:ring-1 focus:ring-ring focus:outline-none"
                                                         >
                                                             <option value="mcq">MCQ</option>
                                                             <option value="short">Short Answer</option>
@@ -451,7 +451,7 @@ export default function Create({ classes = [] }) {
                                                             }
                                                             placeholder="Type the question content here..."
                                                             rows={2}
-                                                            className="w-full text-xs rounded-lg border border-input bg-background text-foreground p-2 mt-1 focus:ring-1 focus:ring-ring focus:outline-none"
+                                                            className="w-full text-xs rounded-xs border border-input bg-background text-foreground p-2 mt-1 focus:ring-1 focus:ring-ring focus:outline-none"
                                                             required
                                                         />
                                                     </div>
@@ -467,7 +467,7 @@ export default function Create({ classes = [] }) {
                                             variant="outline"
                                             size="sm"
                                             onClick={() => addQuestionToCard(cardIndex)}
-                                            className="border-dashed border-primary/40 text-primary hover:bg-primary/10 rounded-xl font-semibold text-xs"
+                                            className="border-dashed border-primary/40 text-primary hover:bg-primary/10 rounded-xs font-semibold text-xs"
                                         >
                                             <Plus className="w-3.5 h-3.5 mr-1.5" />
                                             + Add Question to this Topic
@@ -479,7 +479,7 @@ export default function Create({ classes = [] }) {
                     })}
 
                     {/* Global Add Another Topic Card Button */}
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 bg-foreground text-background dark:bg-muted dark:text-foreground rounded-2xl shadow-lg">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 bg-foreground text-background dark:bg-muted dark:text-foreground rounded-sm shadow-lg">
                         <div>
                             <h3 className="text-base font-bold">
                                 Need to add questions for another topic?
@@ -493,7 +493,7 @@ export default function Create({ classes = [] }) {
                             <Button
                                 type="button"
                                 onClick={addTopicCard}
-                                className="font-bold rounded-xl shadow-md px-5"
+                                className="font-bold rounded-xs shadow-md px-5"
                             >
                                 <Plus className="w-4 h-4 mr-2" />
                                 + Add Another Topic Card
@@ -507,7 +507,7 @@ export default function Create({ classes = [] }) {
                             type="submit"
                             disabled={processing}
                             size="lg"
-                            className="font-bold px-8 rounded-xl shadow-md"
+                            className="font-bold px-8 rounded-xs shadow-md"
                         >
                             <CheckCircle2 className="w-5 h-5 mr-2" />
                             {processing ? 'Saving...' : 'Save All Questions'}

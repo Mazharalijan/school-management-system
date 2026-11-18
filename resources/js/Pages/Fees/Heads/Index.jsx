@@ -169,7 +169,7 @@ export default function Index({ feeHeads = [] }) {
                 {/* Create / Edit Modal */}
                 {isModalOpen && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                        <div className="bg-card text-card-foreground rounded-xl shadow-xl max-w-md w-full p-6 space-y-4 border border-border">
+                        <div className="bg-card text-card-foreground rounded-sm shadow-xl max-w-md w-full p-6 space-y-4 border border-border">
                             <div className="flex items-center justify-between border-b border-border pb-3">
                                 <h2 className="text-base font-bold text-foreground">
                                     {editingHead ? 'Edit Fee Head' : 'Add New Fee Head'}
@@ -209,7 +209,7 @@ export default function Index({ feeHeads = [] }) {
                                         id="head_type"
                                         value={data.type}
                                         onChange={(e) => setData('type', e.target.value)}
-                                        className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
+                                        className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
                                     >
                                         <option value="recurring">Recurring (Monthly)</option>
                                         <option value="one_time">One-Time</option>
@@ -225,7 +225,7 @@ export default function Index({ feeHeads = [] }) {
                                         id="head_desc"
                                         value={data.description}
                                         onChange={(e) => setData('description', e.target.value)}
-                                        className="mt-1 w-full p-2.5 text-sm rounded-md border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
+                                        className="mt-1 w-full p-2.5 text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
                                         rows="3"
                                         placeholder="Optional description..."
                                     />

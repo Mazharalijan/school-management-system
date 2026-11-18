@@ -66,7 +66,7 @@ export default function PrintPnlModal({ isOpen, onClose, summary }) {
                     {/* Statement Financial Table */}
                     <div className="space-y-4">
                         {/* 1. REVENUE (INFLOWS) */}
-                        <div className="border border-border print:border-gray-300 rounded-lg overflow-hidden bg-card print:bg-white">
+                        <div className="border border-border print:border-gray-300 rounded-sm overflow-hidden bg-card print:bg-white">
                             <div className="bg-muted print:bg-gray-100 px-4 py-2 font-bold text-foreground print:text-black uppercase tracking-wider flex justify-between">
                                 <span>I. Operational Revenue (Inflows)</span>
                                 <span>Amount (PKR)</span>
@@ -96,7 +96,7 @@ export default function PrintPnlModal({ isOpen, onClose, summary }) {
                         </div>
 
                         {/* 2. OPERATIONAL EXPENSES (OUTFLOWS) */}
-                        <div className="border border-border print:border-gray-300 rounded-lg overflow-hidden bg-card print:bg-white">
+                        <div className="border border-border print:border-gray-300 rounded-sm overflow-hidden bg-card print:bg-white">
                             <div className="bg-muted print:bg-gray-100 px-4 py-2 font-bold text-foreground print:text-black uppercase tracking-wider flex justify-between">
                                 <span>II. Operating Expenses (Outflows)</span>
                                 <span>Amount (PKR)</span>
@@ -130,7 +130,7 @@ export default function PrintPnlModal({ isOpen, onClose, summary }) {
                         </div>
 
                         {/* 3. NET PROFIT / LOSS SUMMARY */}
-                        <div className={`p-4 rounded-xl border-2 flex items-center justify-between ${
+                        <div className={`p-4 rounded-sm border-2 flex items-center justify-between ${
                             isProfit ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 text-emerald-950 dark:text-emerald-200 print:bg-emerald-50 print:text-emerald-950' : 'bg-rose-50 dark:bg-rose-950/40 border-rose-500 text-rose-950 dark:text-rose-200 print:bg-rose-50 print:text-rose-950'
                         }`}>
                             <div className="space-y-0.5">

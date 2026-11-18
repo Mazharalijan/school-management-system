@@ -89,7 +89,7 @@ export default function CategoryFormModal({ isOpen, onClose }) {
                             placeholder="Describe purpose of this expense bucket..."
                             value={data.description}
                             onChange={(e) => setData('description', e.target.value)}
-                            className="mt-1 w-full p-2.5 text-xs rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                            className="mt-1 w-full p-2.5 text-xs rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                         />
                     </div>
 

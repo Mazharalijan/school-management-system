@@ -167,14 +167,14 @@ export default function PromotionIndex({
                 >
                     <Link
                         href={route('students.index')}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-border bg-background hover:bg-muted text-foreground transition-colors shadow-xs whitespace-nowrap shrink-0"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xs border border-border bg-background hover:bg-muted text-foreground transition-colors shadow-xs whitespace-nowrap shrink-0"
                     >
                         <ArrowLeft className="w-3.5 h-3.5 shrink-0" />
                         <span>Back to Students</span>
                     </Link>
                     <Link
                         href={route('fees.invoices.index')}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-border bg-background hover:bg-muted text-foreground transition-colors shadow-xs whitespace-nowrap shrink-0"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xs border border-border bg-background hover:bg-muted text-foreground transition-colors shadow-xs whitespace-nowrap shrink-0"
                     >
                         <CreditCard className="w-3.5 h-3.5 shrink-0 text-muted-foreground" />
                         <span>Fee Invoices</span>
@@ -182,7 +182,7 @@ export default function PromotionIndex({
                 </PageHeader>
 
                 {/* Configuration Panel: Source & Target Class Selection */}
-                <div className="bg-card text-card-foreground rounded-lg border border-border p-4 shadow-xs space-y-4">
+                <div className="bg-card text-card-foreground rounded-sm border border-border p-4 shadow-xs space-y-4">
                     <div className="flex items-center justify-between border-b border-border pb-3">
                         <h3 className="text-sm font-semibold text-foreground tracking-tight flex items-center gap-2">
                             <Filter className="w-4 h-4 text-muted-foreground shrink-0" />
@@ -193,7 +193,7 @@ export default function PromotionIndex({
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {/* Source Configuration (Left) */}
-                        <div className="bg-muted/30 border border-border rounded-lg p-3.5 space-y-3">
+                        <div className="bg-muted/30 border border-border rounded-sm p-3.5 space-y-3">
                             <div className="flex items-center justify-between">
                                 <span className="text-xs font-bold uppercase text-foreground tracking-wider">Source Class (Current)</span>
                                 <Badge variant="outline" className="bg-background text-muted-foreground text-[10px] border-border">
@@ -207,7 +207,7 @@ export default function PromotionIndex({
                                     <select
                                         value={sourceSessionYear}
                                         onChange={handleSourceSessionChange}
-                                        className="h-9 w-full rounded-md border border-input bg-background px-2.5 py-1.5 text-xs text-foreground shadow-2xs transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:outline-none"
+                                        className="h-9 w-full rounded-xs border border-input bg-background px-2.5 py-1.5 text-xs text-foreground shadow-2xs transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:outline-none"
                                     >
                                         {sessionYears.map((yr) => (
                                             <option key={yr} value={yr}>
@@ -222,7 +222,7 @@ export default function PromotionIndex({
                                     <select
                                         value={sourceClassId}
                                         onChange={handleSourceClassChange}
-                                        className="h-9 w-full rounded-md border border-input bg-background px-2.5 py-1.5 text-xs font-semibold text-foreground shadow-2xs transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:outline-none"
+                                        className="h-9 w-full rounded-xs border border-input bg-background px-2.5 py-1.5 text-xs font-semibold text-foreground shadow-2xs transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:outline-none"
                                     >
                                         {classes.map((cls) => (
                                             <option key={cls.id} value={cls.id}>
@@ -237,7 +237,7 @@ export default function PromotionIndex({
                                     <select
                                         value={sourceSectionId}
                                         onChange={handleSourceSectionChange}
-                                        className="h-9 w-full rounded-md border border-input bg-background px-2.5 py-1.5 text-xs text-foreground shadow-2xs transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:outline-none"
+                                        className="h-9 w-full rounded-xs border border-input bg-background px-2.5 py-1.5 text-xs text-foreground shadow-2xs transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:outline-none"
                                     >
                                         <option value="">All Sections</option>
                                         {(sourceClass?.sections || []).map((sec) => (
@@ -251,13 +251,13 @@ export default function PromotionIndex({
                         </div>
 
                         {/* Target Configuration (Right) */}
-                        <div className="bg-muted/30 border border-border rounded-lg p-3.5 space-y-3">
+                        <div className="bg-muted/30 border border-border rounded-sm p-3.5 space-y-3">
                             <div className="flex items-center justify-between">
                                 <span className="text-xs font-bold uppercase text-foreground tracking-wider">Target Class (Promoted To)</span>
                                 <div className="flex items-center gap-1">
                                     {isBulkSkipping && (
                                         <Badge variant="outline" className="bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border-amber-300 text-[10px]">
-                                            Class Skip
+                                             Class Skip
                                         </Badge>
                                     )}
                                     {isBulkRetaining && (
@@ -292,7 +292,7 @@ export default function PromotionIndex({
                                             setBulkTargetClassId(e.target.value);
                                             setBulkTargetSectionId('');
                                         }}
-                                        className="h-9 w-full rounded-md border border-input bg-background px-2.5 py-1.5 text-xs font-semibold text-foreground shadow-2xs transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:outline-none"
+                                        className="h-9 w-full rounded-xs border border-input bg-background px-2.5 py-1.5 text-xs font-semibold text-foreground shadow-2xs transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:outline-none"
                                     >
                                         {classes.map((cls) => {
                                             let label = cls.name;
@@ -319,7 +319,7 @@ export default function PromotionIndex({
                                     <select
                                         value={bulkTargetSectionId}
                                         onChange={(e) => setBulkTargetSectionId(e.target.value)}
-                                        className="h-9 w-full rounded-md border border-input bg-background px-2.5 py-1.5 text-xs text-foreground shadow-2xs transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:outline-none"
+                                        className="h-9 w-full rounded-xs border border-input bg-background px-2.5 py-1.5 text-xs text-foreground shadow-2xs transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:outline-none"
                                     >
                                         <option value="">Auto Section (First Available)</option>
                                         {targetSections.map((sec) => (
@@ -336,7 +336,7 @@ export default function PromotionIndex({
 
                 {/* Floating / Sticky Bulk Action Bar */}
                 {selectedStudentIds.length > 0 && (
-                    <div className="sticky top-4 z-30 bg-card text-card-foreground p-3 rounded-lg shadow-md border border-border flex flex-col sm:flex-row items-center justify-between gap-3 animate-in fade-in slide-in-from-top duration-200">
+                    <div className="sticky top-4 z-30 bg-card text-card-foreground p-3 rounded-sm shadow-md border border-border flex flex-col sm:flex-row items-center justify-between gap-3 animate-in fade-in slide-in-from-top duration-200">
                         <div className="flex items-center gap-3">
                             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-xs shrink-0">
                                 {selectedStudentIds.length}
@@ -374,7 +374,7 @@ export default function PromotionIndex({
                 )}
 
                 {/* Student Selection Roster Table */}
-                <div className="bg-card text-card-foreground rounded-lg border border-border shadow-xs overflow-hidden">
+                <div className="bg-card text-card-foreground rounded-sm border border-border shadow-xs overflow-hidden">
                     {/* Table Header Bar */}
                     <div className="p-3.5 border-b border-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-muted/40">
                         <div className="flex items-center gap-3 text-xs">
@@ -521,7 +521,7 @@ export default function PromotionIndex({
                                                         <select
                                                             value={studentTargetClassId}
                                                             onChange={(e) => handleRowClassOverride(student.id, e.target.value)}
-                                                            className="text-xs rounded-md border border-input font-medium py-1 px-2 bg-background text-foreground shadow-2xs focus:border-ring focus:ring-1 focus:ring-ring focus:outline-none"
+                                                            className="text-xs rounded-xs border border-input font-medium py-1 px-2 bg-background text-foreground shadow-2xs focus:border-ring focus:ring-1 focus:ring-ring focus:outline-none"
                                                         >
                                                             {classes.map((cls) => (
                                                                 <option key={cls.id} value={cls.id}>

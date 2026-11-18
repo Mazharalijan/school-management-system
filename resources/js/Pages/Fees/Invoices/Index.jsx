@@ -155,7 +155,7 @@ export default function Index({ invoices, classes = [], filters = {} }) {
                     <select
                         value={filters.status || ''}
                         onChange={(e) => handleFilterChange('status', e.target.value)}
-                        className="w-40 shrink-0 h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
+                        className="w-40 shrink-0 h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
                     >
                         <option value="">All Statuses</option>
                         <option value="unpaid">Unpaid</option>
@@ -166,7 +166,7 @@ export default function Index({ invoices, classes = [], filters = {} }) {
                     <select
                         value={filters.month || ''}
                         onChange={(e) => handleFilterChange('month', e.target.value)}
-                        className="w-40 shrink-0 h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
+                        className="w-40 shrink-0 h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
                     >
                         <option value="">All Months</option>
                         {months.map((m) => (
@@ -255,7 +255,7 @@ export default function Index({ invoices, classes = [], filters = {} }) {
                                                         </Button>
                                                         <Link
                                                             href={route('fees.invoices.show', inv.id)}
-                                                            className="inline-flex items-center justify-center h-7 px-2 rounded-md text-xs font-semibold border border-border bg-background hover:bg-muted text-muted-foreground hover:text-foreground transition-colors shrink-0"
+                                                            className="inline-flex items-center justify-center h-7 px-2 rounded-xs text-xs font-semibold border border-border bg-background hover:bg-muted text-muted-foreground hover:text-foreground transition-colors shrink-0"
                                                             title="View Full Voucher"
                                                         >
                                                             <Eye className="w-3.5 h-3.5 shrink-0" />
@@ -288,7 +288,7 @@ export default function Index({ invoices, classes = [], filters = {} }) {
                 {/* Bulk Generator Modal */}
                 {isGenerateModalOpen && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                        <div className="bg-card text-card-foreground rounded-xl shadow-xl max-w-md w-full p-6 space-y-4 border border-border">
+                        <div className="bg-card text-card-foreground rounded-sm shadow-xl max-w-md w-full p-6 space-y-4 border border-border">
                             <h2 className="text-lg font-bold text-foreground">Generate Bulk Invoices</h2>
                             <form onSubmit={handleGenerate} className="space-y-4">
                                 <div>
@@ -296,7 +296,7 @@ export default function Index({ invoices, classes = [], filters = {} }) {
                                     <select
                                         value={data.school_class_id}
                                         onChange={(e) => setData('school_class_id', e.target.value)}
-                                        className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
+                                        className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
                                         required
                                     >
                                         <option value="">-- Select Class --</option>
@@ -311,7 +311,7 @@ export default function Index({ invoices, classes = [], filters = {} }) {
                                     <select
                                         value={data.month}
                                         onChange={(e) => setData('month', e.target.value)}
-                                        className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
+                                        className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card focus:outline-none focus:ring-2 focus:ring-ring"
                                     >
                                         {months.map((m) => (
                                             <option key={m} value={m}>{m}</option>
@@ -364,7 +364,7 @@ export default function Index({ invoices, classes = [], filters = {} }) {
                 {/* In-Page Collect Payment Modal */}
                 {collectingInvoice && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                        <div className="bg-card text-card-foreground rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4 border border-border animate-in fade-in-50 zoom-in-95">
+                        <div className="bg-card text-card-foreground rounded-sm shadow-2xl max-w-md w-full p-6 space-y-4 border border-border animate-in fade-in-50 zoom-in-95">
                             <div className="flex items-center justify-between pb-3 border-b border-border">
                                 <div>
                                     <h3 className="font-bold text-base text-foreground">Collect Fee Payment</h3>
@@ -389,7 +389,7 @@ export default function Index({ invoices, classes = [], filters = {} }) {
                                         max={Number(collectingInvoice.due_amount || 0)}
                                         value={paymentData.amount_paid}
                                         onChange={(e) => setPaymentData('amount_paid', e.target.value)}
-                                        className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                        className="w-full px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                         required
                                     />
                                     {paymentErrors.amount_paid && (
@@ -406,7 +406,7 @@ export default function Index({ invoices, classes = [], filters = {} }) {
                                             type="date"
                                             value={paymentData.payment_date}
                                             onChange={(e) => setPaymentData('payment_date', e.target.value)}
-                                            className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                            className="w-full px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                             required
                                         />
                                     </div>
@@ -417,7 +417,7 @@ export default function Index({ invoices, classes = [], filters = {} }) {
                                         <select
                                             value={paymentData.payment_method}
                                             onChange={(e) => setPaymentData('payment_method', e.target.value)}
-                                            className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                            className="w-full px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                         >
                                             <option value="cash">Cash</option>
                                             <option value="bank_transfer">Bank Transfer</option>
@@ -436,7 +436,7 @@ export default function Index({ invoices, classes = [], filters = {} }) {
                                         placeholder="e.g. TXN-123456"
                                         value={paymentData.transaction_reference}
                                         onChange={(e) => setPaymentData('transaction_reference', e.target.value)}
-                                        className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                        className="w-full px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                     />
                                 </div>
 
@@ -449,7 +449,7 @@ export default function Index({ invoices, classes = [], filters = {} }) {
                                         placeholder="e.g. Paid in full by father"
                                         value={paymentData.note}
                                         onChange={(e) => setPaymentData('note', e.target.value)}
-                                        className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                        className="w-full px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                     />
                                 </div>
 

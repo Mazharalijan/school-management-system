@@ -178,7 +178,7 @@ export default function InventoryIndex({ items, categories, staffMembers, filter
                             setSelectedType(val);
                             handleFilter({ type: val });
                         }}
-                        className="h-10 text-xs rounded-md border border-input bg-background px-3 text-foreground focus:ring-1 focus:ring-ring w-44 shrink-0"
+                        className="h-10 text-xs rounded-xs border border-input bg-background px-3 text-foreground focus:ring-1 focus:ring-ring w-44 shrink-0"
                     >
                         <option value="">All Types</option>
                         <option value="fixed_asset">Fixed Assets</option>
@@ -191,7 +191,7 @@ export default function InventoryIndex({ items, categories, staffMembers, filter
                 </FilterBar>
 
                 {/* Items Table Container */}
-                <Card className="rounded-lg border border-border shadow-xs overflow-hidden bg-card text-card-foreground">
+                <Card className="rounded-sm border border-border shadow-xs overflow-hidden bg-card text-card-foreground">
                     <CardContent className="p-0">
                         <div className="overflow-x-auto">
                             <table className="w-full text-xs text-left text-muted-foreground">
@@ -313,7 +313,7 @@ export default function InventoryIndex({ items, categories, staffMembers, filter
                         <div>
                             <Label className="text-xs font-semibold">Category *</Label>
                             <select
-                                className="w-full h-9 px-3 text-xs rounded-md border border-input bg-background text-foreground mt-1"
+                                className="w-full h-9 px-3 text-xs rounded-xs border border-input bg-background text-foreground mt-1"
                                 value={addItemForm.data.category_id}
                                 onChange={(e) => addItemForm.setData('category_id', e.target.value)}
                                 required
@@ -352,7 +352,7 @@ export default function InventoryIndex({ items, categories, staffMembers, filter
                             <div>
                                 <Label className="text-xs font-semibold">Type *</Label>
                                 <select
-                                    className="w-full h-9 px-3 text-xs rounded-md border border-input bg-background text-foreground mt-1"
+                                    className="w-full h-9 px-3 text-xs rounded-xs border border-input bg-background text-foreground mt-1"
                                     value={addItemForm.data.type}
                                     onChange={(e) => addItemForm.setData('type', e.target.value)}
                                 >
@@ -404,7 +404,7 @@ export default function InventoryIndex({ items, categories, staffMembers, filter
                     </DialogHeader>
                     {selectedItem && (
                         <form onSubmit={handleAllocateSubmit} className="space-y-3 pt-2">
-                            <div className="bg-muted/40 p-2.5 rounded-lg border border-border text-xs">
+                            <div className="bg-muted/40 p-2.5 rounded-xs border border-border text-xs">
                                 <p className="font-bold text-foreground">
                                     {selectedItem.name} ({selectedItem.asset_code})
                                 </p>
@@ -414,7 +414,7 @@ export default function InventoryIndex({ items, categories, staffMembers, filter
                             <div>
                                 <Label className="text-xs font-semibold">Allocation Target</Label>
                                 <select
-                                    className="w-full h-9 px-3 text-xs rounded-md border border-input bg-background text-foreground mt-1"
+                                    className="w-full h-9 px-3 text-xs rounded-xs border border-input bg-background text-foreground mt-1"
                                     value={allocateForm.data.allocation_target}
                                     onChange={(e) => allocateForm.setData('allocation_target', e.target.value)}
                                 >
@@ -427,7 +427,7 @@ export default function InventoryIndex({ items, categories, staffMembers, filter
                                 <div>
                                     <Label className="text-xs font-semibold">Select Staff Member *</Label>
                                     <select
-                                        className="w-full h-9 px-3 text-xs rounded-md border border-input bg-background text-foreground mt-1"
+                                        className="w-full h-9 px-3 text-xs rounded-xs border border-input bg-background text-foreground mt-1"
                                         value={allocateForm.data.staff_id}
                                         onChange={(e) => allocateForm.setData('staff_id', e.target.value)}
                                         required
@@ -499,7 +499,7 @@ export default function InventoryIndex({ items, categories, staffMembers, filter
                     </DialogHeader>
                     {selectedItem && (
                         <form onSubmit={handleDamageSubmit} className="space-y-3 pt-2">
-                            <div className="bg-muted/40 p-2.5 rounded-lg border border-border text-xs">
+                            <div className="bg-muted/40 p-2.5 rounded-xs border border-border text-xs">
                                 <p className="font-bold text-foreground">
                                     {selectedItem.name} ({selectedItem.asset_code})
                                 </p>

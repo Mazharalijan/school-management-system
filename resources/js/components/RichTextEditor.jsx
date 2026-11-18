@@ -79,7 +79,7 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Write q
             type="button"
             onClick={onClick}
             title={title}
-            className={`p-1.5 text-xs rounded transition-colors ${
+            className={`p-1.5 text-xs rounded-xs transition-colors ${
                 isActive
                     ? 'bg-accent text-accent-foreground font-semibold shadow-inner'
                     : 'bg-background hover:bg-muted text-foreground border border-border'
@@ -92,7 +92,7 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Write q
     const Divider = () => <div className="w-px h-5 bg-border my-auto mx-1" />;
 
     return (
-        <div className="text-sm mt-2 rounded-md border border-input bg-card text-foreground focus-within:ring-2 focus-within:ring-ring">
+        <div className="text-sm mt-2 rounded-sm border border-input bg-card text-foreground focus-within:ring-2 focus-within:ring-ring">
             {/* CKEditor Style Multi-Row Toolbar */}
             <div className="flex flex-wrap items-center gap-1 border-b border-border bg-muted/40 p-2 text-foreground">
                 

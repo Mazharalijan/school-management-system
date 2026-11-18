@@ -55,14 +55,14 @@ export default function Index({ classes, feeHeads, structures, filters }) {
                 <p className="text-sm text-muted-foreground">Configure default fee amounts for classes by academic year</p>
             </div>
 
-            <div className="bg-card text-card-foreground p-6 rounded-lg shadow-xs space-y-6 border border-border">
+            <div className="bg-card text-card-foreground p-6 rounded-sm shadow-xs space-y-6 border border-border">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-foreground">Select Class</label>
                         <select
                             value={selectedClass}
                             onChange={(e) => handleClassChange(e.target.value)}
-                            className="mt-1 w-full rounded-md border border-input shadow-xs focus:ring-ring focus:border-ring bg-background text-foreground dark:bg-card"
+                            className="mt-1 w-full rounded-xs border border-input shadow-xs focus:ring-ring focus:border-ring bg-background text-foreground dark:bg-card"
                         >
                             <option value="">-- Choose Class --</option>
                             {classes.map((c) => (
@@ -77,7 +77,7 @@ export default function Index({ classes, feeHeads, structures, filters }) {
                             type="text"
                             value={sessionYear}
                             onChange={(e) => setSessionYear(e.target.value)}
-                            className="mt-1 w-full rounded-md border border-input shadow-xs focus:ring-ring focus:border-ring bg-background text-foreground dark:bg-card"
+                            className="mt-1 w-full rounded-xs border border-input shadow-xs focus:ring-ring focus:border-ring bg-background text-foreground dark:bg-card"
                         />
                     </div>
                 </div>
@@ -94,7 +94,7 @@ export default function Index({ classes, feeHeads, structures, filters }) {
                                             <span className="text-xs text-muted-foreground capitalize">{head.type}</span>
                                         </div>
                                         <div className="w-48">
-                                            <div className="relative rounded-md shadow-xs">
+                                            <div className="relative rounded-xs shadow-xs">
                                                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                                     <span className="text-muted-foreground sm:text-sm">$</span>
                                                 </div>
@@ -103,7 +103,7 @@ export default function Index({ classes, feeHeads, structures, filters }) {
                                                     step="0.01"
                                                     value={feeItem.amount}
                                                     onChange={(e) => handleAmountChange(index, e.target.value)}
-                                                    className="w-full pl-7 pr-3 py-1.5 rounded-md border border-input focus:ring-ring focus:border-ring text-right bg-background text-foreground dark:bg-card"
+                                                    className="w-full pl-7 pr-3 py-1.5 rounded-xs border border-input focus:ring-ring focus:border-ring text-right bg-background text-foreground dark:bg-card"
                                                 />
                                             </div>
                                         </div>
@@ -119,7 +119,7 @@ export default function Index({ classes, feeHeads, structures, filters }) {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg shadow-xs transition"
+                                className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xs shadow-xs transition"
                             >
                                 Save Structure
                             </button>

@@ -81,7 +81,7 @@ export default function Entry({ sessions = [], classes = [], subjects = [], stud
                             <select
                                 value={filters.exam_session_id || ''}
                                 onChange={(e) => handleFilterChange('exam_session_id', e.target.value)}
-                                className="w-full bg-background border border-input rounded-md text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input"
+                                className="w-full bg-background border border-input rounded-xs text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input"
                             >
                                 <option value="">-- Select Session --</option>
                                 {sessions.map((s) => (
@@ -95,7 +95,7 @@ export default function Entry({ sessions = [], classes = [], subjects = [], stud
                             <select
                                 value={filters.school_class_id || ''}
                                 onChange={(e) => handleFilterChange('school_class_id', e.target.value)}
-                                className="w-full bg-background border border-input rounded-md text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input"
+                                className="w-full bg-background border border-input rounded-xs text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input"
                             >
                                 <option value="">-- Select Class --</option>
                                 {classes.map((c) => (
@@ -109,7 +109,7 @@ export default function Entry({ sessions = [], classes = [], subjects = [], stud
                             <select
                                 value={filters.subject_id || ''}
                                 onChange={(e) => handleFilterChange('subject_id', e.target.value)}
-                                className="w-full bg-background border border-input rounded-md text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input"
+                                className="w-full bg-background border border-input rounded-xs text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input"
                             >
                                 <option value="">-- Select Subject --</option>
                                 {subjects.map((sub) => (
@@ -122,7 +122,7 @@ export default function Entry({ sessions = [], classes = [], subjects = [], stud
 
                 {/* Marks Entry Form */}
                 {students?.length > 0 ? (
-                    <form onSubmit={handleSubmit} className="bg-card text-card-foreground rounded-xl shadow-sm border border-border overflow-hidden">
+                    <form onSubmit={handleSubmit} className="bg-card text-card-foreground rounded-sm shadow-sm border border-border overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="min-w-full divide-y divide-border text-sm">
                                 <thead className="bg-muted/50">
@@ -162,7 +162,7 @@ export default function Entry({ sessions = [], classes = [], subjects = [], stud
                                                     disabled={data.marks[idx]?.is_absent}
                                                     value={data.marks[idx]?.obtained_marks || ''}
                                                     onChange={(e) => handleMarkChange(idx, 'obtained_marks', e.target.value)}
-                                                    className="w-32 bg-background border border-input rounded-md text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input disabled:bg-muted/50 disabled:text-muted-foreground"
+                                                    className="w-32 bg-background border border-input rounded-xs text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input disabled:bg-muted/50 disabled:text-muted-foreground"
                                                 />
                                             </td>
                                             <td className="px-6 py-3">
@@ -170,7 +170,7 @@ export default function Entry({ sessions = [], classes = [], subjects = [], stud
                                                     type="number"
                                                     value={data.marks[idx]?.total_marks || 100}
                                                     onChange={(e) => handleMarkChange(idx, 'total_marks', e.target.value)}
-                                                    className="w-32 bg-background border border-input rounded-md text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input"
+                                                    className="w-32 bg-background border border-input rounded-xs text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input"
                                                 />
                                             </td>
                                             <td className="px-6 py-3">
@@ -179,7 +179,7 @@ export default function Entry({ sessions = [], classes = [], subjects = [], stud
                                                     value={data.marks[idx]?.remarks || ''}
                                                     onChange={(e) => handleMarkChange(idx, 'remarks', e.target.value)}
                                                     placeholder="Optional remarks"
-                                                    className="w-full bg-background border border-input rounded-md text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input placeholder:text-muted-foreground"
+                                                    className="w-full bg-background border border-input rounded-xs text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input placeholder:text-muted-foreground"
                                                 />
                                             </td>
                                         </tr>

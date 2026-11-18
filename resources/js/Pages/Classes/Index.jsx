@@ -220,7 +220,7 @@ export default function ClassMatrixIndex({ matrix }) {
                             <CardContent className="pt-4 space-y-3">
                                 <div className="space-y-2">
                                     {item.sections.map((sec) => (
-                                        <div key={sec.id} className="flex items-center justify-between p-2.5 bg-muted/30 rounded-md border border-border group">
+                                        <div key={sec.id} className="flex items-center justify-between p-2.5 bg-muted/30 rounded-xs border border-border group">
                                             <div className="flex items-center space-x-3">
                                                 <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">
                                                     {sec.name}
@@ -452,17 +452,17 @@ export default function ClassMatrixIndex({ matrix }) {
                     {selectedClass && (
                         <div className="space-y-4 py-2">
                             <div className="grid grid-cols-2 gap-3 text-sm">
-                                <div className="p-3 bg-muted/40 rounded-md border border-border">
+                                <div className="p-3 bg-muted/40 rounded-xs border border-border">
                                     <span className="text-xs text-muted-foreground block">Class Code</span>
                                     <span className="font-bold text-foreground">{selectedClass.code}</span>
                                 </div>
-                                <div className="p-3 bg-muted/40 rounded-md border border-border">
+                                <div className="p-3 bg-muted/40 rounded-xs border border-border">
                                     <span className="text-xs text-muted-foreground block">Numeric Level</span>
                                     <span className="font-bold text-foreground">Grade {selectedClass.numeric_value}</span>
                                 </div>
                             </div>
 
-                            <div className="p-3 bg-muted/40 rounded-md border border-border text-sm">
+                            <div className="p-3 bg-muted/40 rounded-xs border border-border text-sm">
                                 <span className="text-xs text-muted-foreground block">Description</span>
                                 <p className="text-foreground mt-0.5">{selectedClass.description || 'No specific description provided.'}</p>
                             </div>
@@ -471,7 +471,7 @@ export default function ClassMatrixIndex({ matrix }) {
                                 <span className="text-xs font-semibold text-muted-foreground uppercase block mb-2">Attached Sections ({selectedClass.sections?.length})</span>
                                 <div className="space-y-1.5 max-h-40 overflow-y-auto">
                                     {selectedClass.sections?.map(sec => (
-                                        <div key={sec.id} className="flex justify-between items-center text-xs p-2 bg-card rounded border border-border text-card-foreground">
+                                        <div key={sec.id} className="flex justify-between items-center text-xs p-2 bg-card rounded-xs border border-border text-card-foreground">
                                             <span className="font-semibold text-foreground">Section {sec.name}</span>
                                             <span className="text-muted-foreground">Cap: {sec.capacity} | Room: {sec.room_number || 'N/A'}</span>
                                         </div>
@@ -604,7 +604,7 @@ export default function ClassMatrixIndex({ matrix }) {
                     </DialogHeader>
                     {selectedSection && (
                         <div className="space-y-3 py-2 text-sm">
-                            <div className="p-3 bg-muted/40 rounded-md border border-border flex justify-between items-center">
+                            <div className="p-3 bg-muted/40 rounded-xs border border-border flex justify-between items-center">
                                 <div>
                                     <span className="text-xs text-muted-foreground block">Parent Class</span>
                                     <span className="font-bold text-foreground">{selectedSection.parentClass?.name}</span>
@@ -613,11 +613,11 @@ export default function ClassMatrixIndex({ matrix }) {
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
-                                <div className="p-3 bg-muted/40 rounded-md border border-border">
+                                <div className="p-3 bg-muted/40 rounded-xs border border-border">
                                     <span className="text-xs text-muted-foreground block">Section Name</span>
                                     <span className="font-bold text-foreground">{selectedSection.name}</span>
                                 </div>
-                                <div className="p-3 bg-muted/40 rounded-md border border-border">
+                                <div className="p-3 bg-muted/40 rounded-xs border border-border">
                                     <span className="text-xs text-muted-foreground block">Status</span>
                                     <span className="font-semibold text-xs flex items-center space-x-1 mt-0.5">
                                         {selectedSection.is_active ? (
@@ -636,11 +636,11 @@ export default function ClassMatrixIndex({ matrix }) {
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
-                                <div className="p-3 bg-muted/40 rounded-md border border-border">
+                                <div className="p-3 bg-muted/40 rounded-xs border border-border">
                                     <span className="text-xs text-muted-foreground block">Student Capacity</span>
                                     <span className="font-bold text-foreground">{selectedSection.capacity} Max</span>
                                 </div>
-                                <div className="p-3 bg-muted/40 rounded-md border border-border">
+                                <div className="p-3 bg-muted/40 rounded-xs border border-border">
                                     <span className="text-xs text-muted-foreground block">Assigned Room</span>
                                     <span className="font-bold text-foreground">{selectedSection.room_number || 'Unassigned'}</span>
                                 </div>

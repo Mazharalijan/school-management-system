@@ -100,7 +100,7 @@ export default function ImposeFineModal({ isOpen, onClose, classes = [], presele
                     <div>
                         <Label className="text-xs font-semibold">Target Student *</Label>
                         {selectedStudent ? (
-                            <div className="flex items-center justify-between p-3 mt-1 rounded-lg border border-primary/30 bg-primary/5">
+                            <div className="flex items-center justify-between p-3 mt-1 rounded-xs border border-primary/30 bg-primary/5">
                                 <div className="flex items-center gap-3">
                                     <ProfileAvatar
                                         src={selectedStudent.photo_url || selectedStudent.photo_path}
@@ -143,7 +143,7 @@ export default function ImposeFineModal({ isOpen, onClose, classes = [], presele
                                 )}
 
                                 {searchResults.length > 0 && (
-                                    <div className="absolute left-0 right-0 top-full mt-1 max-h-52 overflow-y-auto rounded-lg border border-border bg-popover text-popover-foreground shadow-lg z-50 divide-y divide-border">
+                                    <div className="absolute left-0 right-0 top-full mt-1 max-h-52 overflow-y-auto rounded-sm border border-border bg-popover text-popover-foreground shadow-lg z-50 divide-y divide-border">
                                         {searchResults.map((st) => (
                                             <button
                                                 key={st.id}
@@ -186,7 +186,7 @@ export default function ImposeFineModal({ isOpen, onClose, classes = [], presele
                                 id="fine_type"
                                 value={form.data.fine_type}
                                 onChange={(e) => form.setData('fine_type', e.target.value)}
-                                className="w-full mt-1 p-2 text-xs rounded-md border border-input bg-background text-foreground"
+                                className="w-full mt-1 p-2 text-xs rounded-xs border border-input bg-background text-foreground"
                             >
                                 <option value="leave">Short Leave / Absentee Fine</option>
                                 <option value="exam">Exam Penalty / Misconduct</option>
@@ -202,7 +202,7 @@ export default function ImposeFineModal({ isOpen, onClose, classes = [], presele
                                 id="collection_mode"
                                 value={form.data.collection_mode}
                                 onChange={(e) => form.setData('collection_mode', e.target.value)}
-                                className="w-full mt-1 p-2 text-xs rounded-md border border-input bg-background text-foreground"
+                                className="w-full mt-1 p-2 text-xs rounded-xs border border-input bg-background text-foreground"
                             >
                                 <option value="on_the_spot">Collect On The Spot</option>
                                 <option value="monthly">Monthly Fee Invoice</option>
@@ -261,13 +261,13 @@ export default function ImposeFineModal({ isOpen, onClose, classes = [], presele
                     </div>
 
                     {/* Immediate Collection Checkbox */}
-                    <div className="p-3 rounded-lg border border-border bg-muted/30 space-y-2">
+                    <div className="p-3 rounded-sm border border-border bg-muted/30 space-y-2">
                         <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-foreground">
                             <input
                                 type="checkbox"
                                 checked={form.data.collect_now}
                                 onChange={(e) => form.setData('collect_now', e.target.checked)}
-                                className="rounded border-input text-primary focus:ring-ring w-4 h-4"
+                                className="rounded-xs border-input text-primary focus:ring-ring w-4 h-4"
                             />
                             <span>Collect Fine Immediately (On The Spot)?</span>
                         </label>
@@ -278,7 +278,7 @@ export default function ImposeFineModal({ isOpen, onClose, classes = [], presele
                                     id="payment_method"
                                     value={form.data.payment_method}
                                     onChange={(e) => form.setData('payment_method', e.target.value)}
-                                    className="w-full mt-1 p-2 text-xs rounded-md border border-input bg-background text-foreground"
+                                    className="w-full mt-1 p-2 text-xs rounded-xs border border-input bg-background text-foreground"
                                 >
                                     <option value="cash">Cash in Hand</option>
                                     <option value="bank_transfer">Bank Transfer</option>

@@ -39,7 +39,7 @@ export default function PnlOverviewTab({ summary, onOpenPrint }) {
                             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
                                 Total Revenue
                             </span>
-                            <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                            <div className="w-8 h-8 rounded-xs bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                                 <TrendingUp className="w-4 h-4" />
                             </div>
                         </div>
@@ -62,7 +62,7 @@ export default function PnlOverviewTab({ summary, onOpenPrint }) {
                             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
                                 Operating Expenses
                             </span>
-                            <div className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center">
+                            <div className="w-8 h-8 rounded-xs bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center">
                                 <Receipt className="w-4 h-4" />
                             </div>
                         </div>
@@ -85,7 +85,7 @@ export default function PnlOverviewTab({ summary, onOpenPrint }) {
                             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
                                 Staff Payroll
                             </span>
-                            <div className="w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+                            <div className="w-8 h-8 rounded-xs bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 flex items-center justify-center">
                                 <Users className="w-4 h-4" />
                             </div>
                         </div>

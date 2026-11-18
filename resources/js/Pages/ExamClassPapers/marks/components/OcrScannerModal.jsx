@@ -40,14 +40,14 @@ export default function OcrScannerModal({ isOpen, onClose, onApplyOcrData }) {
 
   return (
     <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-card text-card-foreground rounded-2xl max-w-5xl w-full border border-border shadow-2xl flex flex-col max-h-[90vh] overflow-hidden">
+      <div className="bg-card text-card-foreground rounded-sm max-w-5xl w-full border border-border shadow-2xl flex flex-col max-h-[90vh] overflow-hidden">
         
         {/* Modal Header */}
         <div className="p-5 border-b border-border flex items-center justify-between bg-card text-foreground">
           <div className="flex items-center gap-2 font-bold text-sm">
             <Scan className="w-5 h-5 text-primary" /> Offline Tesseract OCR Scanner
           </div>
-          <button onClick={onClose} className="p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted">
+          <button onClick={onClose} className="p-1 rounded-xs text-muted-foreground hover:text-foreground hover:bg-muted">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -57,7 +57,7 @@ export default function OcrScannerModal({ isOpen, onClose, onApplyOcrData }) {
           
           {/* Left: Upload Box & Image Preview */}
           <div className="space-y-4">
-            <div className="border-2 border-dashed border-border bg-card rounded-2xl p-6 text-center hover:border-primary/50 transition-colors">
+            <div className="border-2 border-dashed border-border bg-card rounded-sm p-6 text-center hover:border-primary/50 transition-colors">
               <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" id="ocr-upload" />
               <label htmlFor="ocr-upload" className="cursor-pointer flex flex-col items-center gap-2">
                 <Upload className="w-8 h-8 text-primary" />
@@ -67,15 +67,15 @@ export default function OcrScannerModal({ isOpen, onClose, onApplyOcrData }) {
             </div>
 
             {imagePreview && (
-              <div className="bg-background rounded-2xl p-2 border border-border max-h-72 overflow-hidden flex items-center justify-center">
-                <img src={imagePreview} alt="Scan preview" className="max-h-64 object-contain rounded-lg" />
+              <div className="bg-background rounded-xs p-2 border border-border max-h-72 overflow-hidden flex items-center justify-center">
+                <img src={imagePreview} alt="Scan preview" className="max-h-64 object-contain rounded-xs" />
               </div>
             )}
 
             <button
               disabled={!imagePreview || isScanning}
               onClick={triggerOfflineOcr}
-              className="w-full py-3 rounded-xl bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-primary-foreground font-bold text-xs transition-all flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-xs bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-primary-foreground font-bold text-xs transition-all flex items-center justify-center gap-2"
             >
               {isScanning ? (
                 <><RefreshCw className="w-4 h-4 animate-spin" /> Processing with Bundled Tesseract...</>
@@ -86,7 +86,7 @@ export default function OcrScannerModal({ isOpen, onClose, onApplyOcrData }) {
           </div>
 
           {/* Right: Extracted Grid Preview */}
-          <div className="bg-card rounded-2xl border border-border p-4 flex flex-col justify-between text-card-foreground">
+          <div className="bg-card rounded-sm border border-border p-4 flex flex-col justify-between text-card-foreground">
             <div>
               <h4 className="text-xs font-extrabold text-foreground uppercase tracking-wider mb-3">
                 Extracted Data Verification
@@ -95,16 +95,16 @@ export default function OcrScannerModal({ isOpen, onClose, onApplyOcrData }) {
               {scannedResults ? (
                 <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
                   {scannedResults.map((item, idx) => (
-                    <div key={idx} className="p-3 bg-muted/40 rounded-xl border border-border flex items-center justify-between text-xs font-bold">
+                    <div key={idx} className="p-3 bg-muted/40 rounded-xs border border-border flex items-center justify-between text-xs font-bold">
                       <div>
                         <span className="text-foreground">Roll #{item.roll_no}</span> - <span className="text-muted-foreground">{item.name}</span>
                       </div>
                       <div className="flex gap-2 text-[11px]">
                         {item.is_absent ? (
-                          <span className="text-destructive font-extrabold bg-destructive/10 px-2 py-0.5 rounded">ABSENT</span>
+                          <span className="text-destructive font-extrabold bg-destructive/10 px-2 py-0.5 rounded-xs">ABSENT</span>
                         ) : (
                           Object.entries(item.marks).map(([pId, m]) => (
-                            <span key={pId} className="bg-primary/10 text-primary px-2 py-0.5 rounded border border-primary/20">
+                            <span key={pId} className="bg-primary/10 text-primary px-2 py-0.5 rounded-xs border border-primary/20">
                               P{pId}: {m}
                             </span>
                           ))
@@ -123,7 +123,7 @@ export default function OcrScannerModal({ isOpen, onClose, onApplyOcrData }) {
             {scannedResults && (
               <button
                 onClick={applyDataToForm}
-                className="w-full mt-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-all flex items-center justify-center gap-2"
+                className="w-full mt-4 py-3 rounded-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-all flex items-center justify-center gap-2"
               >
                 <CheckCircle2 className="w-4 h-4" /> Confirm & Auto-Fill Form
               </button>

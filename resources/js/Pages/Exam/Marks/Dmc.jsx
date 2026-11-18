@@ -88,7 +88,7 @@ export default function Dmc({ result, subjectMarks = [], documentPrint = null })
                 </div>
 
                 {/* Printable DMC Certificate Container */}
-                <div className="bg-card text-card-foreground p-8 md:p-10 rounded-2xl shadow-md border border-border relative print:bg-white print:text-black print:shadow-none print:border-none print:p-0">
+                <div className="bg-card text-card-foreground p-8 md:p-10 rounded-sm shadow-md border border-border relative print:bg-white print:text-black print:shadow-none print:border-none print:p-0">
                     {/* Copy Stamp Badge */}
                     <div className="absolute top-6 right-6 text-right print:top-4 print:right-4">
                         <span className={cn(
@@ -118,7 +118,7 @@ export default function Dmc({ result, subjectMarks = [], documentPrint = null })
                     </div>
 
                     {/* Student Info Grid */}
-                    <div className="flex items-center gap-4 p-4 rounded-xl bg-muted/40 border border-border print:bg-gray-50 print:border-gray-300 text-xs font-sans mb-6">
+                    <div className="flex items-center gap-4 p-4 rounded-xs bg-muted/40 border border-border print:bg-gray-50 print:border-gray-300 text-xs font-sans mb-6">
                         <ProfileAvatar
                             src={result?.student?.photo_url}
                             name={studentName}
@@ -196,7 +196,7 @@ export default function Dmc({ result, subjectMarks = [], documentPrint = null })
                     </table>
 
                     {/* Total Summary */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-foreground text-background dark:bg-muted dark:text-foreground rounded-xl text-center text-xs font-sans mb-10 print:bg-gray-900 print:text-white">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-foreground text-background dark:bg-muted dark:text-foreground rounded-xs text-center text-xs font-sans mb-10 print:bg-gray-900 print:text-white">
                         <div>
                             <span className="block text-[11px] uppercase opacity-75 font-medium">Total Marks</span>
                             <span className="text-base font-extrabold">
@@ -226,7 +226,7 @@ export default function Dmc({ result, subjectMarks = [], documentPrint = null })
                     </div>
 
                     {result?.teacher_remarks && (
-                        <div className="mb-8 p-3.5 bg-muted/40 border border-border rounded-lg text-xs print:bg-gray-50 print:border-gray-300">
+                        <div className="mb-8 p-3.5 bg-muted/40 border border-border rounded-xs text-xs print:bg-gray-50 print:border-gray-300">
                             <span className="font-bold text-foreground print:text-black">Teacher Remarks: </span>
                             <span className="text-muted-foreground print:text-gray-700 italic">"{result.teacher_remarks}"</span>
                         </div>

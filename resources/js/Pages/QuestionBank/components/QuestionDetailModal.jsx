@@ -27,7 +27,7 @@ export default function QuestionDetailModal({ isOpen, onClose, question }) {
             maxWidth="sm:max-w-4xl"
         >
             <div className="space-y-4">
-                <div className="bg-muted/40 p-4 rounded-lg border border-border">
+                <div className="bg-muted/40 p-4 rounded-xs border border-border">
                     <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block mb-1">
                         Question Content
                     </span>

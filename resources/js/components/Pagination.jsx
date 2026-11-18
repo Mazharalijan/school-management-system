@@ -50,7 +50,7 @@ export default function Pagination({
                         onClick={() => onPageChange(Math.max(1, current - 1))}
                         disabled={current <= 1}
                         className={cn(
-                            "inline-flex items-center justify-center h-8 px-2.5 rounded-md text-xs font-medium transition-colors border",
+                            "inline-flex items-center justify-center h-8 px-2.5 rounded-xs text-xs font-medium transition-colors border",
                             current <= 1
                                 ? "text-muted-foreground/40 border-border/40 cursor-not-allowed"
                                 : "text-muted-foreground hover:text-foreground hover:bg-muted border-border cursor-pointer"
@@ -76,7 +76,7 @@ export default function Pagination({
                                 type="button"
                                 onClick={() => onPageChange(p)}
                                 className={cn(
-                                    "inline-flex items-center justify-center h-8 w-8 rounded-md text-xs font-medium transition-colors border cursor-pointer",
+                                    "inline-flex items-center justify-center h-8 w-8 rounded-xs text-xs font-medium transition-colors border cursor-pointer",
                                     isActive
                                         ? "bg-primary text-primary-foreground border-primary font-bold shadow-xs"
                                         : "text-muted-foreground hover:text-foreground hover:bg-muted border-border"
@@ -92,7 +92,7 @@ export default function Pagination({
                         onClick={() => onPageChange(Math.min(totalPages, current + 1))}
                         disabled={current >= totalPages}
                         className={cn(
-                            "inline-flex items-center justify-center h-8 px-2.5 rounded-md text-xs font-medium transition-colors border",
+                            "inline-flex items-center justify-center h-8 px-2.5 rounded-xs text-xs font-medium transition-colors border",
                             current >= totalPages
                                 ? "text-muted-foreground/40 border-border/40 cursor-not-allowed"
                                 : "text-muted-foreground hover:text-foreground hover:bg-muted border-border cursor-pointer"
@@ -146,7 +146,7 @@ export default function Pagination({
                                 preserveScroll
                                 preserveState
                                 className={cn(
-                                    "inline-flex items-center justify-center h-8 px-2.5 rounded-md text-xs font-medium transition-colors border",
+                                    "inline-flex items-center justify-center h-8 px-2.5 rounded-xs text-xs font-medium transition-colors border",
                                     !link.url
                                         ? "text-muted-foreground/40 border-border/40 pointer-events-none cursor-not-allowed"
                                         : "text-muted-foreground hover:text-foreground hover:bg-muted border-border"
@@ -167,7 +167,7 @@ export default function Pagination({
                                 preserveScroll
                                 preserveState
                                 className={cn(
-                                    "inline-flex items-center justify-center h-8 px-2.5 rounded-md text-xs font-medium transition-colors border",
+                                    "inline-flex items-center justify-center h-8 px-2.5 rounded-xs text-xs font-medium transition-colors border",
                                     !link.url
                                         ? "text-muted-foreground/40 border-border/40 pointer-events-none cursor-not-allowed"
                                         : "text-muted-foreground hover:text-foreground hover:bg-muted border-border"
@@ -187,7 +187,7 @@ export default function Pagination({
                             preserveScroll
                             preserveState
                             className={cn(
-                                "inline-flex items-center justify-center h-8 w-8 rounded-md text-xs font-medium transition-colors border",
+                                "inline-flex items-center justify-center h-8 w-8 rounded-xs text-xs font-medium transition-colors border",
                                 link.active
                                     ? "bg-primary text-primary-foreground border-primary font-bold shadow-xs"
                                     : !link.url

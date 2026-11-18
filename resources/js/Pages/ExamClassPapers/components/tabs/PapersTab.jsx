@@ -34,7 +34,7 @@ export default function PapersTab({ papers = {}, classes = [], subjects = [], fi
                 <FilterSelect value={selectedSubject} onChange={(val) => { setSelectedSubject(val); applyFilters({ subject_id: val }); }} options={subjects} placeholder="Filter Subject" valueKey="id" labelKey="name" />
             </FilterBar>
 
-            <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden text-card-foreground">
+            <div className="bg-card border border-border rounded-sm shadow-sm overflow-hidden text-card-foreground">
                 <table className="w-full text-left text-sm border-collapse">
                     <thead className="bg-muted/50 border-b border-border text-muted-foreground font-medium">
                         <tr>
@@ -57,7 +57,7 @@ export default function PapersTab({ papers = {}, classes = [], subjects = [], fi
                                         {/* Print Preview Button */}
                                         <Link
                                             href={route('exam-class-papers.preview', paper.id)}
-                                            className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded border border-border bg-background hover:bg-muted text-foreground shadow-sm transition-colors"
+                                            className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-xs border border-border bg-background hover:bg-muted text-foreground shadow-sm transition-colors"
                                             title="Print Preview"
                                         >
                                             <Printer className="w-3.5 h-3.5 text-muted-foreground" />
@@ -78,7 +78,7 @@ export default function PapersTab({ papers = {}, classes = [], subjects = [], fi
                                         {/* Manage Sections Link */}
                                         <Link
                                             href={`${route('exam-class-papers.show', paper.id)}?tab=sections`}
-                                            className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded bg-muted hover:bg-muted/80 text-foreground transition-colors"
+                                            className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-xs bg-muted hover:bg-muted/80 text-foreground transition-colors"
                                             title="Manage Sections"
                                         >
                                             <Layers className="w-3 h-3" /> Sections

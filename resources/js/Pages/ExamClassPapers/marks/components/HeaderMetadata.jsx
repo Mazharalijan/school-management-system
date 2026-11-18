@@ -9,7 +9,7 @@ export default function HeaderMetadata({
   isSubmitted,
 }) {
   return (
-    <div className="bg-card p-5 rounded-xl border border-border shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 text-card-foreground">
+    <div className="bg-card p-5 rounded-sm border border-border shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 text-card-foreground">
       <div>
         <div className="flex items-center gap-2 text-primary font-extrabold text-xs uppercase tracking-wider">
           <FileSpreadsheet className="w-4 h-4" /> Academic Marks Management
@@ -19,7 +19,7 @@ export default function HeaderMetadata({
         </h2>
         
         <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-muted-foreground font-medium">
-          <span className="flex items-center gap-1.5 bg-muted px-2.5 py-1 rounded-md border border-border text-foreground">
+          <span className="flex items-center gap-1.5 bg-muted px-2.5 py-1 rounded-xs border border-border text-foreground">
             <UserCheck className="w-3.5 h-3.5 text-primary" />
             Prepared By: <strong className="text-foreground">{teacher.name}</strong> ({teacher.emp_id})
           </span>
@@ -30,11 +30,11 @@ export default function HeaderMetadata({
 
       <div className="flex items-center gap-3 self-start md:self-center">
         {isSubmitted ? (
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 rounded-lg text-xs font-bold">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 rounded-xs text-xs font-bold">
             <Lock className="w-4 h-4 text-emerald-600" /> Submitted & Locked
           </div>
         ) : (
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 rounded-lg text-xs font-bold">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 rounded-xs text-xs font-bold">
             <AlertCircle className="w-4 h-4 text-amber-600" /> Draft Mode
           </div>
         )}

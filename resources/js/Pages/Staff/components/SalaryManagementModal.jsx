@@ -168,7 +168,7 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
                 </DialogHeader>
 
                 {/* Staff Quick Profile Summary */}
-                <div className="bg-muted/40 p-3 rounded-lg border border-border grid grid-cols-1 md:grid-cols-4 gap-3 text-xs mt-2">
+                <div className="bg-muted/40 p-3 rounded-xs border border-border grid grid-cols-1 md:grid-cols-4 gap-3 text-xs mt-2">
                     <div className="flex items-center gap-2.5">
                         <ProfileAvatar
                             src={staff.photo_url}
@@ -204,7 +204,7 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
                 </div>
 
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mt-3">
-                    <TabsList className="grid grid-cols-2 sm:grid-cols-5 bg-muted p-1 rounded-lg gap-1">
+                    <TabsList className="grid grid-cols-2 sm:grid-cols-5 bg-muted p-1 rounded-sm gap-1">
                         <TabsTrigger value="monthly-settlement" className="text-xs font-semibold flex items-center justify-center gap-1.5 whitespace-nowrap">
                             <Banknote className="h-3.5 w-3.5 shrink-0 text-emerald-600 dark:text-emerald-400" />
                             <span>Pay Salary</span>
@@ -274,7 +274,7 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
                             )}
 
                             {/* Unpaid Leaves Cutoff */}
-                            <div className="bg-muted/40 border border-border p-3 rounded-lg space-y-2 text-xs">
+                            <div className="bg-muted/40 border border-border p-3 rounded-xs space-y-2 text-xs">
                                 <div className="flex items-center justify-between">
                                     <span className="font-bold text-foreground">Unpaid Leaves Cutoff (Optional)</span>
                                     <label className="flex items-center gap-2 cursor-pointer">
@@ -303,7 +303,7 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
                                         </div>
                                         <div>
                                             <Label className="text-[11px] text-muted-foreground">Cutoff Amount Deducted</Label>
-                                            <div className="h-8 px-3 flex items-center bg-background border border-border rounded text-red-600 dark:text-red-400 font-bold font-mono">
+                                            <div className="h-8 px-3 flex items-center bg-background border border-border rounded-xs text-red-600 dark:text-red-400 font-bold font-mono">
                                                 - PKR {leaveCutoffAmount.toFixed(2)}
                                             </div>
                                         </div>
@@ -312,7 +312,7 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
                             </div>
 
                             {/* Advance Deduction & Installment Section */}
-                            <div className="bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 p-3.5 rounded-lg text-xs space-y-3">
+                            <div className="bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 p-3.5 rounded-xs text-xs space-y-3">
                                 <div className="flex items-center justify-between">
                                     <div>
                                         <span className="font-bold text-amber-900 dark:text-amber-200 block text-xs">
@@ -341,7 +341,7 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
 
                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                                             <label
-                                                className={`flex items-start p-2.5 rounded-md border cursor-pointer transition-all ${
+                                                className={`flex items-start p-2.5 rounded-xs border cursor-pointer transition-all ${
                                                     deductionMode === 'full'
                                                         ? 'bg-amber-100 dark:bg-amber-950/60 border-amber-500 text-amber-900 dark:text-amber-200 shadow-sm'
                                                         : 'bg-background border-input text-foreground hover:bg-muted/50'
@@ -364,7 +364,7 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
                                             </label>
 
                                             <label
-                                                className={`flex items-start p-2.5 rounded-md border cursor-pointer transition-all ${
+                                                className={`flex items-start p-2.5 rounded-xs border cursor-pointer transition-all ${
                                                     deductionMode === 'custom'
                                                         ? 'bg-amber-100 dark:bg-amber-950/60 border-amber-500 text-amber-900 dark:text-amber-200 shadow-sm'
                                                         : 'bg-background border-input text-foreground hover:bg-muted/50'
@@ -387,7 +387,7 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
                                             </label>
 
                                             <label
-                                                className={`flex items-start p-2.5 rounded-md border cursor-pointer transition-all ${
+                                                className={`flex items-start p-2.5 rounded-xs border cursor-pointer transition-all ${
                                                     deductionMode === 'none'
                                                         ? 'bg-amber-100 dark:bg-amber-950/60 border-amber-500 text-amber-900 dark:text-amber-200 shadow-sm'
                                                         : 'bg-background border-input text-foreground hover:bg-muted/50'
@@ -467,7 +467,7 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
                             </div>
 
                             {/* Real-time Calculation Matrix */}
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 bg-gradient-to-br from-slate-900 to-slate-800 dark:from-slate-950 dark:to-slate-900 border border-border text-white p-3.5 rounded-lg text-xs">
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 bg-gradient-to-br from-slate-900 to-slate-800 dark:from-slate-950 dark:to-slate-900 border border-border text-white p-3.5 rounded-xs text-xs">
                                 <div>
                                     <span className="text-slate-400 block text-[11px]">Gross Payable</span>
                                     <span className="font-bold text-slate-100 font-mono text-sm">
@@ -542,7 +542,7 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
                     {/* TAB 2: ISSUE ADVANCE */}
                     <TabsContent value="issue-advance" className="mt-4">
                         <form onSubmit={handleAdvanceSubmit} className="space-y-4">
-                            <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200 p-3 rounded-lg text-xs">
+                            <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200 p-3 rounded-xs text-xs">
                                 <span className="font-bold block mb-1">Advance Disbursement Guidelines</span>
                                 <p>
                                     Issuing an advance against salary immediately records a debit entry in the staff ledger. 
@@ -589,7 +589,7 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
                             </div>
 
                             {advanceForm.data.amount > 0 && (
-                                <div className="bg-muted/40 border border-border p-3 rounded-lg text-xs space-y-1">
+                                <div className="bg-muted/40 border border-border p-3 rounded-xs text-xs space-y-1">
                                     <span className="text-muted-foreground block">
                                         Current Pending Advance: <strong>PKR {pendingAdvances.toLocaleString()}</strong>
                                     </span>
@@ -612,7 +612,7 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
 
                     {/* TAB 3: SALARY SETTLEMENTS HISTORY */}
                     <TabsContent value="settlements-history" className="mt-4">
-                        <div className="border border-border rounded-lg overflow-hidden bg-card">
+                        <div className="border border-border rounded-sm overflow-hidden bg-card">
                             <div className="max-h-80 overflow-y-auto">
                                 <table className="w-full text-xs text-left text-muted-foreground">
                                     <thead className="bg-muted border-b border-border font-bold text-muted-foreground uppercase sticky top-0">
@@ -684,7 +684,7 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
 
                     {/* TAB 4: ADVANCES HISTORY */}
                     <TabsContent value="advances-history" className="mt-4">
-                        <div className="border border-border rounded-lg overflow-hidden bg-card">
+                        <div className="border border-border rounded-sm overflow-hidden bg-card">
                             <div className="max-h-80 overflow-y-auto">
                                 <table className="w-full text-xs text-left text-muted-foreground">
                                     <thead className="bg-muted border-b border-border font-bold text-muted-foreground uppercase sticky top-0">
@@ -760,7 +760,7 @@ export default function SalaryManagementModal({ isOpen, onClose, staff }) {
 
                     {/* TAB 5: LEDGER HISTORY */}
                     <TabsContent value="ledger-history" className="mt-4">
-                        <div className="border border-border rounded-lg overflow-hidden bg-card">
+                        <div className="border border-border rounded-sm overflow-hidden bg-card">
                             <div className="max-h-80 overflow-y-auto">
                                 <table className="w-full text-xs text-left text-muted-foreground">
                                     <thead className="bg-muted border-b border-border font-bold text-muted-foreground uppercase sticky top-0">

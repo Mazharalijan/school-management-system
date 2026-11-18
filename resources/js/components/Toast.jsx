@@ -99,7 +99,7 @@ export default function ToastContainer() {
                     <div
                         key={t.id}
                         className={cn(
-                            'pointer-events-auto flex items-start gap-3 p-3.5 rounded-xl border shadow-xl backdrop-blur-md transition-all duration-300 animate-in fade-in slide-in-from-bottom-3',
+                            'pointer-events-auto flex items-start gap-3 p-3.5 rounded-sm border shadow-xl backdrop-blur-md transition-all duration-300 animate-in fade-in slide-in-from-bottom-3',
                             'bg-card/95 text-card-foreground border-border',
                             isSuccess && 'border-emerald-500/30 dark:border-emerald-500/20 bg-card/98',
                             isError && 'border-destructive/30 bg-card/98'
@@ -124,7 +124,7 @@ export default function ToastContainer() {
                         <button
                             type="button"
                             onClick={() => removeToast(t.id)}
-                            className="shrink-0 text-muted-foreground hover:text-foreground transition-colors p-0.5 -mr-1 rounded-md"
+                            className="shrink-0 text-muted-foreground hover:text-foreground transition-colors p-0.5 -mr-1 rounded-xs"
                             aria-label="Dismiss notification"
                         >
                             <X className="w-3.5 h-3.5" />

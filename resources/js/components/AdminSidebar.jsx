@@ -184,7 +184,7 @@ export default function AdminSidebar({ dashboardTheme }) {
                         isCompact ? "size-7 text-xs" : "size-9",
                         isAcademic
                             ? "rounded-none bg-blue-600 text-white shadow-xs"
-                            : "rounded-lg bg-primary text-primary-foreground shadow-2xs"
+                            : "rounded-xs bg-primary text-primary-foreground shadow-2xs"
                     )}
                 >
                     {isAcademic ? <GraduationCap className="size-5" /> : <School className="size-5" />}
@@ -242,9 +242,7 @@ export default function AdminSidebar({ dashboardTheme }) {
                             "w-full pl-8 pr-7 py-1.5 text-xs transition-colors outline-none",
                             isAcademic
                                 ? "rounded-none bg-slate-900 border border-slate-700 text-slate-100 placeholder:text-slate-500 focus:border-blue-500"
-                                : isCompact
-                                ? "rounded-md bg-sidebar-accent/50 border border-sidebar-border text-sidebar-foreground placeholder:text-sidebar-foreground/50 focus:border-primary"
-                                : "rounded-lg bg-sidebar-accent/50 border border-sidebar-border text-sidebar-foreground placeholder:text-sidebar-foreground/50 focus:border-primary"
+                                : "rounded-xs bg-sidebar-accent/50 border border-sidebar-border text-sidebar-foreground placeholder:text-sidebar-foreground/50 focus:border-primary"
                         )}
                     />
                     {isSearching ? (
@@ -272,7 +270,7 @@ export default function AdminSidebar({ dashboardTheme }) {
                             "absolute left-2 right-2 top-full mt-1.5 max-h-80 overflow-y-auto shadow-2xl z-50 border",
                             isAcademic
                                 ? "bg-slate-900 border-slate-700 text-slate-100 divide-y divide-slate-800 rounded-none"
-                                : "bg-popover border-border text-popover-foreground divide-y divide-border/60 rounded-lg"
+                                : "bg-popover border-border text-popover-foreground divide-y divide-border/60 rounded-sm"
                         )}
                     >
                         {isSearching && searchResults.length === 0 ? (
@@ -370,8 +368,8 @@ export default function AdminSidebar({ dashboardTheme }) {
                                     iconClasses = isActive ? "text-blue-400" : "text-slate-400";
                                 } else {
                                     linkClasses = isActive
-                                        ? "bg-sidebar-accent text-sidebar-accent-foreground font-semibold rounded-lg shadow-2xs"
-                                        : "text-sidebar-foreground/75 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground rounded-lg";
+                                        ? "bg-sidebar-accent text-sidebar-accent-foreground font-semibold rounded-xs shadow-2xs"
+                                        : "text-sidebar-foreground/75 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground rounded-xs";
                                     iconClasses = isActive ? "text-primary" : "text-sidebar-foreground/60";
                                 }
 
@@ -405,7 +403,7 @@ export default function AdminSidebar({ dashboardTheme }) {
                 <div
                     className={cn(
                         "flex items-center justify-between p-1.5 transition-colors",
-                        isAcademic ? "rounded-none hover:bg-slate-800/60" : "rounded-lg hover:bg-sidebar-accent/50"
+                        isAcademic ? "rounded-none hover:bg-slate-800/60" : "rounded-xs hover:bg-sidebar-accent/50"
                     )}
                 >
                     <div className="flex items-center space-x-2.5 min-w-0">
@@ -414,7 +412,7 @@ export default function AdminSidebar({ dashboardTheme }) {
                                 "size-8 flex items-center justify-center font-bold text-xs shrink-0",
                                 isAcademic
                                     ? "rounded-none bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-xs"
-                                    : "rounded-lg bg-primary/10 border border-sidebar-border text-primary"
+                                    : "rounded-xs bg-primary/10 border border-sidebar-border text-primary"
                             )}
                         >
                             {user?.first_name?.[0] || user?.name?.[0] || 'A'}
@@ -446,7 +444,7 @@ export default function AdminSidebar({ dashboardTheme }) {
                             "p-1.5 transition-colors shrink-0",
                             isAcademic
                                 ? "rounded-none text-slate-400 hover:text-rose-400 hover:bg-rose-500/10"
-                                : "rounded-md text-sidebar-foreground/50 hover:text-destructive hover:bg-destructive/10"
+                                : "rounded-xs text-sidebar-foreground/50 hover:text-destructive hover:bg-destructive/10"
                         )}
                         title="Sign Out"
                     >

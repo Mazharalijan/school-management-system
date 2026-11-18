@@ -126,7 +126,7 @@ export default function BulkDmcPrintModal({
                             return (
                                 <div
                                     key={student.id}
-                                    className="p-8 sm:p-10 bg-white text-black font-serif rounded-xl border border-gray-300 shadow-xs print:border-none print:shadow-none print:p-6 print:m-0"
+                                    className="p-8 sm:p-10 bg-white text-black font-serif rounded-sm border border-gray-300 shadow-xs print:border-none print:shadow-none print:p-6 print:m-0"
                                     style={{
                                         pageBreakAfter: sIdx < selectedStudentsList.length - 1 ? 'always' : 'auto',
                                         breakAfter: sIdx < selectedStudentsList.length - 1 ? 'page' : 'auto',
@@ -147,7 +147,7 @@ export default function BulkDmcPrintModal({
                                     </div>
 
                                     {/* Student Profile Info */}
-                                    <div className="flex items-center gap-4 text-xs font-sans border border-gray-300 p-3.5 rounded-lg bg-gray-50 my-5">
+                                    <div className="flex items-center gap-4 text-xs font-sans border border-gray-300 p-3.5 rounded-xs bg-gray-50 my-5">
                                         <ProfileAvatar
                                             src={student.photo_url}
                                             name={student.name}

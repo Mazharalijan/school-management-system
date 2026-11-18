@@ -50,7 +50,7 @@ export default function PrintTab({ papers = {} }) {
     };
 
     return (
-        <div className="bg-card p-6 rounded-xl border border-border space-y-6 text-card-foreground">
+        <div className="bg-card p-6 rounded-sm border border-border space-y-6 text-card-foreground">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-border">
                 <div className="flex items-center gap-3">
                     <Printer className="w-6 h-6 text-primary" />
@@ -71,7 +71,7 @@ export default function PrintTab({ papers = {} }) {
                 </div>
             </div>
 
-            <div className="bg-card border border-border rounded-lg overflow-hidden text-card-foreground">
+            <div className="bg-card border border-border rounded-sm overflow-hidden text-card-foreground">
                 <table className="w-full text-left text-sm border-collapse">
                     <thead className="bg-muted/50 border-b border-border text-muted-foreground font-medium">
                         <tr>

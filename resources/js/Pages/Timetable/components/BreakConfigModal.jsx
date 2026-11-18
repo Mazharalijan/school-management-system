@@ -64,11 +64,11 @@ export default function BreakConfigModal({
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-            <div className="bg-card text-card-foreground rounded-2xl border border-border shadow-2xl max-w-md w-full p-6 space-y-5">
+            <div className="bg-card text-card-foreground rounded-sm border border-border shadow-2xl max-w-md w-full p-6 space-y-5">
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-border pb-3">
                     <div className="flex items-center gap-2.5">
-                        <div className="p-2.5 bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 rounded-xl">
+                        <div className="p-2.5 bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 rounded-xs">
                             <Utensils className="w-5 h-5" />
                         </div>
                         <div>
@@ -81,7 +81,7 @@ export default function BreakConfigModal({
                     <button
                         type="button"
                         onClick={onClose}
-                        className="text-muted-foreground hover:text-foreground p-1.5 rounded-lg hover:bg-muted transition-colors"
+                        className="text-muted-foreground hover:text-foreground p-1.5 rounded-xs hover:bg-muted transition-colors"
                     >
                         <X className="w-5 h-5" />
                     </button>
@@ -107,7 +107,7 @@ export default function BreakConfigModal({
                         <select
                             value={data.afterPeriod}
                             onChange={(e) => handlePeriodChange(e.target.value)}
-                            className="w-full h-9 px-3 text-xs rounded-xl border border-input bg-background text-foreground dark:bg-card font-medium focus:ring-2 focus:ring-amber-500 outline-none"
+                            className="w-full h-9 px-3 text-xs rounded-xs border border-input bg-background text-foreground dark:bg-card font-medium focus:ring-2 focus:ring-amber-500 outline-none"
                         >
                             {basePeriods.slice(0, -1).map((p) => (
                                 <option key={p} value={p}>
@@ -118,7 +118,7 @@ export default function BreakConfigModal({
                     </div>
 
                     {/* Live Preview Box */}
-                    <div className="p-3 bg-amber-50/60 dark:bg-amber-950/40 rounded-xl border border-amber-200/60 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-200 space-y-1">
+                    <div className="p-3 bg-amber-50/60 dark:bg-amber-950/40 rounded-xs border border-amber-200/60 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-200 space-y-1">
                         <span className="font-bold text-[11px] uppercase tracking-wider text-amber-700 dark:text-amber-400 block">
                             Live Schedule Impact
                         </span>

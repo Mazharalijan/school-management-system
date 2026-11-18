@@ -115,13 +115,13 @@ export default function ExpenseLedgerTab({
             {/* 1. Cash Flow Summary Strip */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 {/* Total Inflow (Fees Received) */}
-                <div className="bg-card border border-border p-4 rounded-lg relative overflow-hidden text-card-foreground">
+                <div className="bg-card border border-border p-4 rounded-sm relative overflow-hidden text-card-foreground">
                     <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-600" />
                     <div className="flex items-center justify-between">
                         <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
                             Total Inflow (Fee Revenue)
                         </span>
-                        <div className="w-7 h-7 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 flex items-center justify-center rounded-md">
+                        <div className="w-7 h-7 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 flex items-center justify-center rounded-xs">
                             <ArrowDownLeft className="w-4 h-4" />
                         </div>
                     </div>
@@ -136,13 +136,13 @@ export default function ExpenseLedgerTab({
                 </div>
 
                 {/* Total Outflow (Disbursements) */}
-                <div className="bg-card border border-border p-4 rounded-lg relative overflow-hidden text-card-foreground">
+                <div className="bg-card border border-border p-4 rounded-sm relative overflow-hidden text-card-foreground">
                     <div className="absolute top-0 left-0 right-0 h-1 bg-rose-600" />
                     <div className="flex items-center justify-between">
                         <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
                             Total Outflow (Expenses &amp; Pay)
                         </span>
-                        <div className="w-7 h-7 bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 flex items-center justify-center rounded-md">
+                        <div className="w-7 h-7 bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 flex items-center justify-center rounded-xs">
                             <ArrowUpRight className="w-4 h-4" />
                         </div>
                     </div>
@@ -157,13 +157,13 @@ export default function ExpenseLedgerTab({
                 </div>
 
                 {/* Net Cash Flow Balance */}
-                <div className="bg-card border border-border p-4 rounded-lg relative overflow-hidden text-card-foreground">
+                <div className="bg-card border border-border p-4 rounded-sm relative overflow-hidden text-card-foreground">
                     <div className={`absolute top-0 left-0 right-0 h-1 ${isNetPositive ? 'bg-emerald-600' : 'bg-rose-600'}`} />
                     <div className="flex items-center justify-between">
                         <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
                             Net Cash Flow Balance
                         </span>
-                        <div className={`w-7 h-7 border flex items-center justify-center rounded-md ${
+                        <div className={`w-7 h-7 border flex items-center justify-center rounded-xs ${
                             isNetPositive 
                                 ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800' 
                                 : 'bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-800'
@@ -188,13 +188,13 @@ export default function ExpenseLedgerTab({
                 </div>
 
                 {/* Total Transactions */}
-                <div className="bg-card border border-border p-4 rounded-lg relative overflow-hidden text-card-foreground">
+                <div className="bg-card border border-border p-4 rounded-sm relative overflow-hidden text-card-foreground">
                     <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
                     <div className="flex items-center justify-between">
                         <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
                             Ledger Entries
                         </span>
-                        <div className="w-7 h-7 bg-muted text-foreground border border-border flex items-center justify-center rounded-md">
+                        <div className="w-7 h-7 bg-muted text-foreground border border-border flex items-center justify-center rounded-xs">
                             <FileText className="w-4 h-4" />
                         </div>
                     </div>
@@ -223,7 +223,7 @@ export default function ExpenseLedgerTab({
                 <select
                     value={filters.type || 'all'}
                     onChange={(e) => onFilterChange('type', e.target.value)}
-                    className="w-52 shrink-0 h-10 px-3 py-2 text-xs rounded-md border border-input bg-background text-foreground font-medium focus:outline-none focus:ring-1 focus:ring-ring"
+                    className="w-52 shrink-0 h-10 px-3 py-2 text-xs rounded-xs border border-input bg-background text-foreground font-medium focus:outline-none focus:ring-1 focus:ring-ring"
                 >
                     <option value="all">All Flow (Inflow &amp; Outflow)</option>
                     <option value="incoming">Incoming: Fee Receipts (+)</option>
@@ -247,7 +247,7 @@ export default function ExpenseLedgerTab({
                 <select
                     value={filters.payment_method || ''}
                     onChange={(e) => onFilterChange('payment_method', e.target.value)}
-                    className="w-44 shrink-0 h-10 px-3 py-2 text-xs rounded-md border border-input bg-background text-foreground font-medium focus:outline-none focus:ring-1 focus:ring-ring"
+                    className="w-44 shrink-0 h-10 px-3 py-2 text-xs rounded-xs border border-input bg-background text-foreground font-medium focus:outline-none focus:ring-1 focus:ring-ring"
                 >
                     <option value="">All Payment Methods</option>
                     {paymentMethods.map((pm) => (
@@ -259,7 +259,7 @@ export default function ExpenseLedgerTab({
             </FilterBar>
 
             {/* 3. Unified Financial Transactions Ledger Table */}
-            <Card className="rounded-lg border border-border shadow-xs bg-card text-card-foreground">
+            <Card className="rounded-sm border border-border shadow-xs bg-card text-card-foreground">
                 <CardContent className="p-0">
                     <div className="overflow-x-auto">
                         <table className="min-w-full divide-y divide-border text-sm">
@@ -303,15 +303,15 @@ export default function ExpenseLedgerTab({
                                                 <td className="px-4 py-3.5 whitespace-nowrap">
                                                     <div className="flex items-center gap-1.5">
                                                         {isInflow ? (
-                                                            <span className="w-5 h-5 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center rounded-md text-xs" title="Incoming Cash">
+                                                            <span className="w-5 h-5 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center rounded-xs text-xs" title="Incoming Cash">
                                                                 <ArrowDownLeft className="w-3.5 h-3.5" />
                                                             </span>
                                                         ) : (
-                                                            <span className="w-5 h-5 bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 flex items-center justify-center rounded-md text-xs" title="Outgoing Disbursement">
+                                                            <span className="w-5 h-5 bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 flex items-center justify-center rounded-xs text-xs" title="Outgoing Disbursement">
                                                                 <ArrowUpRight className="w-3.5 h-3.5" />
                                                             </span>
                                                         )}
-                                                        <span className={`font-mono text-xs font-bold px-2 py-0.5 rounded-md border ${
+                                                        <span className={`font-mono text-xs font-bold px-2 py-0.5 rounded-xs border ${
                                                             isInflow
                                                                 ? 'text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800'
                                                                 : 'text-foreground bg-muted border-border'
@@ -398,7 +398,7 @@ export default function ExpenseLedgerTab({
                                                             />
                                                         </div>
                                                     ) : (
-                                                        <div className="inline-flex items-center gap-1 text-[10px] text-muted-foreground bg-muted border border-border px-2 py-1 rounded-md font-mono">
+                                                        <div className="inline-flex items-center gap-1 text-[10px] text-muted-foreground bg-muted border border-border px-2 py-1 rounded-xs font-mono">
                                                             <Lock className="w-2.5 h-2.5 text-muted-foreground" />
                                                             <span>System {isInflow ? 'Receipt' : 'Payroll'}</span>
                                                         </div>

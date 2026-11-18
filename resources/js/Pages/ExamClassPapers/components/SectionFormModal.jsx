@@ -259,7 +259,7 @@ export default function SectionFormModal({
                 </div>
 
                 {/* Questions Checkbox Selection Area */}
-                <div className="border border-border rounded-lg p-3 bg-muted/30 space-y-3">
+                <div className="border border-border rounded-sm p-3 bg-muted/30 space-y-3">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-border">
                         <div>
                             <h4 className="font-semibold text-sm text-foreground">
@@ -307,7 +307,7 @@ export default function SectionFormModal({
                                 return (
                                     <label
                                         key={q.id}
-                                        className={`flex items-start gap-3 p-2.5 rounded border text-xs cursor-pointer transition-colors ${isChecked
+                                        className={`flex items-start gap-3 p-2.5 rounded-xs border text-xs cursor-pointer transition-colors ${isChecked
                                                 ? 'bg-primary/10 border-primary/40'
                                                 : 'bg-card border-border hover:border-primary/20'
                                             }`}
@@ -316,7 +316,7 @@ export default function SectionFormModal({
                                             type="checkbox"
                                             checked={isChecked}
                                             onChange={() => handleToggleQuestion(q.id)}
-                                            className="mt-0.5 rounded border-input text-primary focus:ring-ring h-4 w-4 bg-background"
+                                            className="mt-0.5 rounded-xs border-input text-primary focus:ring-ring h-4 w-4 bg-background"
                                         />
                                         <div className="flex-1">
                                             <p className="text-foreground font-medium leading-relaxed">
@@ -328,7 +328,7 @@ export default function SectionFormModal({
                                                 </span>
                                             )}
                                         </div>
-                                        <span className="text-[11px] font-semibold text-muted-foreground bg-muted border border-border px-2 py-0.5 rounded">
+                                        <span className="text-[11px] font-semibold text-muted-foreground bg-muted border border-border px-2 py-0.5 rounded-xs">
                                             {q.marks || 1} M
                                         </span>
                                     </label>

@@ -143,7 +143,7 @@ export default function SinglePromotionModal({
         >
             <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Student Profile Card */}
-                <div className="bg-muted/40 border border-border rounded-lg p-3.5 flex items-center justify-between">
+                <div className="bg-muted/40 border border-border rounded-xs p-3.5 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <ProfileAvatar
                             src={student.photo_url}
@@ -184,7 +184,7 @@ export default function SinglePromotionModal({
                             <button
                                 type="button"
                                 onClick={() => handleQuickClassSelect(nextClass.id, 'promote')}
-                                className={`p-2.5 rounded-lg border text-left transition flex flex-col justify-between ${
+                                className={`p-2.5 rounded-xs border text-left transition flex flex-col justify-between ${
                                     parseInt(data.target_class_id, 10) === nextClass.id && data.promotion_type === 'promote'
                                         ? 'border-indigo-600 bg-indigo-50/70 dark:bg-indigo-950/40 text-indigo-900 dark:text-indigo-200 ring-2 ring-indigo-500/20'
                                         : 'border-border hover:border-slate-400 dark:hover:border-slate-600 bg-card text-foreground'
@@ -204,7 +204,7 @@ export default function SinglePromotionModal({
                             <button
                                 type="button"
                                 onClick={() => handleQuickClassSelect(skip1Class.id, 'skip')}
-                                className={`p-2.5 rounded-lg border text-left transition flex flex-col justify-between ${
+                                className={`p-2.5 rounded-xs border text-left transition flex flex-col justify-between ${
                                     parseInt(data.target_class_id, 10) === skip1Class.id && data.promotion_type === 'skip'
                                         ? 'border-amber-600 bg-amber-50/70 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 ring-2 ring-amber-500/20'
                                         : 'border-border hover:border-slate-400 dark:hover:border-slate-600 bg-card text-foreground'
@@ -224,7 +224,7 @@ export default function SinglePromotionModal({
                             <button
                                 type="button"
                                 onClick={() => handleQuickClassSelect(skip2Class.id, 'skip')}
-                                className={`p-2.5 rounded-lg border text-left transition flex flex-col justify-between ${
+                                className={`p-2.5 rounded-xs border text-left transition flex flex-col justify-between ${
                                     parseInt(data.target_class_id, 10) === skip2Class.id
                                         ? 'border-purple-600 bg-purple-50/70 dark:bg-purple-950/40 text-purple-900 dark:text-purple-200 ring-2 ring-purple-500/20'
                                         : 'border-border hover:border-slate-400 dark:hover:border-slate-600 bg-card text-foreground'
@@ -244,7 +244,7 @@ export default function SinglePromotionModal({
                             <button
                                 type="button"
                                 onClick={() => handleQuickClassSelect(sameClass.id, 'retain')}
-                                className={`p-2.5 rounded-lg border text-left transition flex flex-col justify-between ${
+                                className={`p-2.5 rounded-xs border text-left transition flex flex-col justify-between ${
                                     parseInt(data.target_class_id, 10) === sameClass.id && data.promotion_type === 'retain'
                                         ? 'border-rose-600 bg-rose-50/70 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 ring-2 ring-rose-500/20'
                                         : 'border-border hover:border-slate-400 dark:hover:border-slate-600 bg-card text-foreground'
@@ -262,13 +262,13 @@ export default function SinglePromotionModal({
                 </div>
 
                 {/* Target Class, Section & Session Details */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-card p-3.5 rounded-lg border border-border shadow-xs text-card-foreground">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-card p-3.5 rounded-sm border border-border shadow-xs text-card-foreground">
                     <div>
                         <label className="block text-xs font-semibold text-foreground mb-1">Target Class *</label>
                         <select
                             value={data.target_class_id}
                             onChange={(e) => setData('target_class_id', e.target.value)}
-                            className="w-full text-sm rounded-md border border-input focus:ring-indigo-500 focus:border-indigo-500 bg-background text-foreground dark:bg-card"
+                            className="w-full text-sm rounded-xs border border-input focus:ring-indigo-500 focus:border-indigo-500 bg-background text-foreground dark:bg-card"
                             required
                         >
                             {classes.map((cls) => (
@@ -285,7 +285,7 @@ export default function SinglePromotionModal({
                         <select
                             value={data.target_section_id}
                             onChange={(e) => setData('target_section_id', e.target.value)}
-                            className="w-full text-sm rounded-md border border-input focus:ring-indigo-500 focus:border-indigo-500 bg-background text-foreground dark:bg-card"
+                            className="w-full text-sm rounded-xs border border-input focus:ring-indigo-500 focus:border-indigo-500 bg-background text-foreground dark:bg-card"
                             required
                         >
                             {(selectedTargetClass?.sections || []).map((sec) => (
@@ -304,7 +304,7 @@ export default function SinglePromotionModal({
                             value={data.target_session_year}
                             onChange={(e) => setData('target_session_year', e.target.value)}
                             placeholder="e.g. 2026-2027"
-                            className="w-full text-sm rounded-md border border-input focus:ring-indigo-500 focus:border-indigo-500 bg-background text-foreground dark:bg-card"
+                            className="w-full text-sm rounded-xs border border-input focus:ring-indigo-500 focus:border-indigo-500 bg-background text-foreground dark:bg-card"
                             required
                         />
                         {errors.target_session_year && <p className="text-xs text-rose-600 mt-1">{errors.target_session_year}</p>}
@@ -312,7 +312,7 @@ export default function SinglePromotionModal({
                 </div>
 
                 {/* Fee Settings for the New Class & Session */}
-                <div className="bg-muted/40 rounded-lg border border-border p-4 space-y-4">
+                <div className="bg-muted/40 rounded-sm border border-border p-4 space-y-4">
                     <div className="flex items-center justify-between border-b border-border pb-2">
                         <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-foreground">
                             <DollarSign className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -333,7 +333,7 @@ export default function SinglePromotionModal({
                                 min="0"
                                 value={data.base_monthly_fee}
                                 onChange={(e) => setData('base_monthly_fee', e.target.value)}
-                                className="w-full text-sm rounded-md border border-input bg-background text-foreground dark:bg-card font-mono"
+                                className="w-full text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card font-mono"
                                 required
                             />
                             {errors.base_monthly_fee && <p className="text-xs text-rose-600 mt-1">{errors.base_monthly_fee}</p>}
@@ -351,7 +351,7 @@ export default function SinglePromotionModal({
                                 value={data.admission_fee}
                                 onChange={(e) => setData('admission_fee', e.target.value)}
                                 disabled={data.waive_admission_fee}
-                                className={`w-full text-sm rounded-md border border-input bg-background text-foreground dark:bg-card font-mono ${
+                                className={`w-full text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card font-mono ${
                                     data.waive_admission_fee ? 'bg-muted text-muted-foreground' : ''
                                 }`}
                             />
@@ -361,7 +361,7 @@ export default function SinglePromotionModal({
                                     id="single_waive_admission"
                                     checked={data.waive_admission_fee}
                                     onChange={(e) => setData('waive_admission_fee', e.target.checked)}
-                                    className="rounded border-input text-indigo-600 focus:ring-indigo-500 h-3.5 w-3.5 mr-2"
+                                    className="rounded-xs border-input text-indigo-600 focus:ring-indigo-500 h-3.5 w-3.5 mr-2"
                                 />
                                 <label htmlFor="single_waive_admission" className="text-xs text-muted-foreground font-medium cursor-pointer">
                                     Waive annual admission fee for this student
@@ -380,7 +380,7 @@ export default function SinglePromotionModal({
                                 min="0"
                                 value={data.monthly_discount}
                                 onChange={(e) => setData('monthly_discount', e.target.value)}
-                                className="w-full text-sm rounded-md border border-input bg-background text-foreground dark:bg-card font-mono"
+                                className="w-full text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card font-mono"
                             />
                         </div>
 
@@ -394,13 +394,13 @@ export default function SinglePromotionModal({
                                 value={data.discount_reason}
                                 onChange={(e) => setData('discount_reason', e.target.value)}
                                 placeholder="e.g. Sibling Concession, Merit"
-                                className="w-full text-sm rounded-md border border-input bg-background text-foreground dark:bg-card"
+                                className="w-full text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card"
                             />
                         </div>
                     </div>
 
                     {/* Net Fee Calculation Callout */}
-                    <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-md p-3 flex items-center justify-between">
+                    <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-sm p-3 flex items-center justify-between">
                         <div className="text-xs text-emerald-800 dark:text-emerald-300">
                             <strong>Net Monthly Payable:</strong> Base (${Number(data.base_monthly_fee || 0).toFixed(2)}) - Discount (${Number(data.monthly_discount || 0).toFixed(2)})
                         </div>

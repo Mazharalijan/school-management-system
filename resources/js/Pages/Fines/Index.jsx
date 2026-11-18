@@ -197,7 +197,7 @@ export default function FinesIndex({ fines, classes = [], stats = {}, filters = 
                                     setSelectedClass(e.target.value);
                                     handleFilterChange({ school_class_id: e.target.value });
                                 }}
-                                className="p-2 text-xs h-9 rounded-md border border-input bg-background text-foreground"
+                                className="p-2 text-xs h-9 rounded-xs border border-input bg-background text-foreground"
                             >
                                 <option value="all">All Classes</option>
                                 {classes.map((c) => (
@@ -211,7 +211,7 @@ export default function FinesIndex({ fines, classes = [], stats = {}, filters = 
                                     setSelectedType(e.target.value);
                                     handleFilterChange({ fine_type: e.target.value });
                                 }}
-                                className="p-2 text-xs h-9 rounded-md border border-input bg-background text-foreground"
+                                className="p-2 text-xs h-9 rounded-xs border border-input bg-background text-foreground"
                             >
                                 <option value="all">All Fine Types</option>
                                 <option value="leave">Short Leave / Absent</option>
@@ -227,7 +227,7 @@ export default function FinesIndex({ fines, classes = [], stats = {}, filters = 
                                     setSelectedMode(e.target.value);
                                     handleFilterChange({ collection_mode: e.target.value });
                                 }}
-                                className="p-2 text-xs h-9 rounded-md border border-input bg-background text-foreground"
+                                className="p-2 text-xs h-9 rounded-xs border border-input bg-background text-foreground"
                             >
                                 <option value="all">All Collection Modes</option>
                                 <option value="on_the_spot">On The Spot</option>
@@ -241,7 +241,7 @@ export default function FinesIndex({ fines, classes = [], stats = {}, filters = 
                                     setSelectedStatus(e.target.value);
                                     handleFilterChange({ status: e.target.value });
                                 }}
-                                className="p-2 text-xs h-9 rounded-md border border-input bg-background text-foreground"
+                                className="p-2 text-xs h-9 rounded-xs border border-input bg-background text-foreground"
                             >
                                 <option value="all">All Statuses</option>
                                 <option value="unpaid">Unpaid / Pending</option>

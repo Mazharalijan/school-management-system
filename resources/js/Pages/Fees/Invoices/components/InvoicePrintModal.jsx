@@ -46,13 +46,13 @@ export default function InvoicePrintModal({ isOpen, onClose, invoice }) {
 
                     {/* Printer Type Selector */}
                     <div className="flex flex-wrap items-center gap-2">
-                        <div className="flex items-center rounded-lg border border-border bg-muted/50 p-0.5 text-xs">
+                        <div className="flex items-center rounded-xs border border-border bg-muted/50 p-0.5 text-xs">
                             <span className="text-[11px] font-semibold text-muted-foreground px-2">Printer:</span>
                             <button
                                 type="button"
                                 onClick={() => setPrinterType('standard')}
                                 className={cn(
-                                    "px-2.5 py-1 font-semibold rounded-md transition-colors flex items-center gap-1",
+                                    "px-2.5 py-1 font-semibold rounded-xs transition-colors flex items-center gap-1",
                                     printerType === 'standard'
                                         ? "bg-primary text-primary-foreground shadow-xs"
                                         : "text-muted-foreground hover:text-foreground"
@@ -65,7 +65,7 @@ export default function InvoicePrintModal({ isOpen, onClose, invoice }) {
                                 type="button"
                                 onClick={() => setPrinterType('mini')}
                                 className={cn(
-                                    "px-2.5 py-1 font-semibold rounded-md transition-colors flex items-center gap-1",
+                                    "px-2.5 py-1 font-semibold rounded-xs transition-colors flex items-center gap-1",
                                     printerType === 'mini'
                                         ? "bg-primary text-primary-foreground shadow-xs"
                                         : "text-muted-foreground hover:text-foreground"
@@ -77,12 +77,12 @@ export default function InvoicePrintModal({ isOpen, onClose, invoice }) {
                         </div>
 
                         {printerType === 'standard' && (
-                            <div className="flex items-center rounded-lg border border-border bg-muted/50 p-0.5 text-xs">
+                            <div className="flex items-center rounded-xs border border-border bg-muted/50 p-0.5 text-xs">
                                 <button
                                     type="button"
                                     onClick={() => setStandardLayout('single')}
                                     className={cn(
-                                        "px-2 py-1 text-[11px] font-medium rounded-md transition-colors",
+                                        "px-2 py-1 text-[11px] font-medium rounded-xs transition-colors",
                                         standardLayout === 'single'
                                             ? "bg-primary text-primary-foreground"
                                             : "text-muted-foreground hover:text-foreground"
@@ -94,7 +94,7 @@ export default function InvoicePrintModal({ isOpen, onClose, invoice }) {
                                     type="button"
                                     onClick={() => setStandardLayout('3copy')}
                                     className={cn(
-                                        "px-2 py-1 text-[11px] font-medium rounded-md transition-colors",
+                                        "px-2 py-1 text-[11px] font-medium rounded-xs transition-colors",
                                         standardLayout === '3copy'
                                             ? "bg-primary text-primary-foreground"
                                             : "text-muted-foreground hover:text-foreground"
@@ -259,7 +259,7 @@ export default function InvoicePrintModal({ isOpen, onClose, invoice }) {
                                 {['STUDENT COPY', 'ACCOUNTS / SCHOOL COPY', 'BANK COPY'].map((copyTitle) => (
                                     <div
                                         key={copyTitle}
-                                        className="border-2 border-dashed border-gray-300 p-3 rounded-lg text-xs space-y-3 flex flex-col justify-between"
+                                        className="border-2 border-dashed border-gray-300 p-3 rounded-sm text-xs space-y-3 flex flex-col justify-between"
                                     >
                                         <div>
                                             <div className="text-center pb-2 border-b border-gray-200">
@@ -315,7 +315,7 @@ export default function InvoicePrintModal({ isOpen, onClose, invoice }) {
                         /* OPTION 3: STANDARD A4 - FULL SINGLE PAGE INSTITUTIONAL INVOICE */
                         <div
                             id="printable-standard-invoice"
-                            className="w-full bg-card text-card-foreground p-6 rounded-xl border border-border shadow-xs print:bg-white print:text-black print:border-none print:shadow-none print:p-0 space-y-6"
+                            className="w-full bg-card text-card-foreground p-6 rounded-sm border border-border shadow-xs print:bg-white print:text-black print:border-none print:shadow-none print:p-0 space-y-6"
                         >
                             {/* Formal Institutional Header */}
                             <div className="flex justify-between items-start border-b border-border print:border-gray-300 pb-5">
@@ -349,7 +349,7 @@ export default function InvoicePrintModal({ isOpen, onClose, invoice }) {
                             </div>
 
                             {/* Student Metadata Box */}
-                            <div className="flex items-center gap-4 bg-muted/40 p-4 rounded-xl border border-border print:bg-gray-50 print:border-gray-200 text-xs">
+                            <div className="flex items-center gap-4 bg-muted/40 p-4 rounded-xs border border-border print:bg-gray-50 print:border-gray-200 text-xs">
                                 <ProfileAvatar
                                     src={student.photo_url}
                                     name={studentName}

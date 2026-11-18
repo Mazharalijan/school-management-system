@@ -140,15 +140,15 @@ export default function SettingsIndex({ settings = {} }) {
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {/* Logo Upload Box */}
-                            <div className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-border rounded-lg bg-muted/30">
+                            <div className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-border rounded-sm bg-muted/30">
                                 {logoPreview ? (
-                                    <img src={logoPreview} alt="School Logo" className="h-28 w-28 object-contain mb-3 rounded" />
+                                    <img src={logoPreview} alt="School Logo" className="h-28 w-28 object-contain mb-3 rounded-xs" />
                                 ) : (
-                                    <div className="h-28 w-28 bg-muted rounded flex items-center justify-center text-muted-foreground mb-3">
+                                    <div className="h-28 w-28 bg-muted rounded-xs flex items-center justify-center text-muted-foreground mb-3">
                                         <ImageIcon className="h-10 w-10" />
                                     </div>
                                 )}
-                                <Label htmlFor="logo" className="cursor-pointer bg-card px-3 py-1.5 border border-border rounded text-xs font-semibold text-foreground hover:bg-muted">
+                                <Label htmlFor="logo" className="cursor-pointer bg-card px-3 py-1.5 border border-border rounded-xs text-xs font-semibold text-foreground hover:bg-muted">
                                     Upload Logo
                                 </Label>
                                 <input id="logo" type="file" accept="image/*" className="hidden" onChange={handleLogoChange} />
@@ -206,7 +206,7 @@ export default function SettingsIndex({ settings = {} }) {
                             {/* Option 1: Light Mode */}
                             <div
                                 onClick={() => handleThemeModeChange('light')}
-                                className={`p-4 rounded-xl border-2 transition-all cursor-pointer flex flex-col justify-between ${
+                                className={`p-4 rounded-sm border-2 transition-all cursor-pointer flex flex-col justify-between ${
                                     form.data.theme_mode === 'light'
                                         ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
                                         : 'border-border hover:border-muted-foreground/30 bg-card'
@@ -237,7 +237,7 @@ export default function SettingsIndex({ settings = {} }) {
                             {/* Option 2: Dark Mode */}
                             <div
                                 onClick={() => handleThemeModeChange('dark')}
-                                className={`p-4 rounded-xl border-2 transition-all cursor-pointer flex flex-col justify-between ${
+                                className={`p-4 rounded-sm border-2 transition-all cursor-pointer flex flex-col justify-between ${
                                     form.data.theme_mode === 'dark'
                                         ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
                                         : 'border-border hover:border-muted-foreground/30 bg-card'
@@ -268,7 +268,7 @@ export default function SettingsIndex({ settings = {} }) {
                             {/* Option 3: System Mode */}
                             <div
                                 onClick={() => handleThemeModeChange('system')}
-                                className={`p-4 rounded-xl border-2 transition-all cursor-pointer flex flex-col justify-between ${
+                                className={`p-4 rounded-sm border-2 transition-all cursor-pointer flex flex-col justify-between ${
                                     form.data.theme_mode === 'system'
                                         ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
                                         : 'border-border hover:border-muted-foreground/30 bg-card'
@@ -314,7 +314,7 @@ export default function SettingsIndex({ settings = {} }) {
                             {/* Option 1: Shadcn Modern */}
                             <div
                                 onClick={() => handleDashboardThemeChange('shadcn')}
-                                className={`p-4 rounded-xl border-2 transition-all cursor-pointer flex flex-col justify-between ${
+                                className={`p-4 rounded-sm border-2 transition-all cursor-pointer flex flex-col justify-between ${
                                     form.data.dashboard_theme === 'shadcn'
                                         ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
                                         : 'border-border hover:border-muted-foreground/30 bg-card'
@@ -345,7 +345,7 @@ export default function SettingsIndex({ settings = {} }) {
                             {/* Option 2: Academic Classic */}
                             <div
                                 onClick={() => handleDashboardThemeChange('academic')}
-                                className={`p-4 rounded-xl border-2 transition-all cursor-pointer flex flex-col justify-between ${
+                                className={`p-4 rounded-sm border-2 transition-all cursor-pointer flex flex-col justify-between ${
                                     form.data.dashboard_theme === 'academic'
                                         ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
                                         : 'border-border hover:border-muted-foreground/30 bg-card'
@@ -376,7 +376,7 @@ export default function SettingsIndex({ settings = {} }) {
                             {/* Option 3: Executive Compact */}
                             <div
                                 onClick={() => handleDashboardThemeChange('compact')}
-                                className={`p-4 rounded-xl border-2 transition-all cursor-pointer flex flex-col justify-between ${
+                                className={`p-4 rounded-sm border-2 transition-all cursor-pointer flex flex-col justify-between ${
                                     form.data.dashboard_theme === 'compact'
                                         ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
                                         : 'border-border hover:border-muted-foreground/30 bg-card'
@@ -515,7 +515,7 @@ export default function SettingsIndex({ settings = {} }) {
                                 <textarea
                                     id="address"
                                     rows="2"
-                                    className="w-full p-2.5 text-sm rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                    className="w-full p-2.5 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                     value={form.data.address}
                                     onChange={(e) => form.setData('address', e.target.value)}
                                     required
@@ -556,14 +556,14 @@ export default function SettingsIndex({ settings = {} }) {
                             </div>
                         </div>
 
-                        <div className="rounded-lg border border-border/80 bg-muted/30 p-4">
+                        <div className="rounded-sm border border-border/80 bg-muted/30 p-4">
                             <div className="flex items-start gap-3">
                                 <input
                                     type="checkbox"
                                     id="include_fines_in_financial_flow"
                                     checked={Boolean(form.data.include_fines_in_financial_flow)}
                                     onChange={(e) => form.setData('include_fines_in_financial_flow', e.target.checked)}
-                                    className="mt-1 h-4 w-4 rounded border-input text-primary focus:ring-ring"
+                                    className="mt-1 h-4 w-4 rounded-xs border-input text-primary focus:ring-ring"
                                 />
                                 <div className="space-y-1">
                                     <Label htmlFor="include_fines_in_financial_flow" className="cursor-pointer font-semibold text-foreground text-sm">

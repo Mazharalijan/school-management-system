@@ -42,7 +42,7 @@ export default function SectionsTab({
     return (
         <div className="space-y-6">
             {/* Header & Controls */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-card p-4 rounded-xl border border-border text-card-foreground">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-card p-4 rounded-sm border border-border text-card-foreground">
                 <div>
                     <h3 className="font-semibold text-foreground flex items-center gap-2">
                         <Layers className="w-4 h-4 text-muted-foreground" />
@@ -61,7 +61,7 @@ export default function SectionsTab({
             </div>
 
             {/* Existing Sections Listing */}
-            <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm text-card-foreground">
+            <div className="bg-card border border-border rounded-sm overflow-hidden shadow-sm text-card-foreground">
                 <table className="w-full text-left text-sm border-collapse">
                     <thead className="bg-muted/50 border-b border-border text-muted-foreground font-medium">
                         <tr>

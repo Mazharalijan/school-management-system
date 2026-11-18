@@ -155,7 +155,7 @@ export default function PaperFormModal({ isOpen, onClose, paper = null, classes 
                         value={data.instructions}
                         onChange={(e) => setData('instructions', e.target.value)}
                         placeholder="Write instructions for candidates..."
-                        className="w-full mt-1 border border-input bg-background text-foreground rounded-md p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                        className="w-full mt-1 border border-input bg-background text-foreground rounded-xs p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
                     />
                 </div>
 

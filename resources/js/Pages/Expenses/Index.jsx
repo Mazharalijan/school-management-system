@@ -168,7 +168,7 @@ export default function Index({
                 </PageHeader>
 
                 {/* 2. Date Preset & Reporting Period Bar */}
-                <div className="bg-card p-3 sm:p-4 rounded-lg border border-border shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 text-card-foreground">
+                <div className="bg-card p-3 sm:p-4 rounded-sm border border-border shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 text-card-foreground">
                     {/* Quick Presets */}
                     <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
                         <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mr-1">Period:</span>
@@ -176,7 +176,7 @@ export default function Index({
                             <button
                                 key={p.id}
                                 onClick={() => handlePresetChange(p.id)}
-                                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                                className={`px-3 py-1.5 rounded-xs text-xs font-medium transition-all ${
                                     activePreset === p.id
                                         ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
                                         : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
@@ -216,7 +216,7 @@ export default function Index({
 
                 {/* 3. Domain Tabs */}
                 <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
-                    <TabsList className="bg-muted p-1 rounded-lg mb-6 inline-flex flex-wrap gap-1">
+                    <TabsList className="bg-muted p-1 rounded-sm mb-6 inline-flex flex-wrap gap-1">
                         <TabsTrigger value="pnl" className="flex items-center gap-2 px-4 py-2 text-xs font-medium">
                             <TrendingUp className="h-4 w-4 text-emerald-600 dark:text-emerald-400" /> Profit &amp; Loss Statement &amp; Analytics
                         </TabsTrigger>

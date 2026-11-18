@@ -474,7 +474,7 @@ export default function ImageCropModal({
                 {/* Viewport Canvas */}
                 <div className="md:col-span-7 flex flex-col items-center">
                     <div
-                        className="relative border-2 border-border bg-slate-950 rounded-lg overflow-hidden cursor-move select-none shadow-inner"
+                        className="relative border-2 border-border bg-slate-950 rounded-sm overflow-hidden cursor-move select-none shadow-inner"
                         onMouseDown={handleMouseDown}
                         onMouseMove={handleMouseMove}
                         onMouseUp={handleMouseUp}
@@ -487,19 +487,19 @@ export default function ImageCropModal({
                             height={380}
                             className="block"
                         />
-                        <div className="absolute top-2 left-2 bg-slate-900/80 backdrop-blur-sm text-[11px] text-white px-2 py-0.5 rounded border border-slate-700">
+                        <div className="absolute top-2 left-2 bg-slate-900/80 backdrop-blur-sm text-[11px] text-white px-2 py-0.5 rounded-xs border border-slate-700">
                             Drag to reposition &bull; Scroll to zoom
                         </div>
                     </div>
 
                     {/* Quick Canvas Controls */}
                     <div className="flex items-center gap-3 mt-3 w-full max-w-[380px]">
-                        <div className="flex items-center gap-1 bg-muted p-1 rounded-md border border-border">
+                        <div className="flex items-center gap-1 bg-muted p-1 rounded-xs border border-border">
                             <button
                                 type="button"
                                 onClick={() => setZoom((z) => Math.max(0.5, z - 0.1))}
                                 title="Zoom Out"
-                                className="p-1 hover:bg-background rounded text-foreground transition"
+                                className="p-1 hover:bg-background rounded-xs text-foreground transition"
                             >
                                 <ZoomOut className="w-4 h-4" />
                             </button>
@@ -510,13 +510,13 @@ export default function ImageCropModal({
                                 step={0.05}
                                 value={zoom}
                                 onChange={(e) => setZoom(parseFloat(e.target.value))}
-                                className="w-24 h-1.5 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
+                                className="w-24 h-1.5 bg-secondary rounded-xs appearance-none cursor-pointer accent-primary"
                             />
                             <button
                                 type="button"
                                 onClick={() => setZoom((z) => Math.min(3, z + 0.1))}
                                 title="Zoom In"
-                                className="p-1 hover:bg-background rounded text-foreground transition"
+                                className="p-1 hover:bg-background rounded-xs text-foreground transition"
                             >
                                 <ZoomIn className="w-4 h-4" />
                             </button>
@@ -525,12 +525,12 @@ export default function ImageCropModal({
                             </span>
                         </div>
 
-                        <div className="flex items-center gap-1 bg-muted p-1 rounded-md border border-border ml-auto">
+                        <div className="flex items-center gap-1 bg-muted p-1 rounded-xs border border-border ml-auto">
                             <button
                                 type="button"
                                 onClick={() => setRotation((r) => (r - 90 + 360) % 360)}
                                 title="Rotate Left 90°"
-                                className="p-1.5 hover:bg-background rounded text-foreground transition"
+                                className="p-1.5 hover:bg-background rounded-xs text-foreground transition"
                             >
                                 <RotateCcw className="w-4 h-4" />
                             </button>
@@ -538,7 +538,7 @@ export default function ImageCropModal({
                                 type="button"
                                 onClick={() => setRotation((r) => (r + 90) % 360)}
                                 title="Rotate Right 90°"
-                                className="p-1.5 hover:bg-background rounded text-foreground transition"
+                                className="p-1.5 hover:bg-background rounded-xs text-foreground transition"
                             >
                                 <RotateCw className="w-4 h-4" />
                             </button>
@@ -549,7 +549,7 @@ export default function ImageCropModal({
                 {/* Sidebar Controls */}
                 <div className="md:col-span-5 space-y-4">
                     {/* Aspect Ratio Correction */}
-                    <div className="p-3 bg-muted/30 border border-border rounded-lg">
+                    <div className="p-3 bg-muted/30 border border-border rounded-sm">
                         <Label className="text-xs font-bold text-foreground uppercase tracking-wider block mb-2">
                             Aspect Ratio Format
                         </Label>
@@ -557,7 +557,7 @@ export default function ImageCropModal({
                             <button
                                 type="button"
                                 onClick={() => setAspectRatio('1:1')}
-                                className={`flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold rounded-md border transition ${
+                                className={`flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold rounded-xs border transition ${
                                     aspectRatio === '1:1'
                                         ? 'bg-primary text-primary-foreground border-primary shadow-sm'
                                         : 'bg-card text-foreground border-border hover:bg-accent'
@@ -569,7 +569,7 @@ export default function ImageCropModal({
                             <button
                                 type="button"
                                 onClick={() => setAspectRatio('3:4')}
-                                className={`flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold rounded-md border transition ${
+                                className={`flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold rounded-xs border transition ${
                                     aspectRatio === '3:4'
                                         ? 'bg-primary text-primary-foreground border-primary shadow-sm'
                                         : 'bg-card text-foreground border-border hover:bg-accent'
@@ -585,7 +585,7 @@ export default function ImageCropModal({
                                     type="checkbox"
                                     checked={showCircleGuide}
                                     onChange={(e) => setShowCircleGuide(e.target.checked)}
-                                    className="rounded border-input text-primary focus:ring-ring w-3.5 h-3.5 bg-background"
+                                    className="rounded-xs border-input text-primary focus:ring-ring w-3.5 h-3.5 bg-background"
                                 />
                                 Show circular avatar guideline
                             </label>
@@ -593,14 +593,14 @@ export default function ImageCropModal({
                     </div>
 
                     {/* Background Color Customization */}
-                    <div className="p-3 bg-muted/30 border border-border rounded-lg">
+                    <div className="p-3 bg-muted/30 border border-border rounded-sm">
                         <div className="flex items-center justify-between mb-2">
                             <Label className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
                                 <Palette className="w-3.5 h-3.5 text-primary" />
                                 Background Color
                             </Label>
                             {bgColor !== 'original' && (
-                                <span className="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-bold px-1.5 py-0.5 rounded uppercase">
+                                <span className="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-bold px-1.5 py-0.5 rounded-xs uppercase">
                                     Active
                                 </span>
                             )}
@@ -612,7 +612,7 @@ export default function ImageCropModal({
                                     key={preset.id}
                                     type="button"
                                     onClick={() => setBgColor(preset.id)}
-                                    className={`flex items-center gap-2 p-2 rounded-md border text-left transition ${
+                                    className={`flex items-center gap-2 p-2 rounded-xs border text-left transition ${
                                         bgColor === preset.id
                                             ? 'border-primary ring-2 ring-primary/20 bg-background shadow-sm'
                                             : 'border-border bg-card hover:bg-accent'
@@ -646,7 +646,7 @@ export default function ImageCropModal({
                                     step={1}
                                     value={tolerance}
                                     onChange={(e) => setTolerance(parseInt(e.target.value, 10))}
-                                    className="w-full h-1.5 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
+                                    className="w-full h-1.5 bg-secondary rounded-xs appearance-none cursor-pointer accent-primary"
                                 />
                                 <p className="text-[11px] text-muted-foreground leading-tight">
                                     Increases or decreases edge detection sensitivity to replace uneven wall backdrops with clean {bgColor}.

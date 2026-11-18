@@ -169,7 +169,7 @@ export default function MarksEntryGrid({
 
       {/* Inline Quick Add Student Form */}
       {showAddForm && (
-        <form onSubmit={handleAddStudent} className="p-3.5 bg-muted/30 border border-border rounded-lg flex flex-wrap items-center gap-3 text-xs">
+        <form onSubmit={handleAddStudent} className="p-3.5 bg-muted/30 border border-border rounded-xs flex flex-wrap items-center gap-3 text-xs">
           <Input
             type="text"
             placeholder="Roll No (e.g. 505)"
@@ -193,7 +193,7 @@ export default function MarksEntryGrid({
       )}
 
       {/* Primary Unified Marks Evaluation Table */}
-      <div className="bg-card rounded-lg shadow-sm border border-border overflow-hidden text-card-foreground">
+      <div className="bg-card rounded-sm shadow-sm border border-border overflow-hidden text-card-foreground">
         <div className="overflow-x-auto max-h-[70vh] overflow-y-auto">
           <table className="w-full text-xs text-left text-muted-foreground border-collapse">
             <thead className="text-[11px] uppercase bg-muted text-muted-foreground font-semibold border-b border-border tracking-wider sticky top-0 z-20 shadow-xs">
@@ -308,7 +308,7 @@ export default function MarksEntryGrid({
                                 value={isAbsent ? '' : markVal}
                                 onChange={(e) => handleMarkChange(student.id, subKey, e.target.value, paper.total_marks)}
                                 placeholder={isAbsent ? 'ABS' : '0'}
-                                className={`w-14 h-8 text-center text-xs font-bold rounded border transition-all ${
+                                className={`w-14 h-8 text-center text-xs font-bold rounded-xs border transition-all ${
                                   isAbsent
                                     ? 'bg-destructive/10 border-destructive/40 text-destructive font-bold italic'
                                     : isBelowPass
@@ -323,7 +323,7 @@ export default function MarksEntryGrid({
                                 disabled={isSubmitted}
                                 title={isAbsent ? 'Mark Present' : 'Mark Absent'}
                                 onClick={() => handleAbsentToggle(student.id, subKey)}
-                                className={`p-1 rounded transition-all ${
+                                className={`p-1 rounded-xs transition-all ${
                                   isAbsent
                                     ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
                                     : 'bg-muted text-muted-foreground hover:text-destructive hover:bg-destructive/10'

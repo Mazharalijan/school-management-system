@@ -71,7 +71,7 @@ export default function UnpaidStudentsWidget({
             <CardHeader className="pb-4 border-b border-border">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <div className="flex items-center gap-2.5">
-                        <div className={`p-2 ${isAcademic ? 'rounded-none' : 'rounded-lg'} bg-destructive/10 text-destructive`}>
+                        <div className={`p-2 ${isAcademic ? 'rounded-none' : 'rounded-xs'} bg-destructive/10 text-destructive`}>
                             <AlertTriangle className="w-5 h-5" />
                         </div>
                         <div>
@@ -100,7 +100,7 @@ export default function UnpaidStudentsWidget({
                             asChild
                             variant="outline"
                             size="sm"
-                            className={`h-8 text-xs font-semibold ${isAcademic ? 'rounded-none' : 'rounded-lg'}`}
+                            className={`h-8 text-xs font-semibold ${isAcademic ? 'rounded-none' : 'rounded-xs'}`}
                         >
                             <Link href="/fees/invoices?status=unpaid">
                                 <span>All Invoices</span>
@@ -119,7 +119,7 @@ export default function UnpaidStudentsWidget({
                             placeholder="Search by student, class, roll #, phone, or invoice..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className={`pl-8 h-8 text-xs bg-background ${isAcademic ? 'rounded-none' : 'rounded-md'}`}
+                            className={`pl-8 h-8 text-xs bg-background ${isAcademic ? 'rounded-none' : 'rounded-xs'}`}
                         />
                     </div>
 
@@ -131,7 +131,7 @@ export default function UnpaidStudentsWidget({
                                 statusFilter === 'all'
                                     ? 'bg-primary text-primary-foreground font-semibold'
                                     : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                            } ${isAcademic ? 'rounded-none' : 'rounded-md'}`}
+                            } ${isAcademic ? 'rounded-none' : 'rounded-xs'}`}
                         >
                             All ({unpaidStudents.length})
                         </button>
@@ -142,7 +142,7 @@ export default function UnpaidStudentsWidget({
                                 statusFilter === 'overdue'
                                     ? 'bg-destructive text-destructive-foreground font-semibold'
                                     : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                            } ${isAcademic ? 'rounded-none' : 'rounded-md'}`}
+                            } ${isAcademic ? 'rounded-none' : 'rounded-xs'}`}
                         >
                             Overdue
                         </button>
@@ -153,7 +153,7 @@ export default function UnpaidStudentsWidget({
                                 statusFilter === 'partially_paid'
                                     ? 'bg-amber-600 text-white font-semibold'
                                     : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                            } ${isAcademic ? 'rounded-none' : 'rounded-md'}`}
+                            } ${isAcademic ? 'rounded-none' : 'rounded-xs'}`}
                         >
                             Partial
                         </button>

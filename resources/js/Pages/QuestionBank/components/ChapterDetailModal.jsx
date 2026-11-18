@@ -38,7 +38,7 @@ export default function ChapterDetailsModal({ isOpen, onClose, chapter = null })
         >
             <div className="space-y-6">
                 {/* Header Information Card */}
-                <div className="p-4 bg-muted/40 rounded-lg border border-border space-y-3">
+                <div className="p-4 bg-muted/40 rounded-xs border border-border space-y-3">
                     <div className="flex items-center gap-2 text-foreground font-semibold text-lg">
                         <Bookmark className="w-5 h-5 text-primary" />
                         {chapter.chapter_name || chapter.name}
@@ -81,7 +81,7 @@ export default function ChapterDetailsModal({ isOpen, onClose, chapter = null })
                     </h4>
 
                     {topics.length > 0 ? (
-                        <div className="divide-y divide-border border border-border rounded-lg overflow-hidden bg-card">
+                        <div className="divide-y divide-border border border-border rounded-sm overflow-hidden bg-card">
                             {topics.map((topic, index) => (
                                 <div
                                     key={topic.id || index}
@@ -104,7 +104,7 @@ export default function ChapterDetailsModal({ isOpen, onClose, chapter = null })
                             ))}
                         </div>
                     ) : (
-                        <div className="p-6 text-center border border-dashed border-border rounded-lg text-muted-foreground text-sm">
+                        <div className="p-6 text-center border border-dashed border-border rounded-sm text-muted-foreground text-sm">
                             No topics added to this chapter yet.
                         </div>
                     )}

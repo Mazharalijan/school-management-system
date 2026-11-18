@@ -128,11 +128,11 @@ export default function ChangeSchoolTimingsModal({
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-            <div className="bg-card text-card-foreground rounded-2xl border border-border shadow-2xl max-w-lg w-full p-6 space-y-5">
+            <div className="bg-card text-card-foreground rounded-sm border border-border shadow-2xl max-w-lg w-full p-6 space-y-5">
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-border pb-3">
                     <div className="flex items-center gap-2.5">
-                        <div className="p-2.5 bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 rounded-xl">
+                        <div className="p-2.5 bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 rounded-xs">
                             <Clock className="w-5 h-5" />
                         </div>
                         <div>
@@ -142,20 +142,20 @@ export default function ChangeSchoolTimingsModal({
                             </p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="text-muted-foreground hover:text-foreground p-1.5 rounded-lg hover:bg-muted">
+                    <button onClick={onClose} className="text-muted-foreground hover:text-foreground p-1.5 rounded-xs hover:bg-muted">
                         <X className="w-5 h-5" />
                     </button>
                 </div>
 
                 {errorMsg && (
-                    <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 rounded-xl text-red-700 dark:text-red-300 text-xs font-semibold flex items-center gap-2">
+                    <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 rounded-sm text-red-700 dark:text-red-300 text-xs font-semibold flex items-center gap-2">
                         <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
                         <span>{errorMsg}</span>
                     </div>
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-3 bg-muted/40 p-4 rounded-xl border border-border">
+                    <div className="grid grid-cols-2 gap-3 bg-muted/40 p-4 rounded-xs border border-border">
                         <div>
                             <Label className="text-xs font-bold text-foreground block mb-1">New Start Time</Label>
                             <Input
@@ -180,14 +180,14 @@ export default function ChangeSchoolTimingsModal({
 
                     {/* Live Period Recalculation Preview */}
                     {period1Preview && (
-                        <div className="p-3.5 bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 rounded-xl space-y-1.5">
+                        <div className="p-3.5 bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 rounded-xs space-y-1.5">
                             <div className="text-[11px] font-bold text-indigo-950 dark:text-indigo-300 flex items-center gap-1.5">
                                 <RefreshCw className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" /> Auto-Shift Preview (Period 1)
                             </div>
                             <div className="flex items-center justify-between text-xs font-semibold text-foreground pt-1">
                                 <span className="text-muted-foreground line-through">{period1Preview.oldFormatted}</span>
                                 <ArrowRight className="w-4 h-4 text-indigo-500" />
-                                <span className="text-indigo-700 dark:text-indigo-300 font-extrabold bg-indigo-100 dark:bg-indigo-950/60 px-2 py-0.5 rounded-md">
+                                <span className="text-indigo-700 dark:text-indigo-300 font-extrabold bg-indigo-100 dark:bg-indigo-950/60 px-2 py-0.5 rounded-xs">
                                     {period1Preview.newFormatted}
                                 </span>
                             </div>

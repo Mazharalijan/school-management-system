@@ -39,7 +39,7 @@ export default function CollectFineModal({ isOpen, onClose, fine }) {
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-4 my-2">
-                    <div className="p-3 rounded-lg border border-border bg-muted/30 text-xs space-y-1">
+                    <div className="p-3 rounded-xs border border-border bg-muted/30 text-xs space-y-1">
                         <div className="flex justify-between">
                             <span className="text-muted-foreground">Student:</span>
                             <span className="font-bold text-foreground">{studentName}</span>
@@ -64,7 +64,7 @@ export default function CollectFineModal({ isOpen, onClose, fine }) {
                             id="payment_method"
                             value={form.data.payment_method}
                             onChange={(e) => form.setData('payment_method', e.target.value)}
-                            className="w-full mt-1 p-2 text-xs rounded-md border border-input bg-background text-foreground"
+                            className="w-full mt-1 p-2 text-xs rounded-xs border border-input bg-background text-foreground"
                             required
                         >
                             <option value="cash">Cash in Hand</option>

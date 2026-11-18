@@ -116,7 +116,7 @@ export default function StudentIndex({ students, classes, filters }) {
             >
                 <Link
                     href={route('students.promotion.index')}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-background hover:bg-muted text-foreground text-sm font-medium transition-colors shadow-xs whitespace-nowrap shrink-0"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs border border-border bg-background hover:bg-muted text-foreground text-sm font-medium transition-colors shadow-xs whitespace-nowrap shrink-0"
                 >
                     <TrendingUp className="h-4 w-4 text-muted-foreground shrink-0" />
                     <span>Student Promotion</span>

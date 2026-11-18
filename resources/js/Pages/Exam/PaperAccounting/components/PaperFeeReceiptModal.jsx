@@ -37,13 +37,13 @@ export default function PaperFeeReceiptModal({ isOpen, onClose, paperFee }) {
                     </DialogHeader>
 
                     <div className="flex flex-wrap items-center gap-2">
-                        <div className="flex items-center rounded-lg border border-border bg-muted/50 p-0.5 text-xs">
+                        <div className="flex items-center rounded-xs border border-border bg-muted/50 p-0.5 text-xs">
                             <span className="text-[11px] font-semibold text-muted-foreground px-2">Printer:</span>
                             <button
                                 type="button"
                                 onClick={() => setPrinterType('standard')}
                                 className={cn(
-                                    "px-2.5 py-1 font-semibold rounded-md transition-colors flex items-center gap-1",
+                                    "px-2.5 py-1 font-semibold rounded-xs transition-colors flex items-center gap-1",
                                     printerType === 'standard'
                                         ? "bg-primary text-primary-foreground shadow-xs"
                                         : "text-muted-foreground hover:text-foreground"
@@ -56,7 +56,7 @@ export default function PaperFeeReceiptModal({ isOpen, onClose, paperFee }) {
                                 type="button"
                                 onClick={() => setPrinterType('mini')}
                                 className={cn(
-                                    "px-2.5 py-1 font-semibold rounded-md transition-colors flex items-center gap-1",
+                                    "px-2.5 py-1 font-semibold rounded-xs transition-colors flex items-center gap-1",
                                     printerType === 'mini'
                                         ? "bg-primary text-primary-foreground shadow-xs"
                                         : "text-muted-foreground hover:text-foreground"
@@ -153,17 +153,17 @@ export default function PaperFeeReceiptModal({ isOpen, onClose, paperFee }) {
 
                     {/* OPTION 2: STANDARD A4 RECEIPT */}
                     {printerType === 'standard' && (
-                        <div className="border border-border/80 rounded-xl p-5 bg-card text-card-foreground shadow-xs">
+                        <div className="border border-border/80 rounded-sm p-5 bg-card text-card-foreground shadow-xs">
                             <div className="flex items-start justify-between pb-4 border-b border-border">
                                 <div className="flex items-center gap-3">
                                     {settings.logo_url ? (
                                         <img
                                             src={settings.logo_url}
                                             alt="Logo"
-                                            className="h-14 w-14 object-contain rounded-lg border border-border p-1 bg-background"
+                                            className="h-14 w-14 object-contain rounded-xs border border-border p-1 bg-background"
                                         />
                                     ) : (
-                                        <div className="h-14 w-14 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+                                        <div className="h-14 w-14 rounded-xs bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
                                             <Building2 className="w-7 h-7" />
                                         </div>
                                     )}
@@ -186,7 +186,7 @@ export default function PaperFeeReceiptModal({ isOpen, onClose, paperFee }) {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-4 text-xs border-b border-border bg-muted/20 px-3 my-3 rounded-lg">
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-4 text-xs border-b border-border bg-muted/20 px-3 my-3 rounded-xs">
                                 <div>
                                     <span className="text-muted-foreground block text-[10px] uppercase font-bold">Student Name</span>
                                     <span className="font-bold text-foreground">{studentName}</span>
@@ -205,7 +205,7 @@ export default function PaperFeeReceiptModal({ isOpen, onClose, paperFee }) {
                                 </div>
                             </div>
 
-                            <div className="border border-border rounded-lg overflow-hidden my-3">
+                            <div className="border border-border rounded-sm overflow-hidden my-3">
                                 <table className="w-full text-xs">
                                     <thead className="bg-muted text-foreground">
                                         <tr>

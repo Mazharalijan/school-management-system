@@ -41,7 +41,7 @@ export default function LogPaperExpenseModal({ isOpen, onClose, activeSessionId,
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-4 my-2">
-                    <div className="p-2.5 rounded-lg border border-border bg-muted/30 text-xs">
+                    <div className="p-2.5 rounded-xs border border-border bg-muted/30 text-xs">
                         <span className="text-muted-foreground">Charging to Exam Term:</span>{' '}
                         <span className="font-bold text-foreground">{activeSessionTitle || 'Active Exam Term'}</span>
                     </div>
@@ -68,7 +68,7 @@ export default function LogPaperExpenseModal({ isOpen, onClose, activeSessionId,
                                 id="category"
                                 value={form.data.category}
                                 onChange={(e) => form.setData('category', e.target.value)}
-                                className="w-full mt-1 p-2 text-xs rounded-md border border-input bg-background text-foreground"
+                                className="w-full mt-1 p-2 text-xs rounded-xs border border-input bg-background text-foreground"
                                 required
                             >
                                 <option value="printing">Paper Printing &amp; Photocopying</option>
@@ -117,7 +117,7 @@ export default function LogPaperExpenseModal({ isOpen, onClose, activeSessionId,
                                 id="payment_method"
                                 value={form.data.payment_method}
                                 onChange={(e) => form.setData('payment_method', e.target.value)}
-                                className="w-full mt-1 p-2 text-xs rounded-md border border-input bg-background text-foreground"
+                                className="w-full mt-1 p-2 text-xs rounded-xs border border-input bg-background text-foreground"
                                 required
                             >
                                 <option value="cash">Cash</option>

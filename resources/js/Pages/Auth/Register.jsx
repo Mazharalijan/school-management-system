@@ -48,20 +48,20 @@ export default function Register() {
             <div className="w-full max-w-xl relative z-10">
                 {/* Brand Header */}
                 <div className="text-center mb-6">
-                    <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 shadow-xl shadow-indigo-500/20 mb-3 ring-1 ring-white/20">
+                    <div className="inline-flex items-center justify-center p-3 rounded-xs bg-gradient-to-tr from-blue-600 to-indigo-600 shadow-xl shadow-indigo-500/20 mb-3 ring-1 ring-white/20">
                         <GraduationCap className="h-8 w-8 text-white" />
                     </div>
                     <h1 className="text-2xl font-bold tracking-tight text-white">
                         SMS Portal
                     </h1>
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 mt-2 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-medium">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 mt-2 rounded-xs bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-medium">
                         <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
                         <span>Initial Administrator Setup</span>
                     </div>
                 </div>
 
                 {/* Registration Glassmorphic Card */}
-                <div className="bg-slate-900/75 border border-slate-800/80 backdrop-blur-xl rounded-2xl p-8 shadow-2xl ring-1 ring-white/5">
+                <div className="bg-slate-900/75 border border-slate-800/80 backdrop-blur-xl rounded-sm p-8 shadow-2xl ring-1 ring-white/5">
                     <div className="mb-6">
                         <h2 className="text-xl font-semibold text-white tracking-tight">
                             Create Master Administrator
@@ -91,7 +91,7 @@ export default function Register() {
                                         value={data.first_name}
                                         onChange={(e) => setData('first_name', e.target.value)}
                                         placeholder="e.g. Mazhar"
-                                        className="pl-9 bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all text-sm rounded-xl"
+                                        className="pl-9 bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all text-sm rounded-xs"
                                     />
                                 </div>
                                 {errors.first_name && (
@@ -115,7 +115,7 @@ export default function Register() {
                                         value={data.last_name}
                                         onChange={(e) => setData('last_name', e.target.value)}
                                         placeholder="e.g. Ali"
-                                        className="pl-9 bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all text-sm rounded-xl"
+                                        className="pl-9 bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all text-sm rounded-xs"
                                     />
                                 </div>
                                 {errors.last_name && (
@@ -142,7 +142,7 @@ export default function Register() {
                                     value={data.email}
                                     onChange={(e) => setData('email', e.target.value)}
                                     placeholder="admin@school.edu.pk"
-                                    className="pl-9 bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all text-sm rounded-xl"
+                                    className="pl-9 bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all text-sm rounded-xs"
                                 />
                             </div>
                             {errors.email && (
@@ -168,7 +168,7 @@ export default function Register() {
                                     value={data.password}
                                     onChange={(e) => setData('password', e.target.value)}
                                     placeholder="Minimum 8 characters"
-                                    className="pl-9 pr-10 bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all text-sm rounded-xl"
+                                    className="pl-9 pr-10 bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all text-sm rounded-xs"
                                 />
                                 <button
                                     type="button"
@@ -206,7 +206,7 @@ export default function Register() {
                                     value={data.password_confirmation}
                                     onChange={(e) => setData('password_confirmation', e.target.value)}
                                     placeholder="Repeat your password"
-                                    className="pl-9 pr-10 bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all text-sm rounded-xl"
+                                    className="pl-9 pr-10 bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all text-sm rounded-xs"
                                 />
                                 <button
                                     type="button"
@@ -227,7 +227,7 @@ export default function Register() {
                         </div>
 
                         {/* System Features Checklist */}
-                        <div className="p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/80 space-y-2 text-xs text-slate-400">
+                        <div className="p-3.5 rounded-sm bg-slate-950/40 border border-slate-800/80 space-y-2 text-xs text-slate-400">
                             <div className="flex items-center gap-2 text-emerald-400">
                                 <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
                                 <span>Master Administrator Privileges will be granted</span>
@@ -242,7 +242,7 @@ export default function Register() {
                         <Button
                             type="submit"
                             disabled={processing}
-                            className="w-full mt-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 text-white font-medium py-2.5 rounded-xl shadow-lg shadow-indigo-600/25 transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50"
+                            className="w-full mt-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 text-white font-medium py-2.5 rounded-xs shadow-lg shadow-indigo-600/25 transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50"
                         >
                             {processing ? (
                                 <>

@@ -133,7 +133,7 @@ export default function ManageFeeModal({
                 )}
 
                 {/* STUDENT INFORMATION HEADER */}
-                <div className="bg-muted/40 p-3 rounded-lg border border-border flex justify-between items-center text-xs">
+                <div className="bg-muted/40 p-3 rounded-xs border border-border flex justify-between items-center text-xs">
                     <div className="flex items-center gap-2.5">
                         <ProfileAvatar
                             src={student.photo_url}
@@ -158,7 +158,7 @@ export default function ManageFeeModal({
 
                 {/* BASE VS NET FEE READOUT */}
                 <div className="grid grid-cols-2 gap-3">
-                    <div className="p-3 bg-blue-50/50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50 rounded-lg">
+                    <div className="p-3 bg-blue-50/50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50 rounded-sm">
                         <Label className="text-muted-foreground text-[11px] uppercase font-semibold">
                             Standard Monthly Fee
                         </Label>
@@ -167,7 +167,7 @@ export default function ManageFeeModal({
                         </p>
                     </div>
 
-                    <div className="p-3 bg-emerald-50/50 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50 rounded-lg">
+                    <div className="p-3 bg-emerald-50/50 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50 rounded-sm">
                         <Label className="text-emerald-700 dark:text-emerald-400 text-[11px] uppercase font-semibold">
                             Net Monthly Payable
                         </Label>

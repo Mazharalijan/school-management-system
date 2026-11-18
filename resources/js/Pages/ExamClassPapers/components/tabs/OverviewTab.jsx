@@ -161,7 +161,7 @@ export default function OverviewTab({
     return (
         <div className="space-y-6">
             {/* Top Navigation & Breadcrumb Trail */}
-            <div className="bg-card border border-border rounded-xl p-4 shadow-xs text-card-foreground">
+            <div className="bg-card border border-border rounded-sm p-4 shadow-xs text-card-foreground">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     {/* Breadcrumbs */}
                     <nav className="flex items-center flex-wrap gap-2 text-sm text-muted-foreground">
@@ -213,7 +213,7 @@ export default function OverviewTab({
                                     }}
                                     className={cn(
                                         "font-medium transition-colors hover:text-primary",
-                                        !selectedSubjectId ? "text-primary font-semibold" : "text-muted-foreground"
+                                        !selectedTermId ? "text-primary font-semibold" : "text-muted-foreground"
                                     )}
                                 >
                                     {currentTerm.title}
@@ -244,12 +244,12 @@ export default function OverviewTab({
                             </Button>
                         )}
 
-                        <div className="flex items-center rounded-lg border border-border p-0.5 bg-muted">
+                        <div className="flex items-center rounded-xs border border-border p-0.5 bg-muted">
                             <button
                                 type="button"
                                 onClick={() => setViewMode('hierarchy')}
                                 className={cn(
-                                    "flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md transition-colors",
+                                    "flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-xs transition-colors",
                                     viewMode === 'hierarchy' 
                                         ? "bg-background text-foreground shadow-xs font-semibold" 
                                         : "text-muted-foreground hover:text-foreground"
@@ -262,7 +262,7 @@ export default function OverviewTab({
                                 type="button"
                                 onClick={() => setViewMode('flat')}
                                 className={cn(
-                                    "flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md transition-colors",
+                                    "flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-xs transition-colors",
                                     viewMode === 'flat' 
                                         ? "bg-background text-foreground shadow-xs font-semibold" 
                                         : "text-muted-foreground hover:text-foreground"
@@ -309,7 +309,7 @@ export default function OverviewTab({
             {viewMode === 'hierarchy' ? (
                 <>
                     {/* SECTION 1: CLASSES OVERVIEW */}
-                    <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-3 text-card-foreground">
+                    <div className="bg-card border border-border rounded-sm p-5 shadow-xs space-y-3 text-card-foreground">
                         <div className="flex items-center justify-between">
                             <div>
                                 <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
@@ -335,7 +335,7 @@ export default function OverviewTab({
                                         type="button"
                                         onClick={() => handleSelectClass(cls.id)}
                                         className={cn(
-                                            "flex flex-col text-left p-3.5 rounded-xl border transition-all text-xs relative group cursor-pointer",
+                                            "flex flex-col text-left p-3.5 rounded-xs border transition-all text-xs relative group cursor-pointer",
                                             isSelected
                                                 ? "border-primary bg-primary/10 shadow-xs ring-2 ring-primary/20"
                                                 : "border-border bg-card hover:border-primary/40 hover:bg-muted/40 shadow-2xs"
@@ -349,7 +349,7 @@ export default function OverviewTab({
                                                 {cls.name}
                                             </span>
                                             {cls.code && (
-                                                <span className="text-[10px] uppercase font-bold text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
+                                                <span className="text-[10px] uppercase font-bold text-muted-foreground bg-muted px-1.5 py-0.5 rounded-xs">
                                                     {cls.code}
                                                 </span>
                                             )}
@@ -358,7 +358,7 @@ export default function OverviewTab({
                                         <div className="flex items-center justify-between text-muted-foreground mt-auto pt-2 border-t border-border text-[11px]">
                                             <span>{cls.sections_count || 1} {cls.sections_count === 1 ? 'Section' : 'Sections'}</span>
                                             <span className={cn(
-                                                "font-medium px-1.5 py-0.5 rounded text-[10px]",
+                                                "font-medium px-1.5 py-0.5 rounded-xs text-[10px]",
                                                 cls.class_papers_count > 0 
                                                     ? "bg-primary/10 text-primary font-semibold" 
                                                     : "bg-muted text-muted-foreground"
@@ -378,7 +378,7 @@ export default function OverviewTab({
 
                     {/* SECTION 2: EXAM TERMS (Shown when class is selected) */}
                     {selectedClassId ? (
-                        <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-3 text-card-foreground animate-in fade-in duration-200">
+                        <div className="bg-card border border-border rounded-sm p-5 shadow-xs space-y-3 text-card-foreground animate-in fade-in duration-200">
                             <div className="flex items-center justify-between flex-wrap gap-2">
                                 <div>
                                     <div className="flex items-center gap-2">
@@ -397,7 +397,7 @@ export default function OverviewTab({
                                         type="button"
                                         onClick={() => handleSelectTerm('')}
                                         className={cn(
-                                            "px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors",
+                                            "px-3 py-1.5 rounded-xs text-xs font-medium border transition-colors",
                                             !selectedTermId
                                                 ? "bg-primary text-primary-foreground border-primary"
                                                 : "bg-background text-muted-foreground border-border hover:bg-muted"
@@ -418,7 +418,7 @@ export default function OverviewTab({
                                             key={term.id}
                                             onClick={() => handleSelectTerm(term.id)}
                                             className={cn(
-                                                "p-4 rounded-xl border text-left cursor-pointer transition-all relative flex flex-col justify-between group",
+                                                "p-4 rounded-xs border text-left cursor-pointer transition-all relative flex flex-col justify-between group",
                                                 isSelected
                                                     ? "border-primary bg-primary/10 ring-2 ring-primary/20 shadow-xs"
                                                     : "border-border bg-card hover:border-primary/40 hover:bg-muted/40 shadow-2xs"
@@ -427,7 +427,7 @@ export default function OverviewTab({
                                             <div className="flex items-start justify-between gap-2 mb-2">
                                                 <div>
                                                     <div className="flex items-center gap-1.5 mb-1">
-                                                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-primary/10 text-primary">
+                                                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-xs bg-primary/10 text-primary">
                                                             Term {termNumber}
                                                         </span>
                                                         <Badge
@@ -483,7 +483,7 @@ export default function OverviewTab({
                         </div>
                     ) : (
                         /* Instructional Banner when no class selected */
-                        <div className="bg-muted/40 border border-dashed border-border rounded-xl p-8 text-center">
+                        <div className="bg-muted/40 border border-dashed border-border rounded-sm p-8 text-center">
                             <GraduationCap className="h-10 w-10 text-muted-foreground mx-auto mb-2 opacity-75" />
                             <h4 className="text-sm font-semibold text-foreground">No Class Selected</h4>
                             <p className="text-xs text-muted-foreground max-w-md mx-auto mt-1">
@@ -493,7 +493,7 @@ export default function OverviewTab({
                     )}
 
                     {/* SECTION 3: SUBJECT FILTER & PAPERS IN SELECTED TERM */}
-                    <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4 text-card-foreground">
+                    <div className="bg-card border border-border rounded-sm p-5 shadow-xs space-y-4 text-card-foreground">
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-border">
                             <div>
                                 <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
@@ -533,7 +533,7 @@ export default function OverviewTab({
                                     type="button"
                                     onClick={() => handleSelectSubject('')}
                                     className={cn(
-                                        "px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors cursor-pointer",
+                                        "px-3 py-1.5 rounded-xs text-xs font-medium border transition-colors cursor-pointer",
                                         !selectedSubjectId
                                             ? "bg-primary text-primary-foreground border-primary shadow-xs font-semibold"
                                             : "bg-muted/50 text-muted-foreground border-border hover:bg-muted"
@@ -550,7 +550,7 @@ export default function OverviewTab({
                                             type="button"
                                             onClick={() => handleSelectSubject(sub.id)}
                                             className={cn(
-                                                "px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors cursor-pointer flex items-center gap-1.5",
+                                                "px-3 py-1.5 rounded-xs text-xs font-medium border transition-colors cursor-pointer flex items-center gap-1.5",
                                                 isSelected
                                                     ? "bg-primary text-primary-foreground border-primary shadow-xs font-semibold"
                                                     : "bg-background text-foreground border-border hover:border-primary/40 hover:bg-muted/40"
@@ -570,7 +570,7 @@ export default function OverviewTab({
                                 return (
                                     <div
                                         key={paper.id}
-                                        className="bg-card border border-border hover:border-primary/40 hover:shadow-md transition-all rounded-xl p-4 flex flex-col justify-between space-y-3 group text-card-foreground"
+                                        className="bg-card border border-border hover:border-primary/40 hover:shadow-md transition-all rounded-sm p-4 flex flex-col justify-between space-y-3 group text-card-foreground"
                                     >
                                         <div className="space-y-2">
                                             {/* Header Tags */}
@@ -657,7 +657,7 @@ export default function OverviewTab({
 
                         {/* Empty State */}
                         {paperList.length === 0 && (
-                            <div className="py-12 text-center text-muted-foreground bg-muted/30 rounded-xl border border-dashed border-border">
+                            <div className="py-12 text-center text-muted-foreground bg-muted/30 rounded-sm border border-dashed border-border">
                                 <FileText className="w-10 h-10 mx-auto mb-2 text-muted-foreground/60" />
                                 <h4 className="text-sm font-semibold text-foreground">No Exam Papers Found</h4>
                                 <p className="text-xs text-muted-foreground max-w-sm mx-auto mt-1">
@@ -681,7 +681,7 @@ export default function OverviewTab({
                 </>
             ) : (
                 /* FLAT TABLE VIEW (Optional view mode) */
-                <div className="bg-card border border-border rounded-xl shadow-xs overflow-hidden text-card-foreground">
+                <div className="bg-card border border-border rounded-sm shadow-xs overflow-hidden text-card-foreground">
                     <table className="w-full text-left text-sm border-collapse">
                         <thead className="bg-muted/50 border-b border-border text-muted-foreground font-medium">
                             <tr>

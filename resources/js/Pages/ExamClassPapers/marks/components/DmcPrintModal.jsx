@@ -63,7 +63,7 @@ export default function DmcPrintModal({ isOpen, onClose, student, classDetails, 
 
   return (
     <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-card text-card-foreground rounded-2xl max-w-3xl w-full border border-border shadow-2xl overflow-hidden flex flex-col">
+      <div className="bg-card text-card-foreground rounded-sm max-w-3xl w-full border border-border shadow-2xl overflow-hidden flex flex-col">
         
         {/* Modal Bar */}
         <div className="p-4 border-b border-border flex items-center justify-between bg-card text-foreground">
@@ -85,11 +85,11 @@ export default function DmcPrintModal({ isOpen, onClose, student, classDetails, 
             </Badge>
             <button 
               onClick={handlePrint} 
-              className="px-3.5 py-1.5 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all"
+              className="px-3.5 py-1.5 rounded-xs bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all"
             >
               <Printer className="w-3.5 h-3.5" /> Print Copy
             </button>
-            <button onClick={onClose} className="p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
+            <button onClick={onClose} className="p-1 rounded-xs text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
               <X className="w-5 h-5" />
             </button>
           </div>
@@ -117,7 +117,7 @@ export default function DmcPrintModal({ isOpen, onClose, student, classDetails, 
           </div>
 
           {/* Student Profile Info */}
-          <div className="flex items-center gap-4 text-xs font-sans border border-border print:border-gray-300 p-3.5 rounded-xl bg-muted/40 print:bg-gray-50">
+          <div className="flex items-center gap-4 text-xs font-sans border border-border print:border-gray-300 p-3.5 rounded-xs bg-muted/40 print:bg-gray-50">
             <ProfileAvatar
               src={student.photo_url}
               name={student.name}
@@ -189,7 +189,7 @@ export default function DmcPrintModal({ isOpen, onClose, student, classDetails, 
           </table>
 
           {/* Result Summary */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 p-4 bg-foreground text-background dark:bg-muted dark:text-foreground print:bg-gray-900 print:text-white rounded-xl font-sans text-center text-xs">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 p-4 bg-foreground text-background dark:bg-muted dark:text-foreground print:bg-gray-900 print:text-white rounded-xs font-sans text-center text-xs">
             <div>
               <span className="block text-[11px] opacity-75">Total Marks</span>
               <strong className="text-base">{totalObtained} / {grandTotal}</strong>

@@ -319,11 +319,11 @@ export default function AutoGeneratorModal({
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 overflow-y-hidden">
-            <div className="bg-card text-card-foreground rounded-2xl border border-border shadow-2xl max-w-6xl w-full p-6 space-y-6 my-8">
+            <div className="bg-card text-card-foreground rounded-sm border border-border shadow-2xl max-w-6xl w-full p-6 space-y-6 my-8">
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-border pb-4">
                     <div className="flex items-center gap-2.5">
-                        <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-xl">
+                        <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-xs">
                             <Sparkles className="w-6 h-6" />
                         </div>
                         <div>
@@ -336,14 +336,14 @@ export default function AutoGeneratorModal({
                     <button 
                         type="button"
                         onClick={onClose} 
-                        className="text-muted-foreground hover:text-foreground p-1.5 rounded-lg hover:bg-muted transition-colors"
+                        className="text-muted-foreground hover:text-foreground p-1.5 rounded-xs hover:bg-muted transition-colors"
                     >
                         <X className="w-5 h-5" />
                     </button>
                 </div>
 
                 {validationError && (
-                    <div className="p-3.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 rounded-xl text-amber-900 dark:text-amber-200 text-xs font-semibold flex items-center gap-2">
+                    <div className="p-3.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 rounded-sm text-amber-900 dark:text-amber-200 text-xs font-semibold flex items-center gap-2">
                         <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
                         <span>{validationError}</span>
                     </div>
@@ -351,7 +351,7 @@ export default function AutoGeneratorModal({
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     {/* STEP 1: CLASS, SECTION & DAYS SELECTION */}
-                    <div className="space-y-2 bg-muted/40 p-3 rounded-xl border border-border">
+                    <div className="space-y-2 bg-muted/40 p-3 rounded-xs border border-border">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <Label className="text-xs font-bold text-foreground mb-1 block">Target Class *</Label>
@@ -362,7 +362,7 @@ export default function AutoGeneratorModal({
                                         setSelectedSectionId('');
                                     }}
                                     required
-                                    className="w-full h-10 px-3 text-sm rounded-xl border border-input bg-background text-foreground dark:bg-card font-medium focus:ring-2 focus:ring-ring"
+                                    className="w-full h-10 px-3 text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card font-medium focus:ring-2 focus:ring-ring"
                                 >
                                     <option value="">-- Choose Class --</option>
                                     {classes.map((cls) => (
@@ -379,7 +379,7 @@ export default function AutoGeneratorModal({
                                     value={selectedSectionId}
                                     onChange={(e) => setSelectedSectionId(e.target.value)}
                                     disabled={!selectedClassId || availableSections.length === 0}
-                                    className="w-full h-10 px-3 text-sm rounded-xl border border-input bg-background text-foreground dark:bg-card font-medium focus:ring-2 focus:ring-ring disabled:opacity-50"
+                                    className="w-full h-10 px-3 text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card font-medium focus:ring-2 focus:ring-ring disabled:opacity-50"
                                 >
                                     <option value="">All Sections / Default</option>
                                     {availableSections.map((sec) => (
@@ -403,7 +403,7 @@ export default function AutoGeneratorModal({
                                             key={day.id}
                                             type="button"
                                             onClick={() => toggleDay(day.id)}
-                                            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all border ${
+                                            className={`px-3 py-1 rounded-xs text-xs font-bold transition-all border ${
                                                 isChecked
                                                     ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
                                                     : 'bg-card text-muted-foreground border-border hover:border-indigo-300'
@@ -423,7 +423,7 @@ export default function AutoGeneratorModal({
                             <Clock className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Operational Timings & Break
                         </h3>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-card p-3 rounded-xl border border-border">
+                        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-card p-3 rounded-xs border border-border">
                             <div>
                                 <Label className="text-[11px] font-bold text-muted-foreground mb-1 block">School Start Time</Label>
                                 <Input
@@ -451,7 +451,7 @@ export default function AutoGeneratorModal({
                                 <select
                                     value={breakAfterPeriod}
                                     onChange={(e) => setBreakAfterPeriod(Number(e.target.value))}
-                                    className="w-full h-9 px-2 text-xs rounded-lg border border-input font-medium bg-background text-foreground dark:bg-card"
+                                    className="w-full h-9 px-2 text-xs rounded-xs border border-input font-medium bg-background text-foreground dark:bg-card"
                                 >
                                     {basePeriods.slice(0, -1).map((p) => (
                                         <option key={p} value={p}>
@@ -503,7 +503,7 @@ export default function AutoGeneratorModal({
 
                                 return (
                                     <React.Fragment key={period}>
-                                        <div className="p-2 bg-muted/40 rounded-xl border border-border grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+                                        <div className="p-2 bg-muted/40 rounded-xs border border-border grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
                                             {/* Period Meta & Timing */}
                                             <div className="sm:col-span-3">
                                                 <div className="text-xs font-black text-foreground">Period {period}</div>
@@ -535,7 +535,7 @@ export default function AutoGeneratorModal({
                                                     value={currentAssignment.subject_id}
                                                     onChange={(e) => handleAssignmentChange(period, 'subject_id', e.target.value)}
                                                     required
-                                                    className="w-full h-8 px-2 text-xs rounded-lg border border-input bg-background text-foreground dark:bg-card font-medium focus:ring-2 focus:ring-ring"
+                                                    className="w-full h-8 px-2 text-xs rounded-xs border border-input bg-background text-foreground dark:bg-card font-medium focus:ring-2 focus:ring-ring"
                                                 >
                                                     <option value="">-- Choose Subject --</option>
                                                     {subjects.map((sub) => (
@@ -553,13 +553,13 @@ export default function AutoGeneratorModal({
                                                     value={currentAssignment.staff_id}
                                                     onChange={(e) => handleAssignmentChange(period, 'staff_id', e.target.value)}
                                                     required
-                                                    className="w-full h-8 px-2 text-xs rounded-lg border border-input bg-background text-foreground dark:bg-card font-medium focus:ring-2 focus:ring-ring"
+                                                    className="w-full h-8 px-2 text-xs rounded-xs border border-input bg-background text-foreground dark:bg-card font-medium focus:ring-2 focus:ring-ring"
                                                 >
                                                     <option value="">-- Choose Teacher --</option>
                                                     {staffMembers.map((staff) => {
                                                         const occupied = isTeacherOccupied(staff.id, period);
                                                         return (
-                                                            <option key={staff.id} value={staff.id} disabled={occupied}>
+                                                             <option key={staff.id} value={staff.id} disabled={occupied}>
                                                                 {staff.first_name} {staff.last_name} {occupied ? '(Occupied)' : ''}
                                                             </option>
                                                         );
@@ -570,7 +570,7 @@ export default function AutoGeneratorModal({
 
                                         {/* Insert Visual Break Indicator */}
                                         {period === Number(breakAfterPeriod) && breakDurationMinutes > 0 && (
-                                            <div className="p-2.5 bg-amber-100/70 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 rounded-xl text-center text-xs font-bold text-amber-900 dark:text-amber-200 flex items-center justify-center gap-2">
+                                            <div className="p-2.5 bg-amber-100/70 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 rounded-xs text-center text-xs font-bold text-amber-900 dark:text-amber-200 flex items-center justify-center gap-2">
                                                 <span>RECESS / BREAK SLOT ({breakDurationMinutes} Mins: {timingCalculation.breakStartTimeFormatted} - {timingCalculation.breakEndTimeFormatted})</span>
                                             </div>
                                         )}
@@ -582,7 +582,7 @@ export default function AutoGeneratorModal({
 
                     {/* STEP 4: TIME DEDUCTION & ALLOCATION SUMMARY */}
                     <div
-                        className={`p-3 rounded-xl border space-y-2 ${
+                        className={`p-3 rounded-sm border space-y-2 ${
                             timingCalculation.isOverflow
                                 ? 'bg-red-50 border-red-200 text-red-900'
                                 : 'bg-slate-900 text-white border-slate-800'

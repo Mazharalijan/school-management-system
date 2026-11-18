@@ -131,7 +131,7 @@ export default function Index({ sessions, filters }) {
                                             id="status"
                                             value={data.status}
                                             onChange={(e) => setData('status', e.target.value)}
-                                            className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                            className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                         >
                                             <option value="draft">Draft</option>
                                             <option value="published">Published</option>

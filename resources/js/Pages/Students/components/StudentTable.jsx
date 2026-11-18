@@ -134,7 +134,7 @@ export default function StudentTable({
     ];
 
     return (
-        <div className="bg-card text-card-foreground rounded-lg shadow-xs border border-border overflow-hidden">
+        <div className="bg-card text-card-foreground rounded-sm shadow-xs border border-border overflow-hidden">
             <DataTable
                 columns={columns}
                 data={data}

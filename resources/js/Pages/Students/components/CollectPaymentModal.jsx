@@ -157,7 +157,7 @@ export default function CollectPaymentModal({ isOpen, onClose, student, unpaidIn
       }
     >
       {/* Student Brief Header */}
-      <div className="bg-muted/40 p-4 rounded-lg border border-border grid grid-cols-2 md:grid-cols-4 gap-4 text-xs mb-4">
+      <div className="bg-muted/40 p-4 rounded-xs border border-border grid grid-cols-2 md:grid-cols-4 gap-4 text-xs mb-4">
         <div className="flex items-center gap-3">
           <ProfileAvatar
             src={student.photo_url}
@@ -306,7 +306,7 @@ export default function CollectPaymentModal({ isOpen, onClose, student, unpaidIn
         </div>
 
         {/* Real-time FIFO Allocation Preview Table */}
-        <div className="border border-border rounded-lg overflow-hidden bg-card">
+        <div className="border border-border rounded-sm overflow-hidden bg-card">
           <div className="bg-muted/70 px-4 py-2 border-b border-border flex justify-between items-center">
             <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
               Live FIFO Allocation Preview (Chronological Settlement)
@@ -354,17 +354,17 @@ export default function CollectPaymentModal({ isOpen, onClose, student, unpaidIn
                     </td>
                     <td className="p-2.5 text-center">
                       {inv.newStatus === 'paid' && (
-                        <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-medium text-[10px]">
+                        <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-800 font-medium text-[10px]">
                           Fully Paid
                         </span>
                       )}
                       {inv.newStatus === 'partially_paid' && (
-                        <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-medium text-[10px]">
+                        <span className="px-2 py-1 rounded-full bg-amber-100 text-amber-800 font-medium text-[10px]">
                           Partially Paid
                         </span>
                       )}
                       {inv.newStatus === 'unpaid' && (
-                        <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-medium text-[10px]">
+                        <span className="px-2 py-1 rounded-full bg-slate-100 text-slate-600 font-medium text-[10px]">
                           Unpaid
                         </span>
                       )}

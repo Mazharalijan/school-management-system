@@ -135,7 +135,7 @@ export default function CommandPalette({ isOpen, onClose }) {
             onClick={onClose}
         >
             <div
-                className="w-full max-w-xl bg-popover text-popover-foreground rounded-2xl border border-border shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150"
+                className="w-full max-w-xl bg-popover text-popover-foreground rounded-sm border border-border shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Search Bar Header */}
@@ -153,7 +153,7 @@ export default function CommandPalette({ isOpen, onClose }) {
                     <button
                         type="button"
                         onClick={onClose}
-                        className="p-1 rounded-md text-muted-foreground hover:text-foreground"
+                        className="p-1 rounded-xs text-muted-foreground hover:text-foreground"
                     >
                         <X className="w-4 h-4" />
                     </button>
@@ -177,7 +177,7 @@ export default function CommandPalette({ isOpen, onClose }) {
                                     onClick={() => executeItem(item)}
                                     onMouseEnter={() => setSelectedIndex(index)}
                                     className={cn(
-                                        'w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs transition-colors text-left',
+                                        'w-full flex items-center justify-between px-3.5 py-2.5 rounded-xs text-xs transition-colors text-left',
                                         isSelected
                                             ? 'bg-accent text-accent-foreground font-semibold'
                                             : 'text-foreground hover:bg-muted/60'
@@ -186,7 +186,7 @@ export default function CommandPalette({ isOpen, onClose }) {
                                     <div className="flex items-center gap-3 min-w-0">
                                         <div
                                             className={cn(
-                                                'w-7 h-7 rounded-lg flex items-center justify-center shrink-0 border border-border',
+                                                'w-7 h-7 rounded-xs flex items-center justify-center shrink-0 border border-border',
                                                 isSelected ? 'bg-background text-primary' : 'bg-muted text-muted-foreground'
                                             )}
                                         >

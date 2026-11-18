@@ -290,7 +290,7 @@ export default function TimetableIndex({
             <td key={period} className="p-2 border-r border-border bg-indigo-50/20 dark:bg-indigo-950/20 align-middle">
                 <div
                     onClick={() => handleOpenEditSlot(slot)}
-                    className="p-2.5 bg-card dark:bg-slate-900 border border-indigo-200 dark:border-indigo-900/60 rounded-xl shadow-2xs hover:shadow-md cursor-pointer transition-all space-y-0.5 group"
+                    className="p-2.5 bg-card dark:bg-slate-900 border border-indigo-200 dark:border-indigo-900/60 rounded-xs shadow-2xs hover:shadow-md cursor-pointer transition-all space-y-0.5 group"
                 >
                     <div className="font-bold text-indigo-950 dark:text-indigo-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 text-xs">
                         {slot.subject?.subject_name || 'Subject'}
@@ -319,7 +319,7 @@ export default function TimetableIndex({
 
             <div className="w-full py-6 px-2 sm:px-6 lg:px-8 space-y-6">
                 {/* Header Actions Toolbar */}
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-card text-card-foreground p-6 rounded-md border border-border">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-card text-card-foreground p-6 rounded-sm border border-border">
                     <div>
                         <h1 className="text-2xl font-black text-foreground tracking-tight flex items-center gap-2">
                             <Calendar className="w-7 h-7 text-indigo-600 dark:text-indigo-400" /> Timetable Engine
@@ -362,18 +362,18 @@ export default function TimetableIndex({
 
                 {/* Navigation Tabs */}
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                    <TabsList className="bg-muted p-1 rounded-lg mb-6 inline-flex gap-1">
-                        <TabsTrigger value="class_view" className="rounded-md font-bold text-md">
+                    <TabsList className="bg-muted p-1 rounded-sm mb-6 inline-flex gap-1">
+                        <TabsTrigger value="class_view" className="rounded-xs font-bold text-md">
                             Master View
                         </TabsTrigger>
-                        <TabsTrigger value="teacher_view" className="rounded-md font-bold text-md">
+                        <TabsTrigger value="teacher_view" className="rounded-xs font-bold text-md">
                             Teacher Workload View
                         </TabsTrigger>
                     </TabsList>
 
                     {/* TAB 1: MASTER VIEW */}
                     <TabsContent value="class_view" className="space-y-3">
-                        <div className="bg-card text-card-foreground rounded-md shadow-xs border border-border overflow-hidden">
+                        <div className="bg-card text-card-foreground rounded-sm shadow-xs border border-border overflow-hidden">
                             <div className="overflow-x-auto max-h-[75vh] overflow-y-auto">
                                 <table className="min-w-full divide-y divide-border text-sm border-collapse">
                                     <thead className="bg-slate-900 dark:bg-slate-950 text-white sticky top-0 z-30 shadow-xs">
@@ -438,7 +438,7 @@ export default function TimetableIndex({
                                                                 colSpan={periodsBeforeBreak.length}
                                                                 className="p-3 bg-indigo-50/40 dark:bg-indigo-950/30 text-center border-r border-indigo-200 dark:border-indigo-900/60 align-middle h-full"
                                                             >
-                                                                <div className="flex flex-col items-center justify-center h-full min-h-[90px] p-4 bg-card dark:bg-slate-900 rounded-xl border border-indigo-200 dark:border-indigo-900/60 shadow-2xs space-y-1">
+                                                                <div className="flex flex-col items-center justify-center h-full min-h-[90px] p-4 bg-card dark:bg-slate-900 rounded-xs border border-indigo-200 dark:border-indigo-900/60 shadow-2xs space-y-1">
                                                                     <UserCheck className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
                                                                     <div className="font-black text-indigo-950 dark:text-indigo-200 text-sm">
                                                                         {teacher ? `${teacher.first_name} ${teacher.last_name}` : 'Unassigned Class Teacher'}
@@ -460,7 +460,7 @@ export default function TimetableIndex({
                                                                 colSpan={periodsAfterBreak.length}
                                                                 className="p-3 bg-indigo-50/40 dark:bg-indigo-950/30 text-center border-r border-indigo-200 dark:border-indigo-900/60 align-middle h-full"
                                                             >
-                                                                <div className="flex flex-col items-center justify-center h-full min-h-[90px] p-4 bg-card dark:bg-slate-900 rounded-xl border border-indigo-200 dark:border-indigo-900/60 shadow-2xs space-y-1">
+                                                                <div className="flex flex-col items-center justify-center h-full min-h-[90px] p-4 bg-card dark:bg-slate-900 rounded-xs border border-indigo-200 dark:border-indigo-900/60 shadow-2xs space-y-1">
                                                                     <UserCheck className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
                                                                     <div className="font-black text-indigo-950 dark:text-indigo-200 text-sm">
                                                                         {teacher ? `${teacher.first_name} ${teacher.last_name}` : 'Unassigned Class Teacher'}
@@ -499,7 +499,7 @@ export default function TimetableIndex({
                     <TabsContent value="teacher_view">
                         <div className="space-y-5">
                             {/* Top Controls & Workload Summary */}
-                            <div className="bg-card text-card-foreground p-5 rounded-2xl border border-border shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div className="bg-card text-card-foreground p-5 rounded-sm border border-border shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
                                 <div className="w-full md:w-80">
                                     <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1.5 block">
                                         Select Teacher / Staff Member
@@ -507,7 +507,7 @@ export default function TimetableIndex({
                                     <select
                                         value={selectedStaffId}
                                         onChange={(e) => setSelectedStaffId(e.target.value)}
-                                        className="w-full h-11 px-3.5 py-2 text-sm rounded-xl border border-input bg-background text-foreground dark:bg-card font-semibold focus:ring-2 focus:ring-ring focus:border-transparent transition-all outline-hidden"
+                                        className="w-full h-11 px-3.5 py-2 text-sm rounded-xs border border-input bg-background text-foreground dark:bg-card font-semibold focus:ring-2 focus:ring-ring focus:border-transparent transition-all outline-hidden"
                                     >
                                         <option value="">-- Choose Teacher --</option>
                                         {staffMembers.map((s) => (
@@ -539,15 +539,15 @@ export default function TimetableIndex({
                                     return (
                                         <div className="flex flex-wrap items-center gap-2.5 pt-1 md:pt-0">
                                             {isFullDayTeacher && (
-                                                <div className="px-3.5 py-1.5 rounded-xl bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
+                                                <div className="px-3.5 py-1.5 rounded-xs bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
                                                     <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
                                                     Full-Day Teacher
                                                 </div>
                                             )}
-                                            <div className="px-3.5 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-900/60 text-xs font-bold">
+                                            <div className="px-3.5 py-1.5 rounded-xs bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-900/60 text-xs font-bold">
                                                 Assigned Periods: <span className="font-extrabold text-indigo-950 dark:text-indigo-200">{uniqueAssignedPeriods}</span>
                                             </div>
-                                            <div className="px-3.5 py-1.5 rounded-xl bg-muted text-muted-foreground border border-border text-xs font-bold">
+                                            <div className="px-3.5 py-1.5 rounded-xs bg-muted text-muted-foreground border border-border text-xs font-bold">
                                                 Free Periods: <span className="font-extrabold text-foreground">{Math.max(0, dynamicPeriods.length - uniqueAssignedPeriods)}</span>
                                             </div>
                                         </div>
@@ -556,7 +556,7 @@ export default function TimetableIndex({
                             </div>
 
                             {!selectedStaffId ? (
-                                <div className="bg-card text-card-foreground py-16 px-4 text-center rounded-2xl border border-dashed border-border space-y-3">
+                                <div className="bg-card text-card-foreground py-16 px-4 text-center rounded-sm border border-dashed border-border space-y-3">
                                     <div className="w-12 h-12 rounded-full bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mx-auto text-xl font-bold">
                                         i
                                     </div>
@@ -576,7 +576,7 @@ export default function TimetableIndex({
                                         if (fullTimeClasses.length === 0) return null;
 
                                         return (
-                                            <div className="p-4 bg-gradient-to-r from-amber-50 dark:from-amber-950/40 via-amber-50/80 dark:via-amber-950/30 to-orange-50 dark:to-orange-950/40 border border-amber-200/80 dark:border-amber-800 rounded-2xl shadow-2xs space-y-2">
+                                            <div className="p-4 bg-gradient-to-r from-amber-50 dark:from-amber-950/40 via-amber-50/80 dark:via-amber-950/30 to-orange-50 dark:to-orange-950/40 border border-amber-200/80 dark:border-amber-800 rounded-sm shadow-2xs space-y-2">
                                                 <div className="flex items-center gap-2 text-amber-900 dark:text-amber-200 font-extrabold text-sm">
                                                     <UserCheck className="w-5 h-5 text-amber-600 dark:text-amber-400" />
                                                     Dedicated Full-Day Class Teacher Mode
@@ -588,7 +588,7 @@ export default function TimetableIndex({
                                                     {fullTimeClasses.map((cls) => (
                                                         <span
                                                             key={cls.key}
-                                                            className="px-3 py-1 bg-card border border-amber-300 dark:border-amber-700 text-amber-950 dark:text-amber-300 font-bold text-xs rounded-xl shadow-2xs"
+                                                            className="px-3 py-1 bg-card border border-amber-300 dark:border-amber-700 text-amber-950 dark:text-amber-300 font-bold text-xs rounded-xs shadow-2xs"
                                                         >
                                                             {cls.title}
                                                         </span>
@@ -632,7 +632,7 @@ export default function TimetableIndex({
                                             return (
                                                 <div
                                                     key={period}
-                                                    className="bg-card text-card-foreground rounded-2xl border border-border shadow-2xs hover:shadow-md transition-all overflow-hidden flex flex-col sm:flex-row items-stretch"
+                                                    className="bg-card text-card-foreground rounded-sm border border-border shadow-2xs hover:shadow-md transition-all overflow-hidden flex flex-col sm:flex-row items-stretch"
                                                 >
                                                     {/* Left Side: Period Badge & Time Column */}
                                                     <div className="sm:w-44 bg-muted/40 border-b sm:border-b-0 sm:border-r border-border p-4 flex flex-col justify-center items-center text-center shrink-0">
@@ -653,7 +653,7 @@ export default function TimetableIndex({
                                                     <div className="flex-1 p-4 flex items-center bg-card">
                                                         {fullTimeClasses.length > 0 ? (
                                                             <div className="flex flex-wrap items-center gap-3">
-                                                                <span className="px-3 py-1 bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-200 dark:border-amber-800 rounded-lg text-xs font-extrabold">
+                                                                <span className="px-3 py-1 bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-200 dark:border-amber-800 rounded-xs text-xs font-extrabold">
                                                                     Full-Day Session
                                                                 </span>
                                                                 <span className="font-bold text-foreground text-sm">
@@ -665,7 +665,7 @@ export default function TimetableIndex({
                                                                 {slots.map((slot, idx) => (
                                                                     <div
                                                                         key={slot.id || idx}
-                                                                        className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-muted/30 border border-border"
+                                                                        className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xs bg-muted/30 border border-border"
                                                                     >
                                                                         <div className="flex items-center gap-3">
                                                                             <div className="w-2.5 h-2.5 rounded-full bg-indigo-600 dark:bg-indigo-400"></div>
@@ -681,7 +681,7 @@ export default function TimetableIndex({
 
                                                                         <div className="flex items-center gap-2">
                                                                             {slot.room_number && (
-                                                                                <span className="text-xs font-bold text-foreground bg-card border border-border px-2.5 py-1 rounded-lg">
+                                                                                <span className="text-xs font-bold text-foreground bg-card border border-border px-2.5 py-1 rounded-xs">
                                                                                     Room: {slot.room_number}
                                                                                 </span>
                                                                             )}

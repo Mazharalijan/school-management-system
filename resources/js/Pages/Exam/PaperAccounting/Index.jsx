@@ -132,7 +132,7 @@ export default function ExamPaperAccountingIndex({
                             <select
                                 value={activeSession?.id || ''}
                                 onChange={(e) => handleSessionChange(e.target.value)}
-                                className="p-2 text-xs font-semibold rounded-lg border border-input bg-card text-foreground shadow-xs"
+                                className="p-2 text-xs font-semibold rounded-xs border border-input bg-card text-foreground shadow-xs"
                             >
                                 {examSessions.map((s) => (
                                     <option key={s.id} value={s.id}>
@@ -194,7 +194,7 @@ export default function ExamPaperAccountingIndex({
                                 <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                                     Paper Money Collected
                                 </span>
-                                <div className="w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                                <div className="w-7 h-7 rounded-xs bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                                     <TrendingUp className="w-4 h-4" />
                                 </div>
                             </div>
@@ -217,7 +217,7 @@ export default function ExamPaperAccountingIndex({
                                 <span className="text-[11px] font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">
                                     Paper Costs Incurred
                                 </span>
-                                <div className="w-7 h-7 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center">
+                                <div className="w-7 h-7 rounded-xs bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center">
                                     <Receipt className="w-4 h-4" />
                                 </div>
                             </div>
@@ -264,7 +264,7 @@ export default function ExamPaperAccountingIndex({
                 </div>
 
                 {/* Navigation Tabs */}
-                <div className="bg-muted p-1 rounded-lg inline-flex flex-wrap gap-1">
+                <div className="bg-muted p-1 rounded-sm inline-flex flex-wrap gap-1">
                     <button
                         type="button"
                         onClick={() => {
@@ -272,7 +272,7 @@ export default function ExamPaperAccountingIndex({
                             handleFilterChange({ active_tab: 'fees' });
                         }}
                         className={cn(
-                            "inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap shrink-0",
+                            "inline-flex items-center gap-1.5 rounded-sm px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap shrink-0",
                             activeTab === 'fees'
                                 ? 'bg-background text-foreground shadow-xs font-semibold'
                                 : 'text-muted-foreground hover:text-foreground'
@@ -289,7 +289,7 @@ export default function ExamPaperAccountingIndex({
                             handleFilterChange({ active_tab: 'expenses' });
                         }}
                         className={cn(
-                            "inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap shrink-0",
+                            "inline-flex items-center gap-1.5 rounded-sm px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap shrink-0",
                             activeTab === 'expenses'
                                 ? 'bg-background text-foreground shadow-xs font-semibold'
                                 : 'text-muted-foreground hover:text-foreground'
@@ -306,7 +306,7 @@ export default function ExamPaperAccountingIndex({
                             handleFilterChange({ active_tab: 'pnl_breakdown' });
                         }}
                         className={cn(
-                            "inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap shrink-0",
+                            "inline-flex items-center gap-1.5 rounded-sm px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap shrink-0",
                             activeTab === 'pnl_breakdown'
                                 ? 'bg-background text-foreground shadow-xs font-semibold'
                                 : 'text-muted-foreground hover:text-foreground'
@@ -340,7 +340,7 @@ export default function ExamPaperAccountingIndex({
                                             setSelectedClass(e.target.value);
                                             handleFilterChange({ school_class_id: e.target.value });
                                         }}
-                                        className="p-2 text-xs h-9 rounded-md border border-input bg-background text-foreground"
+                                        className="p-2 text-xs h-9 rounded-xs border border-input bg-background text-foreground"
                                     >
                                         <option value="all">All Classes</option>
                                         {classes.map((c) => (
@@ -354,7 +354,7 @@ export default function ExamPaperAccountingIndex({
                                             setSelectedFeeStatus(e.target.value);
                                             handleFilterChange({ fee_status: e.target.value });
                                         }}
-                                        className="p-2 text-xs h-9 rounded-md border border-input bg-background text-foreground"
+                                        className="p-2 text-xs h-9 rounded-xs border border-input bg-background text-foreground"
                                     >
                                         <option value="all">All Collection Status</option>
                                         <option value="paid">Paid &amp; Collected</option>
@@ -528,7 +528,7 @@ export default function ExamPaperAccountingIndex({
                                             setSelectedCategory(e.target.value);
                                             handleFilterChange({ expense_category: e.target.value });
                                         }}
-                                        className="p-2 text-xs h-9 rounded-md border border-input bg-background text-foreground"
+                                        className="p-2 text-xs h-9 rounded-xs border border-input bg-background text-foreground"
                                     >
                                         <option value="all">All Categories</option>
                                         <option value="printing">Printing &amp; Photocopying</option>
@@ -669,7 +669,7 @@ export default function ExamPaperAccountingIndex({
                                         - Rs. {Number(pnl.total_expenses || 0).toLocaleString()}
                                     </span>
                                 </div>
-                                <div className="flex justify-between items-center py-3 bg-muted/40 px-3 rounded-lg font-bold text-sm">
+                                <div className="flex justify-between items-center py-3 bg-muted/40 px-3 rounded-xs font-bold text-sm">
                                     <span className="text-foreground">Net Exam Term Paper Margin:</span>
                                     <span className={`font-mono text-base ${isProfit ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
                                         {isProfit ? '+ Rs. ' : '- Rs. '}

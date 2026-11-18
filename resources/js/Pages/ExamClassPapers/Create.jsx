@@ -55,7 +55,7 @@ export default function Create({ classes = [], subjects = [], examSessions = [] 
                                         <select 
                                             value={data.school_class_id} 
                                             onChange={e => setData('school_class_id', e.target.value)} 
-                                            className="mt-1 block w-full rounded-md border border-input bg-background text-foreground shadow-sm text-sm focus:ring-1 focus:ring-ring focus:border-input"
+                                            className="mt-1 block w-full rounded-xs border border-input bg-background text-foreground shadow-sm text-sm focus:ring-1 focus:ring-ring focus:border-input"
                                             required
                                         >
                                             <option value="">Select Class</option>
@@ -71,7 +71,7 @@ export default function Create({ classes = [], subjects = [], examSessions = [] 
                                         <select 
                                             value={data.exam_session_id} 
                                             onChange={e => setData('exam_session_id', e.target.value)} 
-                                            className="mt-1 block w-full rounded-md border border-input bg-background text-foreground shadow-sm text-sm focus:ring-1 focus:ring-ring focus:border-input"
+                                            className="mt-1 block w-full rounded-xs border border-input bg-background text-foreground shadow-sm text-sm focus:ring-1 focus:ring-ring focus:border-input"
                                         >
                                             <option value="">Select Term (e.g. First Term)</option>
                                             {examSessions.map(term => (
@@ -86,7 +86,7 @@ export default function Create({ classes = [], subjects = [], examSessions = [] 
                                         <select 
                                             value={data.subject_id} 
                                             onChange={e => setData('subject_id', e.target.value)} 
-                                            className="mt-1 block w-full rounded-md border border-input bg-background text-foreground shadow-sm text-sm focus:ring-1 focus:ring-ring focus:border-input"
+                                            className="mt-1 block w-full rounded-xs border border-input bg-background text-foreground shadow-sm text-sm focus:ring-1 focus:ring-ring focus:border-input"
                                             required
                                         >
                                             <option value="">Select Subject</option>
@@ -129,7 +129,7 @@ export default function Create({ classes = [], subjects = [], examSessions = [] 
                                         value={data.instructions} 
                                         onChange={e => setData('instructions', e.target.value)} 
                                         rows="3" 
-                                        className="mt-1 block w-full rounded-md border border-input bg-background text-foreground shadow-sm text-sm focus:ring-1 focus:ring-ring focus:border-input"
+                                        className="mt-1 block w-full rounded-xs border border-input bg-background text-foreground shadow-sm text-sm focus:ring-1 focus:ring-ring focus:border-input"
                                     ></textarea>
                                     {errors.instructions && <div className="text-destructive text-xs mt-1">{errors.instructions}</div>}
                                 </div>

@@ -61,7 +61,7 @@ export default function Show({ paper, sections = [], questionBank = [] }) {
                 </div>
 
                 {/* Paper Header / Summary Card */}
-                <div className="bg-card border border-border rounded-xl p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="bg-card border border-border rounded-sm p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
                             <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 shadow-none font-medium">
@@ -130,7 +130,7 @@ export default function Show({ paper, sections = [], questionBank = [] }) {
 
                 {/* Sections List */}
                 {sections.length === 0 ? (
-                    <div className="bg-card border border-border rounded-xl py-12 text-center text-muted-foreground">
+                    <div className="bg-card border border-border rounded-sm py-12 text-center text-muted-foreground">
                         <BookOpen className="w-10 h-10 mx-auto mb-3 text-muted-foreground/60" />
                         <h3 className="font-semibold text-foreground text-sm">No Sections Configured Yet</h3>
                         <p className="text-xs text-muted-foreground mt-1 max-w-sm mx-auto">
@@ -149,7 +149,7 @@ export default function Show({ paper, sections = [], questionBank = [] }) {
                         {sections.map((section) => (
                             <div 
                                 key={section.id} 
-                                className="bg-card border border-border rounded-xl overflow-hidden shadow-sm"
+                                className="bg-card border border-border rounded-sm overflow-hidden shadow-sm"
                             >
                                 {/* Section Sub-header */}
                                 <div className="bg-muted/40 px-5 py-3.5 border-b border-border flex items-center justify-between">
@@ -217,7 +217,7 @@ export default function Show({ paper, sections = [], questionBank = [] }) {
                                                             </span>
                                                         )}
                                                     </div>
-                                                    <span className="text-[11px] font-semibold text-muted-foreground bg-muted/40 border border-border px-2 py-0.5 rounded">
+                                                    <span className="text-[11px] font-semibold text-muted-foreground bg-muted/40 border border-border px-2 py-0.5 rounded-xs">
                                                         {q.marks || bankItem.marks || 1} M
                                                     </span>
                                                 </div>

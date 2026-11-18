@@ -98,7 +98,7 @@ export default function ExpenseFormModal({
                                 id="category"
                                 value={data.expense_category_id}
                                 onChange={(e) => setData('expense_category_id', e.target.value)}
-                                className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                 required
                             >
                                 <option value="">-- Select Category --</option>
@@ -170,7 +170,7 @@ export default function ExpenseFormModal({
                                 id="payment_method"
                                 value={data.payment_method}
                                 onChange={(e) => setData('payment_method', e.target.value)}
-                                className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                 required
                             >
                                 <option value="cash">Cash in Hand</option>
@@ -227,7 +227,7 @@ export default function ExpenseFormModal({
                                 placeholder="Additional details or justification..."
                                 value={data.notes}
                                 onChange={(e) => setData('notes', e.target.value)}
-                                className="mt-1 w-full p-2.5 text-xs rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                className="mt-1 w-full p-2.5 text-xs rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                             />
                             {errors.notes && <span className="text-xs text-rose-500 mt-0.5">{errors.notes}</span>}
                         </div>
@@ -240,7 +240,7 @@ export default function ExpenseFormModal({
                                 id="status"
                                 value={data.status}
                                 onChange={(e) => setData('status', e.target.value)}
-                                className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                className="mt-1 w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                             >
                                 <option value="paid">Paid & Completed</option>
                                 <option value="pending">Pending Approval</option>

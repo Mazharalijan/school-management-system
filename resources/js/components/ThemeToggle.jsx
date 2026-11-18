@@ -81,7 +81,7 @@ export default function ThemeToggle({ className = '' }) {
             variant="outline"
             size="sm"
             onClick={toggleTheme}
-            className={`h-9 w-9 p-0 rounded-lg border border-border bg-card text-foreground hover:bg-muted transition-colors shadow-xs ${className}`}
+            className={`h-9 w-9 p-0 rounded-xs border border-border bg-card text-foreground hover:bg-muted transition-colors shadow-xs ${className}`}
             title={`Theme Mode: ${theme.toUpperCase()} (Click to toggle)`}
             aria-label="Toggle theme"
         >

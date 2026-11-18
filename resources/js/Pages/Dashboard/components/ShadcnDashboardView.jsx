@@ -137,7 +137,7 @@ export default function ShadcnDashboardView({
                         </Button>
 
                         {periodDropdownOpen && (
-                            <div className="absolute right-0 mt-2 w-48 bg-popover text-popover-foreground rounded-lg border border-border shadow-md py-1 z-30 animate-in fade-in-50 zoom-in-95">
+                            <div className="absolute right-0 mt-2 w-48 bg-popover text-popover-foreground rounded-sm border border-border shadow-md py-1 z-30 animate-in fade-in-50 zoom-in-95">
                                 <div className="px-3 py-1.5 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                                     Select Reporting Period
                                 </div>
@@ -177,7 +177,7 @@ export default function ShadcnDashboardView({
 
             {/* Shadcn Tabs Navigation */}
             <Tabs defaultValue="overview" className="space-y-4">
-                <TabsList className="bg-muted p-1 rounded-lg inline-flex">
+                <TabsList className="bg-muted p-1 rounded-sm inline-flex">
                     <TabsTrigger value="overview">Overview</TabsTrigger>
                     <TabsTrigger value="defaulters" className="flex items-center gap-1.5">
                         <AlertTriangle className="w-3.5 h-3.5 text-destructive" />
@@ -306,7 +306,7 @@ export default function ShadcnDashboardView({
                                         <div className="relative h-64 w-full flex items-end justify-between gap-2 sm:gap-4 pt-6 pb-2 border-b border-border/60">
                                             {/* Hover info tooltip banner */}
                                             {hoveredBarIndex !== null && monthlyTrends[hoveredBarIndex] && (
-                                                <div className="absolute top-0 right-2 bg-popover text-popover-foreground border border-border px-2.5 py-1 rounded-md text-xs shadow-sm flex items-center gap-3 z-10 animate-in fade-in-50">
+                                                <div className="absolute top-0 right-2 bg-popover text-popover-foreground border border-border px-2.5 py-1 rounded-xs text-xs shadow-sm flex items-center gap-3 z-10 animate-in fade-in-50">
                                                     <span className="font-semibold">{monthlyTrends[hoveredBarIndex].month}:</span>
                                                     <span className="text-primary font-mono font-medium">Rev: {formatCurrency(monthlyTrends[hoveredBarIndex].revenue)}</span>
                                                     <span className="text-muted-foreground font-mono">Exp: {formatCurrency(monthlyTrends[hoveredBarIndex].total_expenses)}</span>
@@ -351,25 +351,25 @@ export default function ShadcnDashboardView({
 
                                         {/* Financial Summary Strip */}
                                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-xs">
-                                            <div className="p-2.5 rounded-lg bg-muted/40 border border-border/50">
+                                            <div className="p-2.5 rounded-sm bg-muted/40 border border-border/50">
                                                 <span className="text-muted-foreground text-[11px] block">Period Revenue</span>
                                                 <span className="font-bold font-mono text-foreground text-sm mt-0.5 block">
                                                     {formatCurrency(fin.revenue)}
                                                 </span>
                                             </div>
-                                            <div className="p-2.5 rounded-lg bg-muted/40 border border-border/50">
+                                            <div className="p-2.5 rounded-sm bg-muted/40 border border-border/50">
                                                 <span className="text-muted-foreground text-[11px] block">Operating Expenses</span>
                                                 <span className="font-bold font-mono text-foreground text-sm mt-0.5 block">
                                                     {formatCurrency(fin.operating_expenses)}
                                                 </span>
                                             </div>
-                                            <div className="p-2.5 rounded-lg bg-muted/40 border border-border/50">
+                                            <div className="p-2.5 rounded-sm bg-muted/40 border border-border/50">
                                                 <span className="text-muted-foreground text-[11px] block">Staff Payroll</span>
                                                 <span className="font-bold font-mono text-foreground text-sm mt-0.5 block">
                                                     {formatCurrency(fin.payroll_expenses)}
                                                 </span>
                                             </div>
-                                            <div className="p-2.5 rounded-lg bg-muted/40 border border-border/50">
+                                            <div className="p-2.5 rounded-sm bg-muted/40 border border-border/50">
                                                 <span className="text-muted-foreground text-[11px] block">Net Period Balance</span>
                                                 <span className={`font-bold font-mono text-sm mt-0.5 block ${isProfit ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
                                                     {isProfit ? '+' : '-'}{formatCurrency(netAmount)}
@@ -469,10 +469,10 @@ export default function ShadcnDashboardView({
                                     <Link
                                         key={m.title}
                                         href={m.href}
-                                        className="p-3.5 rounded-xl border border-border bg-card hover:bg-muted/50 hover:border-primary/40 transition-all flex flex-col justify-between group"
+                                        className="p-3.5 rounded-sm border border-border bg-card hover:bg-muted/50 hover:border-primary/40 transition-all flex flex-col justify-between group"
                                     >
                                         <div className="flex items-center justify-between mb-2">
-                                            <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center text-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                                            <div className="w-8 h-8 rounded-xs bg-muted flex items-center justify-center text-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                                                 <Icon className="h-4 w-4" />
                                             </div>
                                             <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -553,7 +553,7 @@ export default function ShadcnDashboardView({
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
-                                <div className="p-4 rounded-xl bg-muted/40 border border-border/60 text-center">
+                                <div className="p-4 rounded-sm bg-muted/40 border border-border/60 text-center">
                                     <span className="text-xs text-muted-foreground block">Net Profit / Loss</span>
                                     <span className={`text-2xl font-bold font-mono mt-1 block ${isProfit ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
                                         {isProfit ? '+' : '-'}{formatCurrency(netAmount)}
@@ -618,13 +618,13 @@ export default function ShadcnDashboardView({
                                     />
                                 </div>
                                 <div className="grid grid-cols-2 gap-3 pt-2 text-xs">
-                                    <div className="p-3 rounded-lg bg-muted/40 border border-border/50">
+                                    <div className="p-3 rounded-sm bg-muted/40 border border-border/50">
                                         <span className="text-muted-foreground text-[11px] block">Male Ratio</span>
                                         <span className="font-bold text-foreground text-sm mt-0.5 block">
                                             {Math.round(((stats.students?.male || 0) / Math.max(stats.students?.total || 1, 1)) * 100)}%
                                         </span>
                                     </div>
-                                    <div className="p-3 rounded-lg bg-muted/40 border border-border/50">
+                                    <div className="p-3 rounded-sm bg-muted/40 border border-border/50">
                                         <span className="text-muted-foreground text-[11px] block">Female Ratio</span>
                                         <span className="font-bold text-foreground text-sm mt-0.5 block">
                                             {Math.round(((stats.students?.female || 0) / Math.max(stats.students?.total || 1, 1)) * 100)}%
@@ -645,19 +645,19 @@ export default function ShadcnDashboardView({
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <div className="grid grid-cols-3 gap-3 text-center">
-                                    <div className="p-3 rounded-lg bg-muted/40 border border-border/50">
+                                    <div className="p-3 rounded-sm bg-muted/40 border border-border/50">
                                         <span className="text-muted-foreground text-[11px] block">Classes</span>
                                         <span className="font-bold font-mono text-xl text-foreground mt-1 block">
                                             {stats.academics?.classes || 0}
                                         </span>
                                     </div>
-                                    <div className="p-3 rounded-lg bg-muted/40 border border-border/50">
+                                    <div className="p-3 rounded-sm bg-muted/40 border border-border/50">
                                         <span className="text-muted-foreground text-[11px] block">Sections</span>
                                         <span className="font-bold font-mono text-xl text-foreground mt-1 block">
                                             {stats.academics?.sections || 0}
                                         </span>
                                     </div>
-                                    <div className="p-3 rounded-lg bg-muted/40 border border-border/50">
+                                    <div className="p-3 rounded-sm bg-muted/40 border border-border/50">
                                         <span className="text-muted-foreground text-[11px] block">Teachers</span>
                                         <span className="font-bold font-mono text-xl text-foreground mt-1 block">
                                             {stats.staff?.teachers || 0}
@@ -697,7 +697,7 @@ export default function ShadcnDashboardView({
                             </div>
                         </CardHeader>
                         <CardContent>
-                            <div className="rounded-lg border border-border overflow-hidden">
+                            <div className="rounded-sm border border-border overflow-hidden">
                                 <table className="w-full text-xs text-left">
                                     <thead className="bg-muted text-muted-foreground font-semibold border-b border-border">
                                         <tr>
@@ -769,7 +769,7 @@ export default function ShadcnDashboardView({
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-3">
-                            <div className="flex items-start space-x-3 p-3.5 rounded-lg border border-border bg-muted/30">
+                            <div className="flex items-start space-x-3 p-3.5 rounded-sm border border-border bg-muted/30">
                                 <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
                                 <div className="text-xs">
                                     <p className="font-semibold text-foreground">Academic Session Active</p>
@@ -779,7 +779,7 @@ export default function ShadcnDashboardView({
                                 </div>
                             </div>
 
-                            <div className="flex items-start space-x-3 p-3.5 rounded-lg border border-border bg-muted/30">
+                            <div className="flex items-start space-x-3 p-3.5 rounded-sm border border-border bg-muted/30">
                                 <CreditCard className="h-5 w-5 text-blue-600 shrink-0 mt-0.5" />
                                 <div className="text-xs">
                                     <p className="font-semibold text-foreground">Fee Challans Ready</p>
@@ -789,7 +789,7 @@ export default function ShadcnDashboardView({
                                 </div>
                             </div>
 
-                            <div className="flex items-start space-x-3 p-3.5 rounded-lg border border-border bg-muted/30">
+                            <div className="flex items-start space-x-3 p-3.5 rounded-sm border border-border bg-muted/30">
                                 <Activity className="h-5 w-5 text-indigo-600 shrink-0 mt-0.5" />
                                 <div className="text-xs">
                                     <p className="font-semibold text-foreground">System Health Check Passed</p>

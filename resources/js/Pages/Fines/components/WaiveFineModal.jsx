@@ -38,7 +38,7 @@ export default function WaiveFineModal({ isOpen, onClose, fine }) {
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-4 my-2">
-                    <div className="p-3 rounded-lg border border-border bg-muted/30 text-xs space-y-1">
+                    <div className="p-3 rounded-xs border border-border bg-muted/30 text-xs space-y-1">
                         <div className="flex justify-between">
                             <span className="text-muted-foreground">Student:</span>
                             <span className="font-bold text-foreground">{studentName}</span>

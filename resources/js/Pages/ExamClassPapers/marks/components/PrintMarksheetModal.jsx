@@ -25,7 +25,7 @@ export default function PrintMarksheetModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-xs">
-      <div className="bg-card text-card-foreground rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col border border-border overflow-hidden">
+      <div className="bg-card text-card-foreground rounded-sm shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col border border-border overflow-hidden">
         
         {/* Modal Header */}
         <div className="px-6 py-4 bg-card border-b border-border text-foreground flex items-center justify-between">
@@ -35,7 +35,7 @@ export default function PrintMarksheetModal({
           </div>
           <button 
             onClick={onClose}
-            className="p-1 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+            className="p-1 rounded-xs hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -50,7 +50,7 @@ export default function PrintMarksheetModal({
             <select
               value={selectedTeacherId}
               onChange={(e) => onTeacherChange(e.target.value)}
-              className="text-xs font-semibold px-3 py-2 bg-background text-foreground border border-input rounded-lg outline-hidden focus:ring-1 focus:ring-ring"
+              className="text-xs font-semibold px-3 py-2 bg-background text-foreground border border-input rounded-xs outline-hidden focus:ring-1 focus:ring-ring"
             >
               {teachers.map(t => (
                 <option key={t.id} value={t.id}>
@@ -72,7 +72,7 @@ export default function PrintMarksheetModal({
 
         {/* Print Preview Canvas */}
         <div className="p-6 overflow-y-auto flex-1 bg-card text-card-foreground print:bg-white print:text-black print:p-0 print:overflow-visible">
-          <div className="border border-border print:border-none p-8 rounded-xl print:p-0">
+          <div className="border border-border print:border-none p-8 rounded-sm print:p-0">
             
             {/* Header Document Metadata */}
             <div className="text-center pb-4 border-b-2 border-foreground print:border-black mb-6">
@@ -80,7 +80,7 @@ export default function PrintMarksheetModal({
               <p className="text-xs font-semibold text-muted-foreground print:text-gray-600 mt-1">{examTerm?.name || 'Term Examination 2026'}</p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 text-xs font-semibold mb-6 text-foreground print:text-black bg-muted/40 p-3 rounded-lg border border-border print:bg-transparent print:border-none">
+            <div className="grid grid-cols-2 gap-4 text-xs font-semibold mb-6 text-foreground print:text-black bg-muted/40 p-3 rounded-xs border border-border print:bg-transparent print:border-none">
               <div>
                 <p><span className="text-muted-foreground print:text-gray-500">Class & Section:</span> <strong>{classDetails?.name} ({classDetails?.section})</strong></p>
                 <p className="mt-1"><span className="text-muted-foreground print:text-gray-500">Total Students:</span> <strong>{students.length}</strong></p>

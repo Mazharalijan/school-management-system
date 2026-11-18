@@ -46,7 +46,7 @@ export default function GenerateClassPaperFeeModal({ isOpen, onClose, activeSess
                             id="school_class_id"
                             value={form.data.school_class_id}
                             onChange={(e) => form.setData('school_class_id', e.target.value)}
-                            className="w-full mt-1 p-2 text-xs rounded-md border border-input bg-background text-foreground"
+                            className="w-full mt-1 p-2 text-xs rounded-xs border border-input bg-background text-foreground"
                             required
                         >
                             {classes.map((c) => (

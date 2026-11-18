@@ -47,7 +47,7 @@ export default function CompactDashboardView({
     return (
         <div className="space-y-4 w-full pb-10 font-sans text-xs">
             {/* Compact Header Bar */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-lg border border-border bg-card">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-sm border border-border bg-card">
                 <div className="flex items-center gap-3">
                     <h2 className="text-lg font-bold tracking-tight text-foreground">
                         Executive Summary
@@ -59,13 +59,13 @@ export default function CompactDashboardView({
 
                 <div className="flex items-center gap-2">
                     {/* Period Switcher */}
-                    <div className="flex items-center rounded-md border border-border bg-muted/40 p-0.5">
+                    <div className="flex items-center rounded-xs border border-border bg-muted/40 p-0.5">
                         {periods.map((p) => (
                             <button
                                 key={p.key}
                                 type="button"
                                 onClick={() => onPeriodChange(p.key)}
-                                className={`px-2.5 py-1 text-xs font-medium rounded-sm transition-colors ${
+                                className={`px-2.5 py-1 text-xs font-medium rounded-xs transition-colors ${
                                     currentPeriod === p.key
                                         ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
                                         : 'text-muted-foreground hover:text-foreground'
@@ -79,7 +79,7 @@ export default function CompactDashboardView({
                     <button
                         type="button"
                         onClick={() => window.print()}
-                        className="p-1.5 rounded-md border border-border hover:bg-muted text-muted-foreground hover:text-foreground"
+                        className="p-1.5 rounded-xs border border-border hover:bg-muted text-muted-foreground hover:text-foreground"
                         title="Print Summary"
                     >
                         <Download className="h-3.5 w-3.5" />
@@ -89,7 +89,7 @@ export default function CompactDashboardView({
 
             {/* High Density Metric Cards Strip */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <div className="p-3.5 rounded-lg border border-border bg-card">
+                <div className="p-3.5 rounded-sm border border-border bg-card">
                     <div className="flex items-center justify-between text-muted-foreground mb-1">
                         <span className="font-medium text-[11px]">Revenue</span>
                         <DollarSign className="h-3.5 w-3.5" />
@@ -102,7 +102,7 @@ export default function CompactDashboardView({
                     </span>
                 </div>
 
-                <div className="p-3.5 rounded-lg border border-border bg-card">
+                <div className="p-3.5 rounded-sm border border-border bg-card">
                     <div className="flex items-center justify-between text-muted-foreground mb-1">
                         <span className="font-medium text-[11px]">Expenses</span>
                         <Receipt className="h-3.5 w-3.5 text-rose-500" />
@@ -115,7 +115,7 @@ export default function CompactDashboardView({
                     </span>
                 </div>
 
-                <div className="p-3.5 rounded-lg border border-border bg-card">
+                <div className="p-3.5 rounded-sm border border-border bg-card">
                     <div className="flex items-center justify-between text-muted-foreground mb-1">
                         <span className="font-medium text-[11px]">Students</span>
                         <Users className="h-3.5 w-3.5 text-blue-500" />
@@ -128,7 +128,7 @@ export default function CompactDashboardView({
                     </span>
                 </div>
 
-                <div className="p-3.5 rounded-lg border border-border bg-card">
+                <div className="p-3.5 rounded-sm border border-border bg-card">
                     <div className="flex items-center justify-between text-muted-foreground mb-1">
                         <span className="font-medium text-[11px]">Staff / Faculty</span>
                         <Activity className="h-3.5 w-3.5 text-indigo-500" />
@@ -157,7 +157,7 @@ export default function CompactDashboardView({
                         <Link
                             key={item.title}
                             href={item.href}
-                            className="p-2.5 rounded-md border border-border bg-card hover:bg-muted text-center flex items-center justify-center gap-1.5 font-medium text-foreground transition-colors"
+                            className="p-2.5 rounded-xs border border-border bg-card hover:bg-muted text-center flex items-center justify-center gap-1.5 font-medium text-foreground transition-colors"
                         >
                             <Icon className="h-3.5 w-3.5 text-muted-foreground" />
                             <span>{item.title}</span>
@@ -169,7 +169,7 @@ export default function CompactDashboardView({
             {/* 2-Column Compact Tables: Fee Payments & Expense Logs */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Recent Fee Payments */}
-                <div className="rounded-lg border border-border bg-card overflow-hidden">
+                <div className="rounded-sm border border-border bg-card overflow-hidden">
                     <div className="p-3 border-b border-border flex items-center justify-between bg-muted/30">
                         <span className="font-semibold text-foreground flex items-center gap-1.5">
                             <CreditCard className="h-3.5 w-3.5 text-emerald-600" />
@@ -205,7 +205,7 @@ export default function CompactDashboardView({
                 </div>
 
                 {/* Recent Expenses */}
-                <div className="rounded-lg border border-border bg-card overflow-hidden">
+                <div className="rounded-sm border border-border bg-card overflow-hidden">
                     <div className="p-3 border-b border-border flex items-center justify-between bg-muted/30">
                         <span className="font-semibold text-foreground flex items-center gap-1.5">
                             <Receipt className="h-3.5 w-3.5 text-rose-600" />

@@ -18,7 +18,7 @@ export default function StudentFields({ form, classes = [], sections = [] }) {
                         <Label htmlFor="school_class_id">Class *</Label>
                         <select
                             id="school_class_id"
-                            className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground focus:ring-1 focus:ring-ring focus:border-input"
+                            className="w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:ring-1 focus:ring-ring focus:border-input"
                             value={form.data.school_class_id || ''}
                             onChange={(e) => {
                                 form.setData({
@@ -41,7 +41,7 @@ export default function StudentFields({ form, classes = [], sections = [] }) {
                         <Label htmlFor="section_id">Section *</Label>
                         <select
                             id="section_id"
-                            className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground disabled:bg-muted disabled:text-muted-foreground focus:ring-1 focus:ring-ring focus:border-input"
+                            className="w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground disabled:bg-muted disabled:text-muted-foreground focus:ring-1 focus:ring-ring focus:border-input"
                             value={form.data.section_id || ''}
                             onChange={(e) => form.setData('section_id', e.target.value)}
                             disabled={!form.data.school_class_id}
@@ -97,7 +97,7 @@ export default function StudentFields({ form, classes = [], sections = [] }) {
                         <Label htmlFor="gender">Gender *</Label>
                         <select
                             id="gender"
-                            className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground focus:ring-1 focus:ring-ring focus:border-input"
+                            className="w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground focus:ring-1 focus:ring-ring focus:border-input"
                             value={form.data.gender || 'male'}
                             onChange={(e) => form.setData('gender', e.target.value)}
                         >

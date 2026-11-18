@@ -314,7 +314,7 @@ export default function Index({
       <Card>
         <CardContent className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
+            <div className="w-10 h-10 rounded-xs bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
               <Award className="w-5 h-5" />
             </div>
             <div>
@@ -364,7 +364,7 @@ export default function Index({
 
       {/* Notification Banner */}
       {notification && (
-        <div className={`p-4 rounded-lg border flex items-center justify-between text-xs font-bold ${
+        <div className={`p-4 rounded-sm border flex items-center justify-between text-xs font-bold ${
           notification.type === 'success' 
             ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400' 
             : 'bg-destructive/10 border-destructive/20 text-destructive'

@@ -103,7 +103,7 @@ export default function Create({ exam, availableQuestions = [] }) {
                                         rows="2"
                                         value={data.instructions}
                                         onChange={(e) => setData('instructions', e.target.value)}
-                                        className="mt-1 w-full bg-background border border-input rounded-md text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input"
+                                        className="mt-1 w-full bg-background border border-input rounded-xs text-sm text-foreground focus:ring-1 focus:ring-ring focus:border-input"
                                     />
                                 </div>
                             </CardContent>
@@ -115,17 +115,17 @@ export default function Create({ exam, availableQuestions = [] }) {
                                 <h2 className="text-lg font-semibold text-foreground mb-4">Selected Questions ({selectedQuestions.length})</h2>
                                 
                                 {selectedQuestions.length === 0 ? (
-                                    <div className="text-center py-10 text-muted-foreground border-2 border-dashed border-border rounded-lg">
+                                    <div className="text-center py-10 text-muted-foreground border-2 border-dashed border-border rounded-sm">
                                         Select questions from the right panel to construct the paper.
                                     </div>
                                 ) : (
                                     <div className="space-y-4">
                                         {selectedQuestions.map((q, idx) => (
-                                            <div key={q.id} className="p-4 border border-border rounded-lg bg-muted/30 relative flex justify-between gap-4">
+                                            <div key={q.id} className="p-4 border border-border rounded-xs bg-muted/30 relative flex justify-between gap-4">
                                                 <div className="space-y-1 flex-1">
                                                     <span className="text-xs font-bold text-primary">Q{idx + 1}.</span>
                                                     <p className="text-sm text-foreground font-medium">{q.question || q.question_text}</p>
-                                                    <span className="inline-block px-2 py-0.5 text-xs bg-muted text-muted-foreground rounded">
+                                                    <span className="inline-block px-2 py-0.5 text-xs bg-muted text-muted-foreground rounded-xs">
                                                         {(q.question_type || '').replace('_', ' ')}
                                                     </span>
                                                 </div>
@@ -188,7 +188,7 @@ export default function Create({ exam, availableQuestions = [] }) {
                                             <div
                                                 key={q.id}
                                                 onClick={() => toggleQuestion(q)}
-                                                className={`p-3 rounded-md border cursor-pointer transition ${
+                                                className={`p-3 rounded-xs border cursor-pointer transition ${
                                                     isSelected ? 'border-primary bg-primary/10' : 'border-border hover:bg-muted/40'
                                                 }`}
                                             >

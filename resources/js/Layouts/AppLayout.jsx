@@ -84,7 +84,7 @@ export default function AppLayout({ title, children }) {
                         >
                             <Search className="h-3.5 w-3.5" />
                             <span>Quick Search...</span>
-                            <kbd className="pointer-events-none inline-flex h-4 select-none items-center gap-0.5 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                            <kbd className="pointer-events-none inline-flex h-4 select-none items-center gap-0.5 rounded-xs border border-border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
                                 <span>⌘</span>K
                             </kbd>
                         </Button>
@@ -93,9 +93,7 @@ export default function AppLayout({ title, children }) {
                             className={cn(
                                 isAcademic
                                     ? "rounded-none border-border bg-muted text-foreground"
-                                    : isCompact
-                                    ? "rounded-md h-8 w-8"
-                                    : "rounded-lg"
+                                    : "rounded-xs"
                             )}
                         />
 
@@ -108,9 +106,7 @@ export default function AppLayout({ title, children }) {
                                 "flex items-center space-x-2 transition-all font-semibold",
                                 isAcademic
                                     ? "bg-primary hover:bg-primary/90 text-primary-foreground border-primary rounded-none shadow-xs text-xs h-8 px-3.5"
-                                    : isCompact
-                                    ? "h-8 px-2.5 text-xs rounded-md border-border bg-background hover:bg-muted text-foreground"
-                                    : "h-8 px-3 text-xs rounded-lg text-muted-foreground hover:text-foreground border-border bg-background hover:bg-muted"
+                                    : "h-8 px-2.5 text-xs rounded-xs border-border bg-background hover:bg-muted text-foreground"
                             )}
                         >
                             <Printer className="h-4 w-4" />

@@ -513,7 +513,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                     <Label htmlFor="designation">Designation *</Label>
                                     <select
                                         id="designation"
-                                        className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground"
+                                        className="w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground"
                                         value={staffForm.data.designation}
                                         onChange={(e) => staffForm.setData('designation', e.target.value)}
                                         required
@@ -553,7 +553,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                             <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Personal Information</span>
 
                             {/* Profile Photo Upload with Crop & Background Adjustments */}
-                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-2 mb-3 p-3 bg-muted/40 border border-border rounded-lg">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-2 mb-3 p-3 bg-muted/40 border border-border rounded-xs">
                                 <ProfileAvatar
                                     src={createPhotoPreview}
                                     name={staffForm.data.first_name}
@@ -570,7 +570,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                         </span>
                                     </div>
                                     <div className="flex flex-wrap items-center gap-2">
-                                        <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold rounded-md shadow-sm cursor-pointer transition">
+                                        <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold rounded-xs shadow-sm cursor-pointer transition">
                                             <Upload className="w-3.5 h-3.5" />
                                             <span>{createPhotoPreview ? 'Change Photo' : 'Upload Photo'}</span>
                                             <input
@@ -665,7 +665,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                     <Label htmlFor="gender">Gender *</Label>
                                     <select
                                         id="gender"
-                                        className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground"
+                                        className="w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground"
                                         value={staffForm.data.gender}
                                         onChange={(e) => staffForm.setData('gender', e.target.value)}
                                     >
@@ -695,7 +695,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                     <Label htmlFor="qualification">Highest Academic Qualification *</Label>
                                     <select
                                         id="qualification"
-                                        className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground"
+                                        className="w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground"
                                         value={staffForm.data.qualification}
                                         onChange={(e) => staffForm.setData('qualification', e.target.value)}
                                         required
@@ -721,7 +721,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                             {/* Skills / Diplomas Checkboxes */}
                             <div className="mt-3">
                                 <Label className="block mb-1.5 text-xs font-semibold text-foreground">Other Skills & Professional Diplomas</Label>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 bg-muted/40 p-3 rounded-md border border-border">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 bg-muted/40 p-3 rounded-xs border border-border">
                                     {SKILL_OPTIONS.map((skill, idx) => (
                                         <label key={idx} className="flex items-center space-x-2 text-xs text-foreground cursor-pointer hover:text-primary">
                                             <input
@@ -757,7 +757,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                         id="address"
                                         rows="2"
                                         placeholder="Street, City, Sector / Area details..."
-                                        className="w-full p-2.5 text-sm rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                        className="w-full p-2.5 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                         value={staffForm.data.address}
                                         onChange={(e) => staffForm.setData('address', e.target.value)}
                                     />
@@ -788,7 +788,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                     <Label htmlFor="edit_status">Status *</Label>
                                     <select
                                         id="edit_status"
-                                        className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground"
+                                        className="w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground"
                                         value={editForm.data.status}
                                         onChange={(e) => editForm.setData('status', e.target.value)}
                                     >
@@ -801,7 +801,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                     <Label htmlFor="edit_designation">Designation *</Label>
                                     <select
                                         id="edit_designation"
-                                        className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground"
+                                        className="w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground"
                                         value={editForm.data.designation}
                                         onChange={(e) => editForm.setData('designation', e.target.value)}
                                         required
@@ -830,7 +830,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                             <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Personal Information</span>
 
                             {/* Profile Photo Upload with Crop & Background Adjustments */}
-                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-2 mb-3 p-3 bg-muted/40 border border-border rounded-lg">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-2 mb-3 p-3 bg-muted/40 border border-border rounded-xs">
                                 <ProfileAvatar
                                     src={editPhotoPreview}
                                     name={editForm.data.first_name}
@@ -847,7 +847,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                         </span>
                                     </div>
                                     <div className="flex flex-wrap items-center gap-2">
-                                        <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold rounded-md shadow-sm cursor-pointer transition">
+                                        <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold rounded-xs shadow-sm cursor-pointer transition">
                                             <Upload className="w-3.5 h-3.5" />
                                             <span>{editPhotoPreview ? 'Change Photo' : 'Upload Photo'}</span>
                                             <input
@@ -937,7 +937,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                     <Label htmlFor="edit_gender">Gender *</Label>
                                     <select
                                         id="edit_gender"
-                                        className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground"
+                                        className="w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground"
                                         value={editForm.data.gender}
                                         onChange={(e) => editForm.setData('gender', e.target.value)}
                                     >
@@ -967,7 +967,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                     <Label htmlFor="edit_qualification">Highest Academic Qualification *</Label>
                                     <select
                                         id="edit_qualification"
-                                        className="w-full h-10 px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground"
+                                        className="w-full h-10 px-3 py-2 text-sm rounded-xs border border-input bg-background text-foreground"
                                         value={editForm.data.qualification}
                                         onChange={(e) => editForm.setData('qualification', e.target.value)}
                                         required
@@ -992,12 +992,12 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
 
                             <div className="mt-3">
                                 <Label className="block mb-1.5 text-xs font-semibold text-foreground">Other Skills & Professional Diplomas</Label>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 bg-muted/40 p-3 rounded-md border border-border">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 bg-muted/40 p-3 rounded-xs border border-border">
                                     {SKILL_OPTIONS.map((skill, idx) => (
                                         <label key={idx} className="flex items-center space-x-2 text-xs text-foreground cursor-pointer hover:text-primary">
                                             <input
                                                 type="checkbox"
-                                                className="rounded border-input text-primary focus:ring-primary h-4 w-4"
+                                                className="rounded-xs border-input text-primary focus:ring-primary h-4 w-4"
                                                 checked={editForm.data.skills.includes(skill)}
                                                 onChange={() => handleSkillToggle(editForm, skill)}
                                             />
@@ -1027,7 +1027,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                         id="edit_address"
                                         rows="2"
                                         placeholder="Street, City, Sector / Area details..."
-                                        className="w-full p-2.5 text-sm rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                        className="w-full p-2.5 text-sm rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                                         value={editForm.data.address}
                                         onChange={(e) => editForm.setData('address', e.target.value)}
                                     />
@@ -1073,7 +1073,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                         <div className="flex flex-col md:flex-row gap-6 mt-2">
                             
                             {/* LEFT SIDEBAR: BASIC INFO */}
-                            <aside className="w-full md:w-72 shrink-0 space-y-4 bg-muted/40 p-4 rounded-xl border border-border">
+                            <aside className="w-full md:w-72 shrink-0 space-y-4 bg-muted/40 p-4 rounded-sm border border-border">
                                 {/* Identity Header */}
                                 <div className="flex flex-col items-center text-center pb-4 border-b border-border">
                                     <ProfileAvatar
@@ -1144,7 +1144,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                             {/* RIGHT SIDE: TABS FOR EDUCATIONAL & SALARY DETAILS */}
                             <main className="flex-1 min-w-0">
                                 <Tabs defaultValue="educational-details" className="w-full space-y-4">
-                                    <TabsList className="bg-muted p-1 rounded-lg inline-flex gap-1 mb-4">
+                                    <TabsList className="bg-muted p-1 rounded-sm inline-flex gap-1 mb-4">
                                         <TabsTrigger 
                                             value="educational-details"
                                             className="flex items-center gap-1.5"
@@ -1163,7 +1163,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
 
                                     {/* TAB 1: EDUCATIONAL DETAILS */}
                                     <TabsContent value="educational-details" className="mt-0 space-y-4">
-                                        <div className="p-4 rounded-lg border border-border bg-card space-y-3">
+                                        <div className="p-4 rounded-xs border border-border bg-card space-y-3">
                                             <div>
                                                 <span className="text-xs text-muted-foreground font-medium block">Highest Academic Qualification</span>
                                                 <p className="text-sm font-semibold text-foreground mt-0.5">
@@ -1205,7 +1205,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
                                             return (
                                                 <div className="space-y-4">
                                                     {/* Header & Quick Action */}
-                                                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-muted/40 p-3 rounded-lg border border-border">
+                                                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-muted/40 p-3 rounded-xs border border-border">
                                                         <div>
                                                             <h4 className="font-bold text-foreground text-sm">Salary & Advance Ledger</h4>
                                                             <p className="text-xs text-muted-foreground">Track monthly salary disbursements, advance loans, and deductions.</p>
@@ -1225,25 +1225,25 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
 
                                                     {/* Summary Metrics */}
                                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
-                                                        <div className="bg-card p-3 rounded-lg border border-border">
+                                                        <div className="bg-card p-3 rounded-xs border border-border">
                                                             <span className="text-[11px] text-muted-foreground block font-medium">Base Salary</span>
                                                             <span className="text-sm font-bold font-mono text-foreground">
                                                                 PKR {pBaseSalary.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                                             </span>
                                                         </div>
-                                                        <div className="bg-card p-3 rounded-lg border border-border">
+                                                        <div className="bg-card p-3 rounded-xs border border-border">
                                                             <span className="text-[11px] text-muted-foreground block font-medium">Pending Advance Debt</span>
                                                             <span className={`text-sm font-bold font-mono ${pPendingAdvance > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-foreground'}`}>
                                                                 PKR {pPendingAdvance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                                             </span>
                                                         </div>
-                                                        <div className="bg-card p-3 rounded-lg border border-border">
+                                                        <div className="bg-card p-3 rounded-xs border border-border">
                                                             <span className="text-[11px] text-muted-foreground block font-medium">Advances Taken / Repaid</span>
                                                             <span className="text-xs font-bold font-mono text-foreground block">
                                                                 PKR {pTotalAdvances.toLocaleString()} / <span className="text-emerald-600 dark:text-emerald-400">{pTotalAdjusted.toLocaleString()}</span>
                                                             </span>
                                                         </div>
-                                                        <div className="bg-card p-3 rounded-lg border border-border">
+                                                        <div className="bg-card p-3 rounded-xs border border-border">
                                                             <span className="text-[11px] text-muted-foreground block font-medium">Total Net Salary Paid</span>
                                                             <span className="text-sm font-bold font-mono text-emerald-600 dark:text-emerald-400">
                                                                 PKR {pTotalPaid.toLocaleString(undefined, { minimumFractionDigits: 2 })}
@@ -1253,7 +1253,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
 
                                                     {/* Sub Tabs: Settlements / Advances / Ledger */}
                                                     <Tabs defaultValue="profile-settlements" className="w-full">
-                                                        <TabsList className="bg-muted p-0.5 rounded-md h-8">
+                                                        <TabsList className="bg-muted p-0.5 rounded-xs h-8">
                                                             <TabsTrigger value="profile-settlements" className="text-xs px-2.5 py-1">
                                                                 <Receipt className="h-3 w-3 mr-1" />
                                                                 Salary Payments ({pSettlements.length})
@@ -1270,7 +1270,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
 
                                                         {/* Sub-Tab 1: Settlements */}
                                                         <TabsContent value="profile-settlements" className="mt-2.5">
-                                                            <div className="rounded-lg border border-border overflow-hidden bg-card">
+                                                            <div className="rounded-sm border border-border overflow-hidden bg-card">
                                                                 <div className="max-h-60 overflow-y-auto">
                                                                     <table className="w-full text-xs text-left text-muted-foreground">
                                                                         <thead className="bg-muted text-muted-foreground font-semibold border-b border-border uppercase sticky top-0">
@@ -1316,7 +1316,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
 
                                                         {/* Sub-Tab 2: Advances */}
                                                         <TabsContent value="profile-advances" className="mt-2.5">
-                                                            <div className="rounded-lg border border-border overflow-hidden bg-card">
+                                                            <div className="rounded-sm border border-border overflow-hidden bg-card">
                                                                 <div className="max-h-60 overflow-y-auto">
                                                                     <table className="w-full text-xs text-left text-muted-foreground">
                                                                         <thead className="bg-muted text-muted-foreground font-semibold border-b border-border uppercase sticky top-0">
@@ -1370,7 +1370,7 @@ export default function StaffIndex({ staff = { data: [] }, filters = {} }) {
 
                                                         {/* Sub-Tab 3: Ledger */}
                                                         <TabsContent value="profile-ledger" className="mt-2.5">
-                                                            <div className="rounded-lg border border-border overflow-hidden bg-card">
+                                                            <div className="rounded-sm border border-border overflow-hidden bg-card">
                                                                 <div className="max-h-60 overflow-y-auto">
                                                                     <table className="w-full text-xs text-left text-muted-foreground">
                                                                         <thead className="bg-muted text-muted-foreground font-semibold border-b border-border uppercase sticky top-0">

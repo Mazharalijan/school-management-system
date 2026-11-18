@@ -80,7 +80,7 @@ export default function Index({ certificates, classes = [], filters = {} }) {
                     <select
                         value={filters.sub_type || ''}
                         onChange={(e) => handleFilterChange('sub_type', e.target.value)}
-                        className="h-10 px-3 py-2 text-xs rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                        className="h-10 px-3 py-2 text-xs rounded-xs border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                     >
                         <option value="">All Certificate Types</option>
                         <option value="character">Character Certificate</option>
@@ -171,7 +171,7 @@ export default function Index({ certificates, classes = [], filters = {} }) {
                                                             <button
                                                                 type="button"
                                                                 onClick={() => handleDelete(cert)}
-                                                                className="p-1.5 text-muted-foreground hover:text-destructive rounded-md hover:bg-destructive/10 transition-colors shrink-0"
+                                                                className="p-1.5 text-muted-foreground hover:text-destructive rounded-xs hover:bg-destructive/10 transition-colors shrink-0"
                                                                 title="Delete Certificate"
                                                             >
                                                                 <Trash2 className="w-3.5 h-3.5" />
