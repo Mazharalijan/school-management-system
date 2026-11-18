@@ -10,6 +10,7 @@ use App\Models\ExamSession;
 use App\Models\SchoolClass;
 use App\Models\StudentDocumentPrint;
 use App\Models\StudentMark;
+use App\Models\SystemSetting;
 use App\Services\Exam\MarksAndResultService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -95,7 +96,7 @@ class StudentMarkController extends Controller
      */
     public function dmcView(ExamResult $examResult): Response
     {
-        $examResult->load(['student', 'schoolClass', 'examSession']);
+        $examResult->load(['student.current_enrollment.section', 'schoolClass', 'examSession']);
 
         $subjectMarks = StudentMark::with('subject')
             ->where('exam_session_id', $examResult->exam_session_id)
@@ -109,10 +110,18 @@ class StudentMarkController extends Controller
             ->where('exam_result_id', $examResult->id)
             ->first();
 
+        $totalStudentsInClass = ExamResult::where('exam_session_id', $examResult->exam_session_id)
+            ->where('school_class_id', $examResult->school_class_id)
+            ->count();
+
+        $systemSettings = SystemSetting::first();
+
         return Inertia::render('Exam/Marks/Dmc', [
             'result' => $examResult,
             'subjectMarks' => $subjectMarks,
             'documentPrint' => $documentPrint,
+            'totalStudentsInClass' => $totalStudentsInClass,
+            'settings' => $systemSettings,
         ]);
     }
 

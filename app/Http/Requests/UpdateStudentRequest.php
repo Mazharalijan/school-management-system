@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class UpdateStudentRequest extends FormRequest
@@ -56,7 +57,30 @@ class UpdateStudentRequest extends FormRequest
                 'nullable',
                 'string',
                 'max:30',
-                Rule::unique('students', 'roll_number')->ignore($studentId),
+                function ($attribute, $value, $fail) use ($studentId) {
+                    if (blank($value)) {
+                        return;
+                    }
+
+                    $sectionId = $this->input('section_id');
+                    if (! $sectionId) {
+                        return;
+                    }
+
+                    $exists = DB::table('students')
+                        ->join('student_enrollments', 'students.id', '=', 'student_enrollments.student_id')
+                        ->where('student_enrollments.section_id', $sectionId)
+                        ->where('student_enrollments.is_current', true)
+                        ->where('students.roll_number', $value)
+                        ->when($studentId, fn ($q) => $q->where('students.id', '!=', $studentId))
+                        ->whereNull('students.deleted_at')
+                        ->whereNull('student_enrollments.deleted_at')
+                        ->exists();
+
+                    if ($exists) {
+                        $fail('This roll number is already assigned to another student in this section.');
+                    }
+                },
             ],
             'session_year' => ['nullable', 'string', 'max:20'],
             'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
